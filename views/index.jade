@@ -1,82 +1,86 @@
 extends layout
 
 block content
-        .row
-            .panel.panel-primary
-                .panel-heading
-                    .pabel-title
-                        h1=title
-                        .panel-body
-                            .table-responsive
-                                table.table.table-bordered.table-hover.table-striped
-                                    thead
-                                        tr
-                                            th Interview Date
-                                            th Phone Number
-                                            th Cell
-                                            th Email
-                                            th Slip
-                                            th Self Employed
-                                            th T1135
-                                            th Rental
-                                            th Stock
-                                            th New
-                                            th Picked Up
-                                            th Husband Last Name
-                                            th Husband First Name
-                                            th Wife Last Name
-                                            th Wife First Name
-                                            th Group
-                                            th Pickup Date
-                                            th Interviewer
-                                            th Preparer
-                                            th Preparer Done
-                                            th Checker
-                                            th Checker Done
-                                            th Outstanding Info
-                                            th Remarks
-                                            th Ready for Pickup
-                                            th Call Date
-                                            th Pickup OK
-                                            th PYT Received
-                                            th Things to do After Pickup
-                                            th PRC Last Year
-                                        tbody
-                                            each client in clients
-                                                tr.clickable-row(data-href="/clients/#{client.name}")
-                                                    td #{client.interview_date}
-                                                    td #{client.phone_number}
-                                                    td #{client.cell}
-                                                    td #{client.email}
-                                                    td #{client.slips}
-                                                    td #{client.self_employed}
-                                                    td #{client.t1135}
-                                                    td #{client.rental}
-                                                    td #{client._777}
-                                                    td #{client.stock}
-                                                    td #{client.new}
-                                                    td #{client.picked_up}
-                                                    td #{client.husband_last_name}
-                                                    td #{client.husband_first_name}
-                                                    td #{client.wife_last_name}
-                                                    td #{client.wife_first_name}
-                                                    td #{client._group}
-                                                    td #{client.pickup_date}
-                                                    td #{client.interviewer}
-                                                    td #{client.preparer}
-                                                    td #{client.done_preparing}
-                                                    td #{client.checker}
-                                                    td #{client.done_checking}
-                                                    td #{client.outstanding_info}
-                                                    td #{client.remarks}
-                                                    td #{client.ready_pickup}
-                                                    td #{client.call_date}
-                                                    td #{client.pickup_ok}
-                                                    td #{client.pyt_received}
-                                                    td #{client.after_pickup}
-                                                    td #{client.prc_last_year}
+    .row
+        .panel.panel-primary
+            .panel-heading
+                .pabel-title
+                    h1=title
+                    .panel-body
+                        .table-responsive
+                            table.table.table-bordered.table-hover.table-striped
+                                thead
+                                    tr
+                                        th Interview Date
+                                        th Phone Number
+                                        th Cell
+                                        th Email
+                                        th Slip
+                                        th Self Employed
+                                        th T1135
+                                        th Rental
+                                        th Stock
+                                        th New
+                                        th Picked Up
+                                        th Husband Last Name
+                                        th Husband First Name
+                                        th Wife Last Name
+                                        th Wife First Name
+                                        th Group
+                                        th Pickup Date
+                                        th Interviewer
+                                        th Preparer
+                                        th Preparer Done
+                                        th Checker
+                                        th Checker Done
+                                        th Outstanding Info
+                                        th Remarks
+                                        th Ready for Pickup
+                                        th Call Date
+                                        th Pickup OK
+                                        th PYT Received
+                                        th Things to do After Pickup
+                                        th PRC Last Year
+                                    tbody
+                                        each client in clients
+                                            tr.clickable-row(data-href="/client/#{client.name}")
+                                                td #{client.interview_date}
+                                                td #{client.phone_number}
+                                                td #{client.cell}
+                                                td #{client.email}
+                                                td #{client.slips}
+                                                td #{client.self_employed}
+                                                td #{client.t1135}
+                                                td #{client.rental}
+                                                td #{client._777}
+                                                td #{client.stock}
+                                                td #{client.new}
+                                                td #{client.picked_up}
+                                                td #{client.husband_last_name}
+                                                td #{client.husband_first_name}
+                                                td #{client.wife_last_name}
+                                                td #{client.wife_first_name}
+                                                td #{client._group}
+                                                td #{client.pickup_date}
+                                                td #{client.interviewer}
+                                                td #{client.preparer}
+                                                td #{client.done_preparing}
+                                                td #{client.checker}
+                                                td #{client.done_checking}
+                                                td #{client.outstanding_info}
+                                                td #{client.remarks}
+                                                td #{client.ready_pickup}
+                                                td #{client.call_date}
+                                                td #{client.pickup_ok}
+                                                td #{client.pyt_received}
+                                                td #{client.after_pickup}
+                                                td #{client.prc_last_year}
 
 block sidebar
+    br
+    .container-fluid
+        .row
+            button.btn.btn-default.col-xs-12(type="button" onclick="location.href = '/client'") New Client
     h3 Search
     .container-fluid
         .row

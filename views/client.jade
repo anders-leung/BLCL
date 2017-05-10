@@ -1,0 +1,19 @@
+//
+   Created by ander on 2017-05-09.
+
+extends layout
+
+block content
+    h1=title
+    hr
+    .container
+        form
+            .row
+                .form-group.col-xs-2
+                    label(for='year') Year
+                    input#year.form-control(type='number' name='year')
+                    label(for='citizen') Citizen
+
+                .form-group.col-xs-2
+                    label(for='interviewer') Interviewed By
+                    input#interviewer.form-control(type='text' name='interviewer')

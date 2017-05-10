@@ -1,0 +1,17 @@
+//
+   Created by ander on 2017-05-09.
+extends layout
+
+block content
+    h1=title
+    hr
+    h3 Please choose a folder to upload from
+    input.form-control(type="file" multiple webkitdirectory id="fileURL")
+    ul#fileOutput
+
+    form(method="post")
+        input#fileNames(type="text" name="fileNames")
+        span.btn
+            button.btn.btn-default(type="submit") Upload
+
+    script(type="text/javascript" src='/js/load_files.js')
