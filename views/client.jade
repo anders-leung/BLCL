@@ -8,12 +8,51 @@ block content
     hr
     .container
         form
-            .row
-                .form-group.col-xs-2
-                    label(for='year') Year
-                    input#year.form-control(type='number' name='year')
-                    label(for='citizen') Citizen
+            fieldset
+                legend General Info
+                .form-group
+                    .col-xs-2
+                        label(for='year') Year
+                        input#year.form-control(type='number' name='year')
+                        br
+                        label(for='interviewDate') Interview Date
+                        input#interviewDate.form-control(type='date' name='interviewDate')
 
-                .form-group.col-xs-2
-                    label(for='interviewer') Interviewed By
-                    input#interviewer.form-control(type='text' name='interviewer')
+                    .col-xs-2
+                        label(for='interviewer') Interviewed By
+                        input#interviewer.form-control(type='text' name='interviewer')
+                        br
+                        label(for='tel') Telephone
+                        input#tel.form-control.bfh-phone(type='text' name='tel' data-format=' (ddd) ddd-dddd')
+
+                    .col-xs-2
+                        label(for='pickupDate') Pickup Date
+                        input#pickupDate.form-control(type='date' name='pickupDate')
+                        br
+                        label(for='cell') Cell
+                        input#cell.form-control.bfh-phone(type='text' name='cell' data-format=' (ddd) ddd-dddd')
+                        .checkbox
+                            label(for='newCell')
+                                input#newCell(type='checkbox' name='newCell')
+                                | New Cell?
+
+                    .col-xs-2
+                        label(for='preparer') Preparer
+                        input#preparer.form-control(type='text' name='preparer')
+                        br
+                        label(for='address') Address
+                        input#address.form-control(type='text' name='address')
+
+                    .col-xs-2
+                        label(for='checker') Checker
+                        input#checker.form-control(type='text' name='checker')
+
+                    .col-xs-2
+                        .checkbox
+                            label(for='prSold')
+                                input#prSold(type='checkbox' name='prSold')
+                                | PR Sold
+
+                legend Calculation of Total Income
+
+    script(type="text/javascript" src='/js/client_form.js')

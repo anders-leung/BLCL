@@ -1,4 +1,5 @@
 var express = require('express');
+var mongoose = require('mongoose');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -9,6 +10,8 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var excel = require('./routes/api/excel');
 var client = require('./routes/client');
+
+mongoose.connect('mongodb://localhost:27017/');
 
 var app = express();
 
