@@ -4,10 +4,47 @@
 extends layout
 
 block content
-    form(method='post')
-        .form-group
-            label(for='email') Email
-            input#email.form-control(type='email' name='email')
-        .form-group
-            label(for='password') Password
-            input#password.form-control(type='password' name='password')
+    link(rel='stylesheet', href='https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css')
+    link(rel='stylesheet', href='https://cdn.datatables.net/select/1.2.3/css/select.dataTables.min.css')
+    script(type='text/javascript' src='https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js')
+    script(type='text/javascript' src='https://cdn.datatables.net/select/1.2.3/css/select.dataTables.min.js')
+    script(type="text/javascript").
+        var list = !{JSON.stringify(list)};
+    script(src='/js/users_list.js')
+
+    ul.nav.nav-tabs
+        - for (user in list)
+            li.nav-item
+                a.nav-link(data-toggle='tab' href=user) #{user}
+
+    #table.tab-content(style='border-top: 0')
+        - for (user in list)
+            div(id=user).tab-pane
+                table.cell-border
+                    thead
+                        tr
+                            th Husband Last Name
+                            th Husband First Name
+                            th Wife Last Name
+                            th Wife First Name
+                            th Slips
+                            th Self Employed
+                            th T1135
+                            th Rental
+                            th Stocks
+                            th New
+                            th Picked Up
+                    tbody
+                        each client in list[user]
+                            tr
+                                td #{client.husband.lastName}
+                                td #{client.husband.firstName}
+                                td #{client.wife.lastName}
+                                td #{client.wife.firstName}
+                                td.check #{client.slips}
+                                td.check #{client.selfEmployed}
+                                td #{client.t1135}
+                                td.check #{client.rental}
+                                td.check #{client.stocks}
+                                td.check #{client.new}
+                                td.check #{client.pickedUp}
