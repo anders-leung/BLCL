@@ -51,11 +51,21 @@ var ClientService = {
             } else {
                 callback(err, client);
             }
-        })
+        });
     },
 
     updateClient : function(search, values, callback) {
         Client.update(search, { $set: values }, callback);
+    },
+
+    findClients : function(ids, callback) {
+        Client.find({'_id' : { $in: ids }}).lean().exec(function(err, clients) {
+            if (err) {
+                callback(err);
+            } else {
+                callback(err, clients);
+            }
+        });
     }
 };
 
