@@ -1,90 +1,90 @@
 extends layout
 
 block content
+    link(rel='stylesheet', href='https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css')
+    link(rel='stylesheet', href='https://cdn.datatables.net/select/1.2.3/css/select.dataTables.min.css')
+    script(type='text/javascript' src='https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js')
+    script(type='text/javascript' src='https://cdn.datatables.net/select/1.2.3/css/select.dataTables.min.js')
+    script(type="text/javascript" src='/js/jquery.floatThead.js')
+    script(type="text/javascript" src='/socket.io/socket.io.js')
+    script.
+        var socket = io.connect('http://localhost:3000');
+        socket.on('news', function (data) {
+            console.log(data);
+            socket.emit('my other event', {my: 'data'});
+        });
     .row
-        .panel.panel-primary
-            .panel-heading
-                .pabel-title
-                    h1=title
-                    .panel-body
-                        .table-responsive
-                            table.table.table-bordered.table-hover.table-striped
-                                thead
-                                    tr
-                                        th Interview Date
-                                        th Phone Number
-                                        th Cell
-                                        th Email
-                                        th Slip
-                                        th Self Employed
-                                        th T1135
-                                        th Rental
-                                        th Stock
-                                        th New
-                                        th Picked Up
-                                        th Husband Last Name
-                                        th Husband First Name
-                                        th Wife Last Name
-                                        th Wife First Name
-                                        th Group
-                                        th Pickup Date
-                                        th Interviewer
-                                        th Preparer
-                                        th Preparer Done
-                                        th Checker
-                                        th Checker Done
-                                        th Outstanding Info
-                                        th Remarks
-                                        th Ready for Pickup
-                                        th Call Date
-                                        th Pickup OK
-                                        th PYT Received
-                                        th Things to do After Pickup
-                                        th PRC Last Year
-                                    tbody
-                                        each client in clients
-                                            tr.clickable-row(data-href="/client/#{client.name}")
-                                                td #{client.interview_date}
-                                                td #{client.phone_number}
-                                                td #{client.cell}
-                                                td #{client.email}
-                                                td #{client.slips}
-                                                td #{client.self_employed}
-                                                td #{client.t1135}
-                                                td #{client.rental}
-                                                td #{client._777}
-                                                td #{client.stock}
-                                                td #{client.new}
-                                                td #{client.picked_up}
-                                                td #{client.husband_last_name}
-                                                td #{client.husband_first_name}
-                                                td #{client.wife_last_name}
-                                                td #{client.wife_first_name}
-                                                td #{client._group}
-                                                td #{client.pickup_date}
-                                                td #{client.interviewer}
-                                                td #{client.preparer}
-                                                td #{client.done_preparing}
-                                                td #{client.checker}
-                                                td #{client.done_checking}
-                                                td #{client.outstanding_info}
-                                                td #{client.remarks}
-                                                td #{client.ready_pickup}
-                                                td #{client.call_date}
-                                                td #{client.pickup_ok}
-                                                td #{client.pyt_received}
-                                                td #{client.after_pickup}
-                                                td #{client.prc_last_year}
+        .col-12
+            .scrolling.outer
+                .inner
+                    table.cell-border
+                        thead
+                            tr
+                                th Interview Date
+                                th Phone Number
+                                th Cell
+                                th Email
+                                th Slip
+                                th Self Employed
+                                th T1135
+                                th Rental
+                                th Stock
+                                th New
+                                th Picked Up
+                                th Husband Last Name
+                                th Husband First Name
+                                th Wife Last Name
+                                th Wife First Name
+                                th Group
+                                th Pickup Date
+                                th Interviewer
+                                th Preparer
+                                th Preparer Done
+                                th Checker
+                                th Checker Done
+                                th Outstanding Info
+                                th Remarks
+                                th Ready for Pickup
+                                th Call Date MakeThisSuperLong
+                                th Pickup OK
+                                th PYT Received
+                                th Things to do After Pickup
+                                th PRC Last Year
+                        tbody
+                            - for (var i = 0; i < 100; i++)
+                                each client in clients
+                                    tr.clickable-row(data-href="/client/#{client.pathName}")
+                                        td.date.text-nowrap #{client.interviewDate}
+                                        td.text-nowrap #{client.tel.number}
+                                        td.text-nowrap #{client.cell.number}
+                                        td.text-nowrap #{client.email.value}
+                                        td.check #{client.slips}
+                                        td.check #{client.selfEmployed}
+                                        td #{client.t1135}
+                                        td.check #{client.rental}
+                                        td.check #{client.stocks}
+                                        td.check #{client.new}
+                                        td.check.toggle #{client.pickedUp}
+                                        td #{client.husband.lastName}
+                                        td #{client.husband.firstName}
+                                        td #{client.wife.lastName}
+                                        td #{client.wife.firstName}
+                                        td.text-nowrap #{client.group}
+                                        td.date.text-nowrap #{client.pickupDate}
+                                        td #{client.interviewer}
+                                        td #{client.preparer}
+                                        td.check.toggle #{client.preparerDone}
+                                        td #{client.checker}
+                                        td.check.toggle #{client.checkerDone}
+                                        td.text-nowrap.edit #{client.outstanding_info}
+                                        td.text-nowrap.edit #{client.remarks}
+                                        td.check.toggle #{client.readyForPickup}
+                                        td.date.text-nowrap.date-edit #{client.call_date}
+                                        td.check.toggle #{client.pickup_ok}
+                                        td.check #{client.pytReceived}
+                                        td.text-nowrap #{client.after_pickup}
+                                        td.check.toggle #{client.prcLastYear}
 
-block sidebar
-    br
-    .container-fluid
-        .row
-            button.btn.btn-default.col-xs-12(type="button" onclick="location.href = '/client'") New Client
-    h3 Search
-    .container-fluid
-        .row
-            .input-group
-                input.form-control(type="text" placeholder="Search for...")
-                span.input-group-btn
-                    button.btn.btn-default(type="button") Go!
+    script(type="text/javascript").
+        var scroll = !{JSON.stringify(scroll)};
+    script(src='/js/monitoring_sheet.js')

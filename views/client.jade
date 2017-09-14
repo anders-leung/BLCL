@@ -1,58 +1,714 @@
 //
-   Created by ander on 2017-05-09.
+   Created by ander on 2017-05-17.
 
 extends layout
 
 block content
+
+    script(type="text/javascript").
+        var client = !{JSON.stringify(client)};
+    script(src='/js/client_form.js')
+
     h1=title
-    hr
-    .container
-        form
-            fieldset
-                legend General Info
-                .form-group
-                    .col-xs-2
-                        label(for='year') Year
-                        input#year.form-control(type='number' name='year')
-                        br
-                        label(for='interviewDate') Interview Date
-                        input#interviewDate.form-control(type='date' name='interviewDate')
-
-                    .col-xs-2
-                        label(for='interviewer') Interviewed By
-                        input#interviewer.form-control(type='text' name='interviewer')
-                        br
-                        label(for='tel') Telephone
-                        input#tel.form-control.bfh-phone(type='text' name='tel' data-format=' (ddd) ddd-dddd')
-
-                    .col-xs-2
-                        label(for='pickupDate') Pickup Date
-                        input#pickupDate.form-control(type='date' name='pickupDate')
-                        br
-                        label(for='cell') Cell
-                        input#cell.form-control.bfh-phone(type='text' name='cell' data-format=' (ddd) ddd-dddd')
+    br
+    form(method='post')
+        fieldset.form-group
+            legend General Info
+            .row
+                .form-group.col-2
+                    label(for='year') Year
+                    input#year.form-control(type='number' name='year')
+                .form-group.col-2
+                    label(for='interviewer') Interviewer
+                    input#interviewer.form-control(type='text' name='interviewer')
+                .form-group.col-2
+                    label(for='preparer') Preparer
+                    input#preparer.form-control(type='text' name='preparer')
+                .form-group.col-2
+                    label(for='checker') Checker
+                    input#checker.form-control(type='text' name='checker')
+                .form-group.col-2
+                    label(for='pickupDate') Pickup Date
+                    input#pickupDate.form-control(type='date' name='pickupDate')
+                .form-group.col-2
+                    label(for='interviewDate') Interview Date
+                    input#interviewDate.form-control(type='date' name='interviewDate')
+            .row
+                .form-group.col-2
+                    label(for='returns') Number of Returns
+                    input#returns.form-control(type='number' name='numberOfReturns')
+                .form-group.col-2
+                    label(for='method') Drop or Email
+                    select#method.form-control(name='method')
+                        option Drop
+                        option Email
+                .form-group.col-2
+                    label(for='t1135') T1135
+                    select#t1135.form-control(name='t1135')
+                        option Simple
+                        option Complicated
+                .form-group.col-2
+                    label(for='group') Group
+                    input#group.form-control(type='text' name='group')
+                .row.col-4
+                    .col-3
                         .checkbox
-                            label(for='newCell')
-                                input#newCell(type='checkbox' name='newCell')
-                                | New Cell?
-
-                    .col-xs-2
-                        label(for='preparer') Preparer
-                        input#preparer.form-control(type='text' name='preparer')
-                        br
-                        label(for='address') Address
-                        input#address.form-control(type='text' name='address')
-
-                    .col-xs-2
-                        label(for='checker') Checker
-                        input#checker.form-control(type='text' name='checker')
-
-                    .col-xs-2
+                            label(for='slips')
+                                input#slips(type='checkbox' name='slips')
+                                | Slips
+                    .col-3
+                        .checkbox
+                            label(for='stocks')
+                                input#stocks(type='checkbox' name='stocks')
+                                | Stocks
+                    .col-3
+                        .checkbox
+                            label(for='t777')
+                                input#t777(type='checkbox' name='t777')
+                                | T777
+                    .col-3
+                        .checkbox
+                            label(for='new')
+                                input#new(type='checkbox' name='new')
+                                | New
+                    .col-4
                         .checkbox
                             label(for='prSold')
                                 input#prSold(type='checkbox' name='prSold')
                                 | PR Sold
+                    .col-4
+                        .checkbox
+                            label(for='selfEmployed')
+                                input#selfEmployed(type='checkbox' name='selfEmployed')
+                                | Self Emp
+                    .col-3
+                        .checkbox
+                            label(for='rental')
+                                input#rental(type='checkbox' name='rental')
+                                | Rental
+            .form-group.col-2
+                label(for='tel') Telephone
+                input#tel.form-control.phone(type='text' name='tel.number')
+                .checkbox
+                    label(for='newTel')
+                        input#newTel(type='checkbox' name='tel.check')
+                        | New Telephone
+            .form-group.col-2
+                label(for='cell') Cell
+                input#cell.form-control.phone(type='text' name='cell.number')
+                .checkbox
+                    label(for='newCell')
+                        input#newCell(type='checkbox' name='cell.check')
+                        | New Cell
+            .form-group.col-3
+                label(for='email') Email
+                input#email.form-control(type='email' name='email.value')
+                .checkbox
+                    label(for='newEmail')
+                        input#newEmail(type='checkbox' name='email.check')
+                        | New Email
+            .form-group.col-12
+                label Address
+                br
+                .col-2
+                    label(for='apartment') Apartment No.
+                    input#apartment.form-control(type='text' name='address.apartment')
+                .col-3
+                    label(for='street') Street
+                    input#street.form-control(type='text' name='address.street')
+                .col-2
+                    label(for='city') City
+                    input#city.form-control(type='text' name='address.city')
+                .col-1
+                    label(for='province') Province
+                    input#province.form-control(type='text' name='address.province' value='BC')
+                .col-2
+                    label(for='postalCode') Postal Code
+                    input#postalCode.form-control(type='text' name='address.postalCode')
+                .col-2
+                    label(for='country') Country
+                    input#country.form-control(type='text' name='address.country' value='CANADA')
+                .checkbox.col-12
+                    label(for='newAddress')
+                        input#newAddress(type='checkbox' name='address.check')
+                        | New Address
+            .form-group.col-12
+                label Husband
+                br
+                .col-2
+                    label(for='husbandFirstName') First Name
+                    input#husbandFirstName.form-control(type='text' name='husband.firstName')
+                .col-2
+                    label(for='husbandLastName') Last Name
+                    input#husbandLastName.form-control(type='text' name='husband.lastName')
+                .col-2
+                    label(for='husbandDob') Date of Birth
+                    input#husbandDob.form-control(type='date' name='husband.dateOfBirth')
+                .col-2
+                    label(for='husbandDeparture') Departure/Land
+                    input#husbandDeparture.form-control(type='text' name='husband.departure')
+                .col-2
+                    label(for='husbandSin') Sin
+                    input#husbandSin.form-control.sin(type='text' name='husband.sin')
+                .checkbox.col-1
+                    label(for='husbandCitizenship')
+                        input#husbandCitizenship(type='checkbox' name='husband.citizenship')
+                        | Citizen
+                    label(for='husbandElection')
+                        input#husbandElection(type='checkbox' name='husband.election')
+                        | Election
+                    label(for='husbandNoa')
+                        input#husbandNoa(type='checkbox' name='husband.noa')
+                        | NOA
+            .form-group.col-12
+                label Wife
+                br
+                .col-2
+                    label(for='wifeFirstName') First Name
+                    input#wifeFirstName.form-control(type='text' name='wife.firstName')
+                .col-2
+                    label(for='wifeLastName') Last Name
+                    input#wifeLastName.form-control(type='text' name='wife.lastName')
+                .col-2
+                    label(for='wifeDob') Date of Birth
+                    input#wifeDob.form-control(type='date' name='wife.dateOfBirth')
+                .col-2
+                    label(for='wifeDeparture') Departure/Land
+                    input#wifeDeparture.form-control(type='text' name='wife.departure')
+                .col-2
+                    label(for='wifeSin') Sin
+                    input#wifeSin.form-control.sin(type='text' name='wife.sin')
+                .checkbox.col-1
+                    label(for='wifeCitizenship')
+                        input#wifeCitizenship(type='checkbox' name='wife.citizenship')
+                        | Citizen
+                    label(for='wifeElection')
+                        input#wifeElection(type='checkbox' name='wife.election')
+                        | Election
+                    label(for='wifeNoa')
+                        input#wifeNoa(type='checkbox' name='wife.noa')
+                        | NOA
 
-                legend Calculation of Total Income
+            .form-group.col-12
+                label Dependents
+                br
+                .col-4
+                    label(for='dependent1') Name
+                    input#dependent1.form-control(type='text' name='dependent1.name')
+                .col-1
+                    label(for='relationship1') Relationship
+                    select#relationship1.form-control(name='dependent1.relationship')
+                        option S
+                        option D
+                        option F
+                        option M
+                        option GF
+                        option GM
+                .col-2
+                    label(for='dob1') Date of Birth
+                    input#dob1.form-control(type='date' name='dependent1.dateOfBirth')
+                .col-2
+                    label(for='sin1') Sin
+                    input#sin1.form-control.sin(type='text' name='dependent1.sin')
+            .form-group.col-12
+                .col-4
+                    label(for='dependent2') Name
+                    input#dependent2.form-control(type='text' name='dependent2.name')
+                .col-1
+                    label(for='relationship2') Relationship
+                    select#relationship2.form-control(name='dependent2.relationship')
+                        option S
+                        option D
+                        option F
+                        option M
+                        option GF
+                        option GM
+                .col-2
+                    label(for='dob2') Date of Birth
+                    input#dob2.form-control(type='date' name='dependent2.dateOfBirth')
+                .col-2
+                    label(for='sin2') Sin
+                    input#sin2.form-control.sin(type='text' name='dependent2.sin')
+            .form-group.col-12
+                .col-4
+                    label(for='dependent3') Name
+                    input#dependent3.form-control(type='text' name='dependent3.name')
+                .col-1
+                    label(for='relationship3') Relationship
+                    select#relationship3.form-control(name='dependent3.relationship')
+                        option S
+                        option D
+                        option F
+                        option M
+                        option GF
+                        option GM
+                .col-2
+                    label(for='dob3') Date of Birth
+                    input#dob3.form-control(type='date' name='dependent3.dateOfBirth')
+                .col-2
+                    label(for='sin3') Sin
+                    input#sin3.form-control.sin(type='text' name='dependent3.sin')
+        fieldset.form-group
+            legend Calculation of Total Income
+            .col-6
+                label.col-12 Husband
+                .form-group.col-12
+                    label(for='husbandT4') T4
+                    input#husbandT4.form-control(type='number' name='husband.t4')
+                .form-group.col-6
+                    label(for='husbandT5') T5
+                    input#husbandT5.form-control(type='number' name='husband.t5.value')
+                .form-group.col-6
+                    label(for='husbandT5Joint') Joint
+                    input#husbandT5Joint.form-control(type='number' name='husband.t5.joint')
+                label.col-12 Other Income
+                .form-group.col-6
+                    label(for='husband104') 104
+                    input#husband104.form-control(type='number' name='husband.otherIncome.value104')
+                .form-group.col-6
+                    label(for='husband130') 130
+                    input#husband130.form-control(type='number' name='husband.otherIncome.value130')
+                .form-group.col-6
+                    label(for='husbandT5Other') T5 (Other currency)
+                    input#husbandT5Other.form-control(type='number' name='husband.t5Other.value')
+                .form-group.col-6
+                    label(for='husbandT5OtherJoint') Joint
+                    input#husbandT5OtherJoint.form-control(type='number' name='husband.t5Other.joint')
+                label.col-12 Foreign Income
+                .form-group.col-4
+                    label(for='husbandDiv') Div & Int
+                    input#husbandDiv.form-control(type='number' name='husband.foreignIncome.div')
+                .form-group.col-4
+                    label(for='husbandEmpl') Empl
+                    input#husbandEmpl.form-control(type='number' name='husband.foreignIncome.empl')
+                .form-group.col-4
+                    label(for='husbandCountry') Country
+                    input#husbandCountry.form-control(type='text' name='husband.foreignIncome.country')
+                .form-group.col-6
+                    label(for='husbandT3') T3
+                    input#husbandT3.form-control(type='number' name='husband.t3.value')
+                .form-group.col-6
+                    label(for='husbandT3Joint') Joint
+                    input#husbandT3Joint.form-control(type='number' name='husband.t3.joint')
+                .form-group.col-12
+                    label(for='husbandT5007') T5007
+                    input#husbandT5007.form-control(type='number' name='husband.t5007')
+                .form-group.col-12
+                    label(for='husbandT4A') T4A
+                    input#husbandT4A.form-control(type='number' name='husband.t4A')
+                .form-group.col-6
+                    label(for='husbandT5008') T5008 / S3
+                    input#husbandT5008.form-control(type='number' name='husband.t5008.value')
+                .form-group.col-6
+                    label(for='husbandT5008Joint') Joint
+                    input#husbandT5008Joint.form-control(type='number' name='husband.t5008.joint')
+                .form-group.col-12
+                    label(for='husbandT4AOAS') T4A (OAS)
+                    input#husbandT4AOAS.form-control(type='number' name='husband.t4AOAS')
+                .form-group.col-6
+                    label(for='husbandT5013') T5013
+                    input#husbandT5013.form-control(type='number' name='husband.t5013.value')
+                .form-group.col-6
+                    label(for='husbandT5013Joint') Joint
+                    input#husbandT5013Joint.form-control(type='number' name='husband.t5013.joint')
+                .form-group.col-10
+                    label(for='husbandT4AP') T4A (P)
+                    input#husbandT4AP.form-control(type='number' name='husband.t4AP.value')
+                .col-1
+                    br
+                    .checkbox
+                        label(for='husbandSplit')
+                            input#husbandSplit(type='checkbox' name='husband.t4AP.split')
+                            | Split
+                .form-group.col-4
+                    label(for='husbandRental') Rental
+                    input#husbandRental.form-control(type='number' name='husband.rental.value')
+                .form-group.col-4
+                    label(for='husbandRentalJoint') Joint
+                    input#husbandRentalJoint.form-control(type='number' name='husband.rental.joint')
+                .col-3
+                    br
+                    .checkbox
+                        label(for='husbandRentalGST')
+                            input#husbandRentalGST(type='checkbox' name='husband.rental.gstReturn')
+                            | GST Return
+                .form-group.col-12
+                    label(for='husbandT4E') T4E
+                    input#husbandT4E.form-control(type='number' name='husband.t4E')
+                .form-group.col-4
+                    label(for='husbandSelfEmployed') Self Employed
+                    input#husbandSelfEmployed.form-control(type='number' name='husband.selfEmployed.value')
+                .form-group.col-4
+                    label(for='husbandSelfEmployedJoint') Joint
+                    input#husbandSelfEmployedJoint.form-control(type='number' name='husband.selfEmployed.joint')
+                .col-3
+                    br
+                    .checkbox
+                        label(for='husbandSelfEmployedGST')
+                            input#husbandSelfEmployedGST(type='checkbox' name='husband.selfEmployed.gstReturn')
+                            | GST Return
+                .form-group.col-12
+                    label(for='husbandT4RSP') T4RSP / T4RIF
+                    input#husbandT4RSP.form-control(type='number' name='husband.t4RSP')
+                .form-group.col-12
+                    label(for='husbandSupportReceived') Support PYT Received
+                    input#husbandSupportReceived.form-control(type='number' name='husband.supportReceived')
+                .col-2
+                    .checkbox
+                        label(for='husbandUCCB')
+                            input#husbandUCCB(type='checkbox' name='husband.uccb')
+                            | UCCB
 
-    script(type="text/javascript" src='/js/client_form.js')
+            .col-6
+                label.col-12 Wife
+                .form-group.col-12
+                    label(for='wifeT4') T4
+                    input#wifeT4.form-control(type='number' name='wife.t4')
+                .form-group.col-6
+                    label(for='wifeT5') T5
+                    input#wifeT5.form-control(type='number' name='wife.t5.value')
+                .form-group.col-6
+                    label(for='wifeT5Joint') Joint
+                    input#wifeT5Joint.form-control(type='number' name='wife.t5.joint')
+                label.col-12 Other Income
+                .form-group.col-6
+                    label(for='wife104') 104
+                    input#wife104.form-control(type='number' name='wife.otherIncome.value104')
+                .form-group.col-6
+                    label(for='wife130') 130
+                    input#wife130.form-control(type='number' name='wife.otherIncome.value130')
+                .form-group.col-6
+                    label(for='wifeT5Other') T5 (Other currency)
+                    input#wifeT5Other.form-control(type='number' name='wife.t5Other.value')
+                .form-group.col-6
+                    label(for='wifeT5OtherJoint') Joint
+                    input#wifeT5OtherJoint.form-control(type='number' name='wife.t5Other.joint')
+                label.col-12 Foreign Income
+                .form-group.col-4
+                    label(for='wifeDiv') Div & Int
+                    input#wifeDiv.form-control(type='number' name='wife.foreignIncome.div')
+                .form-group.col-4
+                    label(for='wifeEmpl') Empl
+                    input#wifeEmpl.form-control(type='number' name='wife.foreignIncome.empl')
+                .form-group.col-4
+                    label(for='wifeCountry') Country
+                    input#wifeCountry.form-control(type='text' name='wife.foreignIncome.country')
+                .form-group.col-6
+                    label(for='wifeT3') T3
+                    input#wifeT3.form-control(type='number' name='wife.t3.value')
+                .form-group.col-6
+                    label(for='wifeT3Joint') Joint
+                    input#wifeT3Joint.form-control(type='number' name='wife.t3.joint')
+                .form-group.col-12
+                    label(for='wifeT5007') T5007
+                    input#wifeT5007.form-control(type='number' name='wife.t5007')
+                .form-group.col-12
+                    label(for='wifeT4A') T4A
+                    input#wifeT4A.form-control(type='number' name='wife.t4A')
+                .form-group.col-6
+                    label(for='wifeT5008') T5008 / S3
+                    input#wifeT5008.form-control(type='number' name='wife.t5008.value')
+                .form-group.col-6
+                    label(for='wifeT5008Joint') Joint
+                    input#wifeT5008Joint.form-control(type='number' name='wife.t5008.joint')
+                .form-group.col-12
+                    label(for='wifeT4AOAS') T4A (OAS)
+                    input#wifeT4AOAS.form-control(type='number' name='wife.t4AOAS')
+                .form-group.col-6
+                    label(for='wifeT5013') T5013
+                    input#wifeT5013.form-control(type='number' name='wife.t5013.value')
+                .form-group.col-6
+                    label(for='wifeT5013Joint') Joint
+                    input#wifeT5013Joint.form-control(type='number' name='wife.t5013.joint')
+                .form-group.col-10
+                    label(for='wifeT4AP') T4A (P)
+                    input#wifeT4AP.form-control(type='number' name='wife.t4AP.value')
+                .col-1
+                    br
+                    .checkbox
+                        label(for='wifeSplit')
+                            input#wifeSplit(type='checkbox' name='wife.t4AP.split')
+                            | Split
+                .form-group.col-4
+                    label(for='wifeRental') Rental
+                    input#wifeRental.form-control(type='number' name='wife.rental.value')
+                .form-group.col-4
+                    label(for='wifeRentalJoint') Joint
+                    input#wifeRentalJoint.form-control(type='number' name='wife.rental.joint')
+                .col-3
+                    br
+                    .checkbox
+                        label(for='wifeRentalGST')
+                            input#wifeRentalGST(type='checkbox' name='wife.rental.gstReturn')
+                            | GST Return
+                .form-group.col-12
+                    label(for='wifeT4E') T4E
+                    input#wifeT4E.form-control(type='number' name='wife.t4E')
+                .form-group.col-4
+                    label(for='wifeSelfEmployed') Self Employed
+                    input#wifeSelfEmployed.form-control(type='number' name='wife.selfEmployed.value')
+                .form-group.col-4
+                    label(for='wifeSelfEmployedJoint') Joint
+                    input#wifeSelfEmployedJoint.form-control(type='number' name='wife.selfEmployed.joint')
+                .col-3
+                    br
+                    .checkbox
+                        label(for='wifeSelfEmployedGST')
+                            input#wifeSelfEmployedGST(type='checkbox' name='wife.selfEmployed.gstReturn')
+                            | GST Return
+                .form-group.col-12
+                    label(for='wifeT4RSP') T4RSP / T4RIF
+                    input#wifeT4RSP.form-control(type='number' name='wife.t4RSP')
+                .form-group.col-12
+                    label(for='wifeSupportReceived') Support PYT Received
+                    input#wifeSupportReceived.form-control(type='number' name='wife.supportReceived')
+                .col-2
+                    .checkbox
+                        label(for='wifeUCCB')
+                            input#wifeUCCB(type='checkbox' name='wife.uccb')
+                            | UCCB
+
+        fieldset.form-group
+            legend Calculation of Taxable Income
+            .col-6
+                label.col-12 Husband
+                .form-group.col-6
+                    label(for='husbandRRSP') RRSP
+                    input#husbandRRSP.form-control(type='number' name='husband.rrsp.value')
+                .form-group.col-6
+                    label(for='husbandRRSPJoint') Joint
+                    input#husbandRRSPJoint.form-control(type='number' name='husband.rrsp.spouse')
+                .form-group.col-12
+                    label(for='husband777') 777 Exp
+                    input#husband777.form-control(type='number' name='husband.value777')
+                .form-group.col-12
+                    label(for='husbandHBP') HBP
+                    input#husbandHBP.form-control(type='number' name='husband.hbp')
+                .form-group.col-12
+                    label(for='husbandSupportMade') Support PYT Made
+                    input#husbandSupportMade.form-control(type='number' name='husband.supportMade')
+                .checkbox.col-4
+                    label(for='husbandMoving')
+                        input#husbandMoving(type='checkbox' name='husband.moving')
+                        | Moving
+                br
+                .checkbox.col-4
+                    label(for='husbandUnion')
+                        input#husbandUnion(type='checkbox' name='husband.unionDue')
+                        | Union Due
+                br
+                .checkbox.col-4
+                    label(for='husbandDisability')
+                        input#husbandDisability(type='checkbox' name='husband.disabilitySupports')
+                        | Disability Supports
+            .col-6
+                label.col-12 Wife
+                .form-group.col-6
+                    label(for='wifeRRSP') RRSP
+                    input#wifeRRSP.form-control(type='number' name='wife.rrsp.value')
+                .form-group.col-6
+                    label(for='wifeRRSPJoint') Joint
+                    input#wifeRRSPJoint.form-control(type='number' name='wife.rrsp.spouse')
+                .form-group.col-12
+                    label(for='wife777') 777 Exp
+                    input#wife777.form-control(type='number' name='wife.value777')
+                .form-group.col-12
+                    label(for='wifeHBP') HBP
+                    input#wifeHBP.form-control(type='number' name='wife.hbp')
+                .form-group.col-12
+                    label(for='wifeSupportMade') Support PYT Made
+                    input#wifeSupportMade.form-control(type='number' name='wife.supportMade')
+                .checkbox.col-4
+                    label(for='wifeMoving')
+                        input#wifeMoving(type='checkbox' name='wife.moving')
+                        | Moving
+                br
+                .checkbox.col-4
+                    label(for='wifeUnion')
+                        input#wifeUnion(type='checkbox' name='wife.unionDue')
+                        | Union Due
+                br
+                .checkbox.col-4
+                    label(for='wifeDisability')
+                        input#wifeDisability(type='checkbox' name='wife.disabilitySupports')
+                        | Disability Supports
+            .form-group.col-12
+                label(for='carryingCharges') Carrying Charges
+                input#carryingCharges.form-control(type='number' name='carryingCharges')
+            .form-group.col-12
+                label Childcare
+                br
+                .col-4
+                    label(for='childcareName') Name
+                    input#childcareName.form-control(type='text' name='childcare.name')
+                .col-4
+                    label(for='childcareAmount') Amount
+                    input#childcareAmount.form-control(type='number' name='childcare.amount')
+                .col-4
+                    label(for='childcareSin') Sin
+                    input#childcareSin.form-control.sin(type='text' name='childcare.sin')
+
+        fieldset.form-group
+            legend Calculation of Total Non-Refundable Tax Credits
+            .col-6
+                label.col-12 Husband
+                .form-group.col-12
+                    label(for='husbandInstallation') Installation
+                    input#husbandInstallation.form-control(type='number' name='husband.installation')
+                .checkbox.col-2
+                    label(for='husbandTuition')
+                        input#husbandTuition(type='checkbox' name='husband.tuition')
+                        | Tuition
+                br
+                .checkbox.col-4
+                    label(for='husbandStudentLoan')
+                        input#husbandStudentLoan(type='checkbox' name='husband.studentLoan')
+                        | Student Loan Int
+            .col-6
+                label.col-12 Wife
+                .form-group.col-12
+                    label(for='wifeInstallation') Installation
+                    input#wifeInstallation.form-control(type='number' name='wife.installation')
+                .checkbox.col-2
+                    label(for='wifeTuition')
+                        input#wifeTuition(type='checkbox' name='wife.tuition')
+                        | Tuition
+                br
+                .checkbox.col-4
+                    label(for='wifeStudentLoan')
+                        input#wifeStudentLoan(type='checkbox' name='wife.studentLoan')
+                        | Student Loan Int
+            .col-8
+                .form-group.col-12
+                    label Caregiver
+                    br
+                    .col-6
+                        label(for='caregiverName1') Name
+                        input#caregiverName1.form-control(type='text' name='caregiver1.name')
+                    .col-6
+                        label(for='caregiverAmount1') Amount
+                        input#caregiverAmount1.form-control(type='number' name='caregiver1.amount')
+                .form-group.col-12
+                    .col-6
+                        label(for='caregiverName2') Name
+                        input#caregiverName2.form-control(type='text' name='caregiver2.name')
+                    .col-6
+                        label(for='caregiverAmount2') Amount
+                        input#caregiverAmount2.form-control(type='number' name='caregiver2.amount')
+                .form-group.col-12
+                    label Dependent
+                    br
+                    .col-6
+                        label(for='dependentName1') Name
+                        input#dependentName1.form-control(type='text' name='dependentTuition1.name')
+                    .col-6
+                        label(for='dependentAmount1') Amount
+                        input#dependentAmount1.form-control(type='number' name='dependentTuition1.amount')
+                .form-group.col-12
+                    .col-6
+                        label(for='dependentName2') Name
+                        input#dependentName2.form-control(type='text' name='dependentTuition2.name')
+                    .col-6
+                        label(for='dependentAmount2') Amount
+                        input#dependentAmount2.form-control(type='number' name='dependentTuition2.amount')
+            .col-4
+                br
+                .form-group.col-8
+                    label(for='artAmount') Art
+                    input#artAmount.form-control(type='number' name='art.amount')
+                .checkbox.col-4
+                    br
+                    input#art(type='checkbox' name='art.check')
+                .form-group.col-8
+                    label(for='fitnessAmount') Fitness
+                    input#fitnessAmount.form-control(type='number' name='fitness.amount')
+                .checkbox.col-4
+                    br
+                    input#fitness(type='checkbox' name='fitness.check')
+                .checkbox.col-6
+                    br
+                    label(for='publicTransit')
+                        input#publicTransit(type='checkbox' name='publicTransit')
+                        | Public Transit
+                .checkbox.col-6
+                    br
+                    label(for='donation')
+                        input#donation(type='checkbox' name='donation')
+                        | Donation
+                .checkbox.col-6
+                    br
+                    label(for='medExp')
+                        input#medExp(type='checkbox' name='medExp')
+                        | Med Exp
+                .checkbox.col-6
+                    br
+                    label(for='hbtc')
+                        input#hbtc(type='checkbox' name='hbtc')
+                        | HBTC
+                .checkbox.col-6
+                    br
+                    label(for='disability')
+                        input#disability(type='checkbox' name='disability')
+                        | Disability (Dependent)
+                .checkbox.col-6
+                    br
+                    label(for='t2201')
+                        input#t2201(type='checkbox' name='t2201')
+                        | T2201
+                .checkbox.col-6
+                    br
+                    label(for='equiv')
+                        input#equiv(type='checkbox' name='equiv')
+                        | Equiv To Spouse
+
+        fieldset.form-group
+            legend Notes
+            .form-group.col-12
+                label(for='notes1') Notes
+                textarea#notes1.form-control(rows='5' name='notes.one')
+            .form-group.col-12
+                textarea#notes2.form-control(rows='5' name='notes.two')
+            .form-group.col-12
+                textarea#notes3.form-control(rows='5' name='notes.three')
+            .form-group.col-12
+                label(for='comments1') Comments
+                textarea#comments1.form-control(rows='5' name='comments.one')
+            .form-group.col-12
+                textarea#comments2.form-control(rows='5' name='comments.two')
+            .form-group.col-12
+                textarea#comments3.form-control(rows='5' name='comments.three')
+            .checkbox.col-2
+                label(for='witb')
+                    input#witb(type='checkbox' name='witb')
+                    | No WITB
+            .checkbox.col-2
+                br
+                label(for='ctb')
+                    input#ctb(type='checkbox' name='ctb')
+                    | No CTB
+            .checkbox.col-2
+                br
+                label(for='gst')
+                    input#gst(type='checkbox' name='gst')
+                    | No GST
+            .checkbox.col-2
+                br
+                label(for='prov')
+                    input#prov(type='checkbox' name='prov')
+                    | No PROV
+            .checkbox.col-2
+                br
+                label(for='msp')
+                    input#msp(type='checkbox' name='msp')
+                    | Apply MSP Assist
+            .form-group.col-6
+                label(for='consult') Consult Fee
+                input#consult.form-control(type='number' name='consultFee')
+            .form-group.col-6
+                label(for='price') Price Quoted
+                input#price.form-control(type='number' name='price')
+
+        fieldset.form-group
+            legend
+            input.btn.btn-success.col-offset-2.col-8(type='submit' value='Done')
+

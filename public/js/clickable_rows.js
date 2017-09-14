@@ -1,5 +1,2 @@
 $(document).ready(function(e) {
-    $(".clickable-row").click(function() {
-        window.location = $(this).data("href");
-    });
 });

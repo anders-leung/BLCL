@@ -1,0 +1,21 @@
+//
+   Created by ander on 2017-09-12.
+extends layout
+
+block content
+    link(rel='stylesheet', href='/css/login.css')
+
+    #message.container
+        h1.text-center Please login to continue
+    br
+    .container
+        #form.offset-4.col-4
+            form(method='post')
+                .form-group
+                    label(for='email') Email
+                    input#email.form-control(type='email' name='email')
+                .form-group
+                    label(for='password') Passsword
+                    input#password.form-control(type='password' name='password')
+                .form-group
+                    input.btn.btn-success.col-12(type='submit' value='Login')

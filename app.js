@@ -1,6 +1,7 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var path = require('path');
+var session = require('cookie-session');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -8,6 +9,7 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var new_user = require('./routes/new_user');
 var excel = require('./routes/api/excel');
 var client = require('./routes/client');
 
@@ -27,8 +29,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(session({
+  name : 'session',
+  keys : ['email', 'role'],
+  maxAge : 60 * 60 * 1000
+}));
+
 app.use('/', index);
 app.use('/users', users);
+app.use('/new_user', new_user);
 app.use('/loadExcel', excel);
 app.use('/client', client);
 
@@ -49,5 +58,12 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+var User = require('./models/User');
+var admin = new User();
+admin.email = 'georgia@ben-cpa.com';
+admin.password = 'adminPassword';
+admin.role = 'Administrator';
+admin.save();
 
 module.exports = app;

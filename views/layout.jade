@@ -1,36 +1,29 @@
 doctype
 html
 
-  head
-    title BLCL
-    script(type="text/javascript" src='/js/jquery/jquery-3.1.1.min.js')
-    link(rel='stylesheet', href='/css/bootstrap/bootstrap.min.css')
-    link(rel='stylesheet', href='/css/stylesheet.css')
+    head
+        title BLCL
+        link(rel='stylesheet', href='/css/bootstrap/bootstrap.css')
+        link(rel='stylesheet', href='/css/font-awesome/font-awesome.css')
+        link(rel='stylesheet', href='/css/stylesheet.css')
+        script(type="text/javascript" src='/js/jquery/jquery-3.1.1.min.js')
+        script(type="text/javascript" src='/js/tether/tether.js')
+        script(type='text/javascript' src='/js/bootstrap/bootstrap.js')
+        script(type="text/javascript" src='/js/bootstrap-formhelpers.min.js')
 
-  body
-    .container-fluid
-      .row
-        .col-xs-2.sidebar
-          block sidebar
-        .col-xs-offset-2.col-xs-10
-          nav.navbar.navbar-default.navbar-fixed-top
-            .container-fluid
-              ul
-                li
-                  a(href="/") T1
-                li
-                  a(href="/t2") T2
-                li
-                  a(href="/t4") T4
-                li
-                  a(href="/t5") T5
-          .content
+    body
+        nav.navbar.navbar-default.navbar-toggleable-md.navbar-fixed-top
+            button.navbar-toggler.navbar-toggler-right(type='button' data-toggle='collapse' data-target='#navbar' aria-controls='navbar' aria-expanded='false' aria-label='Toggle navigation')
+                span.navbar-toggler-icon
+            a.navbar-brand(href='/') BLCL
+            if role
+                #navbar.collapse.navbar-collapse
+                    ul.navbar-nav.mr-auto
+                        li.nav-item.active
+                            a.nav-link(href='/') T1
+                        li.nav-item
+                            a.nav-link(href='/t2') T2
+                    if role == 'Administrator'
+                        a.btn.btn-secondary(href='/new_user') Add User
+        #content.offset-1.col-10
             block content
-
-          hr
-          footer
-            p BLCL Workflow Management - Anders Leung
-
-    script(type="text/javascript" src='/js/bootstrap/bootstrap.min.js')
-    script(type="text/javascript" src='/js/bootstrap-formhelpers.min.js')
-    script(type="text/javascript" src='/js/clickable_rows.js')
