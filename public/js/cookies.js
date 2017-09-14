@@ -9,10 +9,11 @@ var CookieService = {
     },
 
     readCookie : function(req) {
-        if (req.session == null) {
-            return null;
+        var session = req.session;
+        if ('email' in session) {
+            return session;
         }
-        return req.session
+        return null;
     },
 
     eraseCookie : function(req) {
