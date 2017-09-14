@@ -4,7 +4,6 @@ var ClientService = require('../routes/api/client');
 var UserService = require('../routes/api/user');
 var CookieService = require('../public/js/cookies');
 
-var loggedInUser = null;
 var scroll = '';
 
 function dateToString(date) {
@@ -24,15 +23,14 @@ function cleanDates(clients) {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    if (loggedInUser) {
-        req.session.email = loggedInUser.email;
-        req.session.role = loggedInUser.role;
+    var cookie = CookieService.readCookie(req);
+    if (cookie) {
         ClientService.findClient({}, function (err, clients) {
             if (err) {
                 res.render('error');
             }
             clients = cleanDates(clients);
-            res.render('index', {title: 'T1 Monitoring', clients: clients, scroll: scroll, role: loggedInUser.role});
+            res.render('index', {title: 'T1 Monitoring', clients: clients, scroll: scroll, role: cookie.role});
         });
     } else {
         res.render('login', { title: 'BLCL' });
@@ -65,7 +63,7 @@ router.post('/', function(req, res) {
                 res.render('error');
             }
             if (user) {
-                loggedInUser = user;
+                CookieService.createCookie(req, user.email, user.role);
             }
             res.redirect('/');
         })
