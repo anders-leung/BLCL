@@ -38,7 +38,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res) {
-    if (loggedInUser) {
+    if (CookieService.readCookie(req)) {
         var data = req.body.checks.split(',');
         var pathName = data[0];
         var attr = data[1];
