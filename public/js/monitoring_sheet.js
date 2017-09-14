@@ -113,15 +113,4 @@ $(document).ready(function() {
         $(date).focus();
         $(this).toggleClass('date-edit');
     });
-
-    $('.check').each(function() {
-        var value = $(this).html();
-        if (value == "true") {
-            $(this).html('');
-            $(this).append("<i class='fa fa-check' aria-hidden='true''></i>")
-        } else {
-            $(this).html('');
-            $(this).append("<i class='fa fa-times' aria-hidden='true'></i>")
-        }
-    });
 });
