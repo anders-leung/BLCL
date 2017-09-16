@@ -1,9 +1,6 @@
 /**
  * Created by ander on 2017-09-12.
  */
-/**
- * Created by ander on 2017-05-07.
- */
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
@@ -20,7 +17,11 @@ var UserSchema = new Schema({
     initials: String,
     clients: [{
         type: Schema.Types.ObjectId,
-        ref: 'Client'
+        ref: 'Client',
+        status: {
+            done: false
+        },
+        unique: true
     }]
 });
 

@@ -8,10 +8,10 @@ var ClientSchema = new Schema({
     year: Number,
     interviewer: String,
     prSold: Boolean,
-    pickupDate: Date,
+    pickupDate: String,
     preparer: String,
     checker: String,
-    interviewDate: Date,
+    interviewDate: String,
     tel: {
         number: String,
         check: Boolean
@@ -52,19 +52,19 @@ var ClientSchema = new Schema({
     dependent1: {
         name: String,
         relationship: String,
-        dateOfBirth: Date,
+        dateOfBirth: String,
         sin: String
     },
     dependent2: {
         name: String,
         relationship: String,
-        dateOfBirth: Date,
+        dateOfBirth: String,
         sin: String
     },
     dependent3: {
         name: String,
         relationship: String,
-        dateOfBirth: Date,
+        dateOfBirth: String,
         sin: String
     },
     husband: {
@@ -72,7 +72,7 @@ var ClientSchema = new Schema({
         election: Boolean,
         firstName: String,
         lastName: String,
-        dateOfBirth: Date,
+        dateOfBirth: String,
         departure: String,
         sin: String,
         status: String,
@@ -148,7 +148,7 @@ var ClientSchema = new Schema({
         election: Boolean,
         firstName: String,
         lastName: String,
-        dateOfBirth: Date,
+        dateOfBirth: String,
         departure: String,
         sin: String,
         status: String,
@@ -283,7 +283,10 @@ var ClientSchema = new Schema({
     readyForPickup: false,
     pickupOk: false,
     pytReceived: false,
-    prcLastYear: false
+    outstandingInfo: String,
+    remarks: String,
+    callDate: String,
+    thingsToDo: String
 });
 
 module.exports = mongoose.model('Client', ClientSchema);
