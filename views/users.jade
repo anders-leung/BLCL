@@ -10,7 +10,7 @@ block content
     script(type='text/javascript' src='https://cdn.datatables.net/select/1.2.3/css/select.dataTables.min.js')
     script(type="text/javascript").
         var list = !{JSON.stringify(list)};
-    script(src='/js/users_list.js')
+    script(src='/js/users/users_list.js')
 
     ul.nav.nav-tabs
         - for (user in list)
