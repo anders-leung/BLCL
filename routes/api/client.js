@@ -36,10 +36,12 @@ function getPathName(client) {
 
 var ClientService = {
     saveClient : function(params, callback) {
+        console.log(params);
         var client = new Client(params);
         client.getFileName = getFileName(client);
         client.pathName = getPathName(client);
         client.save(function(err) {
+            console.log(err);
             callback(err);
         });
     },
@@ -55,7 +57,11 @@ var ClientService = {
     },
 
     updateClient : function(search, values, callback) {
-        Client.update(search, { $set: values }, callback);
+        Client.update(search, { $set: values }, function(err, client) {
+            if (err) {
+                callback(err);
+            }
+        });
     },
 
     findClients : function(ids, callback) {

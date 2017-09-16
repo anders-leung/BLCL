@@ -2,24 +2,7 @@ var express = require('express');
 var router = express.Router();
 var ClientService = require('../routes/api/client');
 var UserService = require('../routes/api/user');
-var CookieService = require('../public/js/cookies');
-
-var scroll = '';
-
-function dateToString(date) {
-    var month = date.getMonth();
-    var day = date.getDate();
-    var year = date.getFullYear();
-    return year + '-' + month + '-' + day;
-}
-
-function cleanDates(clients) {
-    for (var i = 0; i < clients.length; i++) {
-        clients[i].interviewDate = dateToString(clients[i].interviewDate);
-        clients[i].pickupDate = dateToString(clients[i].pickupDate);
-    }
-    return clients;
-}
+var CookieService = require('./utils/cookies');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -29,8 +12,7 @@ router.get('/', function(req, res, next) {
             if (err) {
                 res.render('error');
             }
-            clients = cleanDates(clients);
-            res.render('index', {title: 'T1 Monitoring', clients: clients, scroll: scroll, role: cookie.role});
+            res.render('index', {title: 'T1 Monitoring', clients: clients, role: cookie.role});
         });
     } else {
         res.render('login', { title: 'BLCL' });

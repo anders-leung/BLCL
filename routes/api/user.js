@@ -24,6 +24,14 @@ var UserService = {
                 callback(err, users);
             }
         });
+    },
+
+    addClient : function(search, params, callback) {
+        User.update(search, { $push: params }, function(err) {
+            if (err) {
+                callback(err);
+            }
+        });
     }
 };
 

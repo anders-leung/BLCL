@@ -25,10 +25,16 @@ router.get('/:client_name', function(req, res) {
 router.post('/', function(req, res) {
     ClientService.saveClient(req.body, function(err) {
         if (err) {
+            console.log(err);
             res.render('error');
         }
         res.redirect('/');
     });
+});
+
+router.post('/:client_name', function(req, res) {
+    var client_name = req.params.client_name;
+    console.log(client_name);
 });
 
 module.exports = router;
