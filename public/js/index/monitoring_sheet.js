@@ -38,10 +38,12 @@ function setTable() {
 
     var table = $('table').DataTable({
         'paging': false,
-        'info': false,
         'select': true,
         'scrollX': true,
-        'scrollY': '60vh'
+        'scrollY': '55vh',
+        'language': {
+            'info': '_TOTAL_ clients'
+        }
     });
 
     // Apply the search
@@ -59,14 +61,26 @@ function setTable() {
 }
 
 function resetTable() {
-    $('table').dataTable().destroy();
+    $('table').DataTable().destroy();
     setTable();
 }
 
 $(document).ready(function() {
     var socket = io();
 
+    socket.on('done preparing', preparerEvent);
     socket.on('monitoring sheet update', updateEvent);
+
+    function preparerEvent(data) {
+        var row = $('td').filter(function() {
+            return $(this).html() == data.phone_number;
+        }).closest('tr');
+
+        var cell = $(row).find('td:nth-child(20)');
+        $(cell).html(data.value);
+        var table = $('table').DataTable();
+        table.cell($(cell)).data(data.value);
+    }
 
     function updateEvent(data) {
         updateHtml(data.row, data.column, data.value, data.type);
@@ -75,6 +89,11 @@ $(document).ready(function() {
     function updateHtml(row, column, value, type, emit) {
         var rowHtml = $('tbody tr').eq(row);
         var cell = $(rowHtml).find('td:nth-child(' + column + ')');
+
+        $(cell).on('click', showInput);
+
+        var table = $('table').DataTable();
+
         if (typeof(value) === 'boolean') {
             var i = $(cell).find('i');
             i.toggleClass('fa-check');
@@ -86,6 +105,7 @@ $(document).ready(function() {
                 $(cell).toggleClass('edit)');
             }
             cell.html(value);
+            table.cell($(cell)).data(value);
         }
 
         if (!emit) { return; }
@@ -103,11 +123,9 @@ $(document).ready(function() {
     }
 
     function assignJobs() {
-        console.log("assigning jobs");
         $('tbody tr').each(function() {
             var phone_number = $(this).find('td:nth-child(' + 2 + ')').html();
             var preparer = $(this).find('td:nth-child(' + 19 + ')').html();
-
             socket.emit('assigning jobs', {
                 phone_number: phone_number,
                 preparer: preparer
@@ -136,16 +154,21 @@ $(document).ready(function() {
         updateHtml(row, column + 1, value, null, true);
     });
 
-    $('.edit').click(function(e) {
+    function showInput(e) {
+        var cell = e.target;
         var value = $(this).html();
-        var input = $("<input class='form-control' type='text' value='" + value + "'>");
+        var input = $("<input type='text' value='" + value + "'>");
         $(this).html(input);
         $(this).toggleClass('edit');
         $(input).focus();
         var length = $(input).val().length;
         var target = e.target.firstChild;
         target.setSelectionRange(length, length);
-    });
+
+        $(cell).off('click', showInput);
+    }
+
+    $('.edit').on('click', showInput);
 
     $('.edit, .date-edit').keypress(function(e) {
         if (e.which == 13) {
@@ -163,7 +186,7 @@ $(document).ready(function() {
 
     $('.date-edit').click(function(e) {
         var value = $(this).html();
-        var date = $("<input class='form-control' type='date' value='" + value + "'>");
+        var date = $("<input type='date' value='" + value + "'>");
         $(this).html(date);
         $(date).focus();
         $(this).toggleClass('date-edit');

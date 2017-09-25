@@ -14,6 +14,7 @@ $(document).ready(function() {
         if (i == 0) {
             $(this).addClass('in');
             $(this).addClass('active');
+            return;
         }
     });
 

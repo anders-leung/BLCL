@@ -18,6 +18,14 @@ var CookieService = {
 
     eraseCookie : function(req) {
         req.session = null;
+    },
+
+    isLoggedIn : function(req, res, next) {
+        if (CookieService.readCookie(req)) {
+            next();
+        } else {
+            res.redirect('/login');
+        }
     }
 };
 

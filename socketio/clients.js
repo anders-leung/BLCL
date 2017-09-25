@@ -1,7 +1,7 @@
 /**
  * Created by ander on 2017-09-18.
  */
-var ClientService = require('../routes/api/client');
+var ClientService = require('../modules/client');
 
 var ClientsSockets = {
     donePreparing : function(socket) {
@@ -10,7 +10,6 @@ var ClientsSockets = {
             var search = {};
             search['tel.number'] = data.phone_number;
             var update = {};
-            console.log(data.value);
             update['preparerDone'] = data.value;
             ClientService.updateClient(search, update);
         });

@@ -3,14 +3,16 @@
  */
 var express = require('express');
 var router = express.Router();
-var ClientService = require('./api/client');
+
+var CookieService = require('./utils/cookies');
+var ClientService = require('./../modules/client');
 
 /* GET home page. */
-router.get('/', function(req, res) {
+router.get('/', CookieService.isLoggedIn, function(req, res) {
     res.render('client', { title: 'T1 Interview' });
 });
 
-router.get('/:client_name', function(req, res) {
+router.get('/:client_name', CookieService.isLoggedIn, function(req, res) {
     var client_name = req.params.client_name;
 
     var query = {

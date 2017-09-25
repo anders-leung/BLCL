@@ -15,7 +15,7 @@ block content
     ul.nav.nav-tabs
         - for (user in list)
             li.nav-item
-                a.nav-link(data-toggle='tab' href=user) #{user}
+                a.nav-link(data-toggle='tab' href='#' + user) #{user}
 
     #table.tab-content(style='border-top: 0')
         - for (user in list)

@@ -278,7 +278,10 @@ var ClientSchema = new Schema({
     },
     pathName: String,
     pickedUp: false,
-    preparerDone: false,
+    preparerDone: {
+        type: String,
+        enum: [ '', 'WIP', 'OK' ]
+    },
     checkerDone: false,
     readyForPickup: false,
     pickupOk: false,

@@ -2,10 +2,19 @@
  * Created by ander on 2017-09-12.
  */
 
-var User = require('../../models/User');
+var User = require('../models/User');
 
 var UserService = {
-    findUser : function(params, callback) {
+    createUser : function(params, callback) {
+        var user = new User(params);
+        user.save(function(err) {
+            if (err) {
+                callback(err);
+            }
+        });
+    },
+
+    findOneUser : function(params, callback) {
         User.findOne(params).lean().exec(function(err, user) {
             if (err) {
                 callback(err);
@@ -22,16 +31,6 @@ var UserService = {
             }
             else {
                 callback(err, users);
-            }
-        });
-    },
-
-    addClient : function(search, params, callback) {
-        User.update(search, { $push: params }, function(err) {
-            if (err) {
-                callback(err);
-            } else {
-                callback();
             }
         });
     }

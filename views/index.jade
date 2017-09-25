@@ -6,10 +6,10 @@ block content
     script(type='text/javascript', src='https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js')
     script(type='text/javascript', src='https://cdn.datatables.net/select/1.2.3/css/select.dataTables.min.js')
     script(type="text/javascript", src='/js/jquery.floatThead.js')
-    script(type="text/javascript", src='/socket.io/socket.io.js')
     script(type="text/javascript", src='/js/index/monitoring_sheet.js')
 
-    button#assignJobs.pull-right.btn.btn-success Assign jobs
+    if role == 'Administrator'
+        button#assignJobs.pull-right.btn.btn-success Assign jobs
     br
     br
     .row
@@ -99,7 +99,7 @@ block content
                             td.date.text-nowrap #{client.pickupDate}
                             td #{client.interviewer}
                             td.text-nowrap.edit #{client.preparer}
-                            td.check.toggle #{client.preparerDone}
+                            td #{client.preparerDone}
                             td #{client.checker}
                             td.check.toggle #{client.checkerDone}
                             td.text-nowrap.edit #{client.outstandingInfo}

@@ -1,8 +1,9 @@
 /**
  * Created by ander on 2017-09-15.
  */
-var ClientService = require('../routes/api/client');
-var UserService = require('../routes/api/user');
+var ClientService = require('../modules/client');
+var UserService = require('../modules/user');
+var AssignmentService = require('../modules/assignment');
 
 var IndexSockets = {
     monitorUpdate: function(socket) {
@@ -19,14 +20,27 @@ var IndexSockets = {
     jobAssignments : function(socket) {
         socket.on('assigning jobs', function(data) {
             socket.broadcast.emit('assigning jobs', data);
-            var search = {};
-            search['initials'] = data.preparer;
-            ClientService.findClient({ 'tel.number' : data.phone_number }, function(err, client) {
+
+            var clientSearch = {};
+            var userSearch = {};
+            clientSearch['tel.number'] = data.phone_number;
+            userSearch['initials'] = data.preparer;
+
+            ClientService.findClient(clientSearch, function(err, client) {
                 if (err) {
                     console.log(err);
                 } else {
-                    UserService.addClient(search, { 'clients' : client[0] }, function(err) {
-                        console.log(err);
+                    ClientService.updateClient(clientSearch, { preparer : data.preparer }, function(err) {
+                        if (err) {
+                            console.log(err);
+                        }
+                    });
+                    UserService.findOneUser(userSearch, function(err, user) {
+                        AssignmentService.createOrUpdateAssignment(user, client[0], function(err) {
+                            if (err) {
+                                console.log(err);
+                            }
+                        });
                     });
                 }
             });

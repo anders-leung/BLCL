@@ -2,7 +2,7 @@
  * Created by ander on 2017-06-02.
  */
 
-var Client = require('../../models/Client');
+var Client = require('../models/Client');
 
 function getFileName(client) {
     var clientName = '';
@@ -36,7 +36,6 @@ function getPathName(client) {
 
 var ClientService = {
     saveClient : function(params, callback) {
-        console.log(params);
         var client = new Client(params);
         client.getFileName = getFileName(client);
         client.pathName = getPathName(client);
@@ -63,7 +62,7 @@ var ClientService = {
         });
     },
 
-    findClients : function(ids, callback) {
+    findClientsWithIds : function(ids, callback) {
         Client.find({'_id' : { $in: ids }}).lean().exec(function(err, clients) {
             if (err) {
                 callback(err);

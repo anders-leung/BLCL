@@ -14,15 +14,7 @@ var UserSchema = new Schema({
         type: String,
         enum: ['Administrator', 'Employee']
     },
-    initials: String,
-    clients: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Client',
-        status: {
-            done: false
-        },
-        unique: true
-    }]
+    initials: String
 });
 
 module.exports = mongoose.model('User', UserSchema);
