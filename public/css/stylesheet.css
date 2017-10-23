@@ -37,9 +37,14 @@ label {
     background-color: #66afe9;
 }
 
+tfoot input {
+    width: 100%;
+}
+
 #content {
+    margin-left: 2%;
+    margin-right: 2%;
     padding-top: 2%;
-    padding-bottom: 2%;
 }
 
 #table {

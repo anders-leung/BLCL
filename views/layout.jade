@@ -6,10 +6,12 @@ html
         link(rel='stylesheet', href='/css/bootstrap/bootstrap.css')
         link(rel='stylesheet', href='/css/font-awesome/font-awesome.css')
         link(rel='stylesheet', href='/css/stylesheet.css')
+        link(rel='stylesheet', href='/css/datatables/datatables.min.css')
         script(type="text/javascript", src='/js/jquery/jquery-3.1.1.min.js')
         script(type="text/javascript", src='/js/tether/tether.js')
         script(type='text/javascript', src='/js/bootstrap/bootstrap.js')
         script(type="text/javascript", src='/js/bootstrap-formhelpers.min.js')
+        script(type="text/javascript", src='/js/datatables/datatables.min.js')
         script(type='text/javascript', src='/js/utils/checkmarks.js')
         script(type="text/javascript", src='/socket.io/socket.io.js')
 
@@ -25,7 +27,8 @@ html
                             a.nav-link(href='/') T1
                         li.nav-item
                             a.nav-link(href='/t2') T2
+                    a.btn.btn-secondary(href='/clients') My Clients
                     if role == 'Administrator'
                         a.btn.btn-secondary(href='/users') Manage Users
-        #content.offset-1.col-10
+        #content
             block content

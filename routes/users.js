@@ -12,7 +12,7 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
     UserService.getAllUsers(function(err, users) {
         var dict = {};
         async.each(users, function(user, callback) {
-            AssignmentService.findAssignmentByUser(user, function(err, assignments) {
+            AssignmentService.findIncompleteAssignmentsByUser(user, function(err, assignments) {
                 if (err) {
                     callback(err);
                 } else {
@@ -24,8 +24,6 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
                         if (err) {
                             callback(err);
                         } else {
-                            console.log(user.initials);
-                            console.log(clients);
                             dict[user.initials] = clients;
                             callback();
                         }
@@ -33,7 +31,14 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
                 }
             });
         }, function() {
-            res.render('users', { role: req.session.role, list: dict });
+            var list = [];
+            Object.keys(dict).sort().forEach(function(key) {
+                var entry = [key];
+                entry.push(dict[key]);
+                list.push(entry);
+            });
+
+            res.render('users', { role: req.session.role, list: list });
         });
     });
 });

@@ -12,7 +12,7 @@ var AssignmentService = require('./../modules/assignment');
 router.get('/', CookieService.isLoggedIn, function(req, res) {
 
     var query = {
-        'email' : req.session.email
+        'initials' : req.session.initials
     };
 
     UserService.findOneUser(query, function(err, user) {
@@ -25,7 +25,7 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
                 if (err) {
                     res.render('error');
                 }
-                res.render('clients', { clients : clients, statuses : ClientService.getStatuses()});
+                res.render('clients', { clients : clients, initials: user.initials, statuses : ClientService.getStatuses()});
             });
         });
     });

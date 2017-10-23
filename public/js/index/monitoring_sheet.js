@@ -31,8 +31,15 @@ function getField(column) {
 }
 
 function setTable() {
+    $('.tab-pane').each(function(i) {
+        if (i == 0) {
+            $(this).addClass('in');
+            $(this).addClass('active');
+            return;
+        }
+    });
+
     $('table tfoot th').each( function () {
-        var title = $(this).text();
         $(this).html( '<input type="text" />' );
     } );
 
@@ -40,10 +47,7 @@ function setTable() {
         'paging': false,
         'select': true,
         'scrollX': true,
-        'scrollY': '55vh',
-        'language': {
-            'info': '_TOTAL_ clients'
-        }
+        'scrollY': '50vh'
     });
 
     // Apply the search
@@ -90,8 +94,6 @@ $(document).ready(function() {
         var rowHtml = $('tbody tr').eq(row);
         var cell = $(rowHtml).find('td:nth-child(' + column + ')');
 
-        $(cell).on('click', showInput);
-
         var table = $('table').DataTable();
 
         if (typeof(value) === 'boolean') {
@@ -100,12 +102,13 @@ $(document).ready(function() {
             i.toggleClass('fa-times');
         } else {
             if (type == 'date') {
-                $(cell).toggleClass('date-edit');
+                $(cell).on('click', showDateInput);
             } else if (type == 'edit') {
-                $(cell).toggleClass('edit)');
+                $(cell).on('click', showInput);
             }
             cell.html(value);
             table.cell($(cell)).data(value);
+            resetTable();
         }
 
         if (!emit) { return; }
@@ -184,11 +187,16 @@ $(document).ready(function() {
         }
     });
 
-    $('.date-edit').click(function(e) {
+    function showDateInput(e) {
+        var cell = e.target;
         var value = $(this).html();
         var date = $("<input type='date' value='" + value + "'>");
         $(this).html(date);
         $(date).focus();
         $(this).toggleClass('date-edit');
-    });
+
+        $(cell).off('click', showDateInput);
+    }
+
+    $('.date-edit').on('click', showDateInput);
 });

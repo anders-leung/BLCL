@@ -3,11 +3,17 @@
  */
 var Assignment = require('../models/Assignment');
 
-var dateToString = require('utils/dateToString');
+var dateToString = require('./utils/dateToString');
 
 var AssignmentService = {
     findAssignmentByUser: function(user, callback) {
-        Assignment.find({ user : user._id }, function(err, assignments) {
+        Assignment.find({ user : user._id }).sort('date').exec(function(err, assignments) {
+            callback(err, assignments);
+        });
+    },
+
+    findIncompleteAssignmentsByUser: function(user, callback) {
+        Assignment.find({ user: user._id, done: null }).sort('date').exec(function(err, assignments) {
             callback(err, assignments);
         });
     },
@@ -28,9 +34,9 @@ var AssignmentService = {
             date: date,
             user: user
         };
-        var options = { upsert : true };
-        Assignment.findOneAndUpdate(query, update, options, function(err) {
-            callback(err);
+        var options = { upsert : true, new : true };
+        Assignment.findOneAndUpdate(query, update, options, function(err, assignment) {
+            callback(err, assignment);
         });
     }
 };

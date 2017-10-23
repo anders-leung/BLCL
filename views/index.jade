@@ -1,111 +1,114 @@
 extends layout
 
 block content
-    link(rel='stylesheet', href='https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css')
-    link(rel='stylesheet', href='https://cdn.datatables.net/select/1.2.3/css/select.dataTables.min.css')
-    script(type='text/javascript', src='https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js')
-    script(type='text/javascript', src='https://cdn.datatables.net/select/1.2.3/css/select.dataTables.min.js')
     script(type="text/javascript", src='/js/jquery.floatThead.js')
     script(type="text/javascript", src='/js/index/monitoring_sheet.js')
 
-    if role == 'Administrator'
-        button#assignJobs.pull-right.btn.btn-success Assign jobs
-    br
-    br
-    .row
-        #table.col-12
-            table.cell-border
-                thead
-                    tr
-                        th Interview Date
-                        th Phone Number
-                        th Cell
-                        th Email
-                        th Slip
-                        th Self Employed
-                        th T1135
-                        th Rental
-                        th Stock
-                        th New
-                        th Picked Up
-                        th Husband Last Name
-                        th Husband First Name
-                        th Wife Last Name
-                        th Wife First Name
-                        th Group
-                        th Pickup Date
-                        th Interviewer
-                        th Preparer
-                        th Preparer Done
-                        th Checker
-                        th Checker Done
-                        th Outstanding Info
-                        th Remarks
-                        th Ready for Pickup
-                        th Call Date
-                        th Pickup OK
-                        th PYT Received
-                        th Things to do After Pickup
-                tfoot
-                    tr
-                        th Interview Date
-                        th Phone Number
-                        th Cell
-                        th Email
-                        th Slip
-                        th Self Employed
-                        th T1135
-                        th Rental
-                        th Stock
-                        th New
-                        th Picked Up
-                        th Husband Last Name
-                        th Husband First Name
-                        th Wife Last Name
-                        th Wife First Name
-                        th Group
-                        th Pickup Date
-                        th Interviewer
-                        th Preparer
-                        th Preparer Done
-                        th Checker
-                        th Checker Done
-                        th Outstanding Info
-                        th Remarks
-                        th Ready for Pickup
-                        th Call Date
-                        th Pickup OK
-                        th PYT Received
-                        th Things to do After Pickup
-                tbody
-                    each client in clients
-                        tr.clickable-row(data-href="/client/#{client.pathName}")
-                            td.date.text-nowrap #{client.interviewDate}
-                            td.text-nowrap #{client.tel.number}
-                            td.text-nowrap #{client.cell.number}
-                            td.text-nowrap #{client.email.value}
-                            td.check #{client.slips}
-                            td.check #{client.selfEmployed}
-                            td #{client.t1135}
-                            td.check #{client.rental}
-                            td.check #{client.stocks}
-                            td.check #{client.new}
-                            td.check.toggle #{client.pickedUp}
-                            td #{client.husband.lastName}
-                            td #{client.husband.firstName}
-                            td #{client.wife.lastName}
-                            td #{client.wife.firstName}
-                            td.text-nowrap #{client.group}
-                            td.date.text-nowrap #{client.pickupDate}
-                            td #{client.interviewer}
-                            td.text-nowrap.edit #{client.preparer}
-                            td #{client.preparerDone}
-                            td #{client.checker}
-                            td.check.toggle #{client.checkerDone}
-                            td.text-nowrap.edit #{client.outstandingInfo}
-                            td.text-nowrap.edit #{client.remarks}
-                            td.check.toggle #{client.readyForPickup}
-                            td.date.text-nowrap.date-edit #{client.callDate}
-                            td.check.toggle #{client.pickupOk}
-                            td.check.toggle #{client.pytReceived}
-                            td.text-nowrap #{client.thingsToDo}
+    ul.nav.nav-tabs
+        li.nav-item
+            a.nav-link.active(data-toggle='tab' href='#normal') Normal
+        li.nav-item
+            a.nav-link(data-toggle='tab' href='#packed') Packed
+        li.nav-item
+            a.nav-link(data-toggle='tab' href='#emailed') Emailed
+        li.nav-item
+            a.nav-link(data-toggle='tab' href='#pickedUp') Picked Up
+
+    #table.col-12.tab-content(style='border-top: 0')
+        - for (var i = 0; i < clients.length; i++)
+            div(id=clients[i][0]).tab-pane
+                table.cell-border
+                    thead
+                        tr
+                            th Interview Date
+                            th Phone Number
+                            th Cell
+                            th Email
+                            th Slip
+                            th Self Employed
+                            th T1135
+                            th Rental
+                            th Stock
+                            th New
+                            th Picked Up
+                            th Husband Last Name
+                            th Husband First Name
+                            th Wife Last Name
+                            th Wife First Name
+                            th Group
+                            th Pickup Date
+                            th Interviewer
+                            th Preparer
+                            th Preparer Done
+                            th Checker
+                            th Checker Done
+                            th Outstanding Info
+                            th Remarks
+                            th Ready for Pickup
+                            th Call Date
+                            th Pickup OK
+                            th PYT Received
+                            th Things to do After Pickup
+                    tfoot
+                        tr
+                            th Interview Date
+                            th Phone Number
+                            th Cell
+                            th Email
+                            th Slip
+                            th Self Employed
+                            th T1135
+                            th Rental
+                            th Stock
+                            th New
+                            th Picked Up
+                            th Husband Last Name
+                            th Husband First Name
+                            th Wife Last Name
+                            th Wife First Name
+                            th Group
+                            th Pickup Date
+                            th Interviewer
+                            th Preparer
+                            th Preparer Done
+                            th Checker
+                            th Checker Done
+                            th Outstanding Info
+                            th Remarks
+                            th Ready for Pickup
+                            th Call Date
+                            th Pickup OK
+                            th PYT Received
+                            th Things to do After Pickup
+                    tbody
+                        each client in clients[i][1]
+                            tr.clickable-row(data-href="/client/" + client.pathName)
+                                td.date.text-nowrap #{client.interviewDate}
+                                td.text-nowrap #{client.tel.number}
+                                td.text-nowrap #{client.cell.number}
+                                td.text-nowrap #{client.email.value}
+                                td.check #{client.slips}
+                                td.check #{client.selfEmployed}
+                                td #{client.t1135}
+                                td.check #{client.rental}
+                                td.check #{client.stocks}
+                                td.check #{client.new}
+                                td.check.toggle #{client.pickedUp}
+                                td.text-nowrap #{client.husband.lastName}
+                                td.text-nowrap #{client.husband.firstName}
+                                td.text-nowrap #{client.wife.lastName}
+                                td.text-nowrap #{client.wife.firstName}
+                                td.text-nowrap #{client.group}
+                                td.date.text-nowrap #{client.pickupDate}
+                                td #{client.interviewer}
+                                td.text-nowrap.edit #{client.preparer}
+                                td #{client.preparerDone}
+                                td #{client.checker}
+                                td.check.toggle #{client.checkerDone}
+                                td.text-nowrap.edit #{client.outstandingInfo}
+                                td.text-nowrap.edit #{client.remarks}
+                                td.check.toggle #{client.readyForPickup}
+                                td.date.text-nowrap.date-edit #{client.callDate}
+                                td.check.toggle #{client.pickupOk}
+                                td.text-nowrap #{client.pytReceived}
+                                td.text-nowrap #{client.thingsToDo}

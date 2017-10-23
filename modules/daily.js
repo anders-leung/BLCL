@@ -9,10 +9,19 @@ var DailyService = {
     createOrUpdateDaily : function(assignment, callback) {
         var date = dateToString(new Date());
         var query = { date : date };
-        var update = { $push : assignment };
-        var options = { upsert : true };
-        Daily.findOneAndUpdate(query, update, options, function(err) {
-            callback(err);
+        Daily.findOne(query, function(err, daily) {
+            if (err) {
+                callback(err);
+            } else if (daily) {
+                daily.assignments.push(assignment);
+            } else {
+                daily = new Daily();
+                daily.date = date;
+                daily.assignments = [assignment];
+            }
+            daily.save(function(err) {
+                callback(err);
+            });
         });
     },
 

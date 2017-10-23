@@ -5,291 +5,313 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var ClientSchema = new Schema({
-    year: Number,
-    interviewer: String,
-    prSold: Boolean,
-    pickupDate: String,
-    preparer: String,
-    checker: String,
-    interviewDate: String,
+    year: { type: Number, default: 0 },
+    interviewer: { type: String, default: "" },
+    prSold: { type: Boolean, default: false },
+    pickupDate: { type: String, default: "" },
+    preparer: { type: String, default: "" },
+    checker: { type: String, default: "" },
+    interviewDate: { type: String, default: "" },
     tel: {
-        number: String,
-        check: Boolean
+        number: { type: String, default: "" },
+        check: { type: Boolean, default: false }
     },
     cell: {
-        number: String,
-        check: Boolean
+        number: { type: String, default: "" },
+        check: { type: Boolean, default: false }
     },
     email: {
-        value: String,
-        check: Boolean
+        value: { type: String, default: "" },
+        check: { type: Boolean, default: false }
     },
     t1135: {
         type: String,
-        enum: ['Simple', 'Complicated']
+        enum: [ '', 'SIMPLE', 'COMPLICATED' ],
+        default: ''
     },
-    stocks: Boolean,
-    t777: Boolean,
-    slips: Boolean,
-    selfEmployed: Boolean,
-    rental: Boolean,
-    new: Boolean,
-    group: String,
-    numberOfReturns: Number,
+    stocks: { type: Boolean, default: false },
+    t777: { type: Boolean, default: false },
+    slips: { type: Boolean, default: false },
+    selfEmployed: { type: Boolean, default: false },
+    rental: { type: Boolean, default: false },
+    new: { type: Boolean, default: false },
+    group: { type: String, default: "" },
+    numberOfReturns: { type: Number, default: 0 },
     method: {
         type: String,
-        enum: ['Drop', 'Email']
+        enum: [ '', 'DROP', 'EMAIL' ],
+        default: ''
     },
     address: {
-        apartment: String,
-        street: String,
-        city: String,
-        province: String,
-        country: String,
-        postalCode: String,
-        check: Boolean
+        apartment: { type: String, default: "" },
+        street: { type: String, default: "" },
+        city: { type: String, default: "" },
+        province: { type: String, default: "" },
+        postalCode: { type: String, default: "" },
+        check: { type: Boolean, default: false }
     },
     dependent1: {
-        name: String,
-        relationship: String,
-        dateOfBirth: String,
-        sin: String
+        name: { type: String, default: "" },
+        relationship: { type: String, default: "" },
+        dateOfBirth: { type: String, default: "" },
+        sin: { type: String, default: "" }
     },
     dependent2: {
-        name: String,
-        relationship: String,
-        dateOfBirth: String,
-        sin: String
+        name: { type: String, default: "" },
+        relationship: { type: String, default: "" },
+        dateOfBirth: { type: String, default: "" },
+        sin: { type: String, default: "" }
     },
     dependent3: {
-        name: String,
-        relationship: String,
-        dateOfBirth: String,
-        sin: String
+        name: { type: String, default: "" },
+        relationship: { type: String, default: "" },
+        dateOfBirth: { type: String, default: "" },
+        sin: { type: String, default: "" }
     },
     husband: {
-        citizenship: Boolean,
-        election: Boolean,
-        firstName: String,
-        lastName: String,
-        dateOfBirth: String,
-        departure: String,
-        sin: String,
-        status: String,
-        noa: Boolean,
-        t4: Number,
+        citizenship: { type: Boolean, default: false },
+        election: { type: Boolean, default: false },
+        firstName: { type: String, default: "" },
+        lastName: { type: String, default: "" },
+        dateOfBirth: { type: String, default: "" },
+        departure: { type: String, default: "" },
+        sin: { type: String, default: "" },
+        status: { type: String, default: "" },
+        noa: { type: Boolean, default: false },
+        t4: { type: Number, default: 0 },
         t5: {
-            value: Number,
-            joint: Number
+            value: { type: Number, default: 0 },
+            joint: { type: Number, default: 0 }
         },
         otherIncome: {
-            value104: Number,
-            value130: Number
+            value104: { type: Number, default: 0 },
+            value130: { type: Number, default: 0 }
         },
         t5Other: {
-            value: Number,
-            joint: Number
+            value: { type: Number, default: 0 },
+            joint: { type: Number, default: 0 }
         },
         foreignIncome: {
-            div: Number,
-            empl: Number,
-            country: String
+            div: {
+                currency: { type: String, default: '' },
+                value: { type: Number, default: 0 }
+            },
+            empl: {
+                currency: { type: String, default: '' },
+                value: { type: Number, default: 0 }
+            },
+            country: { type: String, default: "" }
         },
         t3: {
-            value: Number,
-            joint: Number
+            value: { type: Number, default: 0 },
+            joint: { type: Number, default: 0 }
         },
-        t5007: Number,
-        t4A: Number,
+        t5007: { type: Number, default: 0 },
+        t4A: { type: Number, default: 0 },
         t5008: {
-            value: Number,
-            joint: Number
+            value: { type: Number, default: 0 },
+            joint: { type: Number, default: 0 }
         },
-        t4AOAS: Number,
+        t4AOAS: { type: Number, default: 0 },
         t5013: {
-            value: Number,
-            joint: Number
+            value: { type: Number, default: 0 },
+            joint: { type: Number, default: 0 }
         },
         t4AP: {
-            value: Number,
-            split: Boolean
+            value: { type: Number, default: 0 },
+            split: { type: Boolean, default: false }
         },
         rental: {
-            value: Number,
-            joint: Number,
-            gstReturn: Boolean
+            value: { type: Number, default: 0 },
+            joint: { type: Number, default: 0 },
+            gstReturn: { type: Boolean, default: false }
         },
-        t4E: Number,
+        t4E: { type: Number, default: 0 },
         selfEmployed: {
-            value: Number,
-            joint: Number,
-            gstReturn: Boolean
+            value: { type: Number, default: 0 },
+            joint: { type: Number, default: 0 },
+            gstReturn: { type: Boolean, default: false }
         },
-        t4RSP: Number,
-        supportReceived: Number,
-        uccb: Boolean,
+        t4RSP: { type: Number, default: 0 },
+        supportReceived: { type: Number, default: 0 },
+        uccb: { type: Boolean, default: false },
         rrsp: {
-            value: Number,
-            spouse: Number
+            value: { type: Number, default: 0 },
+            spouse: { type: Number, default: 0 }
         },
-        value777: Number,
-        hbp: Number,
-        supportMade: Number,
-        moving: Boolean,
-        unionDue: Boolean,
-        disabilitySupports: Boolean,
-        installation: Number,
-        tuition: Boolean,
-        studentLoan: Boolean
+        value777: { type: Number, default: 0 },
+        hbp: { type: Number, default: 0 },
+        supportMade: { type: Number, default: 0 },
+        moving: { type: Boolean, default: false },
+        unionDue: { type: Boolean, default: false },
+        disabilitySupports: { type: Boolean, default: false },
+        installation: { type: Number, default: 0 },
+        tuition: { type: Boolean, default: false },
+        studentLoan: { type: Boolean, default: false }
     },
     wife: {
 
-        citizenship: Boolean,
-        election: Boolean,
-        firstName: String,
-        lastName: String,
-        dateOfBirth: String,
-        departure: String,
-        sin: String,
-        status: String,
-        noa: Boolean,
-        t4: Number,
+        citizenship: { type: Boolean, default: false },
+        election: { type: Boolean, default: false },
+        firstName: { type: String, default: "" },
+        lastName: { type: String, default: "" },
+        dateOfBirth: { type: String, default: "" },
+        departure: { type: String, default: "" },
+        sin: { type: String, default: "" },
+        status: { type: String, default: "" },
+        noa: { type: Boolean, default: false },
+        t4: { type: Number, default: 0 },
         t5: {
-            value: Number,
-            joint: Number
+            value: { type: Number, default: 0 },
+            joint: { type: Number, default: 0 }
         },
         otherIncome: {
-            value104: Number,
-            value130: Number
+            value104: { type: Number, default: 0 },
+            value130: { type: Number, default: 0 }
         },
         t5Other: {
-            value: Number,
-            joint: Number
+            value: { type: Number, default: 0 },
+            joint: { type: Number, default: 0 }
         },
         foreignIncome: {
-            div: Number,
-            empl: Number,
-            country: String
+            div: {
+                currency: { type: String, default: '' },
+                value: { type: Number, default: 0 }
+            },
+            empl: {
+                currency: { type: String, default: '' },
+                value: { type: Number, default: 0 }
+            },
+            country: { type: String, default: "" }
         },
         t3: {
-            value: Number,
-            joint: Number
+            value: { type: Number, default: 0 },
+            joint: { type: Number, default: 0 }
         },
-        t5007: Number,
-        t4A: Number,
+        t5007: { type: Number, default: 0 },
+        t4A: { type: Number, default: 0 },
         t5008: {
-            value: Number,
-            joint: Number
+            value: { type: Number, default: 0 },
+            joint: { type: Number, default: 0 }
         },
-        t4AOAS: Number,
+        t4AOAS: { type: Number, default: 0 },
         t5013: {
-            value: Number,
-            joint: Number
+            value: { type: Number, default: 0 },
+            joint: { type: Number, default: 0 }
         },
         t4AP: {
-            value: Number,
-            split: Boolean
+            value: { type: Number, default: 0 },
+            split: { type: Boolean, default: false }
         },
         rental: {
-            value: Number,
-            joint: Number,
-            gstReturn: Boolean
+            value: { type: Number, default: 0 },
+            joint: { type: Number, default: 0 },
+            gstReturn: { type: Boolean, default: false }
         },
-        t4E: Number,
+        t4E: { type: Number, default: 0 },
         selfEmployed: {
-            value: Number,
-            joint: Number,
-            gstReturn: Boolean
+            value: { type: Number, default: 0 },
+            joint: { type: Number, default: 0 },
+            gstReturn: { type: Boolean, default: false }
         },
-        t4RSP: Number,
-        supportReceived: Number,
-        uccb: Boolean,
+        t4RSP: { type: Number, default: 0 },
+        supportReceived: { type: Number, default: 0 },
+        uccb: { type: Boolean, default: false },
         rrsp: {
-            value: Number,
-            spouse: Number
+            value: { type: Number, default: 0 },
+            spouse: { type: Number, default: 0 }
         },
-        value777: Number,
-        hbp: Number,
-        supportMade: Number,
-        moving: Boolean,
-        unionDue: Boolean,
-        disabilitySupports: Boolean,
-        installation: Number,
-        tuition: Boolean,
-        studentLoan: Boolean
+        value777: { type: Boolean, default: false },
+        hbp: { type: Number, default: 0 },
+        supportMade: { type: Number, default: 0 },
+        moving: { type: Boolean, default: false },
+        unionDue: { type: Boolean, default: false },
+        disabilitySupports: { type: Boolean, default: false },
+        installation: { type: Number, default: 0 },
+        tuition: { type: Boolean, default: false },
+        studentLoan: { type: Boolean, default: false }
     },
-    carryingCharges: Number,
+    carryingCharges: { type: Boolean, default: false },
     childcare: {
-        name: String,
-        amount: Number,
-        sin: String
+        name: { type: String, default: "" },
+        amount: { type: Number, default: 0 },
+        sin: { type: String, default: "" }
     },
     caregiver1: {
-        name: String,
-        amount: Number
+        name: { type: String, default: "" },
+        amount: { type: Number, default: 0 }
     },
     caregiver2: {
-        name: String,
-        amount: Number
+        name: { type: String, default: "" },
+        amount: { type: Number, default: 0 }
     },
     dependentTuition1: {
-        name: String,
-        amount: Number
+        name: { type: String, default: "" },
+        amount: { type: Number, default: 0 }
     },
     dependentTuition2: {
-        name: String,
-        amount: Number
+        name: { type: String, default: "" },
+        amount: { type: Number, default: 0 }
     },
+    /*
     art: {
-        amount: Number,
-        check: Boolean
+        amount: { type: Number, default: 0 },
+        check: { type: Boolean, default: false }
     },
     fitness: {
-        amount: Number,
-        check: Boolean
+        amount: { type: Number, default: 0 },
+        check: { type: Boolean, default: false }
     },
-    publicTransit: Boolean,
-    donation: Boolean,
-    medExp: Boolean,
-    hbtc: Boolean,
-    disability: Boolean,
-    t2201: Boolean,
-    equiv: Boolean,
+    publicTransit: { type: Boolean, default: false },
+    */
+    donation: { type: Boolean, default: false },
+    medExp: { type: Boolean, default: false },
+    hbtc: { type: Boolean, default: false },
+    disability: { type: Boolean, default: false },
+    t2201: { type: Boolean, default: false },
+    equiv: { type: Boolean, default: false },
     notes: {
-        one: String,
-        two: String,
-        three: String
+        one: { type: String, default: "" },
+        two: { type: String, default: "" },
+        three: { type: String, default: "" }
     },
     comments: {
-        one: String,
-        two: String,
-        three: String
+        one: { type: String, default: "" },
+        two: { type: String, default: "" },
+        three: { type: String, default: "" }
     },
-    witb: Boolean,
-    ctb: Boolean,
-    gst: Boolean,
-    prov: Boolean,
-    msp: Boolean,
-    consultFee: Number,
-    price: Number,
+    witb: { type: Boolean, default: false },
+    ctb: { type: Boolean, default: false },
+    gst: { type: Boolean, default: false },
+    prov: { type: Boolean, default: false },
+    msp: { type: Boolean, default: false },
+    consultFee: { type: Number, default: 0 },
+    price: { type: Number, default: 0 },
     fileName: {
         type: String,
         unique: true
     },
-    pathName: String,
-    pickedUp: false,
+    pathName: { type: String, default: "" },
+    pickedUp: { type: Boolean, default: false },
     preparerDone: {
         type: String,
-        enum: [ '', 'WIP', 'OK' ]
+        enum: [ '', 'WIP', 'OK' ],
+        default: ''
     },
-    checkerDone: false,
-    readyForPickup: false,
-    pickupOk: false,
-    pytReceived: false,
-    outstandingInfo: String,
-    remarks: String,
-    callDate: String,
-    thingsToDo: String
+    checkerDone: { type: Boolean, default: false },
+    readyForPickup: { type: Boolean, default: false },
+    pickupOk: { type: Boolean, default: false },
+    pytReceived: {
+        type: String,
+        enum: [ '', 'CA', 'CK', 'DD', 'ETR' ],
+        default: ''
+    },
+    outstandingInfo: { type: String, default: "" },
+    remarks: { type: String, default: "" },
+    callDate: { type: String, default: "" },
+    thingsToDo: { type: String, default: "" },
+    emailed: { type: String, default: "" },
+    packed: { type: Boolean, default: false }
 });
 
 module.exports = mongoose.model('Client', ClientSchema);

@@ -22,12 +22,12 @@ app.set('port', port);
 var server = http.createServer(app);
 var io = require('socket.io')(server);
 var IndexSocket = require('../socketio/index');
+var ClientsSocket = require('../socketio/clients');
 
 io.on('connection', function (socket) {
-    socket.emit('news', { hello: 'world' });
     IndexSocket.monitorUpdate(socket);
     IndexSocket.jobAssignments(socket);
-
+    ClientsSocket.donePreparing(socket);
 });
 
 /**

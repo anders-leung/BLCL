@@ -14,9 +14,11 @@ $(document).ready(function() {
 
         $('table').DataTable().cell($(cell)).data(value);
 
+        console.log(initials);
         var row = $(cell).closest('tr');
         var phone_number = $(row).find('td:nth-child(2)').html();
         socket.emit('done preparing', {
+            preparer: initials,
             phone_number: phone_number,
             value: value
         });
@@ -37,6 +39,8 @@ $(document).ready(function() {
         select += "</select>";
         select = $(select);
         $(cell).html(select);
+
+        $(select).focus();
 
         $(select).focusout(function() {
             updateHtml($(this).parent(), $(this).val());

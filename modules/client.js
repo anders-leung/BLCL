@@ -3,42 +3,13 @@
  */
 
 var Client = require('../models/Client');
-
-function getFileName(client) {
-    var clientName = '';
-
-    if (client.husband != null) {
-        clientName += client.husband.lastName + ', ' + client.husband.firstName;
-        if (client.wife != null) {
-            clientName += ' AND ';
-            clientName += client.wife.lastName + ', ' + client.wife.firstName;
-        }
-    } else {
-        clientName += client.wife.lastName + ', ' + client.wife.firstName;
-    }
-    return clientName.toLowerCase();
-}
-
-function getPathName(client) {
-    var clientName = '';
-
-    if (client.husband != null) {
-        clientName += client.husband.lastName + '-' + client.husband.firstName;
-        if (client.wife != null) {
-            clientName += '&';
-            clientName += client.wife.lastName + '-' + client.wife.firstName;
-        }
-    } else {
-        clientName += client.wife.lastName + '-' + client.wife.firstName;
-    }
-    return clientName.toLowerCase();
-}
+var clientNames = require('./utils/client');
 
 var ClientService = {
     saveClient : function(params, callback) {
         var client = new Client(params);
-        client.getFileName = getFileName(client);
-        client.pathName = getPathName(client);
+        client.fileName = clientNames.getFileName(client);
+        client.pathName = clientNames.getPathName(client);
         client.save(function(err) {
             callback(err);
         });
@@ -54,10 +25,48 @@ var ClientService = {
         });
     },
 
+    findClientsPickedupNotPaid : function(callback) {
+        var search = {};
+        search['pickedUp'] = true;
+        search['pytReceived'] = '';
+        Client.find(search).lean().exec(function(err, clients) {
+            callback(err, clients);
+        });
+    },
+
+    findClientsEmailedNotPaid : function(callback) {
+        var search = {};
+        search['emailed'] = { $ne : ''};
+        search['pytReceived'] = '';
+        Client.find(search).lean().exec(function(err, clients) {
+            callback(err, clients);
+        });
+    },
+
+    findClientsPacked : function(callback) {
+        var search = {};
+        search['packed'] = true;
+        search['pytReceived'] = '';
+        Client.find(search).lean().exec(function(err, clients) {
+            callback(err, clients);
+        });
+    },
+
+    findAllOtherClients : function(callback) {
+        var search = {};
+        search['packed'] = false;
+        search['pickedUp'] = false;
+        search['emailed'] = '';
+        search['pytReceived'] = '';
+        Client.find(search).lean().exec(function(err, clients) {
+            callback(err, clients);
+        });
+    },
+
     updateClient : function(search, values, callback) {
         Client.update(search, { $set: values }, function(err, client) {
             if (err) {
-                callback(err);
+                callback(err, client);
             }
         });
     },

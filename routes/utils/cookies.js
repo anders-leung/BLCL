@@ -3,14 +3,14 @@
  */
 
 var CookieService = {
-    createCookie : function(req, email, role) {
-        req.session.email = email;
+    createCookie : function(req, initials, role) {
+        req.session.initials = initials;
         req.session.role = role;
     },
 
     readCookie : function(req) {
         var session = req.session;
-        if ('email' in session) {
+        if ('initials' in session) {
             return session;
         }
         return null;

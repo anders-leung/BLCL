@@ -11,7 +11,7 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var login = require('./routes/login');
 var users = require('./routes/users');
-var excel = require('./modules/excel');
+var excel = require('./routes/excel');
 var client = require('./routes/client');
 var clients = require('./routes/clients');
 
@@ -64,5 +64,8 @@ app.use(function(err, req, res, next) {
 
 var setup = require('./routes/utils/setup');
 setup();
+
+var readFolder = require('./modules/read_excel');
+readFolder('C://Users//ander//Desktop//BLCL Files//Sheets');
 
 module.exports = app;

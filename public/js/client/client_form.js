@@ -114,8 +114,10 @@ $(document).ready(function(e) {
         $('#husband130').val(client.husband.otherIncome.value130);
         $('#husbandT5Other').val(client.husband.t5Other.value);
         $('#husbandT5OtherJoint').val(client.husband.t5Other.joint);
-        $('#husbandDiv').val(client.husband.foreignIncome.div);
-        $('#husbandEmpl').val(client.husband.foreignIncome.empl);
+        $('#husbandDivCurrency').val(client.husband.foreignIncome.div.currency);
+        $('#husbandDiv').val(client.husband.foreignIncome.div.value);
+        $('#husbandEmplCurrency').val(client.husband.foreignIncome.empl.currency);
+        $('#husbandEmpl').val(client.husband.foreignIncome.empl.value);
         $('#husbandCountry').val(client.husband.foreignIncome.country);
         $('#husbandT3').val(client.husband.t3.value);
         $('#husbandT3Joint').val(client.husband.t3.joint);
@@ -146,8 +148,10 @@ $(document).ready(function(e) {
         $('#wife130').val(client.wife.otherIncome.value130);
         $('#wifeT5Other').val(client.wife.t5Other.value);
         $('#wifeT5OtherJoint').val(client.wife.t5Other.joint);
-        $('#wifeDiv').val(client.wife.foreignIncome.div);
-        $('#wifeEmpl').val(client.wife.foreignIncome.empl);
+        $('#wifeDivCurrency').val(client.wife.foreignIncome.div.currency);
+        $('#wifeDiv').val(client.wife.foreignIncome.div.value);
+        $('#wifeEmplCurrency').val(client.wife.foreignIncome.empl.currency);
+        $('#wifeEmpl').val(client.wife.foreignIncome.empl.value);
         $('#wifeCountry').val(client.wife.foreignIncome.country);
         $('#wifeT3').val(client.wife.t3.value);
         $('#wifeT3Joint').val(client.wife.t3.joint);
@@ -173,7 +177,7 @@ $(document).ready(function(e) {
 
         $('#husbandRRSP').val(client.husband.rrsp.value);
         $('#husbandRRSPJoint').val(client.husband.rrsp.spouse);
-        $('#husband777').val(client.husband.value777);
+        $('#husband777').prop('checked', client.husband.value777);
         $('#husbandHBP').val(client.husband.hbp);
         $('#husbandSupportMade').val(client.husband.supportMade);
         $('#husbandMoving').prop('checked', client.husband.moving);
@@ -182,14 +186,14 @@ $(document).ready(function(e) {
 
         $('#wifeRRSP').val(client.wife.rrsp.value);
         $('#wifeRRSPJoint').val(client.wife.rrsp.spouse);
-        $('#wife777').val(client.wife.value777);
+        $('#wife777').prop('checked', client.wife.value777);
         $('#wifeHBP').val(client.wife.hbp);
         $('#wifeSupportMade').val(client.wife.supportMade);
         $('#wifeMoving').prop('checked', client.wife.moving);
         $('#wifeUnion').prop('checked', client.wife.unionDue);
         $('#wifeDisability').prop('checked', client.wife.disabilitySupports);
 
-        $('#carryingCharges').val(client.carryingCharges);
+        $('#carryingCharges').prop('checked', client.carryingCharges);
         $('#childcareName').val(client.childcare.name);
         $('#childcareAmount').val(client.childcare.amount);
         $('#childcareSin').val(client.childcare.sin);
@@ -211,11 +215,6 @@ $(document).ready(function(e) {
         $('#dependentAmount1').val(client.dependentTuition1.amount);
         $('#dependentName2').val(client.dependentTuition2.name);
         $('#dependentAmount2').val(client.dependentTuition2.amount);
-
-        $('#artAmount').val(client.art.amount);
-        $('#art').prop('checked', client.art.check);
-        $('#fitnessAmount').val(client.fitness.amount);
-        $('#fitness').prop('checked', client.fitness.check);
 
         $('#publicTransit').prop('checked', client.publicTransit);
         $('#donation').prop('checked', client.donation);

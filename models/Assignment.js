@@ -14,7 +14,9 @@ var AssignmentSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Client',
         unique: true
-    }
+    },
+    wip: String,
+    done: String
 });
 
 module.exports = mongoose.model('Assignment', AssignmentSchema);

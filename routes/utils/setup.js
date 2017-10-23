@@ -26,7 +26,7 @@ module.exports = function() {
             value: "anders_leung@hotmail.com",
             check: true
         },
-        t1135: 'Simple',
+        t1135: 'SIMPLE',
         stocks: true,
         t777: true,
         slips: true,
@@ -35,7 +35,7 @@ module.exports = function() {
         new: true,
         group: "D",
         numberOfReturns: 1,
-        method: 'Drop',
+        method: 'DROP',
         address: {
             apartment: "1505",
             street: "57 St. Joseph Street",
@@ -268,15 +268,16 @@ module.exports = function() {
         consultFee: 74,
         price: 75,
         pickedUp: false,
-        preparerDone: '',
+        preparerDone: "",
         checkerDone: false,
         readyForPickup: false,
         pickupOk: false,
-        pytReceived: false,
         outstandingInfo: "Outstanding Info",
         remarks: "Remark",
         callDate: "2017-01-05",
-        thingsToDo: "Nothing"
+        thingsToDo: "Nothing",
+        emailed: '',
+        packed: false
     }, function(err) {
         if (err) {
             console.log(err);

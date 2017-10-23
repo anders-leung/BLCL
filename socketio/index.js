@@ -4,6 +4,7 @@
 var ClientService = require('../modules/client');
 var UserService = require('../modules/user');
 var AssignmentService = require('../modules/assignment');
+var DailyService = require('../modules/daily');
 
 var IndexSockets = {
     monitorUpdate: function(socket) {
@@ -19,8 +20,6 @@ var IndexSockets = {
 
     jobAssignments : function(socket) {
         socket.on('assigning jobs', function(data) {
-            socket.broadcast.emit('assigning jobs', data);
-
             var clientSearch = {};
             var userSearch = {};
             clientSearch['tel.number'] = data.phone_number;
@@ -30,16 +29,24 @@ var IndexSockets = {
                 if (err) {
                     console.log(err);
                 } else {
+                    data['client'] = client[0];
+                    socket.broadcast.emit('assigning jobs', data);
+
                     ClientService.updateClient(clientSearch, { preparer : data.preparer }, function(err) {
                         if (err) {
                             console.log(err);
                         }
                     });
                     UserService.findOneUser(userSearch, function(err, user) {
-                        AssignmentService.createOrUpdateAssignment(user, client[0], function(err) {
+                        AssignmentService.createOrUpdateAssignment(user, client[0], function(err, assignment) {
                             if (err) {
                                 console.log(err);
                             }
+                            DailyService.createOrUpdateDaily(assignment, function(err) {
+                                if (err) {
+                                    console.log(err);
+                                }
+                            });
                         });
                     });
                 }

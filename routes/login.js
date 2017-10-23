@@ -19,7 +19,8 @@ router.post('/', function(req, res) {
             res.render('login');
         }
         if (user) {
-            CookieService.createCookie(req, user.email, user.role);
+            CookieService.createCookie(req, user.initials, user.role);
+            console.log(req.url);
             res.redirect('/');
         }
     });

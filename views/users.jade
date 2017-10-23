@@ -4,25 +4,22 @@
 extends layout
 
 block content
-    link(rel='stylesheet', href='https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css')
-    link(rel='stylesheet', href='https://cdn.datatables.net/select/1.2.3/css/select.dataTables.min.css')
-    script(type='text/javascript' src='https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js')
-    script(type='text/javascript' src='https://cdn.datatables.net/select/1.2.3/css/select.dataTables.min.js')
     script(type="text/javascript").
         var list = !{JSON.stringify(list)};
     script(src='/js/users/users_list.js')
 
     ul.nav.nav-tabs
-        - for (user in list)
+        - for (var i = 0; i < list.length; i++)
             li.nav-item
-                a.nav-link(data-toggle='tab' href='#' + user) #{user}
+                a.nav-link(data-toggle='tab' href='#' + list[i][0]) #{list[i][0]}
 
     #table.tab-content(style='border-top: 0')
-        - for (user in list)
-            div(id=user).tab-pane
+        - for (var i = 0; i < list.length; i++)
+            div(id=list[i][0]).tab-pane
                 table.cell-border
                     thead
                         tr
+                            th Phone Number
                             th Husband Last Name
                             th Husband First Name
                             th Wife Last Name
@@ -34,9 +31,11 @@ block content
                             th Stocks
                             th New
                             th Picked Up
+                            th Status
                     tbody
-                        each client in list[user]
+                        each client in list[i][1]
                             tr
+                                td #{client.tel.number}
                                 td #{client.husband.lastName}
                                 td #{client.husband.firstName}
                                 td #{client.wife.lastName}
@@ -48,3 +47,4 @@ block content
                                 td.check #{client.stocks}
                                 td.check #{client.new}
                                 td.check #{client.pickedUp}
+                                td #{client.preparerDone}

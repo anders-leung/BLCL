@@ -16,16 +16,12 @@ var UserService = {
 
     findOneUser : function(params, callback) {
         User.findOne(params).lean().exec(function(err, user) {
-            if (err) {
-                callback(err);
-            } else {
-                callback(err, user);
-            }
+            callback(err, user);
         });
     },
 
     getAllUsers : function(callback) {
-        User.find({}).lean().exec(function(err, users) {
+        User.find({}).sort('initials').lean().exec(function(err, users) {
             if (err) {
                 callback(err);
             }
