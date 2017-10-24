@@ -10,8 +10,9 @@ var IndexSockets = {
     monitorUpdate: function(socket) {
         socket.on('monitoring sheet update', function (data) {
             socket.broadcast.emit('monitoring sheet update', data);
+            console.log(data);
             var search = {};
-            search['tel.number'] = data.phone_number;
+            search['fileName'] = data.fileName;
             var update = {};
             update[data.field] = data.value;
             ClientService.updateClient(search, update);

@@ -24,6 +24,7 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
                                                     ['emailed', emailed],
                                                     ['pickedUp', pickedUp]
                                                 ],
+                                                pyt: ClientService.getPayments(),
                                                 role: cookie.role});
                     })
                 });

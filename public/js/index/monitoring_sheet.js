@@ -1,6 +1,28 @@
 /**
  * Created by ander on 2017-06-06.
  */
+pyt = pyt.split(",");
+
+function getFileName(row) {
+    var husbandLastName = $(row).find('td:nth-child(12)').html();
+    var husbandFirstName = $(row).find('td:nth-child(13)').html();
+    var wifeLastName = $(row).find('td:nth-child(14)').html();
+    var wifeFirstName = $(row).find('td:nth-child(15)').html();
+
+    var fileName = '';
+
+    if (husbandFirstName) {
+        fileName += husbandLastName + ', ' + husbandFirstName;
+        if (wifeFirstName) {
+            fileName += ' and ';
+            fileName += wifeLastName + ', ' + wifeFirstName;
+        }
+    } else {
+        fileName += wifeLastName + ', ' + wifeFirstName;
+    }
+    return fileName;
+}
+
 function getField(column) {
     var header = $('thead tr').find('th:nth-child(' + column + ')').html();
 
@@ -21,6 +43,8 @@ function getField(column) {
             return 'callDate';
         case 'Pickup OK':
             return 'pickupOk';
+        case 'Emailed':
+            return 'emailed';
         case 'PYT Received':
             return 'pytReceived';
         case 'Things to do After Pickup':
@@ -30,7 +54,7 @@ function getField(column) {
     }
 }
 
-function setTable() {
+function setTable(tableId) {
     $('.tab-pane').each(function(i) {
         if (i == 0) {
             $(this).addClass('in');
@@ -43,7 +67,7 @@ function setTable() {
         $(this).html( '<input type="text" />' );
     } );
 
-    var table = $('table').DataTable({
+    var table = $(tableId).DataTable({
         'paging': false,
         'select': true,
         'scrollX': true,
@@ -64,9 +88,9 @@ function setTable() {
     } );
 }
 
-function resetTable() {
-    $('table').DataTable().destroy();
-    setTable();
+function resetTable(tableId) {
+    $(tableId).DataTable().destroy();
+    setTable(tableId);
 }
 
 $(document).ready(function() {
@@ -94,32 +118,54 @@ $(document).ready(function() {
         var rowHtml = $('tbody tr').eq(row);
         var cell = $(rowHtml).find('td:nth-child(' + column + ')');
 
-        var table = $('table').DataTable();
+        var table = $('#normalTable').DataTable();
+
+        var addRow = table.row($(rowHtml));
+        var otherTable;
 
         if (typeof(value) === 'boolean') {
-            var i = $(cell).find('i');
-            i.toggleClass('fa-check');
-            i.toggleClass('fa-times');
+            $(cell).html('N');
+            if (value) {
+                $(cell).html('Y');
+            }
+            if (column == 11) {
+                otherTable = $('#pickedUpTable').DataTable();
+                otherTable.row.add(addRow.data()).draw();
+                addRow.remove().draw();
+            } else if (column == 27) {
+                otherTable = $('#packedTable').DataTable();
+                otherTable.row.add(addRow.data()).draw();
+                addRow.remove().draw();
+                resetTable('#packedTable');
+            }
         } else {
             if (type == 'date') {
                 $(cell).on('click', showDateInput);
             } else if (type == 'edit') {
                 $(cell).on('click', showInput);
+            } else if (type == 'select') {
+                $(cell).find('select').toggle();
+                $(cell).on('click', showPytInput);
             }
             cell.html(value);
             table.cell($(cell)).data(value);
-            resetTable();
+            if (column == 28) {
+                otherTable = $('#emailedTable').DataTable();
+                otherTable.row.add(addRow.data()).draw();
+                addRow.remove().draw();
+                resetTable('#emailedTable');
+            }
         }
 
         if (!emit) { return; }
 
-        var phone_number = $(rowHtml).find('td:nth-child(2)').html();
+        var fileName = getFileName(rowHtml);
         var field = getField(column);
         socket.emit('monitoring sheet update', {
             row: row,
             column: column,
             type: type,
-            phone_number: phone_number,
+            fileName: fileName,
             field: field,
             value: value
         });
@@ -136,7 +182,10 @@ $(document).ready(function() {
         });
     }
 
-    setTable();
+    resetTable('#normalTable');
+    resetTable('#packedTable');
+    resetTable('#emailedTable');
+    resetTable('#pickedUpTable');
 
     $('tr td').not('.toggle, .edit, .date-edit').dblclick(function() {
         window.location = $(this).parent().data('href');
@@ -149,9 +198,9 @@ $(document).ready(function() {
     $('.toggle').click(function() {
         var column = $(this).index();
         var row = $(this).closest('tr').index();
-        var check = $(this).find('i');
+        var check = $(this).html();
         var value = true;
-        if ($(check).hasClass('fa-check')) {
+        if (check == 'Y') {
             value = false;
         }
         updateHtml(row, column + 1, value, null, true);
@@ -179,13 +228,42 @@ $(document).ready(function() {
             var row = $(this).closest('tr').index();
             var value = $(this).find('input').val();
             var type = 'edit';
-            if (column == 25) {
+            if (column == 25 || column == 27) {
                 type = 'date-edit';
             }
             updateHtml(row, column + 1, value, type, true);
             return false;
         }
     });
+
+    $('.pyt').on('click', showPytInput);
+
+    function showPytInput(e) {
+        var column = $(this).index();
+        var row = $(this).closest('tr').index();
+        var cell = e.target;
+        var value = $(cell).html();
+        var select = "<select>";
+        for (var i = 0; i < pyt.length; i++) {
+            var option = "<option value='" + pyt[i] + "'";
+            if (pyt[i] == value) {
+                option += " selected";
+            }
+            option += ">" + pyt[i] + "</option>";
+            select += option;
+        }
+        select += "</select>";
+        select = $(select);
+        $(cell).html(select);
+
+        $(select).focus();
+
+        $(select).focusout(function() {
+            updateHtml(row, column + 1, $(this).val(), 'select', true)
+        });
+
+        $(cell).off('click', showPytInput);
+    }
 
     function showDateInput(e) {
         var cell = e.target;

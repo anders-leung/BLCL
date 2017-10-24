@@ -83,6 +83,10 @@ var ClientService = {
 
     getStatuses : function() {
         return Client.schema.path('preparerDone').enumValues;
+    },
+
+    getPayments : function() {
+        return Client.schema.path('pytReceived').enumValues;
     }
 };
 

@@ -3,6 +3,9 @@ extends layout
 block content
     script(type="text/javascript", src='/js/jquery.floatThead.js')
     script(type="text/javascript", src='/js/index/monitoring_sheet.js')
+    script(type='text/javascript').
+        var pyt = "#{pyt}";
+    script(src='/js/index/monitoring_sheet.js')
 
     ul.nav.nav-tabs
         li.nav-item
@@ -17,7 +20,7 @@ block content
     #table.col-12.tab-content(style='border-top: 0')
         - for (var i = 0; i < clients.length; i++)
             div(id=clients[i][0]).tab-pane
-                table.cell-border
+                table(id=clients[i][0] + 'Table').cell-border
                     thead
                         tr
                             th Interview Date
@@ -47,6 +50,7 @@ block content
                             th Ready for Pickup
                             th Call Date
                             th Pickup OK
+                            th Emailed
                             th PYT Received
                             th Things to do After Pickup
                     tfoot
@@ -78,6 +82,7 @@ block content
                             th Ready for Pickup
                             th Call Date
                             th Pickup OK
+                            th Emailed
                             th PYT Received
                             th Things to do After Pickup
                     tbody
@@ -110,5 +115,6 @@ block content
                                 td.check.toggle #{client.readyForPickup}
                                 td.date.text-nowrap.date-edit #{client.callDate}
                                 td.check.toggle #{client.pickupOk}
-                                td.text-nowrap #{client.pytReceived}
-                                td.text-nowrap #{client.thingsToDo}
+                                td.text-nowrap.date-edit #{client.emailed}
+                                td.text-nowrap.pyt #{client.pytReceived}
+                                td.text-nowrap.edit #{client.thingsToDo}
