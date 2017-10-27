@@ -63,29 +63,29 @@ function setTable(tableId) {
         }
     });
 
-    $('table tfoot th').each( function () {
-        $(this).html( '<input type="text" />' );
-    } );
-
-    var table = $(tableId).DataTable({
-        'paging': false,
-        'select': true,
-        'scrollX': true,
-        'scrollY': '50vh'
+    $(tableId + ' tfoot th').each( function () {
+        var title = $(this).text();
+        $(this).html( '<input type="text"/>' );
     });
 
-    // Apply the search
-    table.columns().every( function () {
-        var that = this;
+    var table = $(tableId).DataTable({
+        'columnDefs': [{
+            type: 'date', targets: 0
+        }],
+        'select': true,
+        'scrollX': true
+    });
+    // Setup - add a text input to each footer cell
 
-        $( 'input', this.footer() ).on( 'keyup change', function () {
-            if ( that.search() !== this.value ) {
-                that
-                    .search( this.value )
-                    .draw();
+    // Apply the search
+    table.columns().every(function(i) {
+        var that = this;
+        $('input', this.footer()).on('keyup change', function() {
+            if (that.search() !== this.value) {
+                that.search(this.value).draw();
             }
-        } );
-    } );
+        });
+    });
 }
 
 function resetTable(tableId) {
@@ -132,10 +132,11 @@ $(document).ready(function() {
                 otherTable = $('#pickedUpTable').DataTable();
                 otherTable.row.add(addRow.data()).draw();
                 addRow.remove().draw();
-            } else if (column == 27) {
+            } else if (column == 25) {
                 otherTable = $('#packedTable').DataTable();
                 otherTable.row.add(addRow.data()).draw();
                 addRow.remove().draw();
+                $('#packedTable').destroy();
                 resetTable('#packedTable');
             }
         } else {
@@ -181,6 +182,8 @@ $(document).ready(function() {
             });
         });
     }
+
+    $.fn.dataTable.moment('dd-M-y');
 
     resetTable('#normalTable');
     resetTable('#packedTable');

@@ -15,6 +15,7 @@ var excel = require('./routes/excel');
 var client = require('./routes/client');
 var clients = require('./routes/clients');
 
+mongoose.Promise = require('bluebird');
 mongoose.connect('mongodb://localhost:27017/');
 
 var app = express();
@@ -32,9 +33,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
-  name : 'session',
-  keys : ['email', 'role'],
-  maxAge : 60 * 60 * 1000
+    name : 'session',
+    keys : ['email', 'role'],
+    maxAge : 60 * 60 * 1000
 }));
 
 app.use('/', index);
@@ -46,26 +47,34 @@ app.use('/clients', clients);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
 });
 
 // error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
 });
 
-var setup = require('./routes/utils/setup');
-setup();
+//var setup = require('./routes/utils/setup');
+//setup();
 
-var readFolder = require('./modules/read_excel');
-readFolder('C://Users//ander//Desktop//BLCL Files//Sheets');
-
+//var readFolder = require('./modules/read_excel');
+//readFolder('C://Users//ander//Desktop//BLCL Files//Sheets');
+/*
+var ClientService = require('./modules/client');
+ClientService.findClient({ 'fileName' : 'ZHU, YAN JIE' }, function(err, client) {
+    if (!err) {
+        var writeFile = require('./modules/write_excel');
+        writeFile('C://Users//ander//Desktop//BLCL Files//Test files//ZHU, YAN JIE.xlsx', client[0]);
+    }
+});
+*/
 module.exports = app;

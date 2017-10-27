@@ -6,6 +6,7 @@ var router = express.Router();
 
 var CookieService = require('./utils/cookies');
 var ClientService = require('./../modules/client');
+var WriteExcelService = require('./../modules/write_excel');
 
 /* GET home page. */
 router.get('/', CookieService.isLoggedIn, function(req, res) {
@@ -30,6 +31,7 @@ router.post('/', function(req, res) {
             console.log(err);
             res.render('error');
         }
+        WriteExcelService()
         res.redirect('/');
     });
 });

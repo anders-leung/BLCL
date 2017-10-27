@@ -5,6 +5,8 @@ extends layout
 
 block content
 
+    link(rel='stylesheet', href='/js/jquery-ui-1.12.1.custom/jquery-ui.min.css')
+    script(type='text/javascript', src='/js/jquery-ui-1.12.1.custom/jquery-ui.min.js')
     script(type="text/javascript").
         var client = !{JSON.stringify(client)};
     script(src='/js/client/client_form.js')
@@ -30,10 +32,10 @@ block content
                     input#checker.form-control(type='text' name='checker')
                 .form-group.col-2
                     label(for='pickupDate') Pickup Date
-                    input#pickupDate.form-control(type='date' name='pickupDate')
+                    input#pickupDate.form-control.datepicker(type='text' name='pickupDate')
                 .form-group.col-2
                     label(for='interviewDate') Interview Date
-                    input#interviewDate.form-control(type='date' name='interviewDate')
+                    input#interviewDate.form-control.datepicker(type='text' name='interviewDate')
             .row
                 .form-group.col-2
                     label(for='returns') Number of Returns
@@ -52,40 +54,33 @@ block content
                     label(for='group') Group
                     input#group.form-control(type='text' name='group')
                 .row.col-4
-                    .col-3
-                        .checkbox
-                            label(for='slips')
-                                input#slips(type='checkbox' name='slips')
+                        .form-check
+                            label.form-check-label(for='slips')
+                                input#slips.form-check-input(type='checkbox' name='slips')
                                 | Slips
-                    .col-3
-                        .checkbox
-                            label(for='stocks')
-                                input#stocks(type='checkbox' name='stocks')
+                        .form-check
+                            label.form-check-label(for='stocks')
+                                input#stocks.form-check-input(type='checkbox' name='stocks')
                                 | Stocks
-                    .col-3
-                        .checkbox
-                            label(for='t777')
-                                input#t777(type='checkbox' name='t777')
+                        .form-check
+                            label.form-check-label(for='t777')
+                                input#t777.form-check-input(type='checkbox' name='t777')
                                 | T777
-                    .col-3
-                        .checkbox
-                            label(for='new')
-                                input#new(type='checkbox' name='new')
+                        .form-check
+                            label.form-check-label(for='new')
+                                input#new.form-check-input(type='checkbox' name='new')
                                 | New
-                    .col-3
-                        .checkbox
-                            label(for='prSold')
-                                input#prSold(type='checkbox' name='prSold')
+                        .form-check
+                            label.form-check-label(for='prSold')
+                                input#prSold.form-check-input(type='checkbox' name='prSold')
                                 | PR Sold
-                    .col-3
-                        .checkbox
-                            label(for='selfEmployed')
-                                input#selfEmployed(type='checkbox' name='selfEmployed')
+                        .form-check
+                            label.form-check-label(for='selfEmployed')
+                                input#selfEmployed.form-check-input(type='checkbox' name='selfEmployed')
                                 | Self Emp
-                    .col-3
-                        .checkbox
-                            label(for='rental')
-                                input#rental(type='checkbox' name='rental')
+                        .form-check
+                            label.form-check-label(for='rental')
+                                input#rental.form-check-input(type='checkbox' name='rental')
                                 | Rental
                     .col-3
             .row
@@ -129,9 +124,6 @@ block content
                         .col-2
                             label(for='postalCode') Postal Code
                             input#postalCode.form-control(type='text' name='address.postalCode')
-                        .col-2
-                            label(for='country') Country
-                            input#country.form-control(type='text' name='address.country' value='CANADA')
                         .checkbox.col-12
                             label(for='newAddress')
                                 input#newAddress(type='checkbox' name='address.check')
@@ -148,23 +140,27 @@ block content
                         input#husbandLastName.form-control(type='text' name='husband.lastName')
                     .col-2
                         label(for='husbandDob') Date of Birth
-                        input#husbandDob.form-control(type='date' name='husband.dateOfBirth')
+                        input#husbandDob.form-control.datepicker.datepicker(type='text' name='husband.dateOfBirth')
                     .col-2
                         label(for='husbandDeparture') Departure/Land
                         input#husbandDeparture.form-control(type='text' name='husband.departure')
                     .col-2
-                        label(for='husbandSin') Sin
+                        label(for='husbandSin') SIN
                         input#husbandSin.form-control.sin(type='text' name='husband.sin')
-                    .checkbox.col-1
-                        label(for='husbandCitizenship')
-                            input#husbandCitizenship(type='checkbox' name='husband.citizenship')
-                            | Citizen
-                        label(for='husbandElection')
-                            input#husbandElection(type='checkbox' name='husband.election')
-                            | Election
-                    .checkbox.col-1
-                        label(for='husbandNoa')
-                            input#husbandNoa(type='checkbox' name='husband.noa')
+                    .group
+                        br
+                        .form-check
+                            label.form-check-label(for='husbandCitizenship')
+                                input#husbandCitizenship.form-check-input(type='checkbox' name='husband.citizenship')
+                                | Citizen
+                        .form-check
+                            label.form-check-label(for='husbandElection')
+                                input#husbandElection.form-check-input(type='checkbox' name='husband.election')
+                                | Election
+                    .form-check
+                        br
+                        label.form-check-label(for='husbandNoa')
+                            input#husbandNoa.form-check-input(type='checkbox' name='husband.noa')
                             | NOA
                 label Wife
                 .row
@@ -176,23 +172,27 @@ block content
                         input#wifeLastName.form-control(type='text' name='wife.lastName')
                     .col-2
                         label(for='wifeDob') Date of Birth
-                        input#wifeDob.form-control(type='date' name='wife.dateOfBirth')
+                        input#wifeDob.form-control.datepicker(type='text' name='wife.dateOfBirth')
                     .col-2
                         label(for='wifeDeparture') Departure/Land
                         input#wifeDeparture.form-control(type='text' name='wife.departure')
                     .col-2
-                        label(for='wifeSin') Sin
+                        label(for='wifeSin') SIN
                         input#wifeSin.form-control.sin(type='text' name='wife.sin')
-                    .checkbox.col-1
-                        label(for='wifeCitizenship')
-                            input#wifeCitizenship(type='checkbox' name='wife.citizenship')
-                            | Citizen
-                        label(for='wifeElection')
-                            input#wifeElection(type='checkbox' name='wife.election')
-                            | Election
-                    .checkbox.col-1
-                        label(for='wifeNoa')
-                            input#wifeNoa(type='checkbox' name='wife.noa')
+                    .group
+                        br
+                        .form-check
+                            label.form-check-label(for='wifeCitizenship')
+                                input#wifeCitizenship.form-check-input(type='checkbox' name='wife.citizenship')
+                                | Citizen
+                        .form-check
+                            label.form-check-label(for='wifeElection')
+                                input#wifeElection.form-check-input(type='checkbox' name='wife.election')
+                                | Election
+                    .form-check
+                        br
+                        label.form-check-label(for='wifeNoa')
+                            input#wifeNoa.form-check-input(type='checkbox' name='wife.noa')
                             | NOA
                 label Dependents
                 .row
@@ -211,9 +211,9 @@ block content
                             option GM
                     .col-2
                         label(for='dob1') Date of Birth
-                        input#dob1.form-control(type='date' name='dependent1.dateOfBirth')
+                        input#dob1.form-control.datepicker(type='text' name='dependent1.dateOfBirth')
                     .col-2
-                        label(for='sin1') Sin
+                        label(for='sin1') SIN
                         input#sin1.form-control.sin(type='text' name='dependent1.sin')
                 .row
                     .col-4
@@ -231,9 +231,9 @@ block content
                             option GM
                     .col-2
                         label(for='dob2') Date of Birth
-                        input#dob2.form-control(type='date' name='dependent2.dateOfBirth')
+                        input#dob2.form-control.datepicker(type='text' name='dependent2.dateOfBirth')
                     .col-2
-                        label(for='sin2') Sin
+                        label(for='sin2') SIN
                         input#sin2.form-control.sin(type='text' name='dependent2.sin')
                 .row
                     .col-4
@@ -251,9 +251,9 @@ block content
                             option GM
                     .col-2
                         label(for='dob3') Date of Birth
-                        input#dob3.form-control(type='date' name='dependent3.dateOfBirth')
+                        input#dob3.form-control.datepicker(type='text' name='dependent3.dateOfBirth')
                     .col-2
-                        label(for='sin3') Sin
+                        label(for='sin3') SIN
                         input#sin3.form-control.sin(type='text' name='dependent3.sin')
 
         hr
@@ -264,235 +264,273 @@ block content
                     label.col-12 Husband
                     hr
                     .row
-                        .form-group.col-2
-                            label(for='husbandT4') T4
-                            input#husbandT4.form-control(type='number' name='husband.t4')
-                        .form-group.col-2
-                            label(for='husbandT5') T5
-                            input#husbandT5.form-control(type='number' name='husband.t5.value')
-                        .form-group.col-2
-                            label(for='husbandT5Joint') Joint
-                            input#husbandT5Joint.form-control(type='number' name='husband.t5.joint')
-                        .form-group.col-2
-                            label(for='husbandT5Other') T5 (Other)
-                            input#husbandT5Other.form-control(type='number' name='husband.t5Other.value')
-                        .form-group.col-2
-                            label(for='husbandT5OtherJoint') Joint
-                            input#husbandT5OtherJoint.form-control(type='number' name='husband.t5Other.joint')
+                        .form-check
+                            label.form-check-label(for='husbandT4')
+                                input#husbandT4.form-check-input(type='checkbox' name='husband.t4')
+                                | T4
+                        .group
+                            .form-check
+                                label.form-check-label(for='husbandT5')
+                                    input#husbandT5.form-check-input(type='checkbox' name='husband.t5.value')
+                                    | T5
+                            .form-check
+                                label.form-check-label(for='husbandT5Joint')
+                                    input#husbandT5Joint.form-check-input(type='checkbox' name='husband.t5.joint')
+                                    | Joint
+                        .group
+                            .form-check
+                                label.form-check-label(for='husbandT5Other')
+                                    input#husbandT5Other.form-check-input(type='checkbox' name='husband.t5Other.value')
+                                    | T5 (Other currency)
+                            .form-check
+                                label.form-check-label(for='husbandT5OtherJoint')
+                                    input#husbandT5OtherJoint.form-check-input(type='checkbox' name='husband.t5Other.joint')
+                                    | Joint
+                        .group
+                            .form-check
+                                label.form-check-label(for='husbandT3')
+                                    input#husbandT3.form-check-input(type='checkbox' name='husband.t3.value')
+                                    | T3
+                            .form-check
+                                label.form-check-label(for='husbandT3Joint')
+                                    input#husbandT3Joint.form-check-input(type='checkbox' name='husband.t3.joint')
+                                    | Joint
+                        .form-check
+                            label.form-check-label(for='husbandT5007')
+                                input#husbandT5007.form-check-input(type='checkbox' name='husband.t5007')
+                                | T5007
+                        .form-check
+                            label.form-check-label(for='husbandT4A')
+                                input#husbandT4A.form-check-input(type='checkbox' name='husband.t4A')
+                                | T4A
                     label Other Income
                     .row
-                        .form-group.col-2
+                        .form-group.col-3
                             label(for='husband104') 104
                             input#husband104.form-control(type='number' name='husband.otherIncome.value104')
-                        .form-group.col-2
+                        .form-group.col-3
                             label(for='husband130') 130
                             input#husband130.form-control(type='number' name='husband.otherIncome.value130')
-                        .form-group.col-2
-                            label(for='husbandT3') T3
-                            input#husbandT3.form-control(type='number' name='husband.t3.value')
-                        .form-group.col-2
-                            label(for='husbandT3Joint') Joint
-                            input#husbandT3Joint.form-control(type='number' name='husband.t3.joint')
-                        .form-group.col-2
-                            label(for='husbandT5007') T5007
-                            input#husbandT5007.form-control(type='number' name='husband.t5007')
-                        .form-group.col-2
-                            label(for='husbandT4A') T4A
-                            input#husbandT4A.form-control(type='number' name='husband.t4A')
+                        .group
+                            br
+                            .form-check
+                                label.form-check-label(for='husbandT5008')
+                                    input#husbandT5008.form-check-input(type='checkbox' name='husband.t5008.value')
+                                    | T5008 / S3
+                            .form-check
+                                label.form-check-label(for='husbandT5008Joint')
+                                    input#husbandT5008Joint.form-check-input(type='checkbox' name='husband.t5008.joint')
+                                    | Joint
+                        .form-check
+                            br
+                            label.form-check-label(for='husbandT4AOAS')
+                                input#husbandT4AOAS.form-check-input(type='checkbox' name='husband.t4AOAS')
+                                | T4A (OAS)
                     label Foreign Income
                     .row
-                        .form-group.col-3
+                        .form-group.col-4
                             label(for='husbandDiv') Div & Int
                             .input-group.form-inline
-                                input#husbandDivCurrency.col-5.form-control(type='text' name='husband.foreignIncome.div.currency')
+                                input#husbandDivCurrency.col-4.form-control(type='text' name='husband.foreignIncome.div.currency')
                                 input#husbandDiv.form-control(type='number' name='husband.foreignIncome.div.value')
-                        .form-group.col-3
+                        .form-group.col-4
                             label(for='husbandEmpl') Empl
                             .input-group.form-inline
-                                input#husbandEmplCurrency.col-5.form-control(type='text' name='husband.foreignIncome.empl.currency')
+                                input#husbandEmplCurrency.col-4.form-control(type='text' name='husband.foreignIncome.empl.currency')
                                 input#husbandEmpl.form-control(type='number' name='husband.foreignIncome.empl.value')
                         .form-group.col-2
                             label(for='husbandCountry') Country
                             input#husbandCountry.form-control(type='text' name='husband.foreignIncome.country')
-                        .form-group.col-2
-                            label(for='husbandT5008') T5008 / S3
-                            input#husbandT5008.form-control(type='number' name='husband.t5008.value')
-                        .form-group.col-2
-                            label(for='husbandT5008Joint') Joint
-                            input#husbandT5008Joint.form-control(type='number' name='husband.t5008.joint')
-                    .row
-                        .form-group.col-2
-                            label(for='husbandT4AOAS') T4A (OAS)
-                            input#husbandT4AOAS.form-control(type='number' name='husband.t4AOAS')
-                        .form-group.col-2
-                            label(for='husbandT5013') T5013
-                            input#husbandT5013.form-control(type='number' name='husband.t5013.value')
-                        .form-group.col-2
-                            label(for='husbandT5013Joint') Joint
-                            input#husbandT5013Joint.form-control(type='number' name='husband.t5013.joint')
-                        .form-group.col-2
-                            label(for='husbandT4AP') T4A (P)
-                            input#husbandT4AP.form-control(type='number' name='husband.t4AP.value')
-                        .col-2
+                        .group
                             br
-                            .checkbox
-                                label(for='husbandSplit')
-                                    input#husbandSplit(type='checkbox' name='husband.t4AP.split')
-                                    | Split
-                    .row
-                        .form-group.col-2
-                            label(for='husbandRental') Rental
-                            input#husbandRental.form-control(type='number' name='husband.rental.value')
-                        .form-group.col-2
-                            label(for='husbandRentalJoint') Joint
-                            input#husbandRentalJoint.form-control(type='number' name='husband.rental.joint')
-                        .col-2
-                            br
-                            .checkbox
-                                label(for='husbandRentalGST')
-                                    input#husbandRentalGST(type='checkbox' name='husband.rental.gstReturn')
-                                    | GST Rtn
-                        .form-group.col-2
-                            label(for='husbandSelfEmployed') Self Empl
-                            input#husbandSelfEmployed.form-control(type='number' name='husband.selfEmployed.value')
-                        .form-group.col-2
-                            label(for='husbandSelfEmployedJoint') Joint
-                            input#husbandSelfEmployedJoint.form-control(type='number' name='husband.selfEmployed.joint')
-                        .col-2
-                            br
-                            .checkbox
-                                label(for='husbandSelfEmployedGST')
-                                    input#husbandSelfEmployedGST(type='checkbox' name='husband.selfEmployed.gstReturn')
-                                    | GST Rtn
+                            .form-check
+                                label.form-check-label(for='husbandT5013')
+                                    input#husbandT5013.form-check-input(type='checkbox' name='husband.t5013.value')
+                                    | T5013
+                            .form-check
+                                label.form-check-label(for='husbandT5013Joint')
+                                    input#husbandT5013Joint.form-check-input(type='checkbox' name='husband.t5013.joint')
+                                    | Joint
                     .row
                         .form-group.col-3
-                            label(for='husbandT4RSP') T4RSP / T4RIF
-                            input#husbandT4RSP.form-control(type='number' name='husband.t4RSP')
+                            label(for='husbandRental') Rental
+                            .input-group.form-inline
+                                input#husbandRental.form-control(type='number' name='husband.rental.value')
+                                input#husbandRentalJoint.form-control(type='number' name='husband.rental.joint')
+                        .form-check.gst
+                            br
+                            label.form-check-label(for='husbandRentalGST')
+                                input#husbandRentalGST.form-check-input(type='checkbox' name='husband.rental.gstReturn')
+                                | GST Rtn
+                        .form-group.col-3
+                            label(for='husbandSelfEmployed') Self Empl
+                            .input-group.form-inline
+                                input#husbandSelfEmployed.form-control(type='number' name='husband.selfEmployed.value')
+                                input#husbandSelfEmployedJoint.form-control(type='number' name='husband.selfEmployed.joint')
+                        .form-check.gst
+                            br
+                            label.form-check-label(for='husbandSelfEmployedGST')
+                                input#husbandSelfEmployedGST.form-check-input(type='checkbox' name='husband.selfEmployed.gstReturn')
+                                | GST Rtn
+                        .group
+                            br
+                            .form-check
+                                label.form-check-label(for='husbandT4AP')
+                                    input#husbandT4AP.form-check-input(type='checkbox' name='husband.t4AP.value')
+                                    | T4A (P)
+                            .form-check
+                                label.form-check-label(for='husbandSplit')
+                                    input#husbandSplit.form-check-input(type='checkbox' name='husband.t4AP.split')
+                                    | Split
+                    .row
                         .form-group.col-3
                             label(for='husbandSupportReceived') Support PYT Rec'd
                             input#husbandSupportReceived.form-control(type='number' name='husband.supportReceived')
-                        .col-2
+                        .form-check
                             br
-                            .checkbox
-                                label(for='husbandUCCB')
-                                    input#husbandUCCB(type='checkbox' name='husband.uccb')
-                                    | UCCB
+                            label.form-check-label(for='husbandT4RSP')
+                                input#husbandT4RSP.form-check-input(type='checkbox' name='husband.t4RSP')
+                                | T4RSP / T4RIF
+                        .form-check
+                            br
+                            label.form-check-label(for='husbandUCCB')
+                                input#husbandUCCB(type='checkbox' name='husband.uccb')
+                                | UCCB
 
                 .col-6
                     label.col-12 Wife
-                    hr
-                    .row
-                        .form-group.col-2
-                            label(for='wifeT4') T4
-                            input#wifeT4.form-control(type='number' name='wife.t4')
-                        .form-group.col-2
-                            label(for='wifeT5') T5
-                            input#wifeT5.form-control(type='number' name='wife.t5.value')
-                        .form-group.col-2
-                            label(for='wifeT5Joint') Joint
-                            input#wifeT5Joint.form-control(type='number' name='wife.t5.joint')
-                        .form-group.col-2
-                            label(for='wifeT5Other') T5 (Other)
-                            input#wifeT5Other.form-control(type='number' name='wife.t5Other.value')
-                        .form-group.col-2
-                            label(for='wifeT5OtherJoint') Joint
-                            input#wifeT5OtherJoint.form-control(type='number' name='wife.t5Other.joint')
-                    label.col-12 Other Income
-                    .row
-                        .form-group.col-2
-                            label(for='wife104') 104
-                            input#wife104.form-control(type='number' name='wife.otherIncome.value104')
-                        .form-group.col-2
-                            label(for='wife130') 130
-                            input#wife130.form-control(type='number' name='wife.otherIncome.value130')
-                        .form-group.col-2
-                            label(for='wifeT3') T3
-                            input#wifeT3.form-control(type='number' name='wife.t3.value')
-                        .form-group.col-2
-                            label(for='wifeT3Joint') Joint
-                            input#wifeT3Joint.form-control(type='number' name='wife.t3.joint')
-                        .form-group.col-2
-                            label(for='wifeT5007') T5007
-                            input#wifeT5007.form-control(type='number' name='wife.t5007')
-                        .form-group.col-2
-                            label(for='wifeT4A') T4A
-                            input#wifeT4A.form-control(type='number' name='wife.t4A')
-                    label Foreign Income
-                    .row
-                        .form-group.col-3
-                            label(for='wifeDiv') Div & Int
-                            .input-group.form-inline
-                                input#wifeDivCurrency.col-5.form-control(type='text' name='wife.foreignIncome.div.currency')
-                                input#wifeDiv.form-control(type='number' name='wife.foreignIncome.div.value')
-                        .form-group.col-3
-                            label(for='wifeEmpl') Empl
-                            .input-group.form-inline
-                                input#wifeEmplCurrency.col-5.form-control(type='text' name='wife.foreignIncome.empl.currency')
-                                input#wifeEmpl.form-control(type='number' name='wife.foreignIncome.empl.value')
-                        .form-group.col-2
-                            label(for='wifeCountry') Country
-                            input#wifeCountry.form-control(type='text' name='wife.foreignIncome.country')
-                        .form-group.col-2
-                            label(for='wifeT5008') T5008 / S3
-                            input#wifeT5008.form-control(type='number' name='wife.t5008.value')
-                        .form-group.col-2
-                            label(for='wifeT5008Joint') Joint
-                            input#wifeT5008Joint.form-control(type='number' name='wife.t5008.joint')
-                    .row
-                        .form-group.col-2
-                            label(for='wifeT4AOAS') T4A (OAS)
-                            input#wifeT4AOAS.form-control(type='number' name='wife.t4AOAS')
-                        .form-group.col-2
-                            label(for='wifeT5013') T5013
-                            input#wifeT5013.form-control(type='number' name='wife.t5013.value')
-                        .form-group.col-2
-                            label(for='wifeT5013Joint') Joint
-                            input#wifeT5013Joint.form-control(type='number' name='wife.t5013.joint')
-                        .form-group.col-2
-                            label(for='wifeT4AP') T4A (P)
-                            input#wifeT4AP.form-control(type='number' name='wife.t4AP.value')
-                        .col-2
-                            br
-                            .checkbox
-                                label(for='wifeSplit')
-                                    input#wifeSplit(type='checkbox' name='wife.t4AP.split')
-                                    | Split
-                    .row
-                        .form-group.col-2
-                            label(for='wifeRental') Rental
-                            input#wifeRental.form-control(type='number' name='wife.rental.value')
-                        .form-group.col-2
-                            label(for='wifeRentalJoint') Joint
-                            input#wifeRentalJoint.form-control(type='number' name='wife.rental.joint')
-                        .col-2
-                            br
-                            .checkbox
-                                label(for='wifeRentalGST')
-                                    input#wifeRentalGST(type='checkbox' name='wife.rental.gstReturn')
+                        hr
+                        .row
+                            .form-check
+                                label.form-check-label(for='wifeT4')
+                                    input#wifeT4.form-check-input(type='checkbox' name='wife.t4')
+                                    | T4
+                            .group
+                                .form-check
+                                    label.form-check-label(for='wifeT5')
+                                        input#wifeT5.form-check-input(type='checkbox' name='wife.t5.value')
+                                        | T5
+                                .form-check
+                                    label.form-check-label(for='wifeT5Joint')
+                                        input#wifeT5Joint.form-check-input(type='checkbox' name='wife.t5.joint')
+                                        | Joint
+                            .group
+                                .form-check
+                                    label.form-check-label(for='wifeT5Other')
+                                        input#wifeT5Other.form-check-input(type='checkbox' name='wife.t5Other.value')
+                                        | T5 (Other currency)
+                                .form-check
+                                    label.form-check-label(for='wifeT5OtherJoint')
+                                        input#wifeT5OtherJoint.form-check-input(type='checkbox' name='wife.t5Other.joint')
+                                        | Joint
+                            .group
+                                .form-check
+                                    label.form-check-label(for='wifeT3')
+                                        input#wifeT3.form-check-input(type='checkbox' name='wife.t3.value')
+                                        | T3
+                                .form-check
+                                    label.form-check-label(for='wifeT3Joint')
+                                        input#wifeT3Joint.form-check-input(type='checkbox' name='wife.t3.joint')
+                                        | Joint
+                            .form-check
+                                label.form-check-label(for='wifeT5007')
+                                    input#wifeT5007.form-check-input(type='checkbox' name='wife.t5007')
+                                    | T5007
+                            .form-check
+                                label.form-check-label(for='wifeT4A')
+                                    input#wifeT4A.form-check-input(type='checkbox' name='wife.t4A')
+                                    | T4A
+                        label Other Income
+                        .row
+                            .form-group.col-3
+                                label(for='wife104') 104
+                                input#wife104.form-control(type='number' name='wife.otherIncome.value104')
+                            .form-group.col-3
+                                label(for='wife130') 130
+                                input#wife130.form-control(type='number' name='wife.otherIncome.value130')
+                            .group
+                                br
+                                .form-check
+                                    label.form-check-label(for='wifeT5008')
+                                        input#wifeT5008.form-check-input(type='checkbox' name='wife.t5008.value')
+                                        | T5008 / S3
+                                .form-check
+                                    label.form-check-label(for='wifeT5008Joint')
+                                        input#wifeT5008Joint.form-check-input(type='checkbox' name='wife.t5008.joint')
+                                        | Joint
+                            .form-check
+                                br
+                                label.form-check-label(for='wifeT4AOAS')
+                                    input#wifeT4AOAS.form-check-input(type='checkbox' name='wife.t4AOAS')
+                                    | T4A (OAS)
+                        label Foreign Income
+                        .row
+                            .form-group.col-4
+                                label(for='wifeDiv') Div & Int
+                                .input-group.form-inline
+                                    input#wifeDivCurrency.col-4.form-control(type='text' name='wife.foreignIncome.div.currency')
+                                    input#wifeDiv.form-control(type='number' name='wife.foreignIncome.div.value')
+                            .form-group.col-4
+                                label(for='wifeEmpl') Empl
+                                .input-group.form-inline
+                                    input#wifeEmplCurrency.col-4.form-control(type='text' name='wife.foreignIncome.empl.currency')
+                                    input#wifeEmpl.form-control(type='number' name='wife.foreignIncome.empl.value')
+                            .form-group.col-2
+                                label(for='wifeCountry') Country
+                                input#wifeCountry.form-control(type='text' name='wife.foreignIncome.country')
+                            .group
+                                br
+                                .form-check
+                                    label.form-check-label(for='wifeT5013')
+                                        input#wifeT5013.form-check-input(type='checkbox' name='wife.t5013.value')
+                                        | T5013
+                                .form-check
+                                    label.form-check-label(for='wifeT5013Joint')
+                                        input#wifeT5013Joint.form-check-input(type='checkbox' name='wife.t5013.joint')
+                                        | Joint
+                        .row
+                            .form-group.col-3
+                                label(for='wifeRental') Rental
+                                .input-group.form-inline
+                                    input#wifeRental.form-control(type='number' name='wife.rental.value')
+                                    input#wifeRentalJoint.form-control(type='number' name='wife.rental.joint')
+                            .form-check.gst
+                                br
+                                label.form-check-label(for='wifeRentalGST')
+                                    input#wifeRentalGST.form-check-input(type='checkbox' name='wife.rental.gstReturn')
                                     | GST Rtn
-                        .form-group.col-2
-                            label(for='wifeSelfEmployed') Self Empl
-                            input#wifeSelfEmployed.form-control(type='number' name='wife.selfEmployed.value')
-                        .form-group.col-2
-                            label(for='wifeSelfEmployedJoint') Joint
-                            input#wifeSelfEmployedJoint.form-control(type='number' name='wife.selfEmployed.joint')
-                        .col-2
-                            br
-                            .checkbox
-                                label(for='wifeSelfEmployedGST')
-                                    input#wifeSelfEmployedGST(type='checkbox' name='wife.selfEmployed.gstReturn')
+                            .form-group.col-3
+                                label(for='wifeSelfEmployed') Self Empl
+                                .input-group.form-inline
+                                    input#wifeSelfEmployed.form-control(type='number' name='wife.selfEmployed.value')
+                                    input#wifeSelfEmployedJoint.form-control(type='number' name='wife.selfEmployed.joint')
+                            .form-check.gst
+                                br
+                                label.form-check-label(for='wifeSelfEmployedGST')
+                                    input#wifeSelfEmployedGST.form-check-input(type='checkbox' name='wife.selfEmployed.gstReturn')
                                     | GST Rtn
-                    .row
-                        .form-group.col-3
-                            label(for='wifeT4RSP') T4RSP / T4RIF
-                            input#wifeT4RSP.form-control(type='number' name='wife.t4RSP')
-                        .form-group.col-3
-                            label(for='wifeSupportReceived') Support PYT Rec'd
-                            input#wifeSupportReceived.form-control(type='number' name='wife.supportReceived')
-                        .col-2
-                            br
-                            .checkbox
-                                label(for='wifeUCCB')
+                            .group
+                                br
+                                .form-check
+                                    label.form-check-label(for='wifeT4AP')
+                                        input#wifeT4AP.form-check-input(type='checkbox' name='wife.t4AP.value')
+                                        | T4A (P)
+                                .form-check
+                                    label.form-check-label(for='wifeSplit')
+                                        input#wifeSplit.form-check-input(type='checkbox' name='wife.t4AP.split')
+                                        | Split
+                        .row
+                            .form-group.col-3
+                                label(for='wifeSupportReceived') Support PYT Rec'd
+                                input#wifeSupportReceived.form-control(type='number' name='wife.supportReceived')
+                            .form-check
+                                br
+                                label.form-check-label(for='wifeT4RSP')
+                                    input#wifeT4RSP.form-check-input(type='checkbox' name='wife.t4RSP')
+                                    | T4RSP / T4RIF
+                            .form-check
+                                br
+                                label.form-check-label(for='wifeUCCB')
                                     input#wifeUCCB(type='checkbox' name='wife.uccb')
                                     | UCCB
 
@@ -504,63 +542,83 @@ block content
                     label.col-12 Husband
                     hr
                     .row
-                        .form-group.col-2
-                            label(for='husbandRRSP') RRSP
-                            input#husbandRRSP.form-control(type='number' name='husband.rrsp.value')
-                        .form-group.col-2
-                            label(for='husbandRRSPJoint') Joint
-                            input#husbandRRSPJoint.form-control(type='number' name='husband.rrsp.spouse')
-                        .form-group.col-2
-                            label(for='husbandHBP') HBP
-                            input#husbandHBP.form-control(type='number' name='husband.hbp')
                         .form-group.col-3
                             label(for='husbandSupportMade') Support PYT Made
                             input#husbandSupportMade.form-control(type='number' name='husband.supportMade')
-                    .row
-                        .checkbox.col-2
-                            label(for='husbandMoving')
-                                input#husbandMoving(type='checkbox' name='husband.moving')
+                        .group
+                            br
+                            .form-check
+                                label.form-check-label(for='husbandRRSP')
+                                    input#husbandRRSP.form-check-input(type='checkbox' name='husband.rrsp.value')
+                                    | RRSP
+                            .form-check
+                                label.form-check-label(for='husbandRRSPSpouse')
+                                    input#husbandRRSPSpouse.form-check-input(type='checkbox' name='husband.rrsp.spouse')
+                                    | Spouse
+                        .form-check
+                            br
+                            label.form-check-label(for='husbandHBP')
+                                input#husbandHBP.form-check-input(type='checkbox' name='husband.hbp')
+                                | HBP
+                        .form-check
+                            br
+                            label.form-check-label(for='husbandMoving')
+                                input#husbandMoving.form-check-input(type='checkbox' name='husband.moving')
                                 | Moving
-                            label(for='husbandUnion')
-                                input#husbandUnion(type='checkbox' name='husband.unionDue')
+                        .form-check
+                            br
+                            label.form-check-label(for='husbandUnion')
+                                input#husbandUnion.form-check-input(type='checkbox' name='husband.unionDue')
                                 | Union Due
-                        .checkbox.col-4
-                            label(for='husbandDisability')
-                                input#husbandDisability(type='checkbox' name='husband.disabilitySupports')
+                    .row
+                        .form-check
+                            label.form-check-label(for='husbandDisability')
+                                input#husbandDisability.form-check-input(type='checkbox' name='husband.disabilitySupports')
                                 | Disability Supports
-                            label(for='husband777')
-                                input#husband777(type='checkbox' name='husband.value777')
+                        .form-check
+                            label.form-check-label(for='husband777')
+                                input#husband777.form-check-input(type='checkbox' name='husband.value777')
                                 | 777 Exp
                 .col-6
                     label.col-12 Wife
                     hr
                     .row
-                        .form-group.col-2
-                            label(for='wifeRRSP') RRSP
-                            input#wifeRRSP.form-control(type='number' name='wife.rrsp.value')
-                        .form-group.col-2
-                            label(for='wifeRRSPJoint') Joint
-                            input#wifeRRSPJoint.form-control(type='number' name='wife.rrsp.spouse')
-                        .form-group.col-2
-                            label(for='wifeHBP') HBP
-                            input#wifeHBP.form-control(type='number' name='wife.hbp')
                         .form-group.col-3
                             label(for='wifeSupportMade') Support PYT Made
                             input#wifeSupportMade.form-control(type='number' name='wife.supportMade')
-                    .row
-                        .checkbox.col-2
-                            label(for='wifeMoving')
-                                input#wifeMoving(type='checkbox' name='wife.moving')
+                        .group
+                            br
+                            .form-check
+                                label.form-check-label(for='wifeRRSP')
+                                    input#wifeRRSP.form-check-input(type='checkbox' name='wife.rrsp.value')
+                                    | RRSP
+                            .form-check
+                                label.form-check-label(for='wifeRRSPSpouse')
+                                    input#wifeRRSPSpouse.form-check-input(type='checkbox' name='wife.rrsp.spouse')
+                                    | Spouse
+                        .form-check
+                            br
+                            label.form-check-label(for='wifeHBP')
+                                input#wifeHBP.form-check-input(type='checkbox' name='wife.hbp')
+                                | HBP
+                        .form-check
+                            br
+                            label.form-check-label(for='wifeMoving')
+                                input#wifeMoving.form-check-input(type='checkbox' name='wife.moving')
                                 | Moving
-                            label(for='wifeUnion')
-                                input#wifeUnion(type='checkbox' name='wife.unionDue')
+                        .form-check
+                            br
+                            label.form-check-label(for='wifeUnion')
+                                input#wifeUnion.form-check-input(type='checkbox' name='wife.unionDue')
                                 | Union Due
-                        .checkbox.col-4
-                            label(for='wifeDisability')
-                                input#wifeDisability(type='checkbox' name='wife.disabilitySupports')
+                    .row
+                        .form-check
+                            label.form-check-label(for='wifeDisability')
+                                input#wifeDisability.form-check-input(type='checkbox' name='wife.disabilitySupports')
                                 | Disability Supports
-                            label(for='wife777')
-                                input#wife777(type='checkbox' name='wife.value777')
+                        .form-check
+                            label.form-check-label(for='wife777')
+                                input#wife777.form-check-input(type='checkbox' name='wife.value777')
                                 | 777 Exp
             br
             label Childcare
@@ -572,12 +630,12 @@ block content
                     label(for='childcareAmount') Amount
                     input#childcareAmount.form-control(type='number' name='childcare.amount')
                 .col-4
-                    label(for='childcareSin') Sin
+                    label(for='childcareSin') SIN
                     input#childcareSin.form-control.sin(type='text' name='childcare.sin')
-                .checkbox
+                .form-check
                     br
-                    label(for='carryingCharges')
-                        input#carryingCharges(type='checkbox' name='carryingCharges')
+                    label.form-check-label(for='carryingCharges')
+                        input#carryingCharges.form-check-input(type='checkbox' name='carryingCharges')
                         | Carrying Charges
 
         hr
@@ -591,12 +649,15 @@ block content
                         .form-group.col-4
                             label(for='husbandInstallation') Installation
                             input#husbandInstallation.form-control(type='number' name='husband.installation')
-                        .checkbox.col-8
-                            label(for='husbandTuition')
-                                input#husbandTuition(type='checkbox' name='husband.tuition')
+                        .form-check
+                            br
+                            label.form-check-label(for='husbandTuition')
+                                input#husbandTuition.form-check-input(type='checkbox' name='husband.tuition')
                                 | Tuition
-                            label(for='husbandStudentLoan')
-                                input#husbandStudentLoan(type='checkbox' name='husband.studentLoan')
+                        .form-check
+                            br
+                            label.form-check-label(for='husbandStudentLoan')
+                                input#husbandStudentLoan.form-check-input(type='checkbox' name='husband.studentLoan')
                                 | Student Loan Int
                 .col-6
                     label.col-12 Wife
@@ -605,12 +666,15 @@ block content
                         .form-group.col-4
                             label(for='wifeInstallation') Installation
                             input#wifeInstallation.form-control(type='number' name='wife.installation')
-                        .checkbox.col-8
-                            label(for='wifeTuition')
-                                input#wifeTuition(type='checkbox' name='wife.tuition')
+                        .form-check
+                            br
+                            label.form-check-label(for='wifeTuition')
+                                input#wifeTuition.form-check-input(type='checkbox' name='wife.tuition')
                                 | Tuition
-                            label(for='wifeStudentLoan')
-                                input#wifeStudentLoan(type='checkbox' name='wife.studentLoan')
+                        .form-check
+                            br
+                            label.form-check-label(for='wifeStudentLoan')
+                                input#wifeStudentLoan.form-check-input(type='checkbox' name='wife.studentLoan')
                                 | Student Loan Int
             .row
                 .col-6
@@ -648,30 +712,30 @@ block content
             br
             .row
                 .col-2
-                    .checkbox
-                        label(for='donation')
-                            input#donation(type='checkbox' name='donation')
+                    .form-check
+                        label.form-check-label(for='donation')
+                            input#donation.form-check-input(type='checkbox' name='donation')
                             | Donation
-                    .checkbox
-                        label(for='medExp')
-                            input#medExp(type='checkbox' name='medExp')
+                    .form-check
+                        label.form-check-label(for='medExp')
+                            input#medExp.form-check-input(type='checkbox' name='medExp')
                             | Med Exp
-                    .checkbox
-                        label(for='hbtc')
-                            input#hbtc(type='checkbox' name='hbtc')
+                    .form-check
+                        label.form-check-label(for='hbtc')
+                            input#hbtc.form-check-input(type='checkbox' name='hbtc')
                             | HBTC
                 .col-10
-                    .checkbox
-                        label(for='disability')
-                            input#disability(type='checkbox' name='disability')
+                    .form-check
+                        label.form-check-label(for='disability')
+                            input#disability.form-check-input(type='checkbox' name='disability')
                             | Disability (Dependent)
-                    .checkbox
-                        label(for='t2201')
-                            input#t2201(type='checkbox' name='t2201')
+                    .form-check
+                        label.form-check-label(for='t2201')
+                            input#t2201.form-check-input(type='checkbox' name='t2201')
                             | T2201
-                    .checkbox
-                        label(for='equiv')
-                            input#equiv(type='checkbox' name='equiv')
+                    .form-check
+                        label.form-check-label(for='equiv')
+                            input#equiv.form-check-input(type='checkbox' name='equiv')
                             | Equiv To Spouse
         hr
 
@@ -694,25 +758,25 @@ block content
                     textarea#comments3.form-control(rows='5' name='comments.three')
             .row
                 .col-4
-                    .checkbox
-                        label(for='witb')
-                            input#witb(type='checkbox' name='witb')
+                    .form-check
+                        label.form-check-label(for='witb')
+                            input#witb.form-check-input(type='checkbox' name='witb')
                             | No WITB
-                    .checkbox
-                        label(for='ctb')
-                            input#ctb(type='checkbox' name='ctb')
+                    .form-check
+                        label.form-check-label(for='ctb')
+                            input#ctb.form-check-input(type='checkbox' name='ctb')
                             | No CTB
-                    .checkbox
-                        label(for='gst')
-                            input#gst(type='checkbox' name='gst')
+                    .form-check
+                        label.form-check-label(for='gst')
+                            input#gst.form-check-input(type='checkbox' name='gst')
                             | No GST
-                    .checkbox
-                        label(for='prov')
-                            input#prov(type='checkbox' name='prov')
+                    .form-check
+                        label.form-check-label(for='prov')
+                            input#prov.form-check-input(type='checkbox' name='prov')
                             | No PROV
-                    .checkbox
-                        label(for='msp')
-                            input#msp(type='checkbox' name='msp')
+                    .form-check
+                        label.form-check-label(for='msp')
+                            input#msp.form-check-input(type='checkbox' name='msp')
                             | Apply MSP Assist
                 .col-8
                     .form-group

@@ -92,29 +92,29 @@ block content
                                 td.text-nowrap #{client.tel.number}
                                 td.text-nowrap #{client.cell.number}
                                 td.text-nowrap #{client.email.value}
-                                td.check #{client.slips}
-                                td.check #{client.selfEmployed}
+                                td.check #{client.slips ? 'Y' : ''}
+                                td.check #{client.selfEmployed ? 'Y' : ''}
                                 td #{client.t1135}
-                                td.check #{client.rental}
-                                td.check #{client.stocks}
-                                td.check #{client.new}
-                                td.check.toggle #{client.pickedUp}
-                                td.text-nowrap #{client.husband.lastName}
-                                td.text-nowrap #{client.husband.firstName}
-                                td.text-nowrap #{client.wife.lastName}
-                                td.text-nowrap #{client.wife.firstName}
+                                td.check #{client.rental ? 'Y' : ''}
+                                td.check #{client.stocks ? 'Y' : ''}
+                                td.check #{client.new ? 'Y' : ''}
+                                td.check.toggle #{client.pickedUp ? 'Y' : ''}
+                                td.text-nowrap #{client.husband ? client.husband.lastName : ''}
+                                td.text-nowrap #{client.husband ? client.husband.firstName : ''}
+                                td.text-nowrap #{client.wife ? client.wife.lastName : ''}
+                                td.text-nowrap #{client.wife ? client.wife.firstName : ''}
                                 td.text-nowrap #{client.group}
                                 td.date.text-nowrap #{client.pickupDate}
                                 td #{client.interviewer}
                                 td.text-nowrap.edit #{client.preparer}
-                                td #{client.preparerDone}
+                                td #{client.preparerDone ? 'Y' : ''}
                                 td #{client.checker}
-                                td.check.toggle #{client.checkerDone}
+                                td.check.toggle #{client.checkerDone ? 'Y' : ''}
                                 td.text-nowrap.edit #{client.outstandingInfo}
                                 td.text-nowrap.edit #{client.remarks}
-                                td.check.toggle #{client.readyForPickup}
+                                td.check.toggle #{client.readyForPickup ? 'Y' : ''}
                                 td.date.text-nowrap.date-edit #{client.callDate}
-                                td.check.toggle #{client.pickupOk}
+                                td.check.toggle #{client.pickupOk ? 'Y' : ''}
                                 td.text-nowrap.date-edit #{client.emailed}
                                 td.text-nowrap.pyt #{client.pytReceived}
                                 td.text-nowrap.edit #{client.thingsToDo}

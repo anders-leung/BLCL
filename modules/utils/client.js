@@ -11,9 +11,12 @@ var clientNames = {
             if (client.wife.firstName) {
                 clientName += ' and ';
                 clientName += client.wife.lastName + ', ' + client.wife.firstName;
+            } else {
+                client.wife = null;
             }
         } else {
             clientName += client.wife.lastName + ', ' + client.wife.firstName;
+            client.husband = null;
         }
         return clientName;
     },
@@ -28,10 +31,13 @@ var clientNames = {
                 clientName += '&';
                 clientName += client.wife.lastName.replace(/ /g,'') + '-' +
                     client.wife.firstName.replace(/ /g,'');
+            } else {
+                client.wife = null;
             }
         } else {
             clientName += client.wife.lastName.replace(/ /g,'') + '-' +
                 client.wife.firstName.replace(/ /g,'');
+            client.husband = null;
         }
         return clientName.toLowerCase();
     }
