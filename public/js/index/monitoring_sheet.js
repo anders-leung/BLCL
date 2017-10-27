@@ -38,7 +38,7 @@ function getField(column) {
         case 'Remarks':
             return 'remarks';
         case 'Ready for Pickup':
-            return 'readyForPickup';
+            return 'packed';
         case 'Call Date':
             return 'callDate';
         case 'Pickup OK':
@@ -93,6 +93,10 @@ function resetTable(tableId) {
     setTable(tableId);
 }
 
+$(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
+    $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
+});
+
 $(document).ready(function() {
     var socket = io();
 
@@ -136,8 +140,8 @@ $(document).ready(function() {
                 otherTable = $('#packedTable').DataTable();
                 otherTable.row.add(addRow.data()).draw();
                 addRow.remove().draw();
-                $('#packedTable').destroy();
-                resetTable('#packedTable');
+                $('#packedTable').DataTable().destroy();
+                setTable('#packedTable');
             }
         } else {
             if (type == 'date') {

@@ -20,7 +20,7 @@ block content
     #table.col-12.tab-content(style='border-top: 0')
         - for (var i = 0; i < clients.length; i++)
             div(id=clients[i][0]).tab-pane
-                table(id=clients[i][0] + 'Table').cell-border
+                table.nowrap(id=clients[i][0] + 'Table').cell-border
                     thead
                         tr
                             th Interview Date
@@ -112,7 +112,7 @@ block content
                                 td.check.toggle #{client.checkerDone ? 'Y' : ''}
                                 td.text-nowrap.edit #{client.outstandingInfo}
                                 td.text-nowrap.edit #{client.remarks}
-                                td.check.toggle #{client.readyForPickup ? 'Y' : ''}
+                                td.check.toggle #{client.packed ? 'Y' : ''}
                                 td.date.text-nowrap.date-edit #{client.callDate}
                                 td.check.toggle #{client.pickupOk ? 'Y' : ''}
                                 td.text-nowrap.date-edit #{client.emailed}

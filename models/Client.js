@@ -299,7 +299,6 @@ var ClientSchema = new Schema({
         default: ''
     },
     checkerDone: { type: Boolean, default: false },
-    readyForPickup: { type: Boolean, default: false },
     pickupOk: { type: Boolean, default: false },
     pytReceived: {
         type: String,
