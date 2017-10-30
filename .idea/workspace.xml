@@ -5,26 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c5cf9b54-7d29-4db4-b8ac-0ff55423677b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/modules/config.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/setup/loading.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/js/utils/datepicker.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/routes/setup.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/setup.jade" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.js" afterPath="$PROJECT_DIR$/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/Client.js" afterPath="$PROJECT_DIR$/models/Client.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/client.js" afterPath="$PROJECT_DIR$/modules/client.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/read_excel.js" afterPath="$PROJECT_DIR$/modules/read_excel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/modules/write_excel.js" afterPath="$PROJECT_DIR$/modules/write_excel.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/client/client_form.js" afterPath="$PROJECT_DIR$/public/js/client/client_form.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/clients/job_list.js" afterPath="$PROJECT_DIR$/public/js/clients/job_list.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/index/monitoring_sheet.js" afterPath="$PROJECT_DIR$/public/js/index/monitoring_sheet.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/client.js" afterPath="$PROJECT_DIR$/routes/client.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/index.js" afterPath="$PROJECT_DIR$/routes/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/login.js" afterPath="$PROJECT_DIR$/routes/login.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/client.jade" afterPath="$PROJECT_DIR$/views/client.jade" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/index.jade" afterPath="$PROJECT_DIR$/views/index.jade" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/layout.jade" afterPath="$PROJECT_DIR$/views/layout.jade" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -42,7 +24,7 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="setup.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="setup.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/setup.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="255">
@@ -54,11 +36,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="monitoring_sheet.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/js/index/monitoring_sheet.js">
+      <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="62">
-              <caret line="247" column="29" lean-forward="false" selection-start-line="247" selection-start-column="29" selection-end-line="247" selection-end-column="29" />
+            <state relative-caret-position="289">
+              <caret line="68" column="0" lean-forward="false" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -260,7 +242,6 @@
         <option value="$PROJECT_DIR$/modules/config.js" />
         <option value="$PROJECT_DIR$/routes/index.js" />
         <option value="$PROJECT_DIR$/public/js/setup/get_path.js" />
-        <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/modules/read_excel.js" />
         <option value="$PROJECT_DIR$/views/setup.jade" />
         <option value="$PROJECT_DIR$/public/css/stylesheet.css" />
@@ -279,6 +260,7 @@
         <option value="$PROJECT_DIR$/routes/client.js" />
         <option value="$PROJECT_DIR$/routes/login.js" />
         <option value="$PROJECT_DIR$/routes/setup.js" />
+        <option value="$PROJECT_DIR$/app.js" />
       </list>
     </option>
   </component>
@@ -729,12 +711,12 @@
       <workItem from="1508971222880" duration="27621000" />
       <workItem from="1509124236623" duration="14975000" />
       <workItem from="1509228945373" duration="2095000" />
-      <workItem from="1509381964279" duration="16572000" />
+      <workItem from="1509381964279" duration="17275000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="496696000" />
+    <option name="totallyTimeSpent" value="497399000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -948,14 +930,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/js/setup/get_path.js" />
-    <entry file="file://$PROJECT_DIR$/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="367">
-          <caret line="64" column="8" lean-forward="false" selection-start-line="64" selection-start-column="8" selection-end-line="64" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/modules/utils/client.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -1176,6 +1150,14 @@
           <folding>
             <element signature="e#0#42#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="68" column="0" lean-forward="false" selection-start-line="68" selection-start-column="0" selection-end-line="68" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
