@@ -20,7 +20,6 @@ router.post('/', function(req, res) {
         }
         if (user) {
             CookieService.createCookie(req, user.initials, user.role);
-            console.log(req.url);
             res.redirect('/');
         }
     });

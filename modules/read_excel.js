@@ -752,7 +752,7 @@ function readExcel(filepath) {
     excelToClient(workbook);
 }
 
-function readFolder(filepath) {
+function readFolder(filepath, callback) {
     fs.readdir(filepath, function(err, files) {
         (function myLoop (i) {
             if (i % 300 == 0) {
@@ -765,8 +765,8 @@ function readFolder(filepath) {
                 if (--i) myLoop(i);
             }
         })(files.length - 1);
-        console.log('Done');
     });
+    callback();
 }
 
 module.exports = readFolder;

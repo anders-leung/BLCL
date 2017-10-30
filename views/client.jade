@@ -5,10 +5,9 @@ extends layout
 
 block content
 
-    link(rel='stylesheet', href='/js/jquery-ui-1.12.1.custom/jquery-ui.min.css')
-    script(type='text/javascript', src='/js/jquery-ui-1.12.1.custom/jquery-ui.min.js')
     script(type="text/javascript").
         var client = !{JSON.stringify(client)};
+        var options = !{JSON.stringify(options)};
     script(src='/js/client/client_form.js')
 
     h1=title
@@ -43,13 +42,9 @@ block content
                 .form-group.col-2
                     label(for='method') Drop or Email
                     select#method.form-control(name='method')
-                        option Drop
-                        option Email
                 .form-group.col-2
                     label(for='t1135') T1135
                     select#t1135.form-control(name='t1135')
-                        option Simple
-                        option Complicated
                 .form-group.col-2
                     label(for='group') Group
                     input#group.form-control(type='text' name='group')
@@ -202,13 +197,6 @@ block content
                     .col-1
                         label(for='relationship1') Relationship
                         select#relationship1.form-control(name='dependent1.relationship')
-                            option
-                            option S
-                            option D
-                            option F
-                            option M
-                            option GF
-                            option GM
                     .col-2
                         label(for='dob1') Date of Birth
                         input#dob1.form-control.datepicker(type='text' name='dependent1.dateOfBirth')
@@ -222,13 +210,6 @@ block content
                     .col-1
                         label(for='relationship2') Relationship
                         select#relationship2.form-control(name='dependent2.relationship')
-                            option
-                            option S
-                            option D
-                            option F
-                            option M
-                            option GF
-                            option GM
                     .col-2
                         label(for='dob2') Date of Birth
                         input#dob2.form-control.datepicker(type='text' name='dependent2.dateOfBirth')
@@ -242,13 +223,6 @@ block content
                     .col-1
                         label(for='relationship3') Relationship
                         select#relationship3.form-control(name='dependent3.relationship')
-                            option
-                            option S
-                            option D
-                            option F
-                            option M
-                            option GF
-                            option GM
                     .col-2
                         label(for='dob3') Date of Birth
                         input#dob3.form-control.datepicker(type='text' name='dependent3.dateOfBirth')
@@ -790,4 +764,3 @@ block content
         input.btn.btn-success.offset-1.col-10(type='submit' value='Done')
     br
     br
-

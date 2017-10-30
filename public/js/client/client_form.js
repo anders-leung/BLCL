@@ -23,7 +23,7 @@ $(document).ready(function(e) {
         var number = $(this);
         var value = number.val();
 
-        if (e.charCode < 48 && e.charCode > 57) {
+        if (e.keyCode >= 48 && e.keyCode <= 57) {
             console.log(e);
         }
 
@@ -52,6 +52,24 @@ $(document).ready(function(e) {
             sin.val(value + '-');
         }
     });
+
+    function populateSelect(name, options) {
+        for (var i = 0; i < options.length; i++) {
+            $('#' + name).append($('<option>', {
+                text: options[i]
+            }));
+        }
+    }
+
+    for (var select in options) {
+        if (select == 'relationship') {
+            for (var j = 1; j < 4; j++) {
+                populateSelect(select + j, options[select]);
+            }
+        } else {
+            populateSelect(select, options[select]);
+        }
+    }
 
     if (client) {
         $('#year').val(client.year);

@@ -273,6 +273,7 @@ var fields = {
         },
 
         'B55' : function(cell, client) {
+            console.log('client msp: ' + client.msp);
             cell.value(client.msp ? 'Y' : '');
         },
 
@@ -729,7 +730,7 @@ function clientToExcel(filepath, client) {
                 fields[section][cell](workbook.sheet('Interview Sheet').cell(cell), client);
             }
         }
-        return workbook.toFileAsync(filepath);
+        return workbook.toFileAsync(filepath + '.xlsx');
     });
 }
 

@@ -1,0 +1,13 @@
+//
+   Created by ander on 2017-10-27.
+
+extends layout
+
+block content
+    script(type='text/javascript', src='/js/setup/loading.js')
+    .container
+        form(method='post')
+            .form-group
+                label(for='directory') Please type your T1 directory
+                input#directory.form-control(type='text' name='directory')
+            input#submit.btn.btn-success(type='submit' value='Set T1 Directory')

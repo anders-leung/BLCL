@@ -52,19 +52,31 @@ var ClientSchema = new Schema({
     },
     dependent1: {
         name: { type: String, default: "" },
-        relationship: { type: String, default: "" },
+        relationship: {
+            type: String,
+            enum: ['', 'S', 'D', 'F', 'M', 'GF', 'GM'],
+            default: ''
+        },
         dateOfBirth: { type: String, default: "" },
         sin: { type: String, default: "" }
     },
     dependent2: {
         name: { type: String, default: "" },
-        relationship: { type: String, default: "" },
+        relationship: {
+            type: String,
+            enum: ['', 'S', 'D', 'F', 'M', 'GF', 'GM'],
+            default: ''
+        },
         dateOfBirth: { type: String, default: "" },
         sin: { type: String, default: "" }
     },
     dependent3: {
         name: { type: String, default: "" },
-        relationship: { type: String, default: "" },
+        relationship: {
+            type: String,
+            enum: ['', 'S', 'D', 'F', 'M', 'GF', 'GM'],
+            default: ''
+        },
         dateOfBirth: { type: String, default: "" },
         sin: { type: String, default: "" }
     },

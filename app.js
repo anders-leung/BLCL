@@ -8,6 +8,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var setup = require('./routes/setup');
 var index = require('./routes/index');
 var login = require('./routes/login');
 var users = require('./routes/users');
@@ -39,6 +40,7 @@ app.use(session({
 }));
 
 app.use('/', index);
+app.use('/setup', setup);
 app.use('/login', login);
 app.use('/users', users);
 app.use('/loadExcel', excel);
@@ -66,8 +68,6 @@ app.use(function(err, req, res, next) {
 //var setup = require('./routes/utils/setup');
 //setup();
 
-//var readFolder = require('./modules/read_excel');
-//readFolder('C://Users//ander//Desktop//BLCL Files//Sheets');
 /*
 var ClientService = require('./modules/client');
 ClientService.findClient({ 'fileName' : 'ZHU, YAN JIE' }, function(err, client) {

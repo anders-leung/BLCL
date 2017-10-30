@@ -11,17 +11,13 @@ var ClientService = {
         client.fileName = clientNames.getFileName(client);
         client.pathName = clientNames.getPathName(client);
         client.save(function(err) {
-            callback(err);
+            callback(err, client);
         });
     },
 
     findClient : function(params, callback) {
         Client.find(params).lean().exec(function(err, client) {
-            if (err) {
-                callback(err);
-            } else {
-                callback(err, client);
-            }
+            callback(err, client);
         });
     },
 
@@ -64,10 +60,10 @@ var ClientService = {
     },
 
     updateClient : function(search, values, callback) {
-        Client.update(search, { $set: values }, function(err, client) {
-            if (err) {
-                callback(err, client);
-            }
+        Client.update(search, { $set: values }, function(save_err) {
+            Client.findOne(search, function(find_err, client) {
+                callback(save_err, client);
+            })
         });
     },
 
@@ -87,6 +83,18 @@ var ClientService = {
 
     getPayments : function() {
         return Client.schema.path('pytReceived').enumValues;
+    },
+
+    getMethods : function() {
+        return Client.schema.path('method').enumValues;
+    },
+
+    getT1135 : function() {
+        return Client.schema.path('t1135').enumValues;
+    },
+
+    getRelationships : function() {
+        return Client.schema.path('dependent1.relationship').enumValues;
     }
 };
 

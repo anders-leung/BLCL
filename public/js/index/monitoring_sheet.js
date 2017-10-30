@@ -1,7 +1,6 @@
 /**
  * Created by ander on 2017-06-06.
  */
-pyt = pyt.split(",");
 
 function getFileName(row) {
     var husbandLastName = $(row).find('td:nth-child(12)').html();
@@ -54,50 +53,63 @@ function getField(column) {
     }
 }
 
-function setTable(tableId) {
-    $('.tab-pane').each(function(i) {
-        if (i == 0) {
-            $(this).addClass('in');
-            $(this).addClass('active');
-            return;
-        }
-    });
-
-    $(tableId + ' tfoot th').each( function () {
-        var title = $(this).text();
-        $(this).html( '<input type="text"/>' );
-    });
-
-    var table = $(tableId).DataTable({
-        'columnDefs': [{
-            type: 'date', targets: 0
-        }],
-        'select': true,
-        'scrollX': true
-    });
-    // Setup - add a text input to each footer cell
-
-    // Apply the search
-    table.columns().every(function(i) {
-        var that = this;
-        $('input', this.footer()).on('keyup change', function() {
-            if (that.search() !== this.value) {
-                that.search(this.value).draw();
-            }
-        });
-    });
-}
-
-function resetTable(tableId) {
-    $(tableId).DataTable().destroy();
-    setTable(tableId);
+function adjustTables() {
+    $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
 }
 
 $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
-    $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
+    adjustTables();
 });
 
 $(document).ready(function() {
+    pyt = payment.split(',');
+
+    // function for setting up tables
+    function setTable(tableId) {
+        if (tableId == '#normalTable') {
+            $('.tab-pane').each(function (i) {
+                if (i == 0) {
+                    $(this).addClass('in');
+                    $(this).addClass('active');
+                }
+            });
+        }
+
+        $(tableId + ' tfoot th').each( function () {
+            var title = $(this).text();
+            $(this).html( '<input type="text"/>' );
+        });
+
+        var table = $(tableId).DataTable({
+            'columnDefs': [{
+                type: 'date', targets: 0
+            }],
+            'select': true,
+            'scrollX': true
+        });
+
+        table.columns().every(function(i) {
+            var that = this;
+            $('input', this.footer()).on('keyup change', function() {
+                if (that.search() !== this.value) {
+                    that.search(this.value).draw();
+                }
+            });
+        });
+
+        enableEditing(tableId);
+        $(tableId).on('focus', '.datepicker', function() {
+            $(this).datepicker({
+                dateFormat: 'dd-M-y'
+            });
+        })
+    }
+
+    function resetTable(tableId) {
+        $(tableId).DataTable().destroy();
+        setTable(tableId);
+    }
+
     var socket = io();
 
     socket.on('done preparing', preparerEvent);
@@ -122,13 +134,13 @@ $(document).ready(function() {
         var rowHtml = $('tbody tr').eq(row);
         var cell = $(rowHtml).find('td:nth-child(' + column + ')');
 
-        var table = $('#normalTable').DataTable();
+        var table = $(cell).closest('table').DataTable();
 
         var addRow = table.row($(rowHtml));
         var otherTable;
 
         if (typeof(value) === 'boolean') {
-            $(cell).html('N');
+            $(cell).html('');
             if (value) {
                 $(cell).html('Y');
             }
@@ -140,25 +152,19 @@ $(document).ready(function() {
                 otherTable = $('#packedTable').DataTable();
                 otherTable.row.add(addRow.data()).draw();
                 addRow.remove().draw();
-                $('#packedTable').DataTable().destroy();
-                setTable('#packedTable');
             }
         } else {
-            if (type == 'date') {
-                $(cell).on('click', showDateInput);
-            } else if (type == 'edit') {
-                $(cell).on('click', showInput);
-            } else if (type == 'select') {
+            var tableId = $(cell).closest('table');
+            if (type == 'select') {
                 $(cell).find('select').toggle();
-                $(cell).on('click', showPytInput);
             }
+            enableEditing(tableId)
             cell.html(value);
             table.cell($(cell)).data(value);
             if (column == 28) {
                 otherTable = $('#emailedTable').DataTable();
                 otherTable.row.add(addRow.data()).draw();
                 addRow.remove().draw();
-                resetTable('#emailedTable');
             }
         }
 
@@ -189,10 +195,10 @@ $(document).ready(function() {
 
     $.fn.dataTable.moment('dd-M-y');
 
-    resetTable('#normalTable');
-    resetTable('#packedTable');
-    resetTable('#emailedTable');
-    resetTable('#pickedUpTable');
+    setTable('#normalTable');
+    setTable('#packedTable');
+    setTable('#emailedTable');
+    setTable('#pickedUpTable');
 
     $('tr td').not('.toggle, .edit, .date-edit').dblclick(function() {
         window.location = $(this).parent().data('href');
@@ -213,37 +219,50 @@ $(document).ready(function() {
         updateHtml(row, column + 1, value, null, true);
     });
 
+    function enableEditing(tableId) {
+        $(tableId).on('click', '.edit', showInput);
+        $(tableId).on('click', '.date-edit', showDateInput);
+        $(tableId).on('click', '.pyt', showPytInput);
+    }
+
+    function disableEditing(tableId) {
+        $(tableId).off('click');
+    }
+
     function showInput(e) {
         var cell = e.target;
         var value = $(this).html();
         var input = $("<input type='text' value='" + value + "'>");
         $(this).html(input);
-        $(this).toggleClass('edit');
         $(input).focus();
         var length = $(input).val().length;
         var target = e.target.firstChild;
         target.setSelectionRange(length, length);
 
-        $(cell).off('click', showInput);
+        var table = $(cell).closest('table');
+        disableEditing(table);
+        adjustTables()
     }
 
-    $('.edit').on('click', showInput);
+    function saveEdits(target) {
+        var column = $(target).index();
+        var row = $(target).closest('tr').index();
+        var value = $(target).find('input').val();
+        var type = 'edit';
+        if (column == 26 || column == 28) {
+            type = 'date-edit';
+        }
+        updateHtml(row, column + 1, value, type, true);
+        return false;
+    }
 
     $('.edit, .date-edit').keypress(function(e) {
         if (e.which == 13) {
-            var column = $(this).index();
-            var row = $(this).closest('tr').index();
-            var value = $(this).find('input').val();
-            var type = 'edit';
-            if (column == 25 || column == 27) {
-                type = 'date-edit';
-            }
-            updateHtml(row, column + 1, value, type, true);
-            return false;
+            saveEdits(this);
         }
+    }).focusout(function() {
+        saveEdits(this);
     });
-
-    $('.pyt').on('click', showPytInput);
 
     function showPytInput(e) {
         var column = $(this).index();
@@ -269,19 +288,20 @@ $(document).ready(function() {
             updateHtml(row, column + 1, $(this).val(), 'select', true)
         });
 
-        $(cell).off('click', showPytInput);
+        var table = $(cell).closest('table');
+        disableEditing(table);
+        adjustTables();
     }
 
     function showDateInput(e) {
         var cell = e.target;
         var value = $(this).html();
-        var date = $("<input type='date' value='" + value + "'>");
+        var date = $("<input type='text' class='datepicker' value='" + value + "'>");
         $(this).html(date);
         $(date).focus();
-        $(this).toggleClass('date-edit');
 
-        $(cell).off('click', showDateInput);
+        var table = $(cell).closest('table');
+        disableEditing(table);
+        adjustTables();
     }
-
-    $('.date-edit').on('click', showDateInput);
 });
