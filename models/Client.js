@@ -310,13 +310,15 @@ var ClientSchema = new Schema({
         enum: [ '', 'WIP', 'OK' ],
         default: ''
     },
-    checkerDone: { type: Boolean, default: false },
+    readyToPack: { type: String, default: '' },
     pickupOk: { type: Boolean, default: false },
     pytReceived: {
         type: String,
-        enum: [ '', 'CA', 'CK', 'DD', 'ETR' ],
+        enum: [ '', 'ADV', 'CA', 'CK', 'DD', 'ET', 'INV', 'OS' ],
         default: ''
     },
+    pytAmount: { type: String, default: '' },
+    pytDate: { type: String, default: '' },
     outstandingInfo: { type: String, default: "" },
     remarks: { type: String, default: "" },
     callDate: { type: String, default: "" },

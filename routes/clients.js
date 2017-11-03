@@ -10,6 +10,23 @@ var UserService = require('./../modules/user');
 var AssignmentService = require('./../modules/assignment');
 
 router.get('/', CookieService.isLoggedIn, function(req, res) {
+    var query = { 'initials' : req.session.initials };
+    var initials = req.session.initials;
+    ClientService.findClientsWithUser(initials, function(err, clients) {
+        if (err) res.render('error');
+        else {
+            res.render('clients', {
+                clients : clients,
+                initials : initials,
+                statuses : ClientService.getStatuses()
+            });
+        }
+    });
+});
+
+// Old get
+/*
+router.get('/', CookieService.isLoggedIn, function(req, res) {
 
     var query = {
         'initials' : req.session.initials
@@ -30,5 +47,6 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
         });
     });
 });
+*/
 
 module.exports = router;

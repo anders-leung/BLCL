@@ -15,6 +15,7 @@ var users = require('./routes/users');
 var excel = require('./routes/excel');
 var client = require('./routes/client');
 var clients = require('./routes/clients');
+var payment = require('./routes/payment');
 
 mongoose.Promise = require('bluebird');
 mongoose.connect('mongodb://localhost:27017/');
@@ -46,6 +47,7 @@ app.use('/users', users);
 app.use('/loadExcel', excel);
 app.use('/client', client);
 app.use('/clients', clients);
+app.use('/payment', payment);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -6,7 +6,7 @@ var User = require('../../models/User');
 
 module.exports = function() {
 
-    ClientService.saveClient({
+/*    ClientService.saveClient({
         year: 2016,
         interviewer: "A",
         prSold: true,
@@ -283,7 +283,7 @@ module.exports = function() {
             console.log(err);
         }
     });
-
+*/
     var admin = new User();
     admin.email = 'georgia@ben-cpa.com';
     admin.password = 'adminPassword';
@@ -296,5 +296,12 @@ module.exports = function() {
     user.password = 'test';
     user.role = 'Employee';
     user.initials = 'TE';
+    user.save();
+
+    var user = new User();
+    user.email = 'amy@ben-cpa.com';
+    user.password = 'amy';
+    user.role = 'Employee';
+    user.initials = 'AMY';
     user.save();
 };

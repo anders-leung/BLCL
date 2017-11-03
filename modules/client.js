@@ -48,6 +48,16 @@ var ClientService = {
         });
     },
 
+    findClientsPytRec : function(callback) {
+        var search = {
+            'pytReceived' : { $ne : '' },
+            'pytAmount' : { $ne : '' }
+        };
+        Client.find(search).lean().exec(function(err, clients) {
+            callback(err, clients);
+        });
+    },
+
     findAllOtherClients : function(callback) {
         var search = {};
         search['packed'] = false;
@@ -74,6 +84,12 @@ var ClientService = {
             } else {
                 callback(err, clients);
             }
+        });
+    },
+
+    findClientsWithUser : function(user, callback) {
+        Client.find({'preparer' : user}).lean().exec(function(err, clients) {
+            callback(err, clients);
         });
     },
 

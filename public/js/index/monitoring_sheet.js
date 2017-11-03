@@ -1,7 +1,6 @@
 /**
  * Created by ander on 2017-06-06.
  */
-
 function getFileName(row) {
     var husbandLastName = $(row).find('td:nth-child(12)').html();
     var husbandFirstName = $(row).find('td:nth-child(13)').html();
@@ -28,15 +27,17 @@ function getField(column) {
     switch (header) {
         case 'Picked Up':
             return 'pickedUp';
+        case 'Preparer':
+            return 'preparer';
         case 'Preparer Done':
             return 'preparerDone';
-        case 'Checker Done':
-            return 'checkerDone';
+        case 'Ready To Pack':
+            return 'readyToPack';
         case 'Outstanding Info':
             return 'outstandingInfo';
         case 'Remarks':
             return 'remarks';
-        case 'Ready for Pickup':
+        case 'Packed':
             return 'packed';
         case 'Call Date':
             return 'callDate';
@@ -44,8 +45,10 @@ function getField(column) {
             return 'pickupOk';
         case 'Emailed':
             return 'emailed';
-        case 'PYT Received':
+        case 'PYT Rec\'d':
             return 'pytReceived';
+        case 'PYT Amount':
+            return 'pytAmount';
         case 'Things to do After Pickup':
             return 'thingsToDo';
         case 'PRC Last Year':
@@ -63,6 +66,7 @@ $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
 
 $(document).ready(function() {
     pyt = payment.split(',');
+    var previousValue;
 
     // function for setting up tables
     function setTable(tableId) {
@@ -81,14 +85,15 @@ $(document).ready(function() {
         });
 
         var table = $(tableId).DataTable({
-            'columnDefs': [{
-                type: 'date', targets: 0
-            }],
+            'columnDefs': [
+                { type: 'date', targets: 0 },
+                { visible: false, searchable: true, targets: 31 }
+            ],
             'select': true,
             'scrollX': true
         });
 
-        table.columns().every(function(i) {
+        table.columns().every(function() {
             var that = this;
             $('input', this.footer()).on('keyup change', function() {
                 if (that.search() !== this.value) {
@@ -97,12 +102,34 @@ $(document).ready(function() {
             });
         });
 
-        enableEditing(tableId);
+        enableEditing(tableId, role);
         $(tableId).on('focus', '.datepicker', function() {
             $(this).datepicker({
-                dateFormat: 'dd-M-y'
+                dateFormat: 'dd-M-y',
+                onSelect: function() {
+                    saveEdits($(this).parent())
+                }
             });
-        })
+        });
+
+        $(tableId).on('keypress', '.preparer, .edit, .date-edit', function(e) {
+            if (e.which == 13) {
+                saveEdits(this);
+            }
+        });
+
+        $(tableId).on('keyup', '.preparer, .pyt, .edit, .date-edit', function(e) {
+            if (e.which == 27) {
+                console.log('keyup')
+                $(this).html(previousValue);
+                enableEditing(tableId, role);
+                adjustTables();
+            }
+        });
+
+        $(tableId).on('dblclick', 'tr td:not(.toggle, .edit, .date-edit)', function() {
+            window.location = $(this).parent().data('href');
+        });
     }
 
     function resetTable(tableId) {
@@ -116,81 +143,65 @@ $(document).ready(function() {
     socket.on('monitoring sheet update', updateEvent);
 
     function preparerEvent(data) {
-        var row = $('td').filter(function() {
-            return $(this).html() == data.phone_number;
-        }).closest('tr');
-
-        var cell = $(row).find('td:nth-child(20)');
-        $(cell).html(data.value);
-        var table = $('table').DataTable();
-        table.cell($(cell)).data(data.value);
+        var table = $('#normalTable').DataTable();
+        table.rows().every(function(rowIdx) {
+            var fileName = this.data()[31];
+            if (fileName == data.fileName) {
+                table.cell(rowIdx, 19).data(data.value).draw();
+                return;
+            }
+        });
     }
 
     function updateEvent(data) {
-        updateHtml(data.row, data.column, data.value, data.type);
+        updateHtml(data.table, data.fileName, data.column, data.value, data.type, false);
     }
 
-    function updateHtml(row, column, value, type, emit) {
-        var rowHtml = $('tbody tr').eq(row);
-        var cell = $(rowHtml).find('td:nth-child(' + column + ')');
+    function moveRow(row, tableId) {
+        console.log($(row))
+        var table = $(tableId).DataTable();
+        table.row.add(row.data()).draw();
+        row.remove().draw();
+    }
 
-        var table = $(cell).closest('table').DataTable();
+    function updateHtml(table, fileName, column, value, type, emit) {
+        var tableId = table.table().node().id;
+        var row;
+        table.rows().every(function(rowIdx) {
+            var name = this.data()[31];
+            if (name == fileName) {
+                if (type == 'boolean') value = value ? 'Y' : '';
+                if (type == 'select') $('select').toggle();
+                table.cell(rowIdx, column).data(value).draw();
+                row = this;
+            }
+        });
 
-        var addRow = table.row($(rowHtml));
-        var otherTable;
-
-        if (typeof(value) === 'boolean') {
-            $(cell).html('');
-            if (value) {
-                $(cell).html('Y');
-            }
-            if (column == 11) {
-                otherTable = $('#pickedUpTable').DataTable();
-                otherTable.row.add(addRow.data()).draw();
-                addRow.remove().draw();
-            } else if (column == 25) {
-                otherTable = $('#packedTable').DataTable();
-                otherTable.row.add(addRow.data()).draw();
-                addRow.remove().draw();
-            }
-        } else {
-            var tableId = $(cell).closest('table');
-            if (type == 'select') {
-                $(cell).find('select').toggle();
-            }
-            enableEditing(tableId)
-            cell.html(value);
-            table.cell($(cell)).data(value);
-            if (column == 28) {
-                otherTable = $('#emailedTable').DataTable();
-                otherTable.row.add(addRow.data()).draw();
-                addRow.remove().draw();
-            }
+        switch (column) {
+            case 24:
+                moveRow(row, '#packedTable');
+                break;
+            case 27:
+                moveRow(row, '#emailedTable');
+                break;
+            default:
+                return;
         }
 
+        return;
         if (!emit) { return; }
 
-        var fileName = getFileName(rowHtml);
         var field = getField(column);
         socket.emit('monitoring sheet update', {
-            row: row,
             column: column,
             type: type,
             fileName: fileName,
             field: field,
             value: value
         });
-    }
 
-    function assignJobs() {
-        $('tbody tr').each(function() {
-            var phone_number = $(this).find('td:nth-child(' + 2 + ')').html();
-            var preparer = $(this).find('td:nth-child(' + 19 + ')').html();
-            socket.emit('assigning jobs', {
-                phone_number: phone_number,
-                preparer: preparer
-            });
-        });
+        enableEditing('#' + tableId);
+        adjustTables();
     }
 
     $.fn.dataTable.moment('dd-M-y');
@@ -198,40 +209,41 @@ $(document).ready(function() {
     setTable('#normalTable');
     setTable('#packedTable');
     setTable('#emailedTable');
-    setTable('#pickedUpTable');
+    setTable('#signedTable');
 
-    $('tr td').not('.toggle, .edit, .date-edit').dblclick(function() {
-        window.location = $(this).parent().data('href');
-    });
-
-    $('#assignJobs').click(function() {
-        assignJobs();
-    });
-
-    $('.toggle').click(function() {
-        var column = $(this).index();
-        var row = $(this).closest('tr').index();
-        var check = $(this).html();
-        var value = true;
-        if (check == 'Y') {
-            value = false;
-        }
-        updateHtml(row, column + 1, value, null, true);
-    });
-
-    function enableEditing(tableId) {
+    function enableEditing(tableId, role) {
         $(tableId).on('click', '.edit', showInput);
         $(tableId).on('click', '.date-edit', showDateInput);
         $(tableId).on('click', '.pyt', showPytInput);
+        $(tableId).on('click', '.toggle', toggle);
+
+        if (role == 'Administrator') {
+            $(tableId).on('click', '.preparer', showInput);
+        }
     }
 
     function disableEditing(tableId) {
         $(tableId).off('click');
     }
 
+    function toggle(e) {
+        var target = e.target;
+        var column = $(target).index();
+        var table = $(target).closest('table').DataTable();
+        var row = $(target).closest('tr');
+        var fileName = table.row($(row)).data()[31];
+        var check = $(target).html();
+        var value = true;
+        if (check == 'Y') {
+            value = false;
+        }
+        updateHtml(table, fileName, column, value, 'boolean', true);
+    }
+
     function showInput(e) {
         var cell = e.target;
         var value = $(this).html();
+        previousValue = value;
         var input = $("<input type='text' value='" + value + "'>");
         $(this).html(input);
         $(input).focus();
@@ -246,29 +258,26 @@ $(document).ready(function() {
 
     function saveEdits(target) {
         var column = $(target).index();
-        var row = $(target).closest('tr').index();
+        var table = $(target).closest('table').DataTable();
+        var row = $(target).closest('tr');
+        var fileName = table.row($(row)).data()[31];
         var value = $(target).find('input').val();
         var type = 'edit';
         if (column == 26 || column == 28) {
             type = 'date-edit';
         }
-        updateHtml(row, column + 1, value, type, true);
+        updateHtml(table, fileName, column, value, type, true);
         return false;
     }
 
-    $('.edit, .date-edit').keypress(function(e) {
-        if (e.which == 13) {
-            saveEdits(this);
-        }
-    }).focusout(function() {
-        saveEdits(this);
-    });
-
     function showPytInput(e) {
         var column = $(this).index();
-        var row = $(this).closest('tr').index();
+        var table = $(this).closest('table').DataTable();
+        var row = $(this).closest('tr');
+        var fileName = table.row($(row)).data()[31];
         var cell = e.target;
         var value = $(cell).html();
+        previousValue = value;
         var select = "<select>";
         for (var i = 0; i < pyt.length; i++) {
             var option = "<option value='" + pyt[i] + "'";
@@ -284,18 +293,19 @@ $(document).ready(function() {
 
         $(select).focus();
 
-        $(select).focusout(function() {
-            updateHtml(row, column + 1, $(this).val(), 'select', true)
+        $(select).on('change', function() {
+            updateHtml(table, fileName, column, $(this).val(), 'select', true)
         });
 
-        var table = $(cell).closest('table');
-        disableEditing(table);
+        var tableId = $(cell).closest('table');
+        disableEditing(tableId);
         adjustTables();
     }
 
     function showDateInput(e) {
         var cell = e.target;
         var value = $(this).html();
+        previousValue = value;
         var date = $("<input type='text' class='datepicker' value='" + value + "'>");
         $(this).html(date);
         $(date).focus();

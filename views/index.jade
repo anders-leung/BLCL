@@ -4,6 +4,7 @@ block content
     script(type="text/javascript", src='/js/jquery.floatThead.js')
     script(type='text/javascript').
         var payment = "#{pyt}";
+        var role = "#{role}";
     script(src='/js/index/monitoring_sheet.js')
 
     ul.nav.nav-tabs
@@ -14,12 +15,12 @@ block content
         li.nav-item
             a.nav-link(data-toggle='tab' href='#emailed') Emailed
         li.nav-item
-            a.nav-link(data-toggle='tab' href='#pickedUp') Picked Up
+            a.nav-link(data-toggle='tab' href='#osPyt') O/S PYT
 
     #table.col-12.tab-content(style='border-top: 0')
         - for (var i = 0; i < clients.length; i++)
             div(id=clients[i][0]).tab-pane
-                table.nowrap(id=clients[i][0] + 'Table').cell-border
+                table(id=clients[i][0] + 'Table').cell-border
                     thead
                         tr
                             th Interview Date
@@ -27,7 +28,7 @@ block content
                             th Cell
                             th Email
                             th Slip
-                            th Self Employed
+                            th Self Empl
                             th T1135
                             th Rental
                             th Stock
@@ -43,15 +44,17 @@ block content
                             th Preparer
                             th Preparer Done
                             th Checker
-                            th Checker Done
+                            th Ready To Pack
                             th Outstanding Info
                             th Remarks
-                            th Ready for Pickup
+                            th Packed
                             th Call Date
-                            th Pickup OK
+                            th Signed
                             th Emailed
-                            th PYT Received
+                            th PYT Rec'd
+                            th PYT Amount
                             th Things to do After Pickup
+                            th
                     tfoot
                         tr
                             th Interview Date
@@ -59,7 +62,7 @@ block content
                             th Cell
                             th Email
                             th Slip
-                            th Self Employed
+                            th Self Empl
                             th T1135
                             th Rental
                             th Stock
@@ -75,15 +78,17 @@ block content
                             th Preparer
                             th Preparer Done
                             th Checker
-                            th Checker Done
+                            th Ready To Pack
                             th Outstanding Info
                             th Remarks
-                            th Ready for Pickup
+                            th Packed
                             th Call Date
-                            th Pickup OK
+                            th Signed
                             th Emailed
-                            th PYT Received
+                            th PYT Rec'd
+                            th PYT Amount
                             th Things to do After Pickup
+                            th
                     tbody
                         each client in clients[i][1]
                             tr.clickable-row(data-href="/client/" + client.pathName)
@@ -105,10 +110,10 @@ block content
                                 td.text-nowrap #{client.group}
                                 td.text-nowrap #{client.pickupDate}
                                 td #{client.interviewer}
-                                td.text-nowrap.edit #{client.preparer}
-                                td #{client.preparerDone ? 'Y' : ''}
-                                td #{client.checker}
-                                td.check.toggle #{client.checkerDone ? 'Y' : ''}
+                                td.text-nowrap.preparer #{client.preparer}
+                                td #{client.preparerDone}
+                                td.edit #{client.checker}
+                                td.text-nowrap.date-edit #{client.readyToPack}
                                 td.text-nowrap.edit #{client.outstandingInfo}
                                 td.text-nowrap.edit #{client.remarks}
                                 td.check.toggle #{client.packed ? 'Y' : ''}
@@ -116,4 +121,6 @@ block content
                                 td.check.toggle #{client.pickupOk ? 'Y' : ''}
                                 td.text-nowrap.date-edit #{client.emailed}
                                 td.text-nowrap.pyt #{client.pytReceived}
+                                td.text-nowrap.edit #{client.pytAmount}
                                 td.text-nowrap.edit #{client.thingsToDo}
+                                td.text-nowrap #{client.fileName}

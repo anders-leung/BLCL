@@ -26,7 +26,6 @@ var ClientsSocket = require('../socketio/clients');
 
 io.on('connection', function (socket) {
     IndexSocket.monitorUpdate(socket);
-    IndexSocket.jobAssignments(socket);
     ClientsSocket.donePreparing(socket);
 });
 

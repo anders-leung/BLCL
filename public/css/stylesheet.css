@@ -31,10 +31,6 @@ body {
     background-color: white;
 }
 
-.datepicker {
-    text-transform: uppercase;
-}
-
 label {
     display: block;
     padding: 10px 25px 10px 15px;
@@ -43,11 +39,6 @@ label {
 
 input, textarea {
     font-weight: bold;
-    text-transform: uppercase;
-}
-
-#email {
-    text-transform: lowercase;
 }
 
 .highlight {
