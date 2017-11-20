@@ -1,19 +1,19 @@
 /**
- * Created by ander on 2017-11-01.
+ * Created by ander on 2017-11-17.
  */
 var express = require('express');
 var router = express.Router();
 
 var CookieService = require('./utils/cookies');
-var ClientService = require('../modules/client');
+var UserService = require('./../modules/user');
 
-/* GET home page. */
 router.get('/', CookieService.isLoggedIn, function(req, res) {
     if (CookieService.readCookie(req).role != 'Administrator') {
         res.redirect('/');
     }
-    ClientService.findClientsPytRec(function(err, clients) {
-        res.render('payment', { clients: clients })
+    UserService.getAllUsers(function(err, users) {
+        if (err) res.render('error');
+        res.render('manage_users', { title : 'BLCL', users : users, roles : UserService.getRoles() });
     });
 });
 

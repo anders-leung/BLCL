@@ -1,0 +1,25 @@
+//
+   Created by ander on 2017-11-17.
+
+extends layout
+
+block content
+    script(type='text/javascript').
+        var roles = !{JSON.stringify(roles)};;
+    script(src='/js/manage_users/users.js')
+
+    button#addUser.btn.btn-secondary.pull-right Add User
+    h1 Manage Users
+    hr
+    table.cell-border
+        thead
+            tr
+                th Email
+                th Initials
+                th Role
+        tbody
+            - for user in users
+                tr
+                    th #{user.email}
+                    th #{user.initials}
+                    th #{user.role}

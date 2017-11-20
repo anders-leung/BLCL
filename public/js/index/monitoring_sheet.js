@@ -1,26 +1,6 @@
 /**
  * Created by ander on 2017-06-06.
  */
-function getFileName(row) {
-    var husbandLastName = $(row).find('td:nth-child(12)').html();
-    var husbandFirstName = $(row).find('td:nth-child(13)').html();
-    var wifeLastName = $(row).find('td:nth-child(14)').html();
-    var wifeFirstName = $(row).find('td:nth-child(15)').html();
-
-    var fileName = '';
-
-    if (husbandFirstName) {
-        fileName += husbandLastName + ', ' + husbandFirstName;
-        if (wifeFirstName) {
-            fileName += ' and ';
-            fileName += wifeLastName + ', ' + wifeFirstName;
-        }
-    } else {
-        fileName += wifeLastName + ', ' + wifeFirstName;
-    }
-    return fileName;
-}
-
 function getField(column) {
     var header = $('thead tr').find('th:nth-child(' + column + ')').html();
 
@@ -43,6 +23,8 @@ function getField(column) {
             return 'callDate';
         case 'Pickup OK':
             return 'pickupOk';
+        case 'Signed':
+            return 'signed';
         case 'Emailed':
             return 'emailed';
         case 'PYT Rec\'d':
@@ -120,7 +102,6 @@ $(document).ready(function() {
 
         $(tableId).on('keyup', '.preparer, .pyt, .edit, .date-edit', function(e) {
             if (e.which == 27) {
-                console.log('keyup')
                 $(this).html(previousValue);
                 enableEditing(tableId, role);
                 adjustTables();
@@ -145,9 +126,14 @@ $(document).ready(function() {
     function preparerEvent(data) {
         var table = $('#normalTable').DataTable();
         table.rows().every(function(rowIdx) {
+            var field = data.field;
+            var column = 19;
+            if (field == 'checker') {
+                column = 20;
+            }
             var fileName = this.data()[31];
             if (fileName == data.fileName) {
-                table.cell(rowIdx, 19).data(data.value).draw();
+                table.cell(rowIdx, column).data(data.value).draw();
                 return;
             }
         });
@@ -157,15 +143,53 @@ $(document).ready(function() {
         updateHtml(data.table, data.fileName, data.column, data.value, data.type, false);
     }
 
+    function addClassesToRow(row, href) {
+        $(row).attr('data-href', href);
+        $(row).find('td').eq(0).addClass('text-nowrap');
+        $(row).find('td').eq(1).addClass('text-nowrap');
+        $(row).find('td').eq(2).addClass('text-nowrap');
+        $(row).find('td').eq(3).addClass('text-nowrap');
+        $(row).find('td').eq(10).addClass('toggle');
+        $(row).find('td').eq(11).addClass('text-nowrap');
+        $(row).find('td').eq(12).addClass('text-nowrap');
+        $(row).find('td').eq(13).addClass('text-nowrap');
+        $(row).find('td').eq(14).addClass('text-nowrap');
+        $(row).find('td').eq(15).addClass('text-nowrap');
+        $(row).find('td').eq(16).addClass('text-nowrap');
+        $(row).find('td').eq(18).addClass('text-nowrap');
+        $(row).find('td').eq(18).addClass('preparer');
+        $(row).find('td').eq(20).addClass('edit');
+        $(row).find('td').eq(21).addClass('text-nowrap');
+        $(row).find('td').eq(21).addClass('date-edit');
+        $(row).find('td').eq(22).addClass('text-nowrap');
+        $(row).find('td').eq(22).addClass('edit');
+        $(row).find('td').eq(23).addClass('text-nowrap');
+        $(row).find('td').eq(23).addClass('edit');
+        $(row).find('td').eq(24).addClass('toggle');
+        $(row).find('td').eq(25).addClass('text-nowrap');
+        $(row).find('td').eq(25).addClass('date-edit');
+        $(row).find('td').eq(26).addClass('toggle');
+        $(row).find('td').eq(27).addClass('text-nowrap');
+        $(row).find('td').eq(27).addClass('date-edit');
+        $(row).find('td').eq(28).addClass('text-nowrap');
+        $(row).find('td').eq(28).addClass('pyt');
+        $(row).find('td').eq(29).addClass('text-nowrap');
+        $(row).find('td').eq(29).addClass('edit');
+        $(row).find('td').eq(30).addClass('text-nowrap');
+        $(row).find('td').eq(30).addClass('edit');
+        $(row).find('td').eq(31).addClass('text-nowrap');
+    }
+
     function moveRow(row, tableId) {
-        console.log($(row))
         var table = $(tableId).DataTable();
-        table.row.add(row.data()).draw();
+        var rowNode = table.row.add(row.data()).draw().node();
+        var href = $(row.node()).attr('data-href');
+        addClassesToRow(rowNode, href);
         row.remove().draw();
     }
 
-    function updateHtml(table, fileName, column, value, type, emit) {
-        var tableId = table.table().node().id;
+    function updateHtml(tableId, fileName, column, value, type, emit) {
+        var table = $(tableId).DataTable();
         var row;
         table.rows().every(function(rowIdx) {
             var name = this.data()[31];
@@ -185,14 +209,16 @@ $(document).ready(function() {
                 moveRow(row, '#emailedTable');
                 break;
             default:
-                return;
+                break;
         }
 
-        return;
+        adjustTables();
+
         if (!emit) { return; }
 
-        var field = getField(column);
+        var field = getField(column + 1);
         socket.emit('monitoring sheet update', {
+            table: tableId,
             column: column,
             type: type,
             fileName: fileName,
@@ -200,8 +226,7 @@ $(document).ready(function() {
             value: value
         });
 
-        enableEditing('#' + tableId);
-        adjustTables();
+        enableEditing(tableId, role);
     }
 
     $.fn.dataTable.moment('dd-M-y');
@@ -209,7 +234,7 @@ $(document).ready(function() {
     setTable('#normalTable');
     setTable('#packedTable');
     setTable('#emailedTable');
-    setTable('#signedTable');
+    setTable('#osPytTable');
 
     function enableEditing(tableId, role) {
         $(tableId).on('click', '.edit', showInput);
@@ -229,7 +254,8 @@ $(document).ready(function() {
     function toggle(e) {
         var target = e.target;
         var column = $(target).index();
-        var table = $(target).closest('table').DataTable();
+        var tableId = '#' + $(target).closest('table').attr('id');
+        var table = $(tableId).DataTable();
         var row = $(target).closest('tr');
         var fileName = table.row($(row)).data()[31];
         var check = $(target).html();
@@ -237,7 +263,7 @@ $(document).ready(function() {
         if (check == 'Y') {
             value = false;
         }
-        updateHtml(table, fileName, column, value, 'boolean', true);
+        updateHtml(tableId, fileName, column, value, 'boolean', true);
     }
 
     function showInput(e) {
@@ -258,7 +284,8 @@ $(document).ready(function() {
 
     function saveEdits(target) {
         var column = $(target).index();
-        var table = $(target).closest('table').DataTable();
+        var tableId = '#' + $(target).closest('table').attr('id');
+        var table = $(tableId).DataTable();
         var row = $(target).closest('tr');
         var fileName = table.row($(row)).data()[31];
         var value = $(target).find('input').val();
@@ -266,13 +293,14 @@ $(document).ready(function() {
         if (column == 26 || column == 28) {
             type = 'date-edit';
         }
-        updateHtml(table, fileName, column, value, type, true);
+        updateHtml(tableId, fileName, column, value, type, true);
         return false;
     }
 
     function showPytInput(e) {
         var column = $(this).index();
-        var table = $(this).closest('table').DataTable();
+        var tableId = '#' + $(e.target).closest('table').attr('id');
+        var table = $(tableId).DataTable();
         var row = $(this).closest('tr');
         var fileName = table.row($(row)).data()[31];
         var cell = e.target;
@@ -294,10 +322,9 @@ $(document).ready(function() {
         $(select).focus();
 
         $(select).on('change', function() {
-            updateHtml(table, fileName, column, $(this).val(), 'select', true)
+            updateHtml(tableId, fileName, column, $(this).val(), 'select', true)
         });
 
-        var tableId = $(cell).closest('table');
         disableEditing(tableId);
         adjustTables();
     }

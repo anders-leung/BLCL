@@ -5,8 +5,6 @@ var CookieService = require('./utils/cookies');
 var ClientService = require('../modules/client');
 var ConfigService = require('../modules/config');
 
-
-
 /* GET home page. */
 router.get('/', CookieService.isLoggedIn, function(req, res) {
     ConfigService.getT1Directory(function (err, directory) {
@@ -16,8 +14,8 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
             if (err) {
                 res.render('error');
             }
-            ClientService.findClientsEmailedNotPaid(function (err, emailed) {
-                ClientService.findClientsPickedupNotPaid(function (err, pickedUp) {
+            ClientService.findClientsEmailed(function (err, emailed) {
+                ClientService.findClientsOSPyt(function (err, pickedUp) {
                     ClientService.findAllOtherClients(function (err, normal) {
                         var cookie = CookieService.readCookie(req);
                         var clients = [

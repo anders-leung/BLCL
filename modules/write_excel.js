@@ -5,6 +5,7 @@
  * Created by ander on 2017-05-09.
  */
 var XLSX = require('xlsx-populate');
+var ConfigService = require('./config');
 var fs = require('fs');
 
 var fields = {
@@ -716,8 +717,8 @@ var fields = {
     }
 };
 
-function clientToExcel(filepath, client) {
-    var path = filepath;
+function clientToExcel(filepath, year, client) {
+    var path = filepath + '//' + year + '//' + client.fileName + '.xlsx';
     if (!fs.existsSync(filepath)) {
         path = 'C://Users//ander//Desktop//BLCL Files//Templates/1- T1 INTERVIEW-New.xlsx';
     }
@@ -730,7 +731,11 @@ function clientToExcel(filepath, client) {
                 fields[section][cell](workbook.sheet('Interview Sheet').cell(cell), client);
             }
         }
-        return workbook.toFileAsync(filepath + '.xlsx');
+        filepath = filepath + '//' + client.year;
+        if (!fs.existsSync(filepath)) {
+            fs.mkdirSync(filepath);
+        }
+        return workbook.toFileAsync(filepath + '//' + client.fileName + '.xlsx');
     });
 }
 

@@ -12,15 +12,26 @@ var AssignmentService = require('./../modules/assignment');
 router.get('/', CookieService.isLoggedIn, function(req, res) {
     var query = { 'initials' : req.session.initials };
     var initials = req.session.initials;
-    ClientService.findClientsWithUser(initials, function(err, clients) {
-        if (err) res.render('error');
-        else {
-            res.render('clients', {
-                clients : clients,
-                initials : initials,
-                statuses : ClientService.getStatuses()
+    ClientService.findClientsWithUserNew(initials, function(err, new_clients) {
+        ClientService.findClientsWithUserWIP(initials, function(err, wip) {
+            ClientService.findClientsWithUserOK(initials, function(err, ok) {
+                if (err) res.render('error');
+                else {
+                    var cookie = CookieService.readCookie(req);
+                    var clients = [
+                        ['new', new_clients],
+                        ['wip', wip],
+                        ['ok', ok]
+                    ];
+                    res.render('clients', {
+                        clients : clients,
+                        initials : initials,
+                        statuses : ClientService.getStatuses(),
+                        role : cookie.role
+                    });
+                }
             });
-        }
+        });
     });
 });
 

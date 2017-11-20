@@ -23,10 +23,12 @@ var server = http.createServer(app);
 var io = require('socket.io')(server);
 var IndexSocket = require('../socketio/index');
 var ClientsSocket = require('../socketio/clients');
+var UsersSocket = require('../socketio/add_user');
 
 io.on('connection', function (socket) {
     IndexSocket.monitorUpdate(socket);
     ClientsSocket.donePreparing(socket);
+    UsersSocket.addUser(socket);
 });
 
 /**

@@ -7,17 +7,17 @@ block content
     script(type='text/javascript', src='/js/datatables-sum.js')
     script(type='text/javascript', src='/js/payment/pay.js')
 
-    #table.col-12.tab-content(style='border-top: 0')
+    #table.col-12.tab-content
         table.cell-border
             thead
                 tr
+                    th Date Rec'd
                     th Husband Last Name
                     th Husband First Name
                     th Wife Last Name
                     th Wife First Name
                     th Group
                     th Pickup Date
-                    th Date Rec'd
                     th ADV
                     th INV
                     th Cash
@@ -42,13 +42,13 @@ block content
             tbody
                 each client in clients
                     tr.clickable-row(data-href="/client/" + client.pathName)
+                        td.text-nowrap #{client.pytDate}
                         td.text-nowrap #{client.husband ? client.husband.lastName : ''}
                         td.text-nowrap #{client.husband ? client.husband.firstName : ''}
                         td.text-nowrap #{client.wife ? client.wife.lastName : ''}
                         td.text-nowrap #{client.wife ? client.wife.firstName : ''}
                         td.text-nowrap #{client.group}
                         td.text-nowrap #{client.pickupDate}
-                        td.text-nowrap #{client.pytDate}
                         td.text-nowrap #{client.pytReceived == 'ADV' ? client.pytAmount : ''}
                         td.text-nowrap #{client.pytReceived == 'INV' ? client.pytAmount : ''}
                         td.text-nowrap #{client.pytReceived == 'CA' ? client.pytAmount : ''}

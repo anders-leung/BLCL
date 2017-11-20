@@ -157,7 +157,7 @@ var ClientSchema = new Schema({
         moving: { type: Boolean, default: false },
         unionDue: { type: Boolean, default: false },
         disabilitySupports: { type: Boolean, default: false },
-        installation: { type: String, default: '' },
+        installment: { type: String, default: '' },
         tuition: { type: Boolean, default: false },
         studentLoan: { type: Boolean, default: false }
     },
@@ -239,7 +239,7 @@ var ClientSchema = new Schema({
         moving: { type: Boolean, default: false },
         unionDue: { type: Boolean, default: false },
         disabilitySupports: { type: Boolean, default: false },
-        installation: { type: String, default: '' },
+        installment: { type: String, default: '' },
         tuition: { type: Boolean, default: false },
         studentLoan: { type: Boolean, default: false }
     },
@@ -311,7 +311,7 @@ var ClientSchema = new Schema({
         default: ''
     },
     readyToPack: { type: String, default: '' },
-    pickupOk: { type: Boolean, default: false },
+    signed: { type: Boolean, default: false },
     pytReceived: {
         type: String,
         enum: [ '', 'ADV', 'CA', 'CK', 'DD', 'ET', 'INV', 'OS' ],

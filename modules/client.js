@@ -21,19 +21,23 @@ var ClientService = {
         });
     },
 
-    findClientsPickedupNotPaid : function(callback) {
+    findClientsOSPyt : function(callback) {
         var search = {};
-        search['pickedUp'] = true;
+        search['emailed'] = { $ne : '' };
+        search['pytAmount'] = '';
         search['pytReceived'] = '';
+        search['packed'] = true;
+        search['signed'] = false;
         Client.find(search).lean().exec(function(err, clients) {
             callback(err, clients);
         });
     },
 
-    findClientsEmailedNotPaid : function(callback) {
+    findClientsEmailed : function(callback) {
         var search = {};
-        search['emailed'] = { $ne : ''};
-        search['pytReceived'] = '';
+        search['emailed'] = { $ne : '' };
+        search['packed'] = true;
+        search['signed'] = false;
         Client.find(search).lean().exec(function(err, clients) {
             callback(err, clients);
         });
@@ -42,17 +46,17 @@ var ClientService = {
     findClientsPacked : function(callback) {
         var search = {};
         search['packed'] = true;
-        search['pytReceived'] = '';
+        search['emailed'] = '';
+        search['signed'] = false;
         Client.find(search).lean().exec(function(err, clients) {
             callback(err, clients);
         });
     },
 
     findClientsPytRec : function(callback) {
-        var search = {
-            'pytReceived' : { $ne : '' },
-            'pytAmount' : { $ne : '' }
-        };
+        var search = {};
+        search['pytReceived'] = { $ne : '' };
+        search['pytAmount'] = { $ne : '' };
         Client.find(search).lean().exec(function(err, clients) {
             callback(err, clients);
         });
@@ -61,9 +65,8 @@ var ClientService = {
     findAllOtherClients : function(callback) {
         var search = {};
         search['packed'] = false;
-        search['pickedUp'] = false;
+        search['signed'] = false;
         search['emailed'] = '';
-        search['pytReceived'] = '';
         Client.find(search).lean().exec(function(err, clients) {
             callback(err, clients);
         });
@@ -87,8 +90,20 @@ var ClientService = {
         });
     },
 
-    findClientsWithUser : function(user, callback) {
-        Client.find({'preparer' : user}).lean().exec(function(err, clients) {
+    findClientsWithUserNew : function(user, callback) {
+        Client.find({ 'preparer' : user, 'preparerDone' : '' }).lean().exec(function(err, clients) {
+            callback(err, clients);
+        });
+    },
+
+    findClientsWithUserWIP : function(user, callback) {
+        Client.find({ 'preparer' : user, 'preparerDone' : 'WIP' }).lean().exec(function(err, clients) {
+            callback(err, clients);
+        });
+    },
+
+    findClientsWithUserOK : function(user, callback) {
+        Client.find({ 'preparer' : user, 'preparerDone' : 'OK' }).lean().exec(function(err, clients) {
             callback(err, clients);
         });
     },

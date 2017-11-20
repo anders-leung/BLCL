@@ -6,6 +6,7 @@ var User = require('../models/User');
 
 var UserService = {
     createUser : function(params, callback) {
+        console.log(params)
         var user = new User(params);
         user.save(function(err) {
             if (err) {
@@ -29,6 +30,10 @@ var UserService = {
                 callback(err, users);
             }
         });
+    },
+
+    getRoles : function() {
+        return User.schema.path('role').enumValues;
     }
 };
 

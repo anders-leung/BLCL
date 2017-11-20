@@ -91,18 +91,18 @@ block content
                             th
                     tbody
                         each client in clients[i][1]
-                            tr.clickable-row(data-href="/client/" + client.pathName)
+                            tr(data-href="/client/" + client.pathName)
                                 td.text-nowrap #{client.interviewDate}
                                 td.text-nowrap #{client.tel.number}
                                 td.text-nowrap #{client.cell.number}
                                 td.text-nowrap #{client.email.value}
-                                td.check #{client.slips ? 'Y' : ''}
-                                td.check #{client.selfEmployed ? 'Y' : ''}
+                                td #{client.slips ? 'Y' : ''}
+                                td #{client.selfEmployed ? 'Y' : ''}
                                 td #{client.t1135}
-                                td.check #{client.rental ? 'Y' : ''}
-                                td.check #{client.stocks ? 'Y' : ''}
-                                td.check #{client.new ? 'Y' : ''}
-                                td.check.toggle #{client.pickedUp ? 'Y' : ''}
+                                td #{client.rental ? 'Y' : ''}
+                                td #{client.stocks ? 'Y' : ''}
+                                td #{client.new ? 'Y' : ''}
+                                td.toggle #{client.pickedUp ? 'Y' : ''}
                                 td.text-nowrap #{client.husband ? client.husband.lastName : ''}
                                 td.text-nowrap #{client.husband ? client.husband.firstName : ''}
                                 td.text-nowrap #{client.wife ? client.wife.lastName : ''}
@@ -116,9 +116,9 @@ block content
                                 td.text-nowrap.date-edit #{client.readyToPack}
                                 td.text-nowrap.edit #{client.outstandingInfo}
                                 td.text-nowrap.edit #{client.remarks}
-                                td.check.toggle #{client.packed ? 'Y' : ''}
+                                td.toggle #{client.packed ? 'Y' : ''}
                                 td.text-nowrap.date-edit #{client.callDate}
-                                td.check.toggle #{client.pickupOk ? 'Y' : ''}
+                                td.toggle #{client.signed ? 'Y' : ''}
                                 td.text-nowrap.date-edit #{client.emailed}
                                 td.text-nowrap.pyt #{client.pytReceived}
                                 td.text-nowrap.edit #{client.pytAmount}

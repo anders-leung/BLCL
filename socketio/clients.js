@@ -17,15 +17,7 @@ var ClientsSockets = {
             ClientService.updateClient(search, update, function(err, client) {
                 if (err) {
                     console.log(err);
-/*                } else {
-                    UserService.findOneUser({ 'initials' : data.preparer }, function(err, user) {
-                        if (err) console.log(err);
-                        AssignmentService.createOrUpdateAssignment(user, client, function(err, assignment) {
-                            if (err) console.log(err);
-                            console.log(assignment);
-                        });
-                    });
-*/                }
+                }
             });
         });
     }
