@@ -27,6 +27,10 @@ body {
 }
 
 /* table stuff */
+input {
+    text-transform: uppercase;
+}
+
 .header {
     background-color: white;
 }

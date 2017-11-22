@@ -16,6 +16,8 @@ block content
             a.nav-link(data-toggle='tab' href='#wip') WIP
         li.nav-item
             a.nav-link(data-toggle='tab' href='#ok') OK
+        li.nav-item
+            a.nav-link(data-toggle='tab' href='#emailed') Emailed
 
     #table.col-12.tab-content(style='border-top: 0')
         - for (var i = 0; i < clients.length; i++)
@@ -23,104 +25,95 @@ block content
                 table(id=clients[i][0] + 'Table').cell-border
                     thead
                         tr
-                            th Interview Date
-                            th Phone Number
-                            th Cell
-                            th Email
                             th Slip
                             th Self Empl
                             th T1135
                             th Rental
+                            th 777
                             th Stock
                             th New
-                            th Picked Up
+                            th CFM PU
+                            th Pickup Date
                             th Husband Last Name
                             th Husband First Name
                             th Wife Last Name
                             th Wife First Name
                             th Group
-                            th Pickup Date
-                            th Interviewer
-                            th Preparer
-                            th Preparer Done
-                            th Checker
+                            th IN
+                            th PRE
+                            th PRE OK
+                            th CKR
                             th Ready To Pack
                             th Outstanding Info
-                            th Remarks
-                            th Packed
-                            th Call Date
-                            th Signed
                             th Emailed
-                            th PYT Rec'd
-                            th PYT Amount
-                            th Things to do After Pickup
+                            th Signed
+                            th Interview Date
+                            th Phone Number
+                            th Cell
+                            th Email
                             th
                     tfoot
                         tr
-                            th Interview Date
-                            th Phone Number
-                            th Cell
-                            th Email
                             th Slip
                             th Self Empl
                             th T1135
                             th Rental
+                            th 777
                             th Stock
                             th New
-                            th Picked Up
+                            th CFM PU
+                            th Pickup Date
                             th Husband Last Name
                             th Husband First Name
                             th Wife Last Name
                             th Wife First Name
                             th Group
-                            th Pickup Date
-                            th Interviewer
-                            th Preparer
-                            th Preparer Done
-                            th Checker
+                            th IN
+                            th PRE
+                            th PRE OK
+                            th CKR
                             th Ready To Pack
                             th Outstanding Info
-                            th Remarks
-                            th Packed
-                            th Call Date
-                            th Signed
                             th Emailed
-                            th PYT Rec'd
-                            th PYT Amount
-                            th Things to do After Pickup
+                            th Signed
+                            th Interview Date
+                            th Phone Number
+                            th Cell
+                            th Email
                             th
                     tbody
                         each client in clients[i][1]
                             tr(data-href="/client/" + client.pathName)
-                                td.text-nowrap #{client.interviewDate}
-                                td.text-nowrap #{client.tel.number}
-                                td.text-nowrap #{client.cell.number}
-                                td.text-nowrap #{client.email.value}
                                 td #{client.slips ? 'Y' : ''}
                                 td #{client.selfEmployed ? 'Y' : ''}
-                                td #{client.t1135}
+                                td
+                                    if client.t1135 == 'N'
+                                        | 0
+                                    if client.t1135 == 'SIMPLE'
+                                        | 1
+                                    if client.t1135 == 'COMPLICATED'
+                                        | 2
                                 td #{client.rental ? 'Y' : ''}
+                                td #{client.t777 ? 'Y' : ''}
                                 td #{client.stocks ? 'Y' : ''}
                                 td #{client.new ? 'Y' : ''}
-                                td #{client.pickedUp ? 'Y' : ''}
+                                td #{client.confirmPickupDate ? 'Y' : ''}
+                                td.text-nowrap #{client.pickupDate}
                                 td.text-nowrap #{client.husband ? client.husband.lastName : ''}
                                 td.text-nowrap #{client.husband ? client.husband.firstName : ''}
                                 td.text-nowrap #{client.wife ? client.wife.lastName : ''}
                                 td.text-nowrap #{client.wife ? client.wife.firstName : ''}
                                 td.text-nowrap #{client.group}
-                                td.text-nowrap #{client.pickupDate}
                                 td #{client.interviewer}
                                 td.text-nowrap #{client.preparer}
                                 td.status #{client.preparerDone}
                                 td.edit #{client.checker}
-                                td.text-nowrap #{client.readyToPack}
+                                td.text-nowrap.date-edit #{client.readyToPack}
                                 td.text-nowrap #{client.outstandingInfo}
-                                td.text-nowrap #{client.remarks}
-                                td #{client.packed ? 'Y' : ''}
-                                td.text-nowrap #{client.callDate}
-                                td #{client.pickupOk ? 'Y' : ''}
-                                td.text-nowrap #{client.emailed}
-                                td.text-nowrap #{client.pytReceived}
-                                td.text-nowrap #{client.pytAmount}
-                                td.text-nowrap #{client.thingsToDo}
+                                td.text-nowrap.date-edit #{client.emailed}
+                                td.text-nowrap.date-edit #{client.signed}
+                                th.text-nowrap #{client.interviewDate}
+                                th.text-nowrap #{client.tel.number}
+                                th.text-nowrap #{client.cell.number}
+                                th.text-nowrap #{client.email.value}
                                 td.text-nowrap #{client.fileName}

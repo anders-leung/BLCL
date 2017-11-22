@@ -304,14 +304,14 @@ var ClientSchema = new Schema({
         unique: true
     },
     pathName: { type: String, default: "" },
-    pickedUp: { type: Boolean, default: false },
+    confirmPickUpDate: { type: Boolean, default: false },
     preparerDone: {
         type: String,
         enum: [ '', 'WIP', 'OK' ],
         default: ''
     },
     readyToPack: { type: String, default: '' },
-    signed: { type: Boolean, default: false },
+    signed: { type: String, default: '' },
     pytReceived: {
         type: String,
         enum: [ '', 'ADV', 'CA', 'CK', 'DD', 'ET', 'INV', 'OS' ],

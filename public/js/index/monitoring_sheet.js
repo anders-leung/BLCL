@@ -5,11 +5,11 @@ function getField(column) {
     var header = $('thead tr').find('th:nth-child(' + column + ')').html();
 
     switch (header) {
-        case 'Picked Up':
-            return 'pickedUp';
-        case 'Preparer':
+        case 'Pickup Date':
+            return 'pickupDate';
+        case 'PRE':
             return 'preparer';
-        case 'Preparer Done':
+        case 'PRE OK':
             return 'preparerDone';
         case 'Ready To Pack':
             return 'readyToPack';
@@ -31,10 +31,6 @@ function getField(column) {
             return 'pytReceived';
         case 'PYT Amount':
             return 'pytAmount';
-        case 'Things to do After Pickup':
-            return 'thingsToDo';
-        case 'PRC Last Year':
-            return 'prcLastYear';
     }
 }
 
@@ -68,7 +64,7 @@ $(document).ready(function() {
 
         var table = $(tableId).DataTable({
             'columnDefs': [
-                { type: 'date', targets: 0 },
+                { type: 'date', targets: [] },
                 { visible: false, searchable: true, targets: 31 }
             ],
             'select': true,
@@ -127,9 +123,15 @@ $(document).ready(function() {
         var table = $('#normalTable').DataTable();
         table.rows().every(function(rowIdx) {
             var field = data.field;
-            var column = 19;
+            var column = 16;
             if (field == 'checker') {
-                column = 20;
+                column = 17;
+            } else if (field == 'readyToPack') {
+                column = 19;
+            } else if (field == 'emailed') {
+                column = 21;
+            } else if (field == 'signed') {
+                column = 22;
             }
             var fileName = this.data()[31];
             if (fileName == data.fileName) {
@@ -201,11 +203,12 @@ $(document).ready(function() {
             }
         });
 
-        switch (column) {
-            case 24:
+        var field = getField(column + 1);
+        switch (field) {
+            case 'packed':
                 moveRow(row, '#packedTable');
                 break;
-            case 27:
+            case 'emailed':
                 moveRow(row, '#emailedTable');
                 break;
             default:
@@ -216,7 +219,6 @@ $(document).ready(function() {
 
         if (!emit) { return; }
 
-        var field = getField(column + 1);
         socket.emit('monitoring sheet update', {
             table: tableId,
             column: column,

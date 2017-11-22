@@ -9,17 +9,6 @@ var ClientService = require('./../modules/client');
 var ConfigService = require('./../modules/config');
 var WriteExcelService = require('./../modules/write_excel');
 
-var t1Directory;
-var oldYear = 0;
-
-ConfigService.getT1Directory(function(err, directory) {
-    if (directory) {
-        t1Directory = directory;
-    } else {
-        console.log(err);
-    }
-});
-
 /* GET home page. */
 router.get('/', CookieService.isLoggedIn, function(req, res) {
     res.render('client', { title: 'T1 Interview',
@@ -40,7 +29,6 @@ router.get('/:client_name', CookieService.isLoggedIn, function(req, res) {
     };
 
     ClientService.findClient(query, function(err, client) {
-        oldYear = client[0].year;
         res.render('client', {
             title : 'T1 Interview',
             client : client[0],
@@ -58,7 +46,7 @@ router.post('/', function(req, res) {
         if (err) {
             res.render('error');
         } else {
-            WriteExcelService(t1Directory, oldYear, client);
+            WriteExcelService(client.year, client);
             res.redirect('/');
         }
     });
@@ -70,7 +58,6 @@ router.post('/:client_name', function(req, res) {
         if (err) {
             res.render('error');
         }
-        WriteExcelService(t1Directory, oldYear, client);
         res.redirect('/')
     })
 });

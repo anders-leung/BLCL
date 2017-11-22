@@ -3,11 +3,18 @@
  */
 
 var Client = require('../models/Client');
+var WriteExcelService = require('./write_excel');
 var clientNames = require('./utils/client');
 
 var ClientService = {
     saveClient : function(params, callback) {
         var client = new Client(params);
+        for (var field in client) {
+            if (field == 'email') continue;
+            if (typeof(client[field]) == 'string') {
+                client[field] = client[field].toUpperCase();
+            }
+        }
         client.fileName = clientNames.getFileName(client);
         client.pathName = clientNames.getPathName(client);
         client.save(function(err) {
@@ -23,11 +30,10 @@ var ClientService = {
 
     findClientsOSPyt : function(callback) {
         var search = {};
-        search['emailed'] = { $ne : '' };
         search['pytAmount'] = '';
         search['pytReceived'] = '';
         search['packed'] = true;
-        search['signed'] = false;
+        search['signed'] = { $ne : '' };
         Client.find(search).lean().exec(function(err, clients) {
             callback(err, clients);
         });
@@ -36,8 +42,8 @@ var ClientService = {
     findClientsEmailed : function(callback) {
         var search = {};
         search['emailed'] = { $ne : '' };
-        search['packed'] = true;
-        search['signed'] = false;
+        search['pytAmount'] = '';
+        search['pytReceived'] = '';
         Client.find(search).lean().exec(function(err, clients) {
             callback(err, clients);
         });
@@ -46,8 +52,9 @@ var ClientService = {
     findClientsPacked : function(callback) {
         var search = {};
         search['packed'] = true;
-        search['emailed'] = '';
-        search['signed'] = false;
+        search['signed'] = '';
+        search['pytAmount'] = '';
+        search['pytReceived'] = '';
         Client.find(search).lean().exec(function(err, clients) {
             callback(err, clients);
         });
@@ -65,18 +72,31 @@ var ClientService = {
     findAllOtherClients : function(callback) {
         var search = {};
         search['packed'] = false;
-        search['signed'] = false;
         search['emailed'] = '';
+        search['signed'] = '';
+        search['pytAmount'] = '';
+        search['pytReceived'] = '';
         Client.find(search).lean().exec(function(err, clients) {
             callback(err, clients);
         });
     },
 
     updateClient : function(search, values, callback) {
-        Client.update(search, { $set: values }, function(save_err) {
-            Client.findOne(search, function(find_err, client) {
-                callback(save_err, client);
-            })
+        for (var field in values) {
+            if (field == 'email') continue;
+            if (typeof(values[field]) == 'string') {
+                values[field] = values[field].toUpperCase();
+            }
+        }
+        var oldYear;
+        Client.findOne(search, function(err, client) {
+            oldYear = client.year;
+            Client.update(search, { $set: values }, function(save_err) {
+                Client.findOne(search, function(find_err, client) {
+                    WriteExcelService(oldYear, client);
+                    callback(save_err, client);
+                });
+            });
         });
     },
 
@@ -91,19 +111,45 @@ var ClientService = {
     },
 
     findClientsWithUserNew : function(user, callback) {
-        Client.find({ 'preparer' : user, 'preparerDone' : '' }).lean().exec(function(err, clients) {
+        var search = {};
+        search['preparer'] = user;
+        search['preparerDone'] = '';
+        search['readyToPack'] = '';
+        search['emailed'] = '';
+        Client.find(search).lean().exec(function(err, clients) {
             callback(err, clients);
         });
     },
 
     findClientsWithUserWIP : function(user, callback) {
-        Client.find({ 'preparer' : user, 'preparerDone' : 'WIP' }).lean().exec(function(err, clients) {
+        var search = {};
+        search['preparer'] = user;
+        search['preparerDone'] = 'WIP';
+        search['readyToPack'] = '';
+        search['emailed'] = '';
+        Client.find(search).lean().exec(function(err, clients) {
             callback(err, clients);
         });
     },
 
     findClientsWithUserOK : function(user, callback) {
-        Client.find({ 'preparer' : user, 'preparerDone' : 'OK' }).lean().exec(function(err, clients) {
+        var search = {};
+        search['preparer'] = user;
+        search['preparerDone'] = 'OK';
+        search['readyToPack'] = '';
+        search['emailed'] = '';
+        Client.find(search).lean().exec(function(err, clients) {
+            callback(err, clients);
+        });
+    },
+
+    findClientsWithUserEmailed : function(user, callback) {
+        var search = {};
+        search['preparer'] = user;
+        search['preparerDone'] = 'OK';
+        search['readyToPack'] = '';
+        search['emailed'] = { $ne : '' };
+        Client.find(search).lean().exec(function(err, clients) {
             callback(err, clients);
         });
     },

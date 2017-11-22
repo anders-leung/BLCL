@@ -22,11 +22,12 @@ var fields = {
             cell.value(client.pickupDate);
         },
 
-        'P4' : function(cell, client) {
+        'P2' : function(cell, client) {
             cell.value(client.preparer);
+            console.log(cell.value())
         },
 
-        'V4' : function(cell, client) {
+        'V2' : function(cell, client) {
             cell.value(client.checker);
         },
 
@@ -274,7 +275,6 @@ var fields = {
         },
 
         'B55' : function(cell, client) {
-            console.log('client msp: ' + client.msp);
             cell.value(client.msp ? 'Y' : '');
         },
 
@@ -717,11 +717,22 @@ var fields = {
     }
 };
 
-function clientToExcel(filepath, year, client) {
-    var path = filepath + '//' + year + '//' + client.fileName + '.xlsx';
-    if (!fs.existsSync(filepath)) {
+var t1Directory;
+ConfigService.getT1Directory(function(err, directory) {
+    if (directory) {
+        t1Directory = directory;
+    } else {
+        console.log(err);
+    }
+});
+
+function clientToExcel(year, client) {
+    var curr_year = client.year;
+    var path = t1Directory + '//' + year + '//' + client.fileName + '.xlsx';
+    if (!fs.existsSync(path)) {
         path = 'C://Users//ander//Desktop//BLCL Files//Templates/1- T1 INTERVIEW-New.xlsx';
     }
+    console.log('previous path: ', path);
     XLSX.fromFileAsync(path).then(function(workbook) {
         for (var section in fields) {
             if (section == 'husband') if (!client.husband) continue;
@@ -731,11 +742,12 @@ function clientToExcel(filepath, year, client) {
                 fields[section][cell](workbook.sheet('Interview Sheet').cell(cell), client);
             }
         }
-        filepath = filepath + '//' + client.year;
-        if (!fs.existsSync(filepath)) {
-            fs.mkdirSync(filepath);
+        path = t1Directory + '//' + curr_year;
+        if (!fs.existsSync(path)) {
+            fs.mkdirSync(path);
         }
-        return workbook.toFileAsync(filepath + '//' + client.fileName + '.xlsx');
+        console.log('new path: ', path);
+        return workbook.toFileAsync(path + '//' + client.fileName + '.xlsx');
     });
 }
 
