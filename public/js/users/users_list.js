@@ -18,14 +18,41 @@ $(document).ready(function() {
     });
 
     $('table').each(function() {
-        $(this).DataTable({
-            'paging': false,
-            'filter': false,
+        var tableId = '#' + $(this).attr('id');
+        if (tableId == '#normalTable') {
+            $('.tab-pane').each(function (i) {
+                if (i == 0) {
+                    $(this).addClass('in');
+                    $(this).addClass('active');
+                }
+            });
+        }
+
+        $(tableId + ' tfoot th').each( function () {
+            var title = $(this).text();
+            $(this).html( '<input type="text"/>' );
+        });
+
+        var table = $(tableId).DataTable({
+            'scrollX': true,
             'select': true,
             'columnDefs': [
                 { targets : 14, type : 'date' },
                 { targets : 0, visible : false, searchable : true }
             ]
+        });
+
+        table.columns().every(function() {
+            var that = this;
+            $('input', this.footer()).on('keyup change', function() {
+                if (that.search() !== this.value) {
+                    that.search(this.value).draw();
+                }
+            });
+        });
+
+        $(tableId).on('dblclick', 'tr td:not(.toggle, .edit, .date-edit)', function() {
+            window.location = $(this).parent().data('href');
         });
     });
 

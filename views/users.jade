@@ -33,9 +33,27 @@ block content
                             th CFM PU
                             th Pickup Date
                             th PRE
+                    tfoot
+                        tr
+                            th
+                            th Husband Last Name
+                            th Husband First Name
+                            th Wife Last Name
+                            th Wife First Name
+                            th Slips
+                            th Self Empl
+                            th T1135
+                            th Rental
+                            th 777
+                            th Stocks
+                            th New
+                            th PRE OK
+                            th CFM PU
+                            th Pickup Date
+                            th PRE
                     tbody
                         each client in list[i][1]
-                            tr
+                            tr(data-href="/client/" + client.pathName)
                                 td.text-nowrap #{client.fileName}
                                 td.text-nowrap #{client.husband ? client.husband.lastName : ''}
                                 td.text-nowrap #{client.husband ? client.husband.firstName : ''}
