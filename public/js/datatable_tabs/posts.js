@@ -11,8 +11,8 @@ var headersToFields = {
     'Packed' : 'packed',
     'Emailed' : 'emailed',
     'Signed' : 'signed',
-    'PYT Rec\'d' : 'pytRec',
-    'PYT Amount' : 'pytAmt',
+    'PYT Rec\'d' : 'pytReceived',
+    'PYT Amount' : 'pytAmount',
     'Call Date' : 'callDate',
     'Remarks' : 'remarks'
 };
