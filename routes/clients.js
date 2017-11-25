@@ -6,8 +6,6 @@ var router = express.Router();
 
 var CookieService = require('./utils/cookies');
 var ClientService = require('./../modules/client');
-var UserService = require('./../modules/user');
-var AssignmentService = require('./../modules/assignment');
 
 router.get('/', CookieService.isLoggedIn, function(req, res) {
     var query = { 'initials' : req.session.initials };
@@ -28,7 +26,7 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
                         res.render('clients', {
                             clients : clients,
                             initials : initials,
-                            statuses : ClientService.getStatuses(),
+                            options : ClientService.getStatuses(),
                             role : cookie.role
                         });
                     }

@@ -30,10 +30,12 @@ var ClientService = {
 
     findClientsOSPyt : function(callback) {
         var search = {};
-        search['pytAmount'] = '';
-        search['pytReceived'] = '';
         search['packed'] = true;
         search['signed'] = { $ne : '' };
+        var or = [];
+        or.push({ 'pytReceived' : '' });
+        or.push({ 'pytAmount' : '' });
+        search['$or'] = or;
         Client.find(search).lean().exec(function(err, clients) {
             callback(err, clients);
         });
@@ -42,8 +44,7 @@ var ClientService = {
     findClientsEmailed : function(callback) {
         var search = {};
         search['emailed'] = { $ne : '' };
-        search['pytAmount'] = '';
-        search['pytReceived'] = '';
+        search['signed'] = '';
         Client.find(search).lean().exec(function(err, clients) {
             callback(err, clients);
         });
@@ -52,9 +53,8 @@ var ClientService = {
     findClientsPacked : function(callback) {
         var search = {};
         search['packed'] = true;
+        search['emailed'] = '';
         search['signed'] = '';
-        search['pytAmount'] = '';
-        search['pytReceived'] = '';
         Client.find(search).lean().exec(function(err, clients) {
             callback(err, clients);
         });
@@ -74,8 +74,6 @@ var ClientService = {
         search['packed'] = false;
         search['emailed'] = '';
         search['signed'] = '';
-        search['pytAmount'] = '';
-        search['pytReceived'] = '';
         Client.find(search).lean().exec(function(err, clients) {
             callback(err, clients);
         });
@@ -107,6 +105,15 @@ var ClientService = {
             } else {
                 callback(err, clients);
             }
+        });
+    },
+
+    findClientsWithUser : function(user, all, callback) {
+        var search = {};
+        search['preparer'] = user;
+        if (!all) search['readyToPack'] = '';
+        Client.find(search).lean().exec(function(err, clients) {
+            callback(err, clients);
         });
     },
 

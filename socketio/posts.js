@@ -1,7 +1,6 @@
 /**
- * Created by ander on 2017-09-15.
+ * Created by ander on 2017-11-22.
  */
-var getFileName = require('./utils/get_file_name');
 var ClientService = require('../modules/client');
 
 var m_names = ["JAN", "FEB", "MAR",
@@ -16,17 +15,18 @@ function getDate() {
     return curr_date + "-" + m_names[curr_month] + "-" + curr_year;
 }
 
-var IndexSockets = {
-    monitorUpdate: function(socket) {
-        socket.on('monitoring sheet update', function (data) {
-            socket.broadcast.emit('monitoring sheet update', data);
+var ClientsSocket = {
+    ClientUpdate : function(socket) {
+        socket.on('client side update', function (data) {
+            socket.broadcast.emit('client side update', data);
             console.log(data);
+            if (data.field == 'packed') data.value = data.value == 'Y';
             var search = {};
             search['fileName'] = data.fileName;
             var update = {};
             update[data.field] = data.value;
 
-            if (data.column == 29) {
+            if (data.field == 'pytAmt') {
                 update['pytDate'] = getDate();
             }
 
@@ -39,4 +39,4 @@ var IndexSockets = {
     }
 };
 
-module.exports = IndexSockets;
+module.exports = ClientsSocket;

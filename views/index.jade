@@ -2,10 +2,7 @@ extends layout
 
 block content
     script(type="text/javascript", src='/js/jquery.floatThead.js')
-    script(type='text/javascript').
-        var payment = "#{pyt}";
-        var role = "#{role}";
-    script(src='/js/index/monitoring_sheet.js')
+    script(type='text/javascript', src='/js/index/monitoring_sheet.js')
 
     ul.nav.nav-tabs
         li.nav-item
@@ -23,6 +20,7 @@ block content
                 table(id=clients[i][0] + 'Table').cell-border
                     thead
                         tr
+                            th
                             th Slip
                             th Self Empl
                             th T1135
@@ -54,9 +52,9 @@ block content
                             th Cell
                             th Email
                             th Remarks
-                            th
                     tfoot
                         tr
+                            th
                             th Slip
                             th Self Empl
                             th T1135
@@ -88,14 +86,14 @@ block content
                             th Cell
                             th Email
                             th Remarks
-                            th
                     tbody
                         each client in clients[i][1]
                             tr(data-href="/client/" + client.pathName)
+                                td.text-nowrap #{client.fileName}
                                 td #{client.slips ? 'Y' : ''}
                                 td #{client.selfEmployed ? 'Y' : ''}
                                 td
-                                    if client.t1135 == 'N'
+                                    if client.t1135 == 'N' || client.t1135 == ''
                                         | 0
                                     if client.t1135 == 'SIMPLE'
                                         | 1
@@ -105,7 +103,7 @@ block content
                                 td #{client.t777 ? 'Y' : ''}
                                 td #{client.stocks ? 'Y' : ''}
                                 td #{client.new ? 'Y' : ''}
-                                td.toggle #{client.confirmPickupDate ? 'Y' : ''}
+                                td #{client.confirmPickupDate ? 'Y' : ''}
                                 td.text-nowrap.date-edit #{client.pickupDate}
                                 td.text-nowrap #{client.husband ? client.husband.lastName : ''}
                                 td.text-nowrap #{client.husband ? client.husband.firstName : ''}
@@ -113,7 +111,7 @@ block content
                                 td.text-nowrap #{client.wife ? client.wife.firstName : ''}
                                 td.text-nowrap #{client.group}
                                 td #{client.interviewer}
-                                td.text-nowrap.preparer #{client.preparer}
+                                td.text-nowrap.edit.admin #{client.preparer}
                                 td #{client.preparerDone}
                                 td.edit #{client.checker}
                                 td.text-nowrap.edit #{client.outstandingInfo}
@@ -121,7 +119,7 @@ block content
                                 td.toggle #{client.packed ? 'Y' : ''}
                                 td.text-nowrap.date-edit #{client.emailed}
                                 td.text-nowrap.date-edit #{client.signed}
-                                td.text-nowrap.pyt #{client.pytReceived}
+                                td.text-nowrap.select #{client.pytReceived}
                                 td.text-nowrap.edit #{client.pytAmount}
                                 td.text-nowrap.date-edit #{client.callDate}
                                 td.text-nowrap #{client.interviewDate}
@@ -129,4 +127,3 @@ block content
                                 td.text-nowrap #{client.cell.number}
                                 td.text-nowrap #{client.email.value}
                                 td.text-nowrap.edit #{client.remarks}
-                                td.text-nowrap #{client.fileName}

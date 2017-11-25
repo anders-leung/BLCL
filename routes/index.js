@@ -28,7 +28,7 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
                         res.render('index', {
                             title: 'T1 Monitoring',
                             clients: clients,
-                            pyt: ClientService.getPayments(),
+                            options: ClientService.getPayments(),
                             role: cookie.role
                         });
                     });

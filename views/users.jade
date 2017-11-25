@@ -4,9 +4,7 @@
 extends layout
 
 block content
-    script(type="text/javascript").
-        var list = !{JSON.stringify(list)};
-    script(src='/js/users/users_list.js')
+    script(type="text/javascript", src='/js/users/users_list.js')
 
     ul.nav.nav-tabs
         - for (var i = 0; i < list.length; i++)
@@ -16,35 +14,47 @@ block content
     #table.tab-content(style='border-top: 0')
         - for (var i = 0; i < list.length; i++)
             div(id=list[i][0]).tab-pane
-                table.cell-border
+                table(id=list[i][0] + 'table').cell-border
                     thead
                         tr
-                            th Phone Number
+                            th
                             th Husband Last Name
                             th Husband First Name
                             th Wife Last Name
                             th Wife First Name
                             th Slips
-                            th Self Employed
+                            th Self Empl
                             th T1135
                             th Rental
+                            th 777
                             th Stocks
                             th New
-                            th Picked Up
-                            th Status
+                            th PRE OK
+                            th CFM PU
+                            th Pickup Date
+                            th PRE
                     tbody
                         each client in list[i][1]
                             tr
-                                td #{client.tel.number}
-                                td #{client.husband.lastName}
-                                td #{client.husband.firstName}
-                                td #{client.wife.lastName}
-                                td #{client.wife.firstName}
-                                td.check #{client.slips}
-                                td.check #{client.selfEmployed}
-                                td #{client.t1135}
-                                td.check #{client.rental}
-                                td.check #{client.stocks}
-                                td.check #{client.new}
-                                td.check #{client.pickedUp}
+                                td.text-nowrap #{client.fileName}
+                                td.text-nowrap #{client.husband ? client.husband.lastName : ''}
+                                td.text-nowrap #{client.husband ? client.husband.firstName : ''}
+                                td.text-nowrap #{client.wife ? client.wife.lastName : ''}
+                                td.text-nowrap #{client.wife ? client.wife.firstName : ''}
+                                td #{client.slips ? 'Y' : ''}
+                                td #{client.selfEmployed ? 'Y' : ''}
+                                td
+                                    if client.t1135 == 'N' || client.t1135 == ''
+                                        | 0
+                                    if client.t1135 == 'SIMPLE'
+                                        | 1
+                                    if client.t1135 == 'COMPLICATED'
+                                        | 2
+                                td #{client.rental ? 'Y' : ''}
+                                td #{client.t777 ? 'Y': ''}
+                                td #{client.stocks ? 'Y' : ''}
+                                td #{client.new ? 'Y' : ''}
                                 td #{client.preparerDone}
+                                td #{client.confirmPickupDate}
+                                td.text-nowrap #{client.pickupDate}
+                                td.edit.admin #{client.preparer}

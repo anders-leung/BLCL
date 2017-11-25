@@ -25,6 +25,7 @@ block content
                 table(id=clients[i][0] + 'Table').cell-border
                     thead
                         tr
+                            th
                             th Slip
                             th Self Empl
                             th T1135
@@ -51,9 +52,9 @@ block content
                             th Phone Number
                             th Cell
                             th Email
-                            th
                     tfoot
                         tr
+                            th
                             th Slip
                             th Self Empl
                             th T1135
@@ -80,14 +81,14 @@ block content
                             th Phone Number
                             th Cell
                             th Email
-                            th
                     tbody
                         each client in clients[i][1]
                             tr(data-href="/client/" + client.pathName)
+                                td.text-nowrap #{client.fileName}
                                 td #{client.slips ? 'Y' : ''}
                                 td #{client.selfEmployed ? 'Y' : ''}
                                 td
-                                    if client.t1135 == 'N'
+                                    if client.t1135 == 'N' || client.t1135 == ''
                                         | 0
                                     if client.t1135 == 'SIMPLE'
                                         | 1
@@ -106,7 +107,7 @@ block content
                                 td.text-nowrap #{client.group}
                                 td #{client.interviewer}
                                 td.text-nowrap #{client.preparer}
-                                td.status #{client.preparerDone}
+                                td.select #{client.preparerDone}
                                 td.edit #{client.checker}
                                 td.text-nowrap.date-edit #{client.readyToPack}
                                 td.text-nowrap #{client.outstandingInfo}
@@ -116,4 +117,3 @@ block content
                                 th.text-nowrap #{client.tel.number}
                                 th.text-nowrap #{client.cell.number}
                                 th.text-nowrap #{client.email.value}
-                                td.text-nowrap #{client.fileName}
