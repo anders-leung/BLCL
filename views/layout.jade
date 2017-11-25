@@ -26,7 +26,9 @@ html
         script(type='text/javascript', src='/js/datatable_tabs/posts.js')
 
     body
-        nav.navbar.navbar-default.navbar-toggleable-md.navbar-fixed-top
+        nav.navbar.navbar-default.navbar-toggleable-md.fixed-top
+            button.navbar-toggler.navbar-toggler-right(type='button' data-toggle='collapse' data-target='#navbar' aria-controls='navbar' aria-expanded='false' aria-label='Toggle navigation')
+                span.navbar-toggler-icon
             a.navbar-brand(href='/') BLCL
             if role
                 #navbar.collapse.navbar-collapse
