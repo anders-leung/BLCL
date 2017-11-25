@@ -69,9 +69,11 @@ $(document).ready(function() {
     }
 
     function findTableForRow(row) {
+        var readyToPack = row.data()[19] != '';
         var status = row.data()[17] == '' ? 'new' : row.data()[17].toLowerCase();
         var emailed = row.data()[21] != '';
 
+        if (readyToPack) return 'none';
         if (emailed) return '#emailedTable';
         return '#' + status + 'Table';
     }
