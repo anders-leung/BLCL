@@ -11,6 +11,7 @@ block content
         table.cell-border
             thead
                 tr
+                    th
                     th Date Rec'd
                     th Husband Last Name
                     th Husband First Name
@@ -39,9 +40,11 @@ block content
                     th
                     th
                     th
+                    th
             tbody
                 each client in clients
                     tr.clickable-row(data-href="/client/" + client.pathName)
+                        td.text-nowrap #{client.fileName}
                         td.text-nowrap #{client.pytDate}
                         td.text-nowrap #{client.husband ? client.husband.lastName : ''}
                         td.text-nowrap #{client.husband ? client.husband.firstName : ''}
