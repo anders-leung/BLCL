@@ -10,6 +10,10 @@ function adjustTables() {
     $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
 }
 
+$(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
+    adjustTables();
+});
+
 // Disable clicks for all tables to prevent editing
 function disableEditing(table) {
     $('table').each(function() {
