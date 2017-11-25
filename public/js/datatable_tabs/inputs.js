@@ -30,7 +30,7 @@ $(document).ready(function() {
     enableEditing();
 
     $('table').each(function() {
-        $(this).on('enableEditing', '.date-edit, .select', function() {
+        $(this).on('enableEditing', '.edit, .date-edit, .select', function() {
             enableEditing();
         });
     });
