@@ -6,13 +6,13 @@ var router = express.Router();
 
 var CookieService = require('./utils/cookies');
 var ClientService = require('./../modules/client');
-var ConfigService = require('./../modules/config');
 var WriteExcelService = require('./../modules/write_excel');
 
 /* GET home page. */
 router.get('/', CookieService.isLoggedIn, function(req, res) {
     res.render('client', { title: 'T1 Interview',
         client : null,
+        role : CookieService.readCookie(req).role,
         options : {
             method : ClientService.getMethods(),
             t1135 : ClientService.getT1135(),
@@ -32,6 +32,7 @@ router.get('/:client_name', CookieService.isLoggedIn, function(req, res) {
         res.render('client', {
             title : 'T1 Interview',
             client : client[0],
+            role : CookieService.readCookie(req).role,
             options : {
                 method : ClientService.getMethods(),
                 t1135 : ClientService.getT1135(),
