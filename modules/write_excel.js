@@ -102,7 +102,8 @@ var fields = {
         'D10' : function(cell, client) {
             var address = '';
             address += client.address.apartment;
-            address += '-' + client.address.street;
+            if (client.address.apartment != '') address += ' - ';
+            address += client.address.street;
             address += ', ' + client.address.city;
             address += ', ' + client.address.province;
             address += ' ' + client.address.postalCode;

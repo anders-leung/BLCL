@@ -31,9 +31,6 @@ block content
                         label(for='checker') Checker
                         input#checker.form-control(type='text' name='checker')
                     .form-group.col-2
-                        label(for='pickupDate') Pickup Date
-                        input#pickupDate.form-control.datepicker(type='text' name='pickupDate')
-                    .form-group.col-2
                         label(for='interviewDate') Interview Date
                         input#interviewDate.form-control.datepicker(type='text' name='interviewDate')
                 .row
@@ -41,47 +38,11 @@ block content
                         label(for='returns') Number of Returns
                         input#returns.form-control(type='number' name='numberOfReturns')
                     .form-group.col-2
-                        label(for='method') Drop or Email
-                        select#method.form-control(name='method')
-                    .form-group.col-2
-                        label(for='t1135') T1135
-                        select#t1135.form-control(name='t1135')
-                    .form-group.col-2
                         label(for='group') Group
                         input#group.form-control(type='text' name='group')
-                    .row.col-4
-                            .form-check
-                                label.form-check-label(for='prSold')
-                                    input#prSold.form-check-input(type='checkbox' name='prSold')
-                                    | PR Sold
-                            .form-check
-                                label.form-check-label(for='slips')
-                                    input#slips.form-check-input(type='checkbox' name='slips')
-                                    | Slips
-                            .form-check
-                                label.form-check-label(for='stocks')
-                                    input#stocks.form-check-input(type='checkbox' name='stocks')
-                                    | Stocks
-                            .form-check
-                                label.form-check-label(for='confirmPickupDate')
-                                    input#confirmPickupDate.form-check-input(type='checkbox' name='confirmPickupDate')
-                                    | CFM PU
-                            .form-check
-                                label.form-check-label(for='t777')
-                                    input#t777.form-check-input(type='checkbox' name='t777')
-                                    | T777
-                            .form-check
-                                label.form-check-label(for='new')
-                                    input#new.form-check-input(type='checkbox' name='new')
-                                    | New
-                            .form-check
-                                label.form-check-label(for='rental')
-                                    input#rental.form-check-input(type='checkbox' name='rental')
-                                    | Rental
-                            .form-check
-                                label.form-check-label(for='selfEmployed')
-                                    input#selfEmployed.form-check-input(type='checkbox' name='selfEmployed')
-                                    | Self Emp
+                    .form-group.col-2
+                        label(for='method') Drop or Email
+                        select#method.form-control(name='method')
                 .row
                     .form-group.col-2
                         label(for='tel') Telephone
@@ -698,7 +659,7 @@ block content
                             label.form-check-label(for='hbtc')
                                 input#hbtc.form-check-input(type='checkbox' name='hbtc')
                                 | HBTC
-                    .col-3
+                    .col-4
                         .form-check
                             label.form-check-label(for='disability')
                                 input#disability.form-check-input(type='checkbox' name='disability')
@@ -711,7 +672,7 @@ block content
                             label.form-check-label(for='equiv')
                                 input#equiv.form-check-input(type='checkbox' name='equiv')
                                 | Equiv To Spouse
-                    .col-7
+                    .col-6
                         .form-group
                             label(for='outstandingInfo') Outstanding Info
                                 textarea#outstandingInfo.form-control(rows='4' name='outstandingInfo')
@@ -763,7 +724,47 @@ block content
                         .form-group
                             label(for='price') Price Quoted
                             input#price.form-control(type='number' name='price')
-
+                        .row
+                            .form-group.col-4
+                                label(for='pickupDate') Pickup Date
+                                input#pickupDate.form-control.datepicker(type='text' name='pickupDate')
+                            .form-group.col-4
+                                label(for='t1135') T1135
+                                select#t1135.form-control(name='t1135')
+                            .form-check
+                                br
+                                label.form-check-label(for='prSold')
+                                    input#prSold.form-check-input(type='checkbox' name='prSold')
+                                    | PR Sold
+                            .form-check
+                                br
+                                label.form-check-label(for='slips')
+                                    input#slips.form-check-input(type='checkbox' name='slips')
+                                    | Slips
+                            .form-check
+                                label.form-check-label(for='stocks')
+                                    input#stocks.form-check-input(type='checkbox' name='stocks')
+                                    | Stocks
+                            .form-check
+                                label.form-check-label(for='confirmPickupDate')
+                                    input#confirmPickupDate.form-check-input(type='checkbox' name='confirmPickupDate')
+                                    | CFM PU
+                            .form-check
+                                label.form-check-label(for='t777')
+                                    input#t777.form-check-input(type='checkbox' name='t777')
+                                    | T777
+                            .form-check
+                                label.form-check-label(for='new')
+                                    input#new.form-check-input(type='checkbox' name='new')
+                                    | New
+                            .form-check
+                                label.form-check-label(for='rental')
+                                    input#rental.form-check-input(type='checkbox' name='rental')
+                                    | Rental
+                            .form-check
+                                label.form-check-label(for='selfEmployed')
+                                    input#selfEmployed.form-check-input(type='checkbox' name='selfEmployed')
+                                    | Self Emp
             br
             input.btn.btn-success.offset-1.col-10(type='submit' value='Done')
         br

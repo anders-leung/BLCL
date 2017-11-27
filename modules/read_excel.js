@@ -115,8 +115,11 @@ var fields = {
         } else {
             return;
         }
+
         var address_tokens = address.split(',');
         var units = address_tokens[0].split('-');
+
+        if (address_tokens.length < 3) return;
 
         client.address.street = address_tokens[0].trim();
 
@@ -748,23 +751,16 @@ function excelToClient(workbook) {
 }
 
 function readExcel(filepath) {
+    console.log(filepath);
     var workbook = XLSX.readFile(filepath);
     excelToClient(workbook);
 }
 
 function readFolder(filepath, callback) {
     fs.readdir(filepath, function(err, files) {
-        (function myLoop (i) {
-            if (i % 300 == 0) {
-                setTimeout(function(){
-                    readExcel(filepath + '//' + files[i]);
-                    if (--i) myLoop(i);
-                }, 2000);
-            } else {
-                readExcel(filepath + '//' + files[i]);
-                if (--i) myLoop(i);
-            }
-        })(files.length - 1);
+        for (var i = 0; i < files.length; i++) {
+            readExcel(filepath + '//' + files[i]);
+        }
     });
     callback();
 }

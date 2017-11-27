@@ -292,13 +292,6 @@ module.exports = function() {
     admin.save();
 
     var user = new User();
-    user.email = 'test-email@gmail.com';
-    user.password = 'test';
-    user.role = 'Employee';
-    user.initials = 'TE';
-    user.save();
-
-    var user = new User();
     user.email = 'amy@ben-cpa.com';
     user.password = 'amy';
     user.role = 'Employee';
