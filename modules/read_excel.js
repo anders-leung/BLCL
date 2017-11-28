@@ -759,6 +759,7 @@ function readExcel(filepath) {
 function readFolder(filepath, callback) {
     fs.readdir(filepath, function(err, files) {
         for (var i = 0; i < files.length; i++) {
+            if (files[i].split('.')[1] != 'xlsx') continue;
             readExcel(filepath + '//' + files[i]);
         }
     });
