@@ -54,6 +54,20 @@ input, textarea {
 .highlight {
     background-color: #66afe9;
 }
+/*
+.divider{
+    border-left:1px solid black;
+}
+*/
+
+.husband {
+    border-right: 1px solid #e5e5e5;
+}
+
+.section {
+    padding: 1% 0 1% 0;
+    border-top: 1px solid #c9c9c9;
+}
 
 input[type=checkbox] {
     /* Double-sized Checkboxes */
@@ -69,12 +83,7 @@ input[type=checkbox] {
 }
 
 .group label {
-    margin-top: -20px;
-    margin-bottom: -30px;
-}
-
-.form-check-label {
-    font-size: 120%;
+    margin-bottom: -20px;
 }
 
 .gst {
