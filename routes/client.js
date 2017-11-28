@@ -47,7 +47,6 @@ router.post('/', function(req, res) {
         if (err) {
             res.render('error');
         } else {
-            WriteExcelService(client.year, client);
             res.redirect('/');
         }
     });
