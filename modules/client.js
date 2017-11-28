@@ -10,6 +10,10 @@ var ClientService = {
     saveClient : function(params, callback) {
         var client = new Client(params);
         for (var field in client) {
+            if (field == 'prSold') {
+                client[field] = client[field] == 'Y';
+                continue;
+            }
             if (field == 'email') continue;
             if (typeof(client[field]) == 'string') {
                 client[field] = client[field].toUpperCase();
@@ -18,6 +22,9 @@ var ClientService = {
         client.fileName = clientNames.getFileName(client);
         client.pathName = clientNames.getPathName(client);
         client.save(function(err) {
+            Client.findOne({ pathName : client.pathName }, function(err, client) {
+                WriteExcelService(client.year, client);
+            });
             callback(err, client);
         });
     },
