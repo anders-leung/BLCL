@@ -1,0 +1,33 @@
+//
+   Created by ander on 2017-12-03.
+
+extends layout
+
+block content
+    #table.col-12.tab-content
+            table(id='t5Table').cell-border
+                thead
+                    tr
+                        th
+                        th Company Name
+                        th Done
+                        th Billed
+                        th Invoicing
+                        th T1
+                tfoot
+                    tr
+                        th
+                        th Company Name
+                        th Done
+                        th Billed
+                        th Invoicing
+                        th T1
+                tbody
+                    each company in companies
+                        tr(data-href="/company/" + company.pathName)
+                            td.text-nowrap #{company.fileName}
+                            td.text-nowrap #{company.name}
+                            td.text-nowrap #{company.t4.done}
+                            td.text-nowrap #{company.t4.billed.value ? 'Y' : ''}
+                            td.text-nowrap #{company.t4.billed.invoicing}
+                            td.text-nowrap #{company.t4.t1}

@@ -31,6 +31,7 @@ $(document).ready(function() {
 
     $('table').each(function() {
         $(this).on('enableEditing', '.edit, .date-edit, .select', function() {
+            console.log('enableEditing')
             enableEditing();
         });
     });

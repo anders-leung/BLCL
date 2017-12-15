@@ -1,3 +1,6 @@
+/**
+ * Created by ander on 2017-12-03.
+ */
 var express = require('express');
 var router = express.Router();
 
@@ -10,31 +13,7 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
     ConfigService.getT1Directory(function (err, directory) {
         if (err) res.render('error');
         if (!directory) res.redirect('/setup');
-        ClientService.findClientsPacked(function (err, packed) {
-            if (err) {
-                res.render('error');
-            }
-            ClientService.findClientsEmailed(function (err, emailed) {
-                ClientService.findClientsOSPyt(function (err, pickedUp) {
-                    ClientService.findAllOtherClients(function (err, normal) {
-                        var cookie = CookieService.readCookie(req);
-                        var clients = [
-                            ['normal', normal],
-                            ['packed', packed],
-                            ['emailed', emailed],
-                            ['osPyt', pickedUp]
-                        ];
-
-                        res.render('index', {
-                            title: 'T1 Monitoring',
-                            clients: clients,
-                            options: ClientService.getPayments(),
-                            role: cookie.role
-                        });
-                    });
-                });
-            });
-        });
+        res.render('index', { title: 'Home', role: req.session.role });
     });
 });
 

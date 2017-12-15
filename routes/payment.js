@@ -9,11 +9,12 @@ var ClientService = require('../modules/client');
 
 /* GET home page. */
 router.get('/', CookieService.isLoggedIn, function(req, res) {
-    if (CookieService.readCookie(req).role != 'Administrator') {
+    var role = CookieService.readCookie(req).role;
+    if (role != 'Administrator') {
         res.redirect('/');
     }
     ClientService.findClientsPytRec(function(err, clients) {
-        res.render('payment', { clients: clients })
+        res.render('payment', { clients: clients, role: role });
     });
 });
 

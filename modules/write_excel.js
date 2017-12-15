@@ -18,6 +18,10 @@ var fields = {
             cell.value(client.interviewer);
         },
 
+        'U1' : function(cell, client) {
+            cell.value(client.prSold ? 'Y' : '');
+        },
+
         'X1' : function(cell, client) {
             cell.value(client.pickupDate);
         },

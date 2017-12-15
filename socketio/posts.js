@@ -18,8 +18,16 @@ function getDate() {
 var ClientsSocket = {
     ClientUpdate : function(socket) {
         socket.on('client side update', function (data) {
-            socket.broadcast.emit('client side update', data);
             console.log(data);
+            if (data.field == 'preparer') {
+                ClientService.findClient({ fileName : data.fileName }, function(err, client) {
+                    data.client = client[0];
+                    socket.broadcast.emit('job assignment', data);
+                })
+            } else {
+                socket.broadcast.emit('client side update', data);
+            }
+
             if (data.field == 'packed') data.value = data.value == 'Y';
             var search = {};
             search['fileName'] = data.fileName;

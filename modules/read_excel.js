@@ -15,6 +15,10 @@ var fields = {
         client.interviewer = (cell ? cell.v : '');
     },
 
+    'U1' : function(cell, client) {
+        if (cell) client.prSold = cell.v == 'Y';
+    },
+
     'X1' : function(cell, client) {
         client.pickupDate = (cell ? cell.v : '');
     },

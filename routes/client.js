@@ -6,9 +6,7 @@ var router = express.Router();
 
 var CookieService = require('./utils/cookies');
 var ClientService = require('./../modules/client');
-var WriteExcelService = require('./../modules/write_excel');
 
-/* GET home page. */
 router.get('/', CookieService.isLoggedIn, function(req, res) {
     res.render('client', { title: 'T1 Interview',
         client : null,
@@ -43,6 +41,7 @@ router.get('/:client_name', CookieService.isLoggedIn, function(req, res) {
 });
 
 router.post('/', function(req, res) {
+    req.body.new = true;
     ClientService.saveClient(req.body, function(err, client) {
         if (err) {
             res.render('error');

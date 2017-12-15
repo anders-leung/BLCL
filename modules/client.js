@@ -88,6 +88,10 @@ var ClientService = {
 
     updateClient : function(search, values, callback) {
         for (var field in values) {
+            if (field == 'prSold') {
+                values[field] = values[field] == 'Y';
+                continue;
+            }
             if (field == 'email') continue;
             if (typeof(values[field]) == 'string') {
                 values[field] = values[field].toUpperCase();

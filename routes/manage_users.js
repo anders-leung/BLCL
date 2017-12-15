@@ -13,7 +13,7 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
     }
     UserService.getAllUsers(function(err, users) {
         if (err) res.render('error');
-        res.render('manage_users', { title : 'BLCL', users : users, roles : UserService.getRoles() });
+        res.render('manage_users', { title : 'BLCL', users : users, roles : UserService.getRoles(), role : req.session.role });
     });
 });
 

@@ -97,6 +97,7 @@ $(document).ready(function() {
     }
 
     function moveRow(row, tableId) {
+        if (!tableId) return;
         if (tableId == 'none') return row.remove().draw();
         var table = $(tableId).DataTable();
         var rowNode = table.row.add(row.data()).draw().node();

@@ -24,15 +24,8 @@ block content
                         label(for='interviewer') Interviewer
                         input#interviewer.form-control(type='text' name='interviewer')
                     .form-group.col-2
-                        label(for='preparer') Preparer
-                        input#preparer.form-control(type='text' name='preparer')
-                    .form-group.col-2
-                        label(for='checker') Checker
-                        input#checker.form-control(type='text' name='checker')
-                    .form-group.col-2
                         label(for='interviewDate') Interview Date
                         input#interviewDate.form-control.datepicker(type='text' name='interviewDate')
-                .row
                     .form-group.col-2
                         label(for='returns') Number of Returns
                         input#returns.form-control(type='number' name='numberOfReturns')
@@ -725,18 +718,22 @@ block content
                             label(for='price') Price Quoted
                             input#price.form-control(type='number' name='price')
                         .row
-                            .form-group.col-4
+                            .form-group.col-3
                                 label(for='pickupDate') Pickup Date
                                 input#pickupDate.form-control.datepicker(type='text' name='pickupDate')
-                            .form-group.col-4
+                            .form-group.col-3
                                 label(for='t1135') T1135
                                 select#t1135.form-control(name='t1135' required)
-                            .form-group.col-4
+                            .form-group.col-3
                                 label(for='prSold') PR Sold
                                 select#prSold.form-control(name='prSold' required)
                                     option
                                     option N
                                     option Y
+                            .form-group.col-3
+                                label(for='preparer') Preparer
+                                input#preparer.form-control(type='text' name='preparer')
+                        .row
                             .form-check
                                 label.form-check-label(for='slips')
                                     input#slips.form-check-input(type='checkbox' name='slips')
@@ -753,10 +750,6 @@ block content
                                 label.form-check-label(for='t777')
                                     input#t777.form-check-input(type='checkbox' name='t777')
                                     | T777
-                            .form-check
-                                label.form-check-label(for='new')
-                                    input#new.form-check-input(type='checkbox' name='new')
-                                    | New
                             .form-check
                                 label.form-check-label(for='rental')
                                     input#rental.form-check-input(type='checkbox' name='rental')

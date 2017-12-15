@@ -17,9 +17,11 @@ block content
                 th Email
                 th Initials
                 th Role
+                th Password
         tbody
             - for user in users
                 tr
                     th #{user.email}
                     th #{user.initials}
                     th #{user.role}
+                    th #{user.password}

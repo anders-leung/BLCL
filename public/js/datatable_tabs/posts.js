@@ -83,6 +83,7 @@ $(document).ready(function() {
         if (type == 'toggle') value = $(cell).html() == 'Y' ? '' : 'Y';
         var field = getField(cell);
         updateHtml(fileName, field, value, true);
+        console.log()
         $(that).trigger('enableEditing');
     }
 

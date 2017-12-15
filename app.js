@@ -10,9 +10,12 @@ var bodyParser = require('body-parser');
 
 var setup = require('./routes/setup');
 var index = require('./routes/index');
+var t1 = require('./routes/t1');
+var t2 = require('./routes/t2');
+var t4 = require('./routes/t4');
+var t5 = require('./routes/t5');
 var login = require('./routes/login');
 var users = require('./routes/users');
-var excel = require('./routes/excel');
 var client = require('./routes/client');
 var clients = require('./routes/clients');
 var payment = require('./routes/payment');
@@ -42,10 +45,13 @@ app.use(session({
 }));
 
 app.use('/', index);
+app.use('/t1', t1);
+app.use('/t2', t2);
+app.use('/t4', t4);
+app.use('/t5', t5);
 app.use('/setup', setup);
-app.use('/login', login);
+app.use('/login*', login);
 app.use('/users', users);
-app.use('/loadExcel', excel);
 app.use('/client', client);
 app.use('/clients', clients);
 app.use('/payment', payment);
