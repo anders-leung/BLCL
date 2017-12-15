@@ -735,7 +735,7 @@ function clientToExcel(year, client) {
     var curr_year = client.year;
     var path = t1Directory + '//' + year + '//' + client.fileName + '.xlsx';
     if (!fs.existsSync(path)) {
-        path = 'C://Users//ander//Desktop//BLCL Files//Templates/1- T1 INTERVIEW-New.xlsx';
+        path = t1Directory + '//Templates//1- T1 INTERVIEW-New.xlsx';
     }
     console.log('previous path: ', path);
     XLSX.fromFileAsync(path).then(function(workbook) {
