@@ -86,6 +86,10 @@ input[type=checkbox] {
     margin-bottom: -20px;
 }
 
+.group-joint .form-group:first-child {
+    margin: 0 -30px 0 0;
+}
+
 .gst {
     margin-left: -15px;
 }

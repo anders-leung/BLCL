@@ -8,18 +8,18 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var setup = require('./routes/setup');
-var index = require('./routes/index');
-var t1 = require('./routes/t1');
-var t2 = require('./routes/t2');
-var t4 = require('./routes/t4');
-var t5 = require('./routes/t5');
-var login = require('./routes/login');
-var users = require('./routes/users');
-var client = require('./routes/client');
-var clients = require('./routes/clients');
-var payment = require('./routes/payment');
-var manage_users = require('./routes/manage_users');
+var setup = require('./server/routes/setup');
+var index = require('./server/routes/index');
+var t1 = require('./server/routes/t1');
+var t2 = require('./server/routes/t2');
+var t4 = require('./server/routes/t4');
+var t5 = require('./server/routes/t5');
+var login = require('./server/routes/login');
+var users = require('./server/routes/users');
+var client = require('./server/routes/client');
+var clients = require('./server/routes/clients');
+var payment = require('./server/routes/payment');
+var manage_users = require('./server/routes/manage_users');
 
 mongoose.Promise = require('bluebird');
 mongoose.connect('mongodb://localhost:27017/');
@@ -27,7 +27,7 @@ mongoose.connect('mongodb://localhost:27017/');
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, '/client/views'));
 app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
@@ -37,6 +37,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'client')));
 
 app.use(session({
     name : 'session',
@@ -75,7 +76,7 @@ app.use(function(err, req, res, next) {
     res.render('error');
 });
 
-var setup = require('./routes/utils/setup');
+var setup = require('./server/routes/utils/setup');
 setup();
 
 /*

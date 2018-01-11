@@ -1,0 +1,56 @@
+//
+   Created by ander on 2017-12-03.
+
+extends layout
+
+block content
+    script(type='text/javascript', src='/js/t2/job_status.js')
+
+    #table.col-12.tab-content
+            table(id='t2Table').cell-border
+                thead
+                    tr
+                        th
+                        th Job In
+                        th Job Pickup
+                        th PA Time Allot
+                        th PA Time Actual
+                        th PA Time Variance
+                        th Company Name
+                        th Year ended
+                        th Due Date
+                        th Reason
+                        th Status
+                        th T4
+                        th T5
+                tfoot
+                    tr
+                        th
+                        th Job In
+                        th Job Pickup
+                        th PA Time Allot
+                        th PA Time Actual
+                        th PA Time Variance
+                        th Company Name
+                        th Year ended
+                        th Due Date
+                        th Reason
+                        th Status
+                        th T4
+                        th T5
+                tbody
+                    each company in companies
+                        tr(data-href="/company/" + company.pathName)
+                            td.text-nowrap #{company.fileName}
+                            td.text-nowrap #{company.jobIn}
+                            td.text-nowrap #{company.jobPickup}
+                            td.text-nowrap #{company.paTimeAllot}
+                            td.text-nowrap #{company.paTimeActual}
+                            td.text-nowrap #{company.paTimeVariance}
+                            td.text-nowrap #{company.name}
+                            td.text-nowrap #{company.yearEnded}
+                            td.text-nowrap #{company.dueDate}
+                            td.text-nowrap #{company.reason}
+                            td.text-nowrap #{company.status}
+                            td #{company.t4 ? 'Y' : ''}
+                            td #{company.t5 ? 'Y' : ''}
