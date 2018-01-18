@@ -123,7 +123,10 @@ var ClientSchema = new Schema({
             joint: { type: Boolean, default: false }
         },
         t5007: { type: Boolean, default: false },
-        t4A: { type: Boolean, default: false },
+        t4A: {
+            value: {type: Boolean, default: false},
+            blcl: {type: Boolean, default: false}
+        },
         t5008: {
             value: { type: Boolean, default: false },
             joint: { type: Boolean, default: false }
@@ -208,7 +211,10 @@ var ClientSchema = new Schema({
             joint: { type: Boolean, default: false }
         },
         t5007: { type: Boolean, default: false },
-        t4A: { type: Boolean, default: false },
+        t4A: {
+            value: {type: Boolean, default: false},
+            blcl: {type: Boolean, default: false}
+        },
         t5008: {
             value: { type: Boolean, default: false },
             joint: { type: Boolean, default: false }

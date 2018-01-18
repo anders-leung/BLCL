@@ -128,7 +128,7 @@ $(document).ready(function() {
         var status = row.data()[17] == '' ? 'new' : row.data()[17].toLowerCase();
         var emailed = row.data()[21] != '';
 
-        if (readyToPack) return 'none';
+        if (readyToPack) return '#doneTable';
         if (emailed) return '#emailedTable';
         return '#' + status + 'Table';
     }

@@ -51,7 +51,7 @@ $(document).ready(function() {
     $('#addUser').on('click', function() {
         $(this).prop('disabled', true);
         var table = $('table').DataTable();
-        var row = table.row.add(['', '', '']).draw().node();
+        var row = table.row.add(['', '', '', '']).draw().node();
         $(row).find('td').each(function(i) {
             if (i == 2) {
                 var select = "<select>";
@@ -70,7 +70,7 @@ $(document).ready(function() {
                 var input = "<input type='text'>";
                 $(this).html(input);
             }
-            if (i == 2) {
+            if (i == 3) {
                 var button = "<button id='addUser' class='btn btn-success pull-right' style='padding : 0 5px 0 5px'>+</button>"
                 $(this).append(button);
             }

@@ -70,6 +70,26 @@ function updateHusbandT5(sheet) {
     }
 }
 
+function updateHusbandT4A(sheet) {
+    var range = sheet.range('B25:F25');
+    if (range.merged()) {
+        range.merged(false);
+        range = sheet.range('B25:D25');
+        range.merged(true);
+        setInputStyle(range);
+        var cell = sheet.cell('B25');
+        cell.value('');
+
+        cell = sheet.cell('E25');
+        setLabelStyle(cell);
+        cell.value('BLCL');
+
+        cell = sheet.cell('F25');
+        setLabelStyle(cell);
+        cell.value('');
+    }
+}
+
 function updateWifeT4(sheet) {
     var range = sheet.range('P20:T20');
     if (range.merged()) {
@@ -115,6 +135,26 @@ function updateWifeT5(sheet) {
 
         cell = sheet.cell('Z20');
         setInputStyle(cell);
+        cell.value('');
+    }
+}
+
+function updateWifeT4A(sheet) {
+    var range = sheet.range('P25:T25');
+    if (range.merged()) {
+        range.merged(false);
+        range = sheet.range('P25:R25');
+        range.merged(true);
+        setInputStyle(range);
+        var cell = sheet.cell('P25');
+        cell.value('');
+
+        cell = sheet.cell('S25');
+        setLabelStyle(cell);
+        cell.value('BLCL');
+
+        cell = sheet.cell('T25');
+        setLabelStyle(cell);
         cell.value('');
     }
 }
@@ -173,6 +213,7 @@ function setPRSold(sheet) {
     range.merged(false);
 
     range = sheet.range('P1:R1');
+    range.merged(true);
     var cell = sheet.cell('P1');
     cell.style({
         'border': true,
@@ -183,24 +224,45 @@ function setPRSold(sheet) {
     range = sheet.range('S1:T1');
     range.merged(true);
     range.style({
-        'border': true,
+        'border': 'thick',
         'bold': true,
         'fontSize': 14,
         'horizontalAlignment': 'left'
     });
     sheet.cell('S1').value('PR SOLD');
 
-    sheet.cell('U1').value('');
+    cell = sheet.cell('U1');
+    cell.value('');
+    cell.style('fill', 'ffffff');
 
-    cell = sheet.cell('')
+    range = sheet.range('V1:Z1');
+    range.merged(false);
+
+    range = sheet.range('V1:W1');
+    range.merged(true);
+    cell = sheet.cell('V1');
+    cell.style({
+        'fill': 'ffff00',
+        'underline': true,
+        'fontSize': 11,
+        'bold': false
+    });
+    cell.value('PR SOLD');
+
+    range = sheet.range('X1:Z1');
+    range.merged(true);
+    sheet.cell('X1').value('');
 }
 
 var UpdateService = {
     updateSheet: function(sheet) {
             updateHusbandT4(sheet);
             updateHusbandT5(sheet);
+            updateHusbandT4A(sheet);
             updateWifeT4(sheet);
             updateWifeT5(sheet);
+            updateWifeT4A(sheet);
+            setPRSold(sheet);
             setDD(sheet);
             setOSP(sheet);
     }

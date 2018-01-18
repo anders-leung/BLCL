@@ -16,7 +16,7 @@ router.post('/', function(req, res) {
     ConfigService.setT1Directory(req.body.directory, function(err) {
         if (err) res.render('error');
 
-        var readFolder = require('./read_excel');
+        var readFolder = require('../modules/read_excel');
         readFolder(req.body.directory, function() {
             res.redirect('/');
         });

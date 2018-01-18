@@ -26,23 +26,26 @@ html
         script(type='text/javascript', src='/js/datatable_tabs/posts.js')
 
     body
-        nav.navbar.navbar-default.navbar-toggleable-md.fixed-top
+        nav.navbar.navbar-default.navbar-toggleable-md.fixed-top(role='navigation')
             button.navbar-toggler.navbar-toggler-right(type='button' data-toggle='collapse' data-target='#navbar' aria-controls='navbar' aria-expanded='false' aria-label='Toggle navigation')
                 span.navbar-toggler-icon
             a.navbar-brand(href='/') BLCL
             if role
                 #navbar.collapse.navbar-collapse
-                    ul.navbar-nav.mr-auto
-                        li.nav-item.active
-                            a.nav-link(href='/t1') T1
-                        li.nav-item
-                            a.nav-link(href='/t2') T2
-                        li.nav-item
-                            a.nav-link(href='/t2') T4
-                        li.nav-item
-                            a.nav-link(href='/t2') T5
+                    ul.nav.navbar-nav.mr-auto
+                        li.nav-item.dropdown
+                            a#t1Dropdown.nav-link.dropdown-toggle(href='#' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false') T1
+                            .dropdown-menu(aria-labelledby='t1Dropdown')
+                                a.dropdown-item(href='/t1_directory') Directory
+                                a.dropdown-item(href='/t1') Monitoring Sheet
+                        //li.nav-item
+                        //    a.nav-link(href='/t2') T2
+                        //li.nav-item
+                        //    a.nav-link(href='/t2') T4
+                        //li.nav-item
+                        //    a.nav-link(href='/t2') T5
 
-                    ul.navbar-nav.pull-right
+                    ul.nav.navbar-nav.pull-right
                         li.nav-item
                             a.nav-link(href='/clients') My Clients
                         li.nav-item

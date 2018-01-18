@@ -79,7 +79,7 @@ $(document).ready(function() {
             if (signed) {
                 if (pyt) {
                     if (packed) {
-                        return 'none';
+                        return '#doneTable';
                     } else {
                         return '#emailedNotPackedTable';
                     }
@@ -93,7 +93,7 @@ $(document).ready(function() {
             if (packed) {
                 if (signed) {
                     if (pyt) {
-                        return 'none';
+                        return '#done';
                     } else {
                         return '#osPytTable';
                     }

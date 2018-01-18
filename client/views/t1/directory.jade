@@ -1,0 +1,18 @@
+//
+   Created by ander on 2018-01-13.
+
+extends ../layout
+
+block content
+
+    script(type='text/javascript', src='/js/t1/directory.js')
+
+    #table.col-12
+        table.cell-border
+            thead
+                tr
+                    th Client Names
+            tbody
+                each client in clients
+                    tr(data-href="/client/" + client.pathName)
+                        td.text-nowrap #{client.fileName}

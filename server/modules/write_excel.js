@@ -408,7 +408,11 @@ var fields = {
         },
 
         'B25' : function(cell, client) {
-            cell.value(client.husband.t4A ? 'Y' : '');
+            cell.value(client.husband.t4A.value ? 'Y' : '');
+        },
+
+        'F25' : function(cell, client) {
+            cell.value(client.husband.t4A.blcl ? 'Y' : '');
         },
 
         'H25' : function(cell, client) {
@@ -630,7 +634,11 @@ var fields = {
         },
 
         'P25' : function(cell, client) {
-            cell.value(client.wife.t4A ? 'Y' : '');
+            cell.value(client.wife.t4A.value ? 'Y' : '');
+        },
+
+        'T25' : function(cell, client) {
+            cell.value(client.wife.t4A.blcl ? 'Y' : '');
         },
 
         'V25' : function(cell, client) {

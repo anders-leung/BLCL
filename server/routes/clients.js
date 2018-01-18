@@ -14,22 +14,25 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
         ClientService.findClientsWithUserWIP(initials, function(err, wip) {
             ClientService.findClientsWithUserOK(initials, function(err, ok) {
                 ClientService.findClientsWithUserEmailed(initials, function(err, emailed) {
-                    if (err) res.render('error');
-                    else {
-                        var cookie = CookieService.readCookie(req);
-                        var clients = [
-                            ['new', new_clients],
-                            ['wip', wip],
-                            ['ok', ok],
-                            ['emailed', emailed]
-                        ];
-                        res.render('clients', {
-                            clients : clients,
-                            initials : initials,
-                            options : ClientService.getStatuses(),
-                            role : cookie.role
-                        });
-                    }
+                    ClientService.findClientsPreparerDone(initials, function(err, done) {
+                        if (err) res.render('error');
+                        else {
+                            var cookie = CookieService.readCookie(req);
+                            var clients = [
+                                ['new', new_clients],
+                                ['wip', wip],
+                                ['ok', ok],
+                                ['emailed', emailed],
+                                ['done', done]
+                            ];
+                            res.render('clients', {
+                                clients: clients,
+                                initials: initials,
+                                options: ClientService.getStatuses(),
+                                role: cookie.role
+                            });
+                        }
+                    });
                 });
             });
         });

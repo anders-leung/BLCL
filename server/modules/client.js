@@ -103,9 +103,15 @@ var ClientService = {
         });
     },
 
+    findAllClients : function(callback) {
+        Client.find({}).lean().exec(function(err, clients) {
+            callback(err, clients);
+        })
+    },
+
     updateClient : function(search, values, callback) {
         for (var field in values) {
-            if (field == 'prSold') {
+            if (field == 'prSold' || field == 'donation' || field == 'medExp') {
                 values[field] = values[field] == 'Y';
                 continue;
             }
@@ -184,6 +190,29 @@ var ClientService = {
         search['preparerDone'] = 'OK';
         search['readyToPack'] = '';
         search['emailed'] = { $ne : '' };
+        Client.find(search).lean().exec(function(err, clients) {
+            callback(err, clients);
+        });
+    },
+
+    findClientsPreparerDone : function(user, callback) {
+        var search = {};
+        search['preparer'] = user;
+        search['preparerDone'] = 'OK';
+        search['readyToPack'] = { $ne : '' };
+        Client.find(search).lean().exec(function(err, clients) {
+            callback(err, clients);
+        });
+    },
+
+    findClientsDone : function(callback) {
+        var search = {};
+        search['preparer'] = { $ne : '' };
+        search['preparerDone'] = 'OK';
+        search['pytReceived'] = { $ne : '' };
+        search['pytAmount'] = { $ne : '' };
+        search['signed'] = { $ne : '' };
+        search['packed'] = true;
         Client.find(search).lean().exec(function(err, clients) {
             callback(err, clients);
         });
