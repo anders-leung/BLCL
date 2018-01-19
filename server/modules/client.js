@@ -37,12 +37,14 @@ var ClientService = {
 
     findClientsOSPyt : function(callback) {
         var search = {};
+        search['interviewDate'] = { $ne : '' };
         search['packed'] = false;
         search['signed'] = { $ne : '' };
         search['emailed'] = { $ne : '' };
         search['pytReceived'] = '';
         search['pytAmount'] = '';
         var or = [];
+        or.push({ 'interviewDate' : { $ne : '' }});
         or.push({ 'packed' : true });
         or.push({ 'signed' : { $ne : '' }});
         or.push({ 'pytReceived' : '' });
@@ -55,6 +57,7 @@ var ClientService = {
 
     findClientsEmailedNotPacked : function(callback) {
         var search = {};
+        search['interviewDate'] = { $ne : '' };
         search['packed'] = false;
         search['signed'] = { $ne : '' };
         search['emailed'] = { $ne : '' };
@@ -67,6 +70,7 @@ var ClientService = {
 
     findClientsEmailed : function(callback) {
         var search = {};
+        search['interviewDate'] = { $ne : '' };
         search['emailed'] = { $ne : '' };
         search['signed'] = '';
         Client.find(search).lean().exec(function(err, clients) {
@@ -76,6 +80,7 @@ var ClientService = {
 
     findClientsPacked : function(callback) {
         var search = {};
+        search['interviewDate'] = { $ne : '' };
         search['packed'] = true;
         search['emailed'] = '';
         search['signed'] = '';
@@ -86,6 +91,7 @@ var ClientService = {
 
     findClientsPytRec : function(callback) {
         var search = {};
+        search['interviewDate'] = { $ne : '' };
         search['pytReceived'] = { $ne : '' };
         search['pytAmount'] = { $ne : '' };
         Client.find(search).lean().exec(function(err, clients) {
@@ -95,6 +101,7 @@ var ClientService = {
 
     findAllOtherClients : function(callback) {
         var search = {};
+        search['interviewDate'] = { $ne : '' };
         search['packed'] = false;
         search['emailed'] = '';
         search['signed'] = '';
@@ -207,6 +214,7 @@ var ClientService = {
 
     findClientsDone : function(callback) {
         var search = {};
+        search['interviewDate'] = { $ne : '' };
         search['preparer'] = { $ne : '' };
         search['preparerDone'] = 'OK';
         search['pytReceived'] = { $ne : '' };
