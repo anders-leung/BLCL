@@ -19,9 +19,9 @@ var fields = {
         if (cell) client.prSold = cell.v == 'Y';
     },
 
-    'X1' : function(cell, client) {
-        client.pickupDate = (cell ? cell.v : '');
-    },
+    //'X1' : function(cell, client) {
+    //    client.pickupDate = (cell ? cell.v : '');
+    //},
 
     'D4' : function(cell, client) {
         client.husband.citizenship = (cell ? cell.v == 'Y' : false);
@@ -47,9 +47,9 @@ var fields = {
         client.checker = (cell ? cell.v : '');
     },
 
-    'B7' : function(cell, client) {
-        client.interviewDate = (cell ? cell.v : '');
-    },
+    //'B7' : function(cell, client) {
+    //    client.interviewDate = (cell ? cell.v : '');
+    //},
 
     'I7' : function(cell, client) {
         client.tel.check = false;
@@ -95,9 +95,9 @@ var fields = {
         client.rental = (cell ? cell.v == 'Y' : false);
     },
 
-    'Z8' : function(cell, client) {
-        client.new = (cell ? cell.v == 'Y' : false);
-    },
+    //'Z8' : function(cell, client) {
+    //    client.new = (cell ? cell.v == 'Y' : false);
+    //},
 
     'D9' : function(cell, client) {
         client.email.check = false;
