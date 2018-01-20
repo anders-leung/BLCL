@@ -643,6 +643,7 @@ block content
                                 label.form-check-label(for='wifeStudentLoan')
                                     input#wifeStudentLoan.form-check-input(type='checkbox' name='wife.studentLoan')
                                     | Student Loan Int
+                br
                 .row
                     .col-6
                         label Caregiver
@@ -660,7 +661,6 @@ block content
                             .col-6
                                 label(for='caregiverAmount2') Net Income (Line 236)
                                 input#caregiverAmount2.form-control(type='number' name='caregiver2.amount')
-                    .col-6
                         label Dependent
                         .row
                             .col-6
@@ -676,8 +676,6 @@ block content
                             .col-6
                                 label(for='dependentAmount2') Net Income (Line 236)
                                 input#dependentAmount2.form-control(type='number' name='dependentTuition2.amount')
-                br
-                .row
                     .col-6
                         .row
                             .form-group.col-6
@@ -693,6 +691,14 @@ block content
                                     option N
                                     option Y
                         .row
+                            .form-check
+                                label.form-check-label(for='art')
+                                    input#art.form-check-input(type='checkbox' name='art')
+                                    | Art
+                            .form-check
+                                label.form-check-label(for='fitness')
+                                    input#fitness.form-check-input(type='checkbox' name='fitness')
+                                    | Fitness
                             .form-check
                                 label.form-check-label(for='hbtc')
                                     input#hbtc.form-check-input(type='checkbox' name='hbtc')

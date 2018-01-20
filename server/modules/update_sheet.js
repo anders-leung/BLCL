@@ -179,7 +179,7 @@ function setDD(sheet) {
     cell.value('');
 }
 
-function setOSP(sheet) {
+function setTeachingSupplies(sheet) {
     var range = sheet.range('G33:G34');
     if (range.merged()) return;
     range.merged(true);
@@ -187,23 +187,68 @@ function setOSP(sheet) {
     cell.style({
         'border': true,
         'bold': true,
+        'horizontalAlignment': 'left',
+        'wrapText': true
+    });
+    cell.value('TEACHING SUPPLIES');
+
+    range = sheet.range('H33:I34');
+    range.merged(true);
+    cell.style({
+        'border': true,
+        'bold': true,
+        'horizontalAlignment': 'center',
+        'fontSize': 18
+    });
+    cell = sheet.cell('H33');
+    cell.value('');
+}
+
+function setHomeAccessibilities(sheet) {
+    var range = sheet.range('J33:K34');
+    if (range.merged()) return;
+    range.merged(true);
+    var cell = sheet.cell('J33');
+    cell.style({
+        'border': true,
+        'bold': true,
+        'horizontalAlignment': 'left',
+        'wrapText': true
+    });
+    cell.value('HOME ACCESSIBILITIES');
+
+    range = sheet.range('L33:L34');
+    range.merged(true);
+    cell.style({
+        'border': true,
+        'bold': true,
+        'horizontalAlignment': 'center',
+        'fontSize': 18
+    });
+    cell = sheet.cell('L33');
+    cell.value('');
+}
+
+function setOSI(sheet) {
+    var range = sheet.range('D55:E55');
+    if (range.merged()) return;
+    range.merged(true);
+    var cell = sheet.cell('D55');
+    cell.style({
+        'bold': true,
         'horizontalAlignment': 'left'
     });
     cell.value('O/S INFO');
 
-    range = sheet.range('O33:O34');
-    range.merged(false);
-    range = sheet.range('H33:Z34');
+    range = sheet.range('F55:P55');
     range.merged(true);
     range.style({
-        'border': true,
         'bold': true,
         'fontSize': 14,
-        'horizontalAlignment': 'left'
+        'horizontalAlignment': 'left',
+        'leftBorder': 'thick'
     });
-    range.style('rightBorder', 'thick');
-
-    cell = sheet.cell('H33');
+    cell = sheet.cell('F55');
     cell.value('');
 }
 
@@ -224,7 +269,9 @@ function setPRSold(sheet) {
     range = sheet.range('S1:T1');
     range.merged(true);
     range.style({
-        'border': 'thick',
+        'rightBorder': 'thick',
+        'leftBorder': 'thick',
+        'bottomBorder': 'thick',
         'bold': true,
         'fontSize': 14,
         'horizontalAlignment': 'left'
@@ -262,9 +309,11 @@ var UpdateService = {
             updateWifeT4(sheet);
             updateWifeT5(sheet);
             updateWifeT4A(sheet);
+            setTeachingSupplies(sheet);
+            setHomeAccessibilities(sheet);
             setPRSold(sheet);
             setDD(sheet);
-            setOSP(sheet);
+            setOSI(sheet);
     }
 };
 

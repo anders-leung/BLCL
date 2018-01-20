@@ -255,23 +255,27 @@ var fields = {
     },
 
     'B20' : function(cell, client) {
-        client.husband.t4.value = (cell ? cell.v == 'Y' : false)
+        client.husband.t4.value = (cell ? cell.v != '' : false);
     },
-
+    /*
     'F20' : function(cell, client) {
-        if (cell) client.husband.t4.blcl = cell.v;
-    },
-
+        client.husband.t4.blcl = (cell ? cell.v != '' : false);
+    },*/
+    
     'H20' : function(cell, client) {
-        client.husband.t5.value = (cell ? cell.v == 'Y' : false)
+        client.husband.t5.value = (cell ? cell.v != '' : false);
     },
-
+    /*
     'K20' : function(cell, client) {
-        client.husband.t5.joint = (cell ? cell.v == 'Y' : false)
+        client.husband.t5.joint = (cell ? cell.v != '' : false);
     },
 
     'M20' : function(cell, client) {
-        if (cell) client.husband.t5.blcl = cell.v;
+        client.husband.t5.blcl = (cell ? cell.v != '' : false);
+    },*/
+
+    'L20' : function(cell, client) {
+        client.husband.t5.joint = (cell ? cell.v != '' : false);
     },
 
     'D21' : function(cell, client) {
@@ -283,11 +287,11 @@ var fields = {
     },
 
     'H21' : function(cell, client) {
-        client.husband.t5Other.value = (cell ? cell.v == 'Y' : false)
+        client.husband.t5Other.value = (cell ? cell.v != '' : false);
     },
 
     'L21' : function(cell, client) {
-        client.husband.t5Other.joint = (cell ? cell.v == 'Y' : false)
+        client.husband.t5Other.joint = (cell ? cell.v != '' : false);
     },
 
     'D23' : function(cell, client) {
@@ -311,47 +315,47 @@ var fields = {
     },
 
     'H23' : function(cell, client) {
-        client.husband.t3.value = (cell ? cell.v == 'Y' : false)
+        client.husband.t3.value = (cell ? cell.v != '' : false);
     },
 
     'L23' : function(cell, client) {
-        client.husband.t3.joint = (cell ? cell.v == 'Y' : false)
+        client.husband.t3.joint = (cell ? cell.v != '' : false);
     },
 
     'L24' : function(cell, client) {
-        client.husband.t5007 = (cell ? cell.v == 'Y' : false)
+        client.husband.t5007 = (cell ? cell.v != '' : false);
     },
 
     'B25' : function(cell, client) {
-        client.husband.t4A.value = (cell ? cell.v == 'Y' : false)
+        client.husband.t4A.value = (cell ? cell.v != '' : false);
     },
-
+    /*
     'E25' : function(cell, client) {
-        client.husband.t4A.blcl = (cell ? cell.v == 'Y' : false)
-    },
+        client.husband.t4A.blcl = (cell ? cell.v != '' : false);
+    },*/
 
     'H25' : function(cell, client) {
-        client.husband.t5008.value = (cell ? cell.v == 'Y' : false)
+        client.husband.t5008.value = (cell ? cell.v != '' : false);
     },
 
     'L25' : function(cell, client) {
-        client.husband.t5008.joint = (cell ? cell.v == 'Y' : false)
+        client.husband.t5008.joint = (cell ? cell.v != '' : false);
     },
 
     'B26' : function(cell, client) {
-        client.husband.t4AOAS = (cell ? cell.v == 'Y' : false)
+        client.husband.t4AOAS = (cell ? cell.v != '' : false);
     },
 
     'H26' : function(cell, client) {
-        client.husband.t5013.value = (cell ? cell.v == 'Y' : false)
+        client.husband.t5013.value = (cell ? cell.v != '' : false);
     },
 
     'L26' : function(cell, client) {
-        client.husband.t5013.joint = (cell ? cell.v == 'Y' : false)
+        client.husband.t5013.joint = (cell ? cell.v != '' : false);
     },
 
     'B27' : function(cell, client) {
-        client.husband.t4AP.value = (cell ? cell.v == 'Y' : false)
+        client.husband.t4AP.value = (cell ? cell.v != '' : false);
     },
 
     'B28' : function(cell, client) {
@@ -371,7 +375,7 @@ var fields = {
     },
 
     'B29' : function(cell, client) {
-        client.husband.t4E = (cell ? cell.v == 'Y' : false)
+        client.husband.t4E = (cell ? cell.v != '' : false);
     },
 
     'H29' : function(cell, client) {
@@ -387,7 +391,7 @@ var fields = {
     },
 
     'B31' : function(cell, client) {
-        client.husband.t4RSP = (cell ? cell.v == 'Y' : false)
+        client.husband.t4RSP = (cell ? cell.v != '' : false);
     },
 
     'H31' : function(cell, client) {
@@ -399,11 +403,11 @@ var fields = {
     },
 
     'B36' : function(cell, client) {
-        client.husband.rrsp.value = (cell ? cell.v == 'Y' : false)
+        client.husband.rrsp.value = (cell ? cell.v != '' : false);
     },
 
     'F36' : function(cell, client) {
-        client.husband.rrsp.spouse = (cell ? cell.v == 'Y' : false)
+        client.husband.rrsp.spouse = (cell ? cell.v != '' : false);
     },
 
     'H36' : function(cell, client) {
@@ -411,7 +415,7 @@ var fields = {
     },
 
     'B37' : function(cell, client) {
-        client.husband.hbp = (cell ? cell.v == 'Y' : false)
+        client.husband.hbp = (cell ? cell.v != '' : false);
     },
 
     'H37' : function(cell, client) {
@@ -443,23 +447,27 @@ var fields = {
     },
 
     'P20' : function(cell, client) {
-        client.wife.t4.value = (cell ? cell.v == 'Y' : false)
+        client.wife.t4.value = (cell ? cell.v != '' : false);
     },
-
+    /*
     'T20' : function(cell, client) {
-        if (cell) client.wife.t4.blcl = cell.v;
-    },
+        client.wife.t4.blcl = (cell ? cell.v != '' : false);
+    },*/
 
     'V20' : function(cell, client) {
-        client.wife.t5.value = (cell ? cell.v == 'Y' : false)
+        client.wife.t5.value = (cell ? cell.v != '' : false);
     },
-
+    /*
     'X20' : function(cell, client) {
-        client.wife.t5.joint = (cell ? cell.v == 'Y' : false)
+        client.wife.t5.joint = (cell ? cell.v != '' : false);
     },
 
     'Z20' : function(cell, client) {
-        if (cell) client.wife.t5.blcl = cell.v;
+        client.wife.t5.blcl = (cell ? cell.v != '' : false);
+    },*/
+    
+    'Y20' : function(cell, client) {
+        client.wife.t5.joint = (cell ? cell.v != '' : false);
     },
 
     'R21' : function(cell, client) {
@@ -471,11 +479,11 @@ var fields = {
     },
 
     'V21' : function(cell, client) {
-        client.wife.t5Other.value = (cell ? cell.v == 'Y' : false)
+        client.wife.t5Other.value = (cell ? cell.v != '' : false);
     },
 
     'Y21' : function(cell, client) {
-        client.wife.t5Other.joint = (cell ? cell.v == 'Y' : false)
+        client.wife.t5Other.joint = (cell ? cell.v != '' : false);
     },
 
     'R23' : function(cell, client) {
@@ -499,47 +507,47 @@ var fields = {
     },
 
     'V23' : function(cell, client) {
-        client.wife.t3.value = (cell ? cell.v == 'Y' : false)
+        client.wife.t3.value = (cell ? cell.v != '' : false);
     },
 
     'Y23' : function(cell, client) {
-        client.wife.t3.joint = (cell ? cell.v == 'Y' : false)
+        client.wife.t3.joint = (cell ? cell.v != '' : false);
     },
 
     'Y24' : function(cell, client) {
-        client.wife.t5007 = (cell ? cell.v == 'Y' : false)
+        client.wife.t5007 = (cell ? cell.v != '' : false);
     },
 
     'P25' : function(cell, client) {
-        client.wife.t4A.value = (cell ? cell.v == 'Y' : false)
+        client.wife.t4A.value = (cell ? cell.v != '' : false);
     },
 
     'S25' : function(cell, client) {
-        client.wife.t4A.blcl = (cell ? cell.v == 'Y' : false)
+        client.wife.t4A.blcl = (cell ? cell.v != '' : false);
     },
 
     'V25' : function(cell, client) {
-        client.wife.t5008.value = (cell ? cell.v == 'Y' : false)
+        client.wife.t5008.value = (cell ? cell.v != '' : false);
     },
 
     'Y25' : function(cell, client) {
-        client.wife.t5008.joint = (cell ? cell.v == 'Y' : false)
+        client.wife.t5008.joint = (cell ? cell.v != '' : false);
     },
 
     'P26' : function(cell, client) {
-        client.wife.t4AOAS = (cell ? cell.v == 'Y' : false)
+        client.wife.t4AOAS = (cell ? cell.v != '' : false);
     },
 
     'V26' : function(cell, client) {
-        client.wife.t5013.value = (cell ? cell.v == 'Y' : false)
+        client.wife.t5013.value = (cell ? cell.v != '' : false);
     },
 
     'Y26' : function(cell, client) {
-        client.wife.t5013.joint = (cell ? cell.v == 'Y' : false)
+        client.wife.t5013.joint = (cell ? cell.v != '' : false);
     },
 
     'P27' : function(cell, client) {
-        client.wife.t4AP.value = (cell ? cell.v == 'Y' : false)
+        client.wife.t4AP.value = (cell ? cell.v != '' : false);
     },
 
     'P28' : function(cell, client) {
@@ -559,7 +567,7 @@ var fields = {
     },
 
     'P29' : function(cell, client) {
-        client.wife.t4E = (cell ? cell.v == 'Y' : false)
+        client.wife.t4E = (cell ? cell.v != '' : false);
     },
 
     'V29' : function(cell, client) {
@@ -575,7 +583,7 @@ var fields = {
     },
 
     'P31' : function(cell, client) {
-        client.wife.t4RSP = (cell ? cell.v == 'Y' : false)
+        client.wife.t4RSP = (cell ? cell.v != '' : false);
     },
 
     'V31' : function(cell, client) {
@@ -587,11 +595,11 @@ var fields = {
     },
 
     'P36' : function(cell, client) {
-        client.wife.rrsp.value = (cell ? cell.v == 'Y' : false)
+        client.wife.rrsp.value = (cell ? cell.v != '' : false);
     },
 
     'T36' : function(cell, client) {
-        client.wife.rrsp.spouse = (cell ? cell.v == 'Y' : false)
+        client.wife.rrsp.spouse = (cell ? cell.v != '' : false);
     },
 
     'V36' : function(cell, client) {
@@ -599,7 +607,7 @@ var fields = {
     },
 
     'P37' : function(cell, client) {
-        client.wife.hbp = (cell ? cell.v == 'Y' : false)
+        client.wife.hbp = (cell ? cell.v != '' : false);
     },
 
     'V37' : function(cell, client) {

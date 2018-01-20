@@ -168,8 +168,16 @@ var fields = {
             cell.value(client.dependent3.sin);
         },
 
-        'H33' : function(cell, client) {
+        'F55' : function(cell, client) {
             cell.value(client.outstandingInfo);
+        },
+        
+        'H33' : function(cell, client) {
+            cell.value(client.teachingSupplies ? 'Y' : '');
+        },
+        
+        'L33' : function(cell, client) {
+            cell.value(client.homeAccessibilities ? 'Y' : '');
         },
 
         'B38' : function(cell, client) {

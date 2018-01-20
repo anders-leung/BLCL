@@ -338,7 +338,9 @@ var ClientSchema = new Schema({
     callDate: { type: String, default: "" },
     thingsToDo: { type: String, default: "" },
     emailed: { type: String, default: "" },
-    packed: { type: Boolean, default: false }
+    packed: { type: Boolean, default: false },
+    teachingSupplies: { type: Boolean, default: false },
+    homeAccessibilities: { type: Boolean, default: false }
 });
 
 module.exports = mongoose.model('Client', ClientSchema);
