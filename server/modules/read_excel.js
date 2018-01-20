@@ -179,7 +179,7 @@ var fields = {
     },
 
     'K14' : function(cell, client) {
-        client.husband.departure = (cell ? cell.v : '');
+        client.husband.departure.value = (cell ? cell.v : '');
     },
 
     'P14' : function(cell, client) {
@@ -187,7 +187,7 @@ var fields = {
     },
 
     'X14' : function(cell, client) {
-        client.wife.departure = (cell ? cell.v : '');
+        client.wife.departure.value = (cell ? cell.v : '');
     },
 
     'B15' : function(cell, client) {
