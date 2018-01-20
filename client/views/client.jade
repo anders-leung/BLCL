@@ -92,23 +92,36 @@ block content
                             input#husbandLastName.form-control(type='text' name='husband.lastName')
                         .col-2
                             label(for='husbandDob') Date of Birth
-                            input#husbandDob.form-control.datepicker.datepicker(type='text' name='husband.dateOfBirth')
-                        .col-2
-                            label(for='husbandDeparture') Departure/Land
-                            input#husbandDeparture.form-control(type='text' name='husband.departure')
+                            input#husbandDob.form-control.datepickerChangeYear(type='text' name='husband.dateOfBirth')
                         .col-2
                             label(for='husbandSin') SIN
                             input#husbandSin.form-control.sin(type='text' name='husband.sin')
-                        .row.col-12
+                    .group-joint
+                        .row
+                            .form-group.col-2
+                                label(for='husbandDepartureWhich') Departure/Land
+                                select#husbandDepartureWhich.form-control(name='husband.departure.which')
+                                    option  
+                                    option DEPARTURE
+                                    option LAND
+                            .form-group.col-2
+                                label(for='husbandDeparture') Date
+                                input#husbandDeparture.form-control.datepickerChangeYear(type='text' name='husband.departure.value')
+                            .col-2.status
+                                label(for='husbandStatus') Status
+                                input#husbandStatus.form-control(type='text' name='husband.status')
                             .form-check
+                                br
                                 label.form-check-label(for='husbandCitizenship')
                                     input#husbandCitizenship.form-check-input(type='checkbox' name='husband.citizenship')
                                     | Citizen
                             .form-check
+                                br
                                 label.form-check-label(for='husbandElection')
                                     input#husbandElection.form-check-input(type='checkbox' name='husband.election')
                                     | Election
                             .form-check
+                                br
                                 label.form-check-label(for='husbandNoa')
                                     input#husbandNoa.form-check-input(type='checkbox' name='husband.noa')
                                     | NOA
@@ -122,23 +135,36 @@ block content
                             input#wifeLastName.form-control(type='text' name='wife.lastName')
                         .col-2
                             label(for='wifeDob') Date of Birth
-                            input#wifeDob.form-control.datepicker(type='text' name='wife.dateOfBirth')
-                        .col-2
-                            label(for='wifeDeparture') Departure/Land
-                            input#wifeDeparture.form-control(type='text' name='wife.departure')
+                            input#wifeDob.form-control.datepickerChangeYear(type='text' name='wife.dateOfBirth')
                         .col-2
                             label(for='wifeSin') SIN
                             input#wifeSin.form-control.sin(type='text' name='wife.sin')
-                        .row.col-12
+                    .group-joint
+                        .row
+                            .form-group.col-2
+                                label(for='wifeDepartureWhich') Departure/Land
+                                select#wifeDepartureWhich.form-control(name='wife.departure.which')
+                                    option  
+                                    option DEPARTURE
+                                    option LAND
+                            .form-group.col-2
+                                label(for='wifeDeparture') Date
+                                input#wifeDeparture.form-control.datepickerChangeYear(type='text' name='wife.departure.value')
+                            .form-group.col-2.status
+                                label(for='wifeStatus') Status
+                                input#wifeStatus.form-control(type='text' name='wife.status')
                             .form-check
+                                br
                                 label.form-check-label(for='wifeCitizenship')
                                     input#wifeCitizenship.form-check-input(type='checkbox' name='wife.citizenship')
                                     | Citizen
                             .form-check
+                                br
                                 label.form-check-label(for='wifeElection')
                                     input#wifeElection.form-check-input(type='checkbox' name='wife.election')
                                     | Election
                             .form-check
+                                br
                                 label.form-check-label(for='wifeNoa')
                                     input#wifeNoa.form-check-input(type='checkbox' name='wife.noa')
                                     | NOA
@@ -154,7 +180,7 @@ block content
                             select#relationship1.form-control(name='dependent1.relationship')
                         .col-2
                             label(for='dob1') Date of Birth
-                            input#dob1.form-control.datepicker(type='text' name='dependent1.dateOfBirth')
+                            input#dob1.form-control.datepickerChangeYear(type='text' name='dependent1.dateOfBirth')
                         .col-2
                             label(for='sin1') SIN
                             input#sin1.form-control.sin(type='text' name='dependent1.sin')
@@ -167,7 +193,7 @@ block content
                             select#relationship2.form-control(name='dependent2.relationship')
                         .col-2
                             label(for='dob2') Date of Birth
-                            input#dob2.form-control.datepicker(type='text' name='dependent2.dateOfBirth')
+                            input#dob2.form-control.datepickerChangeYear(type='text' name='dependent2.dateOfBirth')
                         .col-2
                             label(for='sin2') SIN
                             input#sin2.form-control.sin(type='text' name='dependent2.sin')
@@ -180,7 +206,7 @@ block content
                             select#relationship3.form-control(name='dependent3.relationship')
                         .col-2
                             label(for='dob3') Date of Birth
-                            input#dob3.form-control.datepicker(type='text' name='dependent3.dateOfBirth')
+                            input#dob3.form-control.datepickerChangeYear(type='text' name='dependent3.dateOfBirth')
                         .col-2
                             label(for='sin3') SIN
                             input#sin3.form-control.sin(type='text' name='dependent3.sin')
@@ -229,7 +255,7 @@ block content
                             .group
                                 .form-check
                                     label.form-check-label(for='husbandT4')
-                                        input#husbandT4.form-check-input(type='checkbox' name='husband.t4')
+                                        input#husbandT4.form-check-input(type='checkbox' name='husband.t4.value')
                                         | T4
                                 .form-check
                                     label.form-check-label(for='husbandT4Blcl')
@@ -341,6 +367,11 @@ block content
                                 label.form-check-label(for='husbandT4RSP')
                                     input#husbandT4RSP.form-check-input(type='checkbox' name='husband.t4RSP')
                                     | T4RSP / T4RIF
+                            .form-check
+                                br
+                                label.form-check-label(for='husbandT4E')
+                                    input#husbandT4E.form-check-input(type='checkbox' name='husband.t4E')
+                                    | T4E
                             .form-check
                                 br
                                 label.form-check-label(for='husbandUCCB')
@@ -500,6 +531,11 @@ block content
                                         | T4RSP / T4RIF
                                 .form-check
                                     br
+                                    label.form-check-label(for='wifeT4E')
+                                        input#wifeT4E.form-check-input(type='checkbox' name='wife.t4E')
+                                        | T4E
+                                .form-check
+                                    br
                                     label.form-check-label(for='wifeUCCB')
                                         input#wifeUCCB(type='checkbox' name='wife.uccb')
                                         | UCCB
@@ -512,7 +548,7 @@ block content
                         label.col-12 Husband
                         hr
                         .row
-                            .form-group.col-3
+                            .form-group.col-4
                                 label(for='husbandSupportMade') Support PYT Made
                                 input#husbandSupportMade.form-control(type='number' name='husband.supportMade')
                             .group
@@ -534,12 +570,11 @@ block content
                                 label.form-check-label(for='husbandMoving')
                                     input#husbandMoving.form-check-input(type='checkbox' name='husband.moving')
                                     | Moving
+                        .row
                             .form-check
-                                br
                                 label.form-check-label(for='husbandUnion')
                                     input#husbandUnion.form-check-input(type='checkbox' name='husband.unionDue')
                                     | Union Due
-                        .row
                             .form-check
                                 label.form-check-label(for='husbandDisability')
                                     input#husbandDisability.form-check-input(type='checkbox' name='husband.disabilitySupports')
@@ -552,7 +587,7 @@ block content
                         label.col-12 Wife
                         hr
                         .row
-                            .form-group.col-3
+                            .form-group.col-4
                                 label(for='wifeSupportMade') Support PYT Made
                                 input#wifeSupportMade.form-control(type='number' name='wife.supportMade')
                             .group
@@ -574,12 +609,11 @@ block content
                                 label.form-check-label(for='wifeMoving')
                                     input#wifeMoving.form-check-input(type='checkbox' name='wife.moving')
                                     | Moving
+                        .row
                             .form-check
-                                br
                                 label.form-check-label(for='wifeUnion')
                                     input#wifeUnion.form-check-input(type='checkbox' name='wife.unionDue')
                                     | Union Due
-                        .row
                             .form-check
                                 label.form-check-label(for='wifeDisability')
                                     input#wifeDisability.form-check-input(type='checkbox' name='wife.disabilitySupports')
@@ -700,9 +734,13 @@ block content
                                     input#fitness.form-check-input(type='checkbox' name='fitness')
                                     | Fitness
                             .form-check
+                                label.form-check-label(for='publicTransit')
+                                    input#publicTransit.form-check-input(type='checkbox' name='publicTransit')
+                                    | Public Transit
+                            .form-check
                                 label.form-check-label(for='hbtc')
                                     input#hbtc.form-check-input(type='checkbox' name='hbtc')
-                                    | HBTC
+                                    | HBTC (home buyer tax cr)
                             .form-check
                                 label.form-check-label(for='disability')
                                     input#disability.form-check-input(type='checkbox' name='disability')
@@ -715,6 +753,15 @@ block content
                                 label.form-check-label(for='equiv')
                                     input#equiv.form-check-input(type='checkbox' name='equiv')
                                     | Equiv To Spouse
+                        .row
+                            .form-check
+                                label.form-check-label(for='teachingSupplies')
+                                    input#teachingSupplies.form-check-input(type='checkbox' name='teachingSupplies')
+                                    | Teaching Supplies
+                            .form-check
+                                label.form-check-label(for='homeAccessibilities')
+                                    input#homeAccessibilities.form-check-input(type='checkbox' name='homeAccessibilities')
+                                    | Home Accessibilities
 
         fieldset.form-group
             .section
@@ -765,7 +812,7 @@ block content
                             .col-8
                                 .form-group
                                     label(for='outstandingInfo') Outstanding Info
-                                        textarea#outstandingInfo.form-control(rows='4' name='outstandingInfo')
+                                        input#outstandingInfo.form-control(type='text' name='outstandingInfo')
                             .col-4
                                 .form-group
                                     label(for='consult') Consult Fee

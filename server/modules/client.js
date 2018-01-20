@@ -7,24 +7,26 @@ var WriteExcelService = require('./write_excel');
 var clientNames = require('./utils/client');
 
 var ClientService = {
-    saveClient : function(params, callback) {
-        var client = new Client(params);
-        for (var field in client) {
-            if (field == 'prSold') {
-                client[field] = client[field] == 'Y';
+    saveClient : function(values, callback) {
+        for (var field in values) {
+            if (field == 'prSold' || field == 'donation' || field == 'medExp') {
+                console.log(field, values[field]);
+                values[field] = values[field] == 'Y';
                 continue;
             }
             if (field == 'email') continue;
-            if (typeof(client[field]) == 'string') {
-                client[field] = client[field].toUpperCase();
+            if (typeof(values[field]) == 'string') {
+                values[field] = values[field].toUpperCase();
             }
         }
+        var client = new Client(values);
+
         client.fileName = clientNames.getFileName(client);
         client.pathName = clientNames.getPathName(client);
+        
         client.save(function(err) {
-            Client.findOne({ pathName : client.pathName }, function(err, client) {
-                WriteExcelService(client.year, client);
-            });
+            WriteExcelService(client.year, client);
+            if (err) console.log(err);
             callback(err, client);
         });
     },
@@ -119,14 +121,19 @@ var ClientService = {
     updateClient : function(search, values, callback) {
         for (var field in values) {
             if (field == 'prSold' || field == 'donation' || field == 'medExp') {
+                console.log(field, values[field]);
                 values[field] = values[field] == 'Y';
                 continue;
             }
             if (field == 'email') continue;
             if (typeof(values[field]) == 'string') {
+                console.log(field);
                 values[field] = values[field].toUpperCase();
             }
         }
+        values.fileName = clientNames.getFileName(client);
+        values.pathName = clientNames.getPathName(client);
+
         var oldYear;
         Client.findOne(search, function(err, client) {
             oldYear = client.year;

@@ -86,18 +86,21 @@ var ClientSchema = new Schema({
         firstName: { type: String, default: "" },
         lastName: { type: String, default: "" },
         dateOfBirth: { type: String, default: "" },
-        departure: { type: String, default: "" },
+        departure: {
+            which: { type: String, enum: ['', 'DEPARTURE', 'LAND', null], default: '' },
+            value: { type: String, default: '' }
+        },
         sin: { type: String, default: "" },
         status: { type: String, default: "" },
         noa: { type: Boolean, default: false },
         t4: {
-            value: {type: Boolean, default: false},
-            blcl: {type: String, default: ''}
+            value: {type: Boolean, default: false },
+            blcl: {type: Boolean, default: false }
         },
         t5: {
             value: { type: Boolean, default: false },
             joint: { type: Boolean, default: false },
-            blcl: {type: String, default: ''}
+            blcl: {type: Boolean, default: false }
         },
         otherIncome: {
             value104: { type: String, default: '' },
@@ -174,18 +177,21 @@ var ClientSchema = new Schema({
         firstName: { type: String, default: "" },
         lastName: { type: String, default: "" },
         dateOfBirth: { type: String, default: "" },
-        departure: { type: String, default: "" },
+        departure: {
+            which: { type: String, enum: ['', 'DEPARTURE', 'LAND', null], default: '' },
+            value: { type: String, default: '' }
+        },
         sin: { type: String, default: "" },
         status: { type: String, default: "" },
         noa: { type: Boolean, default: false },
         t4: {
-            value: {type: Boolean, default: false},
-            blcl: {type: String, default: ''}
+            value: {type: Boolean, default: false },
+            blcl: {type: Boolean, default: false }
         },
         t5: {
             value: { type: Boolean, default: false },
             joint: { type: Boolean, default: false },
-            blcl: {type: String, default: ''}
+            blcl: {type: Boolean, default: false }
         },
         otherIncome: {
             value104: { type: String, default: '' },
@@ -278,17 +284,9 @@ var ClientSchema = new Schema({
         name: { type: String, default: "" },
         amount: { type: String, default: '' }
     },
-    /*
-    art: {
-        amount: { type: String, default: '' },
-        check: { type: Boolean, default: false }
-    },
-    fitness: {
-        amount: { type: String, default: '' },
-        check: { type: Boolean, default: false }
-    },
+    art: { type: Boolean, default: false },
+    fitness: { type: Boolean, default: false },
     publicTransit: { type: Boolean, default: false },
-    */
     donation: { type: Boolean, default: false },
     medExp: { type: Boolean, default: false },
     hbtc: { type: Boolean, default: false },
@@ -318,7 +316,7 @@ var ClientSchema = new Schema({
         unique: true
     },
     pathName: { type: String, default: "" },
-    confirmPickUpDate: { type: Boolean, default: false },
+    confirmPickupDate: { type: Boolean, default: false },
     preparerDone: {
         type: String,
         enum: [ '', 'WIP', 'OK' ],

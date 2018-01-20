@@ -46,7 +46,7 @@ router.post('/', function(req, res) {
         if (err) {
             res.render('error');
         } else {
-            res.redirect('/');
+            res.redirect('/t1_directory');
         }
     });
 });
