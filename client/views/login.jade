@@ -7,6 +7,9 @@ block content
 
     #message.container
         h1.text-center Please login to continue
+    if (login_error)
+        .container.offset-4.col-4.error
+            p.text-center You have entered an incorrect email or password.
     br
     .container
         #form.offset-4.col-4

@@ -2,6 +2,13 @@
     margin-top: 3%;
 }
 
+.error {
+    border: 2px solid #d9534f;
+    border-radius: 5px;
+    padding-top: 10px;
+    background: #ffc4be;
+}
+
 #form {
     padding: 2%;
     border: solid 1px black;
