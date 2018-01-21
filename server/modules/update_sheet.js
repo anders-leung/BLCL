@@ -234,11 +234,13 @@ function setHomeAccessibilities(sheet) {
 function setOSI(sheet) {
     var range = sheet.range('D55:E55');
     if (range.merged()) return;
-    range.merged(true);
     var cell = sheet.cell('D55');
+    cell.value('');
+    range.merged(true);
     cell.style({
         'bold': true,
-        'horizontalAlignment': 'left'
+        'horizontalAlignment': 'left',
+        'fontSize': 11
     });
     cell.value('O/S INFO');
 
