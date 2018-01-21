@@ -43,21 +43,20 @@ var ClientService = {
     },
 
     findClientsOSPyt : function(callback) {
-        var search = {};
-        search['interviewDate'] = { $ne : '' };
-        search['packed'] = false;
-        search['signed'] = { $ne : '' };
-        search['emailed'] = { $ne : '' };
-        search['pytReceived'] = '';
-        search['pytAmount'] = '';
-        var or = [];
-        or.push({ 'interviewDate' : { $ne : '' }});
-        or.push({ 'packed' : true });
-        or.push({ 'signed' : { $ne : '' }});
-        or.push({ 'pytReceived' : '' });
-        or.push({ 'pytAmount' : '' });
-        search['$or'] = or;
-        Client.find(search).lean().exec(function(err, clients) {
+        var emailed = {};
+        emailed['interviewDate'] = { $ne : '' };
+        emailed['packed'] = false;
+        emailed['signed'] = { $ne : '' };
+        emailed['emailed'] = { $ne : '' };
+        emailed['pytReceived'] = '';
+        emailed['pytAmount'] = '';
+        var normal = {};
+        normal['interviewDate'] = { $ne : '' };
+        normal['packed'] = true ;
+        normal['signed'] = { $ne : '' };
+        normal['pytReceived'] = '';
+        normal['pytAmount'] = '';
+        Client.find({ $or: [emailed, normal] }).lean().exec(function(err, clients) {
             callback(err, clients);
         });
     },
