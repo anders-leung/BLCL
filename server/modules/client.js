@@ -6,19 +6,24 @@ var Client = require('../models/client');
 var WriteExcelService = require('./write_excel');
 var clientNames = require('./utils/client');
 
+function cleanValues(values) {
+    for (var field in values) {
+        if (field == 'prSold' || field == 'donation' || field == 'medExp') {
+            values[field] = values[field] == 'Y';
+            continue;
+        }
+        if (field == 'email') continue;
+        if (typeof(values[field]) == 'string') {
+            values[field] = values[field].toUpperCase();
+        }
+    }
+
+    return values;
+}
+
 var ClientService = {
     saveClient : function(values, callback) {
-        for (var field in values) {
-            if (field == 'prSold' || field == 'donation' || field == 'medExp') {
-                console.log(field, values[field]);
-                values[field] = values[field] == 'Y';
-                continue;
-            }
-            if (field == 'email') continue;
-            if (typeof(values[field]) == 'string') {
-                values[field] = values[field].toUpperCase();
-            }
-        }
+        values = cleanValues(values);
         var client = new Client(values);
 
         client.fileName = clientNames.getFileName(client);
@@ -119,29 +124,20 @@ var ClientService = {
     },
 
     updateClient : function(search, values, callback) {
-        for (var field in values) {
-            if (field == 'prSold' || field == 'donation' || field == 'medExp') {
-                console.log(field, values[field]);
-                values[field] = values[field] == 'Y';
-                continue;
-            }
-            if (field == 'email') continue;
-            if (typeof(values[field]) == 'string') {
-                console.log(field);
-                values[field] = values[field].toUpperCase();
-            }
-        }
-
         var oldYear;
         Client.findOne(search, function(err, client) {
             oldYear = client.year;
+            values = cleanValues(values);
             Client.update(search, { $set: values }, function(save_err) {
                 Client.findOne(search, function(find_err, client) {
                     var updates = {}
                     updates['fileName'] = clientNames.getFileName(client);
                     updates['pathName'] = clientNames.getPathName(client);
                     Client.update(search, { $set: updates }, function(err) {
+                        console.log(oldYear, client.year);
                         WriteExcelService(oldYear, client);
+                        if (err) console.log(err);
+                        if (save_err) console.log(save_err);
                         callback(save_err, client);
                     });
                 });
