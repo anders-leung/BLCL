@@ -57,7 +57,7 @@ router.post('/:client_name', function(req, res) {
         if (err) {
             res.render('error');
         }
-        res.redirect('/')
+        res.redirect('/t1_directory');
     })
 });
 
