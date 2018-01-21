@@ -131,16 +131,19 @@ var ClientService = {
                 values[field] = values[field].toUpperCase();
             }
         }
-        values.fileName = clientNames.getFileName(client);
-        values.pathName = clientNames.getPathName(client);
 
         var oldYear;
         Client.findOne(search, function(err, client) {
             oldYear = client.year;
             Client.update(search, { $set: values }, function(save_err) {
                 Client.findOne(search, function(find_err, client) {
-                    WriteExcelService(oldYear, client);
-                    callback(save_err, client);
+                    var updates = {}
+                    updates['fileName'] = clientNames.getFileName(client);
+                    updates['pathName'] = clientNames.getPathName(client);
+                    Client.update(search, { $set: updates }, function(err) {
+                        WriteExcelService(oldYear, client);
+                        callback(save_err, client);
+                    });
                 });
             });
         });
