@@ -34,7 +34,7 @@ var ClientsSocket = {
             var update = {};
             update[data.field] = data.value;
 
-            if (data.field == 'pytAmt') {
+            if (data.field == 'pytAmount') {
                 update['pytDate'] = getDate();
             }
 
