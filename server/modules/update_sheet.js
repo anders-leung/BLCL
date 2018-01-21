@@ -188,7 +188,8 @@ function setTeachingSupplies(sheet) {
         'border': true,
         'bold': true,
         'horizontalAlignment': 'left',
-        'wrapText': true
+        'wrapText': true,
+        'fontSize': 11
     });
     cell.value('TEACHING SUPPLIES');
 
@@ -213,7 +214,8 @@ function setHomeAccessibilities(sheet) {
         'border': true,
         'bold': true,
         'horizontalAlignment': 'left',
-        'wrapText': true
+        'wrapText': true,
+        'fontSize': 11
     });
     cell.value('HOME ACCESSIBILITIES');
 
