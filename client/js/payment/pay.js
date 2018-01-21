@@ -13,15 +13,31 @@ $(document).ready(function() {
 
         drawCallback: function() {
             var api = this.api();
-
+            var total = 0;
             api.columns().every(function(i) {
-                if (i > 6) {
+                if (i > 8) {
                     var sum = 0;
                     $('table tbody tr').each(function() {
-                        var amount = $(this).find('td').eq(i).html();
+                        var amount = $(this).find('td').eq(i - 1).html();
+                        console.log(amount);
                         sum += parseFloat(amount == '' ? 0 : amount);
                     });
-                    $(this.footer()).html(sum)
+                    $(this.footer()).html(sum + '<br>-');
+                    total += sum;
+                    if (i == 13) $(this.footer()).html(sum + '<br>Total:');
+                    if (i == 14) $(this.footer()).html(sum + '<br>' + total);
+                }
+            });
+        }
+    });
+
+    table.columns().every(function(i) {
+        if (i < 9) {
+            $(this.footer()).html( '<input type="text"/>' );
+            var that = this;
+            $('input', this.footer()).on('keyup change', function () {
+                if (that.search() !== this.value) {
+                    that.search(this.value).draw();
                 }
             });
         }

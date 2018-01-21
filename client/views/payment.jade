@@ -18,15 +18,17 @@ block content
                     th Wife Last Name
                     th Wife First Name
                     th Group
+                    th PRE
                     th Pickup Date
                     th ADV
                     th INV
-                    th Cash
-                    th Cheque
+                    th CA
+                    th CK
                     th DD
                     th ET
             tfoot
                 tr
+                    th
                     th
                     th
                     th
@@ -51,6 +53,7 @@ block content
                         td.text-nowrap #{client.wife ? client.wife.lastName : ''}
                         td.text-nowrap #{client.wife ? client.wife.firstName : ''}
                         td.text-nowrap #{client.group}
+                        td.text-nowrap #{client.preparer}
                         td.text-nowrap #{client.pickupDate}
                         td.text-nowrap #{client.pytReceived == 'ADV' ? client.pytAmount : ''}
                         td.text-nowrap #{client.pytReceived == 'INV' ? client.pytAmount : ''}
