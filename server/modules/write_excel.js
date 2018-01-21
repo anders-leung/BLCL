@@ -352,7 +352,7 @@ var fields = {
         },
 
         'F20' : function(cell, client) {
-            cell.value(client.husband.t4.blcl);
+            cell.value(client.husband.t4.blcl ? 'Y' : '');
         },
 
         'H20' : function(cell, client) {
@@ -364,7 +364,7 @@ var fields = {
         },
 
         'M20' : function(cell, client) {
-            cell.value(client.husband.t5.blcl);
+            cell.value(client.husband.t5.blcl ? 'Y' : '');
         },
 
         'D21' : function(cell, client) {
@@ -578,7 +578,7 @@ var fields = {
         },
 
         'T20' : function(cell, client) {
-            cell.value(client.wife.t4.blcl);
+            cell.value(client.wife.t4.blcl ? 'Y' : '');
         },
 
         'V20' : function(cell, client) {
@@ -590,7 +590,7 @@ var fields = {
         },
 
         'Z20' : function(cell, client) {
-            cell.value(client.wife.t5.blcl);
+            cell.value(client.wife.t5.blcl ? 'Y' : '');
         },
 
         'R21' : function(cell, client) {
