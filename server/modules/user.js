@@ -14,6 +14,12 @@ var UserService = {
         });
     },
 
+    updateUser : function(search, values, callback) {
+        User.update(search, { $set : values }, function(err) {
+            callback(err);
+        });
+    },
+
     findOneUser : function(params, callback) {
         User.findOne(params).lean().exec(function(err, user) {
             callback(err, user);
