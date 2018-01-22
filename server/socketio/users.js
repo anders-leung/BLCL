@@ -23,8 +23,16 @@ var UsersSocket = {
     }, updateUser : function(socket) {
         socket.on('update user', function(data) {
             console.log('update user', data);
-            UserService.updateUser()
-        })
+            var search = {};
+            search['email'] = data.email;
+            var values = {};
+            values[data.field] = data.value;
+            UserService.updateUser(search, values, function(err) {
+                if (err) {
+                    console.log(err);
+                }
+            });
+        });
     }
 };
 
