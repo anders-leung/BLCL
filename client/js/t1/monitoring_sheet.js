@@ -69,12 +69,14 @@ $(document).ready(function() {
     }
 
     function findTableForRow(row) {
+        var preparer = row.data()[16] != '';
         var packed = row.data()[21] == 'Y';
         var emailed = row.data()[22] != '';
         var signed = row.data()[23] != '';
         var pyt = row.data()[24] != '' && row.data()[25] != '';
-        console.log(packed, emailed, signed, pyt)
+        console.log(preparer, packed, emailed, signed, pyt)
 
+        if (!preparer) return '#noPreparerTable';
         if (emailed) {
             if (signed) {
                 if (pyt) {

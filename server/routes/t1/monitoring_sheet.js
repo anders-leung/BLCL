@@ -12,21 +12,24 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
                 ClientService.findAllOtherClients(function (err, normal) {
                     ClientService.findClientsEmailedNotPacked(function(err, emailedNotPacked) {
                         ClientService.findClientsDone(function(err, completed) {
-                            var cookie = CookieService.readCookie(req);
-                            var clients = [
-                                ['normal', normal],
-                                ['packed', packed],
-                                ['emailed', emailed],
-                                ['osPyt', pickedUp],
-                                ['emailedNotPacked', emailedNotPacked],
-                                ['done', completed]
-                            ];
+                            ClientService.findClientsNoPreparer(function(err, noPreparer) {
+                                var cookie = CookieService.readCookie(req);
+                                var clients = [
+                                    ['normal', normal],
+                                    ['noPreparer', noPreparer],
+                                    ['packed', packed],
+                                    ['emailed', emailed],
+                                    ['osPyt', pickedUp],
+                                    ['emailedNotPacked', emailedNotPacked],
+                                    ['done', completed]
+                                ];
 
-                            res.render('t1/monitoring_sheet', {
-                                title: 'T1 Monitoring',
-                                clients: clients,
-                                options: ClientService.getPayments(),
-                                role: cookie.role
+                                res.render('t1/monitoring_sheet', {
+                                    title: 'T1 Monitoring',
+                                    clients: clients,
+                                    options: ClientService.getPayments(),
+                                    role: cookie.role
+                                });
                             });
                         });
                     });

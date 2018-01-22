@@ -24,9 +24,8 @@ var ClientsSocket = {
                     data.client = client[0];
                     socket.broadcast.emit('job assignment', data);
                 })
-            } else {
-                socket.broadcast.emit('client side update', data);
             }
+            socket.broadcast.emit('client side update', data);
 
             if (data.field == 'packed') data.value = data.value == 'Y';
             var search = {};

@@ -61,6 +61,15 @@ var ClientService = {
         });
     },
 
+    findClientsNoPreparer : function(callback) {
+        var search = {};
+        search['preparer'] = '';
+        search['interviewDate'] = { $ne : '' };
+        Client.find(search).lean().exec(function(err, clients) {
+            callback(err, clients);
+        });
+    },
+
     findClientsEmailedNotPacked : function(callback) {
         var search = {};
         search['interviewDate'] = { $ne : '' };
@@ -107,6 +116,7 @@ var ClientService = {
 
     findAllOtherClients : function(callback) {
         var search = {};
+        search['preparer'] = { $ne : '' };
         search['interviewDate'] = { $ne : '' };
         search['packed'] = false;
         search['emailed'] = '';
