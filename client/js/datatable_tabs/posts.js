@@ -26,7 +26,9 @@ function getField(cell) {
     $('table').first().find('thead tr th').each(function(index) {
         if ($(cell).index() == index) header = $(this).html();
     });
-    return headersToFields[header];
+    var field = headersToFields[header];
+    if (!field) return header.toLowerCase();
+    return field;
 }
 
 function getColumn(field) {
@@ -37,6 +39,13 @@ function getColumn(field) {
                 if ($(this).html() == header) columnIndex = index + 1;
             });
         }
+    }
+
+    if (columnIndex == -1) {
+        $('table').find('thead tr th').each(function(index) {
+            var header = field.charAt(0).toUpperCase() + field.slice(1);
+            if ($(this).html() == header) columnIndex = index;
+        });
     }
     return columnIndex;
 }
@@ -83,7 +92,6 @@ $(document).ready(function() {
         if (type == 'toggle') value = $(cell).html() == 'Y' ? '' : 'Y';
         var field = getField(cell);
         updateHtml(fileName, field, value, true);
-        console.log()
         $(that).trigger('enableEditing');
     }
 
@@ -93,6 +101,7 @@ $(document).ready(function() {
 
     function updateHtml(fileName, field, value, emit) {
         var column = getColumn(field);
+        console.log(column);
         $('table').each(function() {
             var table = $(this).DataTable();
             table.rows().every(function(row) {
@@ -105,31 +114,19 @@ $(document).ready(function() {
 
         if (!emit) return;
 
+        if (fileName.indexOf('@') > -1) {
+            socket.emit('update user', {
+                email: fileName,
+                field : field,
+                value : value
+            });
+            return;
+        }
+
         socket.emit('client side update', {
             fileName : fileName,
             field : field,
             value : value
         });
-    }
-
-    function getRow(fileName) {
-        var row;
-        $('table').each(function() {
-            var table = $(this).DataTable();
-            table.rows().every(function() {
-                if (this.data()[0] == fileName) row = this;
-            });
-        });
-
-        return row;
-    }
-
-    function moveRow(row, tableId) {
-        if (tableId == 'none') return row.remove().draw();
-        var table = $(tableId).DataTable();
-        var rowNode = table.row.add(row.data()).draw().node();
-        var href = $(row.node()).attr('data-href');
-        addClassesToRow(rowNode, href);
-        row.remove().draw();
     }
 });
