@@ -4,8 +4,9 @@
 extends layout
 
 block content
+    link(rel='stylesheet', href='/css/manage_users.css')
     script(type='text/javascript').
-        var roles = !{JSON.stringify(roles)};;
+        var roles = !{JSON.stringify(options)}
     script(src='/js/manage_users/users.js')
 
     button#addUser.btn.btn-secondary.pull-right Add User
@@ -21,7 +22,7 @@ block content
         tbody
             - for user in users
                 tr
-                    th #{user.email}
-                    th #{user.initials}
-                    th #{user.role}
-                    th #{user.password}
+                    td.edit #{user.email}
+                    td.edit #{user.initials}
+                    td.select #{user.role}
+                    td.edit #{user.password}
