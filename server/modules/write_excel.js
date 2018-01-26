@@ -766,6 +766,7 @@ var fields = {
 var t1Directory;
 ConfigService.getT1Directory(function(err, directory) {
     if (directory) {
+        console.log('DIRECTORY IS SET');
         t1Directory = directory;
     } else {
         console.log(err);
@@ -774,28 +775,30 @@ ConfigService.getT1Directory(function(err, directory) {
 
 function clientToExcel(year, client) {
     var curr_year = client.year;
-    var path = t1Directory + '//' + year + '//' + client.fileName + '.xlsx';
-    if (!fs.existsSync(path)) {
-        path = t1Directory + '//Templates//1- T1 INTERVIEW-New.xlsx';
-    }
-    console.log('previous path: ', path);
-    XLSX.fromFileAsync(path).then(function(workbook) {
-        var sheet = workbook.sheet('Interview Sheet');
-        UpdateSheetService.updateSheet(sheet);
-        for (var section in fields) {
-            if (section == 'husband') if (!client.husband) continue;
-            if (section == 'wife') if (!client.wife) continue;
-
-            for (var cell in fields[section]) {
-                fields[section][cell](sheet.cell(cell), client);
-            }
-        }
-        path = t1Directory + '//' + curr_year;
+    ConfigService.getT1Directory(function(err, t1Directory) {
+        var path = t1Directory + '//' + year + '//' + client.fileName + '.xlsx';
         if (!fs.existsSync(path)) {
-            fs.mkdirSync(path);
+            path = t1Directory + '//Templates//1- T1 INTERVIEW-New.xlsx';
         }
-        console.log('new path: ', path);
-        return workbook.toFileAsync(path + '//' + client.fileName + '.xlsx');
+        console.log('previous path: ', path);
+        XLSX.fromFileAsync(path).then(function(workbook) {
+            var sheet = workbook.sheet('Interview Sheet');
+            UpdateSheetService.updateSheet(sheet);
+            for (var section in fields) {
+                if (section == 'husband') if (!client.husband) continue;
+                if (section == 'wife') if (!client.wife) continue;
+
+                for (var cell in fields[section]) {
+                    fields[section][cell](sheet.cell(cell), client);
+                }
+            }
+            path = t1Directory + '//' + curr_year;
+            if (!fs.existsSync(path)) {
+                fs.mkdirSync(path);
+            }
+            console.log('new path: ', path);
+            return workbook.toFileAsync(path + '//' + client.fileName + '.xlsx');
+        });
     });
 }
 

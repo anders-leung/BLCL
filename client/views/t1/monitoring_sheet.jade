@@ -48,6 +48,8 @@ block content
                             th Outstanding Info
                             th Ready To Pack
                             th Packed
+                            th GST
+                            th Method
                             th Emailed
                             th Signed
                             th PYT Rec'd
@@ -82,6 +84,8 @@ block content
                             th Outstanding Info
                             th Ready To Pack
                             th Packed
+                            th GST
+                            th Method
                             th Emailed
                             th Signed
                             th PYT Rec'd
@@ -123,6 +127,10 @@ block content
                                 td.text-nowrap #{client.outstandingInfo ? 'Y' : ''}
                                 td.text-nowrap.date-edit #{client.readyToPack}
                                 td.toggle #{client.packed ? 'Y' : ''}
+                                td 
+                                    if (client.husband.rental.gstReturn || client.husband.selfEmployed.gstReturn || client.wife.rental.gstReturn || client.wife.selfEmployed.gstReturn)
+                                        | Y
+                                td #{client.method}
                                 td.text-nowrap.date-edit #{client.emailed}
                                 td.text-nowrap.date-edit #{client.signed}
                                 td.text-nowrap.select #{client.pytReceived}

@@ -3,20 +3,25 @@
  */
 var XLSX = require('xlsx-populate');
 
-function setInputStyle(object) {
-    object.style({
+function setInputStyle(object, border) {
+    var styles = {
         'bold': true,
         'fontSize': 18,
         'horizontalAlignment': 'center'
-    });
+    };
+    if (border) styles.border = true;
+    object.style(styles);
 }
 
 function setLabelStyle(object) {
-    object.style({
-        'bold': false,
+    var styles = {
+        'bold': true,
         'fontSize': 11,
-        'horizontalAlignment': 'center'
-    });
+        'horizontalAlignment': 'left',
+        'wrapText': true
+    };
+    if (border) styles.border = true;
+    object.style(styles);
 }
 
 function updateHusbandT4(sheet) {
@@ -162,19 +167,12 @@ function updateWifeT4A(sheet) {
 function setDD(sheet) {
     var cell = sheet.cell('A53');
     cell.value('DD DONE');
-    cell.style({
-        'bold': true,
-        'fontSize': 11,
-        'border': true,
-        'horizontalAlignment': 'left'
-    });
+    setLabelStyle(cell, true);
     cell.style('leftBorder', 'thick');
 
     var range = sheet.range('B53:C53');
     range.merged(true);
-    setInputStyle(range);
-    range.style('border', true);
-
+    setInputStyle(range, true);
     cell = sheet.cell('B53');
     cell.value('');
 }
@@ -182,25 +180,15 @@ function setDD(sheet) {
 function setTeachingSupplies(sheet) {
     var range = sheet.range('G33:G34');
     if (range.merged()) return;
+
     range.merged(true);
+    setLabelStyle(range, true);
     var cell = sheet.cell('G33');
-    cell.style({
-        'border': true,
-        'bold': true,
-        'horizontalAlignment': 'left',
-        'wrapText': true,
-        'fontSize': 11
-    });
     cell.value('TEACHING SUPPLIES');
 
     range = sheet.range('H33:I34');
     range.merged(true);
-    cell.style({
-        'border': true,
-        'bold': true,
-        'horizontalAlignment': 'center',
-        'fontSize': 18
-    });
+    setInputStyle(range, true);
     cell = sheet.cell('H33');
     cell.value('');
 }
@@ -208,51 +196,29 @@ function setTeachingSupplies(sheet) {
 function setHomeAccessibilities(sheet) {
     var range = sheet.range('J33:K34');
     if (range.merged()) return;
-    range.merged(true);
+
+    range.merged(true, true);
+    setLabelStyle(range);
     var cell = sheet.cell('J33');
-    cell.style({
-        'border': true,
-        'bold': true,
-        'horizontalAlignment': 'left',
-        'wrapText': true,
-        'fontSize': 11
-    });
     cell.value('HOME ACCESSIBILITIES');
 
     range = sheet.range('L33:L34');
-    range.merged(true);
-    cell.style({
-        'border': true,
-        'bold': true,
-        'horizontalAlignment': 'center',
-        'fontSize': 18
-    });
+    range.merged(true, true);
+    setInputStyle(range);
     cell = sheet.cell('L33');
     cell.value('');
 }
 
 function setOSI(sheet) {
-    var range = sheet.range('D55:E55');
-    if (range.merged()) return;
     var cell = sheet.cell('D55');
     cell.value('');
-    range.merged(true);
-    cell.style({
-        'bold': true,
-        'horizontalAlignment': 'left',
-        'fontSize': 11
-    });
-    cell.value('O/S INFO');
+    setLabelStyle(cell);
+    cell.value('O/S');
 
-    range = sheet.range('F55:P55');
+    range = sheet.range('E55:T55');
     range.merged(true);
-    range.style({
-        'bold': true,
-        'fontSize': 14,
-        'horizontalAlignment': 'left',
-        'leftBorder': 'thick'
-    });
-    cell = sheet.cell('F55');
+    setInputStyle(range);
+    cell = sheet.cell('E55');
     cell.value('');
 }
 
@@ -305,6 +271,48 @@ function setPRSold(sheet) {
     sheet.cell('X1').value('');
 }
 
+function updateConsultFeeAndPriceQuoted(sheet) {
+    var cell = sheet.cell('Q55');
+    if (cell.value() != 'Consult Fee') return;
+    cell.value('');
+    var range = sheet.range('Q55:R55');
+    range.merged(false);
+
+    cell = sheet.cell('S55');
+    cell.value('');
+    range = sheet.range('S55:T55');
+    range.merged(false);
+
+
+    cell = sheet.cell('U55');
+    cell.value('');
+
+    cell = sheet.cell('V55');
+    cell.value('');
+    range = sheet.range('V55:Z55');
+    range.merged(false);
+
+    cell = sheet.cell('U55');
+    setLabelStyle(cell);
+    cell.value('Consult Fee');
+
+    range = sheet.range('V55:W55');
+    range.merged(true);
+    setInputStyle(range, true);
+    cell.value('');
+
+
+    cell = sheet.cell('X55');
+    setLabelStyle(cell, true);
+    cell.value('PRICE QUOTED');
+
+    range = sheet.range('Y55:Z55');
+    range.merged(true);
+    setInputStyle(range, true);
+    cell = sheet.cell('Y55');
+    cell.value('');
+}
+
 var UpdateService = {
     updateSheet: function(sheet) {
             updateHusbandT4(sheet);
@@ -317,6 +325,7 @@ var UpdateService = {
             setHomeAccessibilities(sheet);
             setPRSold(sheet);
             setDD(sheet);
+            updateConsultFeeAndPriceQuoted(sheet);
             setOSI(sheet);
     }
 };
