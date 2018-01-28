@@ -760,7 +760,7 @@ var fields = {
 
     'B55' : function(cell, client) {
         client.msp = (cell ? cell.v == 'Y' : false);
-    },
+    }/*,
 
     'S55' : function(cell, client) {
         client.consultFee = (cell ? cell.v : '');
@@ -768,7 +768,7 @@ var fields = {
 
     'V55' : function(cell, client) {
         client.price = (cell ? cell.v : '');
-    }
+    }*/
 };
 
 function excelToClient(workbook) {
