@@ -1,15 +1,22 @@
 /**
  * Created by ander on 2017-11-01.
  */
+
 $(document).ready(function() {
     var table = $('table').DataTable({
-        'iDisplayLength': 25,
+        'iDisplayLength': 10,
         'select': true,
         'scrollX': false,
         'columnDefs' : [
             { type: 'date', targets: 1 },
             { visible: false, searchable: true, targets: 0 }
         ],
+        'dom': 'Bfrtip',
+        'buttons': [{
+            extend: 'excelHtml5',
+            footer: true,
+            title: new Date().toISOString().slice(0,10) + ' Payments'
+        }],
 
         drawCallback: function() {
             var api = this.api();
@@ -19,13 +26,11 @@ $(document).ready(function() {
                     var sum = 0;
                     $('table tbody tr').each(function() {
                         var amount = $(this).find('td').eq(i - 1).html();
-                        console.log(amount);
                         sum += parseFloat(amount == '' ? 0 : amount);
                     });
-                    $(this.footer()).html(sum + '<br>-');
+                    $(this.footer()).html(sum);
                     total += sum;
-                    if (i == 13) $(this.footer()).html(sum + '<br>Total:');
-                    if (i == 14) $(this.footer()).html(sum + '<br>' + total);
+                    if (i == 15) $(this.footer()).html(total);
                 }
             });
         }

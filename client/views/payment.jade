@@ -4,7 +4,10 @@
 extends layout
 
 block content
-    script(type='text/javascript', src='/js/datatables-sum.js')
+    script(type='text/javascript', src='/js/datatables/jquery.dataTables.min.js')
+    script(type='text/javascript', src='/js/datatables/dataTables.buttons.min.js')
+    script(type='text/javascript', src='/js/datatables/jszip.min.js')
+    script(type='text/javascript', src='/js/datatables/buttons.html5.min.js')
     script(type='text/javascript', src='/js/payment/pay.js')
 
     #table.col-12.tab-content
@@ -26,8 +29,10 @@ block content
                     th CK
                     th DD
                     th ET
+                    th
             tfoot
                 tr
+                    th
                     th
                     th
                     th
@@ -61,3 +66,4 @@ block content
                         td.text-nowrap #{client.pytReceived == 'CK' ? client.pytAmount : ''}
                         td.text-nowrap #{client.pytReceived == 'DD' ? client.pytAmount : ''}
                         td.text-nowrap #{client.pytReceived == 'ET' ? client.pytAmount : ''}
+                        td
