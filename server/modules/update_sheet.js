@@ -13,14 +13,15 @@ function setInputStyle(object, border) {
     object.style(styles);
 }
 
-function setLabelStyle(object) {
+function setLabelStyle(object, border, bold) {
     var styles = {
-        'bold': true,
+        'bold': false,
         'fontSize': 11,
         'horizontalAlignment': 'left',
         'wrapText': true
     };
     if (border) styles.border = true;
+    if (bold) styles.bold = true;
     object.style(styles);
 }
 
@@ -36,6 +37,7 @@ function updateHusbandT4(sheet) {
 
         cell = sheet.cell('E20');
         setLabelStyle(cell);
+        cell.style('horizontalAlignment', 'center');
         cell.value('BLCL');
 
         cell = sheet.cell('F20');
@@ -56,6 +58,7 @@ function updateHusbandT5(sheet) {
 
         cell = sheet.cell('J20');
         setLabelStyle(cell);
+        cell.style('horizontalAlignment', 'center');
         cell.value('JT');
 
         cell = sheet.cell('K20');
@@ -67,6 +70,7 @@ function updateHusbandT5(sheet) {
 
         cell = sheet.cell('L20');
         setLabelStyle(cell);
+        cell.style('horizontalAlignment', 'center');
         cell.value('BLCL');
 
         cell = sheet.cell('M20');
@@ -87,6 +91,7 @@ function updateHusbandT4A(sheet) {
 
         cell = sheet.cell('E25');
         setLabelStyle(cell);
+        cell.style('horizontalAlignment', 'center');
         cell.value('BLCL');
 
         cell = sheet.cell('F25');
@@ -107,6 +112,7 @@ function updateWifeT4(sheet) {
 
         cell = sheet.cell('S20');
         setLabelStyle(cell);
+        cell.style('horizontalAlignment', 'center');
         cell.value('BLCL');
 
         cell = sheet.cell('T20');
@@ -125,6 +131,7 @@ function updateWifeT5(sheet) {
 
         cell = sheet.cell('W20');
         setLabelStyle(cell);
+        cell.style('horizontalAlignment', 'center');
         cell.value('JT');
 
         cell = sheet.cell('X20');
@@ -167,8 +174,8 @@ function updateWifeT4A(sheet) {
 function setDD(sheet) {
     var cell = sheet.cell('A53');
     cell.value('DD DONE');
-    setLabelStyle(cell, true);
-    cell.style('leftBorder', 'thick');
+    setLabelStyle(cell, true, true);
+    cell.style('leftBorder', 'medium');
 
     var range = sheet.range('B53:C53');
     range.merged(true);
@@ -182,7 +189,7 @@ function setTeachingSupplies(sheet) {
     if (range.merged()) return;
 
     range.merged(true);
-    setLabelStyle(range, true);
+    setLabelStyle(range, true, true);
     var cell = sheet.cell('G33');
     cell.value('TEACHING SUPPLIES');
 
@@ -197,14 +204,14 @@ function setHomeAccessibilities(sheet) {
     var range = sheet.range('J33:K34');
     if (range.merged()) return;
 
-    range.merged(true, true);
-    setLabelStyle(range);
+    range.merged(true);
+    setLabelStyle(range, true, true);
     var cell = sheet.cell('J33');
     cell.value('HOME ACCESSIBILITIES');
 
     range = sheet.range('L33:L34');
-    range.merged(true, true);
-    setInputStyle(range);
+    range.merged(true);
+    setInputStyle(range, true);
     cell = sheet.cell('L33');
     cell.value('');
 }
@@ -212,12 +219,14 @@ function setHomeAccessibilities(sheet) {
 function setOSI(sheet) {
     var cell = sheet.cell('D55');
     cell.value('');
-    setLabelStyle(cell);
+    setLabelStyle(cell, true, true);
+    cell.style('border', 'medium');
     cell.value('O/S');
 
-    range = sheet.range('E55:T55');
+    var range = sheet.range('E55:T55');
     range.merged(true);
     setInputStyle(range);
+    range.style('border', 'medium');
     cell = sheet.cell('E55');
     cell.value('');
 }
@@ -239,9 +248,9 @@ function setPRSold(sheet) {
     range = sheet.range('S1:T1');
     range.merged(true);
     range.style({
-        'rightBorder': 'thick',
-        'leftBorder': 'thick',
-        'bottomBorder': 'thick',
+        'rightBorder': 'medium',
+        'leftBorder': 'medium',
+        'bottomBorder': 'medium',
         'bold': true,
         'fontSize': 14,
         'horizontalAlignment': 'left'
@@ -293,22 +302,34 @@ function updateConsultFeeAndPriceQuoted(sheet) {
     range.merged(false);
 
     cell = sheet.cell('U55');
-    setLabelStyle(cell);
+    setLabelStyle(cell, true, true);
+    cell.style({
+        'border': 'medium',
+        'underline': false
+    });
     cell.value('Consult Fee');
 
     range = sheet.range('V55:W55');
     range.merged(true);
     setInputStyle(range, true);
+    range.style('bottomBorder', 'medium');
+    cell = sheet.cell('V55');
     cell.value('');
 
 
     cell = sheet.cell('X55');
-    setLabelStyle(cell, true);
+    setLabelStyle(cell, true, true);
+    cell.style({
+        'underline': true,
+        'border': 'medium'
+    });
     cell.value('PRICE QUOTED');
 
     range = sheet.range('Y55:Z55');
     range.merged(true);
     setInputStyle(range, true);
+    range.style('bottomBorder', 'medium');
+    range.style('rightBorder', 'medium');
     cell = sheet.cell('Y55');
     cell.value('');
 }
