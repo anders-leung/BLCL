@@ -5,6 +5,7 @@
 var Client = require('../models/client');
 var WriteExcelService = require('./write_excel');
 var clientNames = require('./utils/client');
+var async = require('async');
 
 function cleanValues(values) {
     for (var field in values) {
@@ -133,22 +134,24 @@ var ClientService = {
     },
 
     updateClient : function(search, values, callback) {
-        console.log(values);
-        var oldYear;
-        Client.findOne(search, function(err, client) {
-            oldYear = client.year;
+        Client.findOne(search, function(err, oldClient) {
+            oldYear = oldClient.year;
+            oldFileName = oldClient.fileName;
             values = cleanValues(values);
             Client.update(search, { $set: values }, function(save_err) {
                 Client.findOne(search, function(find_err, client) {
                     var updates = {}
                     updates['fileName'] = clientNames.getFileName(client);
                     updates['pathName'] = clientNames.getPathName(client);
-                    Client.update(search, { $set: updates }, function(err) {
-                        console.log(oldYear, client.year);
-                        WriteExcelService(oldYear, client);
-                        if (err) console.log(err);
-                        if (save_err) console.log(save_err);
-                        callback(save_err, client);
+                    Client.update(search, { $set: updates }, function(file_name_err) {
+                        if (file_name_err) console.log(file_name_err);
+                        var id_search = { _id: oldClient._id };
+                        Client.findOne(id_search, function(err, client) {
+                            WriteExcelService(oldYear, client, oldFileName);
+                            if (err) console.log(err);
+                            if (save_err) console.log(save_err);
+                            callback(save_err, client);
+                        });
                     });
                 });
             });

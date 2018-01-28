@@ -85,6 +85,7 @@ $(document).ready(function(e) {
         $('#prSold').val(client.prSold ? 'Y' : 'N');
         $('#slips').prop('checked', client.slips);
         $('#stocks').prop('checked', client.stocks);
+        $('#confirmPickupDate').prop('checked', client.confirmPickupDate);
         $('#t777').prop('checked', client.t777);
         $('#new').prop('checked', client.new);
         $('#selfEmployed').prop('checked', client.selfEmployed);
@@ -294,5 +295,5 @@ $(document).ready(function(e) {
             // set value 0 and check it
             $(this).prop('checked', true).val(0);
         });
-    })
+    });
 });

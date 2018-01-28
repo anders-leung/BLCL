@@ -773,10 +773,10 @@ ConfigService.getT1Directory(function(err, directory) {
     }
 });
 
-function clientToExcel(year, client) {
+function clientToExcel(year, client, fileName) {
     var curr_year = client.year;
     ConfigService.getT1Directory(function(err, t1Directory) {
-        var path = t1Directory + '//' + year + '//' + client.fileName + '.xlsx';
+        var path = t1Directory + '//' + year + '//' + fileName + '.xlsx';
         if (!fs.existsSync(path)) {
             path = t1Directory + '//Templates//1- T1 INTERVIEW-New.xlsx';
         }
@@ -796,7 +796,7 @@ function clientToExcel(year, client) {
             if (!fs.existsSync(path)) {
                 fs.mkdirSync(path);
             }
-            console.log('new path: ', path);
+            console.log('new path: ', path + '//' + client.fileName + '.xlsx');
             return workbook.toFileAsync(path + '//' + client.fileName + '.xlsx');
         });
     });

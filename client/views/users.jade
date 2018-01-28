@@ -14,7 +14,7 @@ block content
     #table.tab-content(style='border-top: 0')
         - for (var i = 0; i < list.length; i++)
             div(id=list[i][0]).tab-pane
-                table(id=list[i][0] + 'table').cell-border
+                table(id=list[i][0] + 'Table').cell-border
                     thead
                         tr
                             th
@@ -73,6 +73,6 @@ block content
                                 td #{client.stocks ? 'Y' : ''}
                                 td #{client.new ? 'Y' : ''}
                                 td #{client.preparerDone}
-                                td #{client.confirmPickupDate}
+                                td #{client.confirmPickupDate ? 'Y' : ''}
                                 td.text-nowrap #{client.pickupDate}
                                 td.edit.admin #{client.preparer}
