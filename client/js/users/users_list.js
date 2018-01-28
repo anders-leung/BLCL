@@ -87,7 +87,6 @@ $(document).ready(function() {
         if (tableId == 'none') return row.remove().draw();
         var table = $(tableId).DataTable();
         var rowNode = table.row.add(row.data()).draw().node();
-        console.log('drawing new row')
         var href = $(row.node()).attr('data-href');
         addClassesToRow(rowNode, href);
         row.remove().draw();
