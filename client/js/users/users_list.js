@@ -80,7 +80,7 @@ $(document).ready(function() {
 
     function findTableForRow(row) {
         var preparer = row.data()[15];
-        return '#' + preparer + 'table';
+        return '#' + preparer.toUpperCase() + 'Table';
     }
 
     function moveRow(row, tableId) {
