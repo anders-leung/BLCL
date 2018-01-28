@@ -133,6 +133,7 @@ var ClientService = {
     },
 
     updateClient : function(search, values, callback) {
+        console.log(values);
         var oldYear;
         Client.findOne(search, function(err, client) {
             oldYear = client.year;

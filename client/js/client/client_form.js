@@ -287,4 +287,12 @@ $(document).ready(function(e) {
         $('#consult').val(client.consultFee);
         $('#price').val(client.price);
     }
+
+    $('form').on('submit', function() {
+        // to each unchecked checkbox
+        $('input[type="checkbox"]:not(:checked)').each(function () {
+            // set value 0 and check it
+            $(this).prop('checked', true).val(0);
+        });
+    })
 });
