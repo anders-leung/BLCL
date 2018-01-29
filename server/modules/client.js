@@ -55,8 +55,10 @@ var ClientService = {
         normal['interviewDate'] = { $ne : '' };
         normal['packed'] = true ;
         normal['signed'] = { $ne : '' };
-        normal['pytReceived'] = '';
-        normal['pytAmount'] = '';
+        normal['$or'] = [
+            { 'pytReceived' : '' },
+            { 'pytAmount' : '' },
+        ];
         Client.find({ $or: [emailed, normal] }).lean().exec(function(err, clients) {
             callback(err, clients);
         });
