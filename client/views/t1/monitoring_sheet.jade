@@ -1,8 +1,16 @@
 extends ../layout
 
 block content
+    if role == 'Administrator'
+        script(type='text/javascript', src='/js/datatables/jquery.dataTables.min.js')
+        script(type='text/javascript', src='/js/datatables/dataTables.buttons.min.js')
+        script(type='text/javascript', src='/js/datatables/jszip.min.js')
+        script(type='text/javascript', src='/js/datatables/buttons.html5.min.js')
+        script(type='text/javascript', src='/js/datatables/datatables-sum.js')
     script(type="text/javascript", src='/js/jquery.floatThead.js')
-    script(type='text/javascript', src='/js/t1/monitoring_sheet.js')
+    script(type='text/javascript').
+        var role = !{JSON.stringify(role)};
+    script(src='/js/t1/monitoring_sheet.js')
 
     ul.nav.nav-tabs
         li.nav-item
@@ -17,8 +25,9 @@ block content
             a.nav-link(data-toggle='tab' href='#osPyt') O/S PYT
         li.nav-item
             a.nav-link(data-toggle='tab' href='#emailedNotPacked') Emailed Not Packed
-        li.nav-item
-            a.nav-link(data-toggle='tab' href='#done') Done
+        if role == 'Administrator'
+            li.nav-item
+                a.nav-link(data-toggle='tab' href='#done') Done
 
     #table.col-12.tab-content(style='border-top: 0')
         - for (var i = 0; i < clients.length; i++)
