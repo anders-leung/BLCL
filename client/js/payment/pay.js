@@ -21,14 +21,10 @@ $(document).ready(function() {
         drawCallback: function() {
             var api = this.api();
             var total = 0;
-            api.columns().every(function(i) {
+            api.columns({ 'filter': 'applied' }).every(function(i) {
                 if (i > 8) {
-                    var sum = 0;
-                    $('table tbody tr').each(function() {
-                        var amount = $(this).find('td').eq(i - 1).html();
-                        sum += parseFloat(amount == '' ? 0 : amount);
-                    });
-                    $(this.footer()).html(sum);
+                    var sum = this.data().sum();
+                    $(this.footer()).html(sum)
                     total += sum;
                     if (i == 15) $(this.footer()).html(total);
                 }
