@@ -20,9 +20,10 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
                                     ['packed', packed],
                                     ['emailed', emailed],
                                     ['osPyt', pickedUp],
-                                    ['emailedNotPacked', emailedNotPacked],
-                                    ['done', completed]
+                                    ['emailedNotPacked', emailedNotPacked]
                                 ];
+
+                                if (cookie.role == 'Administrator') clients.push(['done', completed]);
 
                                 res.render('t1/monitoring_sheet', {
                                     title: 'T1 Monitoring',
