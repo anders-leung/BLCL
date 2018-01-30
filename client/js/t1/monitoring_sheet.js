@@ -11,11 +11,14 @@ var exportDatatable = {
     'select': true,
     'scrollX': true,
     'iDisplayLength': 10,
-    'dom': 'lBfrtip',
+    'dom': '<"toolbar">lBfrtip',
     'buttons': [{
         extend: 'excelHtml5',
         footer: true,
-        title: title
+        title: title,
+        exportOptions: {
+            columns: [10, 11, 12, 13, 27]
+        }
     }]
 }
 
@@ -43,8 +46,10 @@ $(document).ready(function() {
         });
 
         var table;
-        if (tableId == '#osPytTable') table = $(tableId).DataTable(exportDatatable);
-        else {
+        if (tableId == '#osPytTable') {
+            table = $(tableId).DataTable(exportDatatable);
+            $("div.toolbar").html('<p>Exported Excel file name: <input type="text"/></p>');
+        } else {
             table = $(tableId).DataTable({
                 'columnDefs': [
                     { type: 'date', targets: [9, 20, 22, 23, 26, 27] },

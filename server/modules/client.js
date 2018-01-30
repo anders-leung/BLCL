@@ -170,10 +170,18 @@ var ClientService = {
         });
     },
 
-    findClientsWithUser : function(user, all, callback) {
+    findClientsWithUser : function(user, filter, callback) {
         var search = {};
         search['preparer'] = user;
-        if (!all) search['readyToPack'] = '';
+        if (!filter) search['readyToPack'] = '';
+        else if (filter.done) {
+            search['interviewDate'] = { $ne : '' };
+            search['preparerDone'] = 'OK';
+            search['pytReceived'] = { $ne : '' };
+            search['pytAmount'] = { $ne : '' };
+            search['signed'] = { $ne : '' };
+            search['packed'] = true;
+        }
         Client.find(search).lean().exec(function(err, clients) {
             callback(err, clients);
         });

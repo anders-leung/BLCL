@@ -21,6 +21,7 @@ var client = require('./server/routes/client');
 var clients = require('./server/routes/clients');
 var payment = require('./server/routes/payment');
 var manage_users = require('./server/routes/manage_users');
+var staff_analysis = require('./server/routes/staff_analysis');
 
 mongoose.Promise = require('bluebird');
 mongoose.connect('mongodb://localhost:27017/');
@@ -59,6 +60,7 @@ app.use('/client', client);
 app.use('/clients', clients);
 app.use('/payment', payment);
 app.use('/manage_users', manage_users);
+app.use('/staff_analysis', staff_analysis);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
