@@ -8,6 +8,9 @@ var UserService = require('../modules/user');
 
 /* GET users listing. */
 router.get('/', CookieService.isLoggedIn, function(req, res) {
+    if (CookieService.readCookie(req).role != 'Administrator') {
+        res.redirect('/');
+    }
     UserService.getAllUsers(function(err, users) {
         var dict = {};
         async.each(users, function(user, callback) {
