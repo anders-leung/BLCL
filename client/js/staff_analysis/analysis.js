@@ -47,7 +47,16 @@ $(document).ready(function() {
                     if (i == 14) {
                         var sum = this.data().sum();
                         $(this.footer()).html(sum)
-                    } else if (i > 5) {
+                    } else if (i == 7) {
+                        var zeroes = ones = twos = 0;
+                        var data = this.data();
+                        for (var i = 0; i < data.length; i++) {
+                            if (data[i] == '0') zeroes++;
+                            if (data[i] == '1') ones++;
+                            if (data[i] == '2') twos++;
+                        }
+                        $(this.footer()).html(zeroes + '/' + ones + '/' + twos);
+                    } else if (i > 4) {
                         var count = 0;
                         var data = this.data();
                         for (var i = 0; i < data.length; i++) {
