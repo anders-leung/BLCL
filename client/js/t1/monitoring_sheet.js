@@ -17,7 +17,7 @@ var exportDatatable = {
         footer: true,
         title: title,
         exportOptions: {
-            columns: [10, 11, 12, 13, 27]
+            columns: [9, 10, 11, 12, 13, 27]
         }
     }]
 }
@@ -46,9 +46,10 @@ $(document).ready(function() {
         });
 
         var table;
-        if (tableId == '#osPytTable') {
+        if (tableId == '#osPytTable' || tableId == '#normalTable') {
             table = $(tableId).DataTable(exportDatatable);
-            $("div.toolbar").html('<p>Exported Excel file name: <input type="text"/></p>');
+            $("div.toolbar").html('<p class="title">Exported Excel file name: <input type="text"></p>');
+            $('.dt-buttons').find('button').appendTo($('div.toolbar').find('p'));
         } else {
             table = $(tableId).DataTable({
                 'columnDefs': [
@@ -71,6 +72,10 @@ $(document).ready(function() {
 
         $(tableId).on('dblclick', 'tr td:not(.toggle, .edit, .date-edit)', function() {
             window.location = $(this).parent().data('href');
+        });
+
+        $('input').on('keypress', '.title', function() {
+            console.log('hello')
         });
     }
 
