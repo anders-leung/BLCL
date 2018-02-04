@@ -1,6 +1,16 @@
 /**
  * Created by ander on 2017-09-14.
  */
+
+// Adjust tables so columns are of correct width when DOM is dynamically modified
+function adjustTables() {
+    $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
+}
+
+$(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
+    adjustTables();
+});
+
 $(document).ready(function() {
     $('.nav-tabs a').each(function(i) {
         if (i == 0) {
@@ -34,7 +44,7 @@ $(document).ready(function() {
         });
 
         var table = $(tableId).DataTable({
-            'scrollX': true,
+            'scrollX': false,
             'select': true,
             'columnDefs': [
                 { targets : 14, type : 'date' },
