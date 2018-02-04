@@ -300,11 +300,11 @@ var fields = {
             cell.value(client.msp ? 'Y' : '');
         },
 
-        'S55' : function(cell, client) {
+        'V55' : function(cell, client) {
             cell.value(client.consultFee);
         },
 
-        'V55' : function(cell, client) {
+        'Y55' : function(cell, client) {
             cell.value(client.price);
         }
 
