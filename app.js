@@ -44,7 +44,7 @@ app.use(express.static(path.join(__dirname, 'client')));
 app.use(session({
     name : 'session',
     keys : ['email', 'role'],
-    maxAge : 60 * 60 * 1000
+    maxAge : 12 * 60 * 60 * 1000
 }));
 
 app.use('/', index);
