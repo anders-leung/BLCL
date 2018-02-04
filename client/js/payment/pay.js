@@ -11,11 +11,14 @@ $(document).ready(function() {
             { type: 'date', targets: 1 },
             { visible: false, searchable: true, targets: 0 }
         ],
-        'dom': 'Bfrtip',
+        'dom': 'lBfrtip',
         'buttons': [{
             extend: 'excelHtml5',
             footer: true,
-            title: new Date().toISOString().slice(0,10) + ' Payments'
+            title: new Date().toISOString().slice(0,10) + ' Payments',
+            exportOptions: {
+                columns: 'visible'
+            }
         }],
 
         drawCallback: function() {
