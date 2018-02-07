@@ -168,7 +168,7 @@ var fields = {
             cell.value(client.dependent3.sin);
         },
 
-        'F55' : function(cell, client) {
+        'E55' : function(cell, client) {
             cell.value(client.outstandingInfo);
         },
         
