@@ -264,14 +264,26 @@ var fields = {
         },
 
         'A46' : function(cell, client) {
+            cell.style({
+                wrapText: true,
+                shrinkToFit: true
+            });
             cell.value(client.notes.one);
         },
 
         'A47' : function(cell, client) {
+            cell.style({
+                wrapText: true,
+                shrinkToFit: true
+            });
             cell.value(client.notes.two);
         },
 
         'A48' : function(cell, client) {
+            cell.style({
+                wrapText: true,
+                shrinkToFit: true
+            });
             cell.value(client.notes.three);
         },
 
@@ -296,14 +308,26 @@ var fields = {
         },
 
         'D49' : function(cell, client) {
+            cell.style({
+                wrapText: true,
+                shrinkToFit: true
+            });
             cell.value(client.comments.one);
         },
 
         'D51' : function(cell, client) {
+            cell.style({
+                wrapText: true,
+                shrinkToFit: true
+            });
             cell.value(client.comments.two);
         },
 
         'D53' : function(cell, client) {
+            cell.style({
+                wrapText: true,
+                shrinkToFit: true
+            });
             cell.value(client.comments.three);
         },
 
