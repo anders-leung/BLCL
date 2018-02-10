@@ -39,6 +39,12 @@ var UserService = {
 
     getRoles : function() {
         return User.schema.path('role').enumValues;
+    },
+
+    getInitials : function(callback) {
+        User.find({}).distinct('initials', function(err, initials) {
+            callback(err, initials);
+        })
     }
 };
 
