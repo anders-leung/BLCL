@@ -61,8 +61,9 @@ block content
                             th Method
                             th Emailed
                             th Signed
-                            th PYT Rec'd
-                            th PYT Amount
+                            th.pyt PYT Rec'd
+                            th.pyt PYT Amount
+                            th.pyt Rec'd By
                             th Call Date
                             th Interview Date
                             th Phone Number
@@ -99,6 +100,7 @@ block content
                             th Signed
                             th PYT Rec'd
                             th PYT Amount
+                            th Rec'd By
                             th Call Date
                             th Interview Date
                             th Phone Number
@@ -142,8 +144,9 @@ block content
                                 td #{client.method}
                                 td.text-nowrap.date-edit #{client.emailed}
                                 td.text-nowrap.date-edit #{client.signed}
-                                td.text-nowrap.select #{client.pytReceived}
-                                td.text-nowrap.edit #{client.pytAmount}
+                                td.text-nowrap.select.pyt #{client.pytReceived}
+                                td.text-nowrap.edit.pyt #{client.pytAmount}
+                                td.text-nowrap.edit.pyt #{client.recBy}
                                 td.text-nowrap.date-edit #{client.callDate}
                                 td.text-nowrap #{client.interviewDate}
                                 td.text-nowrap #{client.tel.number}
