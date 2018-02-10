@@ -15,7 +15,8 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
             method : ClientService.getMethods(),
             t1135 : ClientService.getT1135(),
             relationship : ClientService.getRelationships()
-        }
+        },
+        newClient : true
     });
 });
 
@@ -35,7 +36,8 @@ router.get('/:client_name', CookieService.isLoggedIn, function(req, res) {
                 method : ClientService.getMethods(),
                 t1135 : ClientService.getT1135(),
                 relationship : ClientService.getRelationships()
-            }
+            },
+            newClient : false
         });
     });
 });

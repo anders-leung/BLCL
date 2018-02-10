@@ -8,6 +8,7 @@ block content
     script(type="text/javascript").
         var client = !{JSON.stringify(client)};
         var options = !{JSON.stringify(options)};
+        var newClient = !{JSON.stringify(newClient)};
     script(src='/js/client/client_form.js')
 
     h1=title
@@ -763,7 +764,7 @@ block content
                                     input#homeAccessibilities.form-check-input(type='checkbox' name='homeAccessibilities')
                                     | Home Accessibilities
 
-        fieldset.form-groupinput
+        fieldset.form-group
             .section
                 legend Notes (current year info - delete old info if no use)
                 .row
