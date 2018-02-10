@@ -14,7 +14,7 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
     UserService.getAllUsers(function(err, users) {
         var dict = {};
         async.each(users, function(user, callback) {
-            ClientService.findClientsWithUser(user.initials, false, function(err, clients) {
+            ClientService.findClientsWithUser(user.initials, { done: true }, function(err, clients) {
                 if (err) {
                     callback(err);
                 } else {
@@ -30,7 +30,7 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
                 list.push(entry);
             });
 
-            res.render('users', { role: req.session.role, list: list, options : null });
+            res.render('staff_analysis', { role: req.session.role, list: list, options : null });
         });
     });
 });

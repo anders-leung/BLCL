@@ -331,6 +331,7 @@ var ClientSchema = new Schema({
     },
     pytAmount: { type: String, default: '' },
     pytDate: { type: String, default: '' },
+    recBy: { type: String, default: '' },
     outstandingInfo: { type: String, default: "" },
     remarks: { type: String, default: "" },
     callDate: { type: String, default: "" },

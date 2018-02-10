@@ -20,7 +20,12 @@ var fields = {
         },
 
         'U1' : function(cell, client) {
-            cell.value(client.prSold ? 'Y' : '');
+            cell.style({
+                fontSize: '18',
+                bold: true,
+                horizontalAlignment: 'center'
+            });
+            cell.value(client.prSold ? 'Y' : 'N');
         },
 
         'X1' : function(cell, client) {
@@ -89,6 +94,12 @@ var fields = {
         },
 
         'D9' : function(cell, client) {
+            cell.style({
+                fontSize: '16',
+                fontColor: 'black',
+                underline: false,
+                bold: true
+            });
             cell.value(client.email.value);
         },
 
@@ -253,14 +264,26 @@ var fields = {
         },
 
         'A46' : function(cell, client) {
+            cell.style({
+                wrapText: true,
+                shrinkToFit: true
+            });
             cell.value(client.notes.one);
         },
 
         'A47' : function(cell, client) {
+            cell.style({
+                wrapText: true,
+                shrinkToFit: true
+            });
             cell.value(client.notes.two);
         },
 
         'A48' : function(cell, client) {
+            cell.style({
+                wrapText: true,
+                shrinkToFit: true
+            });
             cell.value(client.notes.three);
         },
 
@@ -285,14 +308,26 @@ var fields = {
         },
 
         'D49' : function(cell, client) {
+            cell.style({
+                wrapText: true,
+                shrinkToFit: true
+            });
             cell.value(client.comments.one);
         },
 
         'D51' : function(cell, client) {
+            cell.style({
+                wrapText: true,
+                shrinkToFit: true
+            });
             cell.value(client.comments.two);
         },
 
         'D53' : function(cell, client) {
+            cell.style({
+                wrapText: true,
+                shrinkToFit: true
+            });
             cell.value(client.comments.three);
         },
 

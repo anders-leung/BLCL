@@ -13,6 +13,7 @@ var headersToFields = {
     'Signed' : 'signed',
     'PYT Rec\'d' : 'pytReceived',
     'PYT Amount' : 'pytAmount',
+    'Rec\'d By' : 'recBy',
     'Call Date' : 'callDate',
     'Remarks' : 'remarks'
 };
@@ -68,7 +69,7 @@ $(document).ready(function() {
 
         $(this).on('focus', '.datepicker', function() {
             $(this).datepicker({
-                dateFormat: 'dd-M-y',
+                dateFormat: 'yy-M-dd',
                 onSelect: function() {
                     var td = $(this).parent();
                     if ($(td).find('input').length === 0) return;
@@ -90,6 +91,7 @@ $(document).ready(function() {
         var value = $(that).find('input').val();
         if (type == 'select') value = $(that).find('select').val();
         if (type == 'toggle') value = $(cell).html() == 'Y' ? '' : 'Y';
+        value = value.toUpperCase();
         var field = getField(cell);
         updateHtml(fileName, field, value, true);
         $(that).trigger('enableEditing');
