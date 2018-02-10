@@ -2,13 +2,20 @@
  * Created by ander on 2017-05-10.
  */
 $(document).ready(function(e) {
+    if (newClient) {
+        $('#newTel').prop('checked', true);
+        $('#newCell').prop('checked', true);
+        $('#newEmail').prop('checked', true);
+        $('#newAddress').prop('checked', true);
+    }
+
     // Setup the year
     var year = (new Date()).getYear();
     year = year + 1899;
     $('#year').val(year);
 
     $('.datepickerChangeYear').datepicker({
-        dateFormat: 'dd-M-y',
+        dateFormat: 'yy-M-dd',
         changeMonth: true,
         changeYear: true,
         yearRange: '1920:' + year
