@@ -49,8 +49,11 @@ var ClientService = {
         emailed['packed'] = false;
         emailed['signed'] = { $ne : '' };
         emailed['emailed'] = { $ne : '' };
-        emailed['pytReceived'] = '';
-        emailed['pytAmount'] = '';
+        emailed['$or'] = [
+            { 'pytReceived' : '' },
+            { 'pytAmount' : '' },
+            { 'recBy' : '' },
+        ]
         var normal = {};
         normal['interviewDate'] = { $ne : '' };
         normal['packed'] = true ;
@@ -58,7 +61,8 @@ var ClientService = {
         normal['$or'] = [
             { 'pytReceived' : '' },
             { 'pytAmount' : '' },
-        ];
+            { 'recBy' : '' },
+        ]
         Client.find({ $or: [emailed, normal] }).lean().exec(function(err, clients) {
             callback(err, clients);
         });
@@ -81,6 +85,7 @@ var ClientService = {
         search['emailed'] = { $ne : '' };
         search['pytReceived'] = { $ne : '' };
         search['pytAmount'] = { $ne : '' };
+        search['recBy'] = { $ne : '' };
         Client.find(search).lean().exec(function(err, clients) {
             callback(err, clients);
         });
@@ -112,6 +117,7 @@ var ClientService = {
         search['interviewDate'] = { $ne : '' };
         search['pytReceived'] = { $ne : '' };
         search['pytAmount'] = { $ne : '' };
+        search['recBy'] = { $ne : '' };
         Client.find(search).lean().exec(function(err, clients) {
             callback(err, clients);
         });
@@ -248,6 +254,7 @@ var ClientService = {
         search['preparerDone'] = 'OK';
         search['pytReceived'] = { $ne : '' };
         search['pytAmount'] = { $ne : '' };
+        search['recBy'] = { $ne : '' };
         search['signed'] = { $ne : '' };
         search['packed'] = true;
         Client.find(search).lean().exec(function(err, clients) {
