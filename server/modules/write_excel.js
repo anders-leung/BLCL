@@ -20,7 +20,12 @@ var fields = {
         },
 
         'U1' : function(cell, client) {
-            cell.value(client.prSold ? 'Y' : '');
+            cell.style({
+                fontSize: '18',
+                bold: true,
+                horizontalAlignment: 'center'
+            });
+            cell.value(client.prSold ? 'Y' : 'N');
         },
 
         'X1' : function(cell, client) {
@@ -89,6 +94,12 @@ var fields = {
         },
 
         'D9' : function(cell, client) {
+            cell.style({
+                fontSize: '16',
+                fontColor: 'black',
+                underline: false,
+                bold: true
+            });
             cell.value(client.email.value);
         },
 
@@ -168,7 +179,7 @@ var fields = {
             cell.value(client.dependent3.sin);
         },
 
-        'F55' : function(cell, client) {
+        'E55' : function(cell, client) {
             cell.value(client.outstandingInfo);
         },
         
