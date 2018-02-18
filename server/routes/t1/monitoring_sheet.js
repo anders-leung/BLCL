@@ -31,7 +31,11 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
                                     res.render('t1/monitoring_sheet', {
                                         title: 'T1 Monitoring',
                                         clients: clients,
-                                        options: ClientService.getPayments(),
+                                        options: {
+                                            pytType: ClientService.getPayments(),
+                                            initials: initials,
+                                            tax: ClientService.getTax()
+                                        },
                                         role: cookie.role,
                                     }); 
                                 });
