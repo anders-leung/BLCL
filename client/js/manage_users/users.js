@@ -55,12 +55,13 @@ $(document).ready(function() {
         $(row).find('td').each(function(i) {
             if (i == 2) {
                 var select = "<select>";
-                for (var j = 0; j < roles.length; j++) {
-                    var option = "<option value='" + roles[j] + "'";
-                    if (roles[j] == 'Employee') {
+                var options = roles.roles;
+                for (var j = 0; j < options.length; j++) {
+                    var option = "<option value='" + options[j] + "'";
+                    if (options[j] == 'Employee') {
                         option += " selected";
                     }
-                    option += ">" + roles[j] + "</option>";
+                    option += ">" + options[j] + "</option>";
                     select += option;
                 }
                 select += "</select>";

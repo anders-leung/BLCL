@@ -14,6 +14,7 @@ var headersToFields = {
     'PYT Rec\'d' : 'pytReceived',
     'PYT Amount' : 'pytAmount',
     'Rec\'d By' : 'recBy',
+    'Tax To CRA' : 'taxToCRA',
     'Call Date' : 'callDate',
     'Remarks' : 'remarks'
 };

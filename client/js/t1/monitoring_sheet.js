@@ -9,6 +9,10 @@ var exportDatatable = {
     ],
     'select': true,
     'scrollX': true,
+    drawCallback: function(row, data, index, full) {
+        var td = $('td.pyt');
+        if ($(td).hasClass('pyt')) $(td).css('color', 'red');
+    },
     'iDisplayLength': 10,
     'dom': '<"toolbar">lBfrtip',
     'buttons': [{
@@ -42,11 +46,12 @@ $(document).ready(function() {
         }
 
         $(tableId + ' tfoot th').each( function (i) {
+            //$(this).html(i);
             $(this).html( '<input type="text"/>' );
         });
 
         var table;
-        if (tableId == '#osPytTable' || tableId == '#normalTable') {
+        if (role == 'Administrator' && (tableId == '#osPytTable' || tableId == '#normalTable')) {
             table = $(tableId).DataTable(exportDatatable);
             $("div.toolbar").html('<p>Exported Excel file name: <input class="title" type="text"></p>');
             $('.dt-buttons').find('button').appendTo($('div.toolbar').find('p'));
@@ -58,7 +63,7 @@ $(document).ready(function() {
                 ],
                 'select': true,
                 'scrollX': true,
-                rowCallback: function(row, data, index, full) {
+                drawCallback: function(row, data, index, full) {
                     var td = $('td.pyt');
                     if ($(td).hasClass('pyt')) $(td).css('color', 'red');
                 }
@@ -77,7 +82,7 @@ $(document).ready(function() {
             if (header.hasClass('pyt')) header.css('color', 'red');
         });
 
-        $(tableId).on('dblclick', 'tr td:not(.toggle, .edit, .date-edit)', function() {
+        $(tableId).on('dblclick', 'tr td:not(.toggle, .edit, .date-edit, .select)', function() {
             window.location = $(this).parent().data('href');
         });
     }
@@ -154,6 +159,7 @@ $(document).ready(function() {
         row.remove().draw();
     }
 
+    // This is behind by 1
     function addClassesToRow(row, href) {
         var $row = $(row);
         $row.attr('data-href', href);
@@ -161,17 +167,18 @@ $(document).ready(function() {
             $(this).addClass('text-nowrap');
         });
         $(row).find('td').eq(8).addClass('date-edit');
-        $(row).find('td').eq(15).addClass('preparer');
-        $(row).find('td').eq(17).addClass('edit');
+        $(row).find('td').eq(15).addClass('select admin preparer initials');
+        $(row).find('td').eq(17).addClass('select initials');
         $(row).find('td').eq(18).addClass('edit');
         $(row).find('td').eq(19).addClass('date-edit');
         $(row).find('td').eq(20).addClass('toggle');
         $(row).find('td').eq(23).addClass('date-edit');
         $(row).find('td').eq(24).addClass('date-edit');
-        $(row).find('td').eq(25).addClass('select pyt');
+        $(row).find('td').eq(25).addClass('select pyt pytType');
         $(row).find('td').eq(26).addClass('edit pyt');
-        $(row).find('td').eq(27).addClass('edit pyt');
-        $(row).find('td').eq(28).addClass('date-edit');
-        $(row).find('td').eq(33).addClass('edit');
+        $(row).find('td').eq(27).addClass('select pyt initials');
+        $(row).find('td').eq(28).addClass('select pyt tax');
+        $(row).find('td').eq(29).addClass('date-edit');
+        $(row).find('td').eq(34).addClass('edit');
     }
 });

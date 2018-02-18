@@ -13,7 +13,11 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
     ConfigService.getT1Directory(function (err, directory) {
         if (err) res.render('error');
         if (!directory) res.redirect('/setup');
-        res.render('index', { title: 'Home', role: req.session.role });
+        res.render('index', {
+            title: 'Home',
+            role: req.session.role,
+            options: {}
+        });
     });
 });
 

@@ -64,6 +64,7 @@ block content
                             th.pyt PYT Rec'd
                             th.pyt PYT Amount
                             th.pyt Rec'd By
+                            th.pyt Tax To CRA
                             th Call Date
                             th Interview Date
                             th Phone Number
@@ -101,6 +102,7 @@ block content
                             th PYT Rec'd
                             th PYT Amount
                             th Rec'd By
+                            th Tax To CRA
                             th Call Date
                             th Interview Date
                             th Phone Number
@@ -132,9 +134,9 @@ block content
                                 td.text-nowrap #{client.wife ? client.wife.firstName : ''}
                                 td.text-nowrap #{client.group}
                                 td #{client.interviewer}
-                                td.text-nowrap.edit.admin #{client.preparer}
+                                td.text-nowrap.select.admin.initials #{client.preparer}
                                 td #{client.preparerDone}
-                                td.edit #{client.checker}
+                                td.select.initials #{client.checker}
                                 td.text-nowrap #{client.outstandingInfo ? 'Y' : ''}
                                 td.text-nowrap.date-edit #{client.readyToPack}
                                 td.toggle #{client.packed ? 'Y' : ''}
@@ -144,9 +146,10 @@ block content
                                 td #{client.method}
                                 td.text-nowrap.date-edit #{client.emailed}
                                 td.text-nowrap.date-edit #{client.signed}
-                                td.text-nowrap.select.pyt #{client.pytReceived}
+                                td.text-nowrap.select.pyt.pytType #{client.pytReceived}
                                 td.text-nowrap.edit.pyt #{client.pytAmount}
-                                td.text-nowrap.edit.pyt #{client.recBy}
+                                td.text-nowrap.select.pyt.initials #{client.recBy}
+                                td.text-nowrap.select.pyt.tax #{client.taxToCRA}
                                 td.text-nowrap.date-edit #{client.callDate}
                                 td.text-nowrap #{client.interviewDate}
                                 td.text-nowrap #{client.tel.number}

@@ -280,6 +280,10 @@ var ClientService = {
 
     getRelationships : function() {
         return Client.schema.path('dependent1.relationship').enumValues;
+    },
+
+    getTax : function() {
+        return Client.schema.path('taxToCRA').enumValues;
     }
 };
 

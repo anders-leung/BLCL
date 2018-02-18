@@ -106,13 +106,17 @@ $(document).ready(function() {
         var value = $(this).html();
         previousValue = value;
 
+        for (var key in options) {
+            if ($(cell).hasClass(key)) var selectOptions = options[key];
+        }
+
         var select = "<select>";
-        for (var i = 0; i < options.length; i++) {
-            var option = "<option value='" + options[i] + "'";
-            if (options[i] == value) {
+        for (var i = 0; i < selectOptions.length; i++) {
+            var option = "<option value='" + selectOptions[i] + "'";
+            if (selectOptions[i] == value) {
                 option += " selected";
             }
-            option += ">" + options[i] + "</option>";
+            option += ">" + selectOptions[i] + "</option>";
             select += option;
         }
         select += "</select>";
