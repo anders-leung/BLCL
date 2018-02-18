@@ -6,6 +6,7 @@ var router = express.Router();
 
 var CookieService = require('./utils/cookies');
 var ClientService = require('../modules/client');
+var UserService = require('../modules/user');
 
 router.get('/', CookieService.isLoggedIn, function(req, res) {
     var query = { 'initials' : req.session.initials };
@@ -15,23 +16,28 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
             ClientService.findClientsWithUserOK(initials, function(err, ok) {
                 ClientService.findClientsWithUserEmailed(initials, function(err, emailed) {
                     ClientService.findClientsPreparerDone(initials, function(err, done) {
-                        if (err) res.render('error');
-                        else {
-                            var cookie = CookieService.readCookie(req);
-                            var clients = [
-                                ['new', new_clients],
-                                ['wip', wip],
-                                ['ok', ok],
-                                ['emailed', emailed],
-                                ['done', done]
-                            ];
-                            res.render('clients', {
-                                clients: clients,
-                                initials: initials,
-                                options: ClientService.getStatuses(),
-                                role: cookie.role
-                            });
-                        }
+                        UserService.getInitials(function(err, staffInitials) {
+                            if (err) res.render('error');
+                            else {
+                                var cookie = CookieService.readCookie(req);
+                                var clients = [
+                                    ['new', new_clients],
+                                    ['wip', wip],
+                                    ['ok', ok],
+                                    ['emailed', emailed],
+                                    ['done', done]
+                                ];
+                                res.render('clients', {
+                                    clients: clients,
+                                    initials: initials,
+                                    options: { 
+                                        status: ClientService.getStatuses(),
+                                        initials: staffInitials
+                                    },
+                                    role: cookie.role
+                                });
+                            }
+                        });
                     });
                 });
             });
