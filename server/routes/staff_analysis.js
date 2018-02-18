@@ -30,7 +30,11 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
                 list.push(entry);
             });
 
-            res.render('staff_analysis', { role: req.session.role, list: list, options : null });
+            res.render('staff_analysis', {
+                role: req.session.role,
+                list: list,
+                options : {}
+            });
         });
     });
 });

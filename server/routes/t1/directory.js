@@ -11,7 +11,8 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
     ClientService.findAllClients(function(err, clients) {
         res.render('t1/directory', {
             clients: clients,
-            role: req.session.role
+            role: req.session.role,
+            options: {}
         });
     });
 });
