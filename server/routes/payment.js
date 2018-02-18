@@ -14,7 +14,11 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
         res.redirect('/');
     }
     ClientService.findClientsPytRec(function(err, clients) {
-        res.render('payment', { clients: clients, role: role });
+        res.render('payment', {
+            clients: clients,
+            role: role,
+            options: {}
+        });
     });
 });
 
