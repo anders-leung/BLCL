@@ -16,7 +16,9 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
         res.render('manage_users', {
             title : 'BLCL',
             users : users,
-            options : UserService.getRoles(),
+            options : {
+                roles: UserService.getRoles()
+            },
             role : req.session.role });
     });
 });
