@@ -53,6 +53,7 @@ var ClientService = {
             { 'pytReceived' : '' },
             { 'pytAmount' : '' },
             { 'recBy' : '' },
+            { 'taxToCRA' : '' }
         ]
         var normal = {};
         normal['interviewDate'] = { $ne : '' };
@@ -62,6 +63,7 @@ var ClientService = {
             { 'pytReceived' : '' },
             { 'pytAmount' : '' },
             { 'recBy' : '' },
+            { 'taxToCRA' : '' }
         ]
         Client.find({ $or: [emailed, normal] }).lean().exec(function(err, clients) {
             callback(err, clients);
@@ -86,6 +88,7 @@ var ClientService = {
         search['pytReceived'] = { $ne : '' };
         search['pytAmount'] = { $ne : '' };
         search['recBy'] = { $ne : '' };
+        search['taxToCRA'] = { $ne : '' };
         Client.find(search).lean().exec(function(err, clients) {
             callback(err, clients);
         });
@@ -118,6 +121,15 @@ var ClientService = {
         search['pytReceived'] = { $ne : '' };
         search['pytAmount'] = { $ne : '' };
         search['recBy'] = { $ne : '' };
+        search['taxToCRA'] = { $ne : '' };
+        Client.find(search).lean().exec(function(err, clients) {
+            callback(err, clients);
+        });
+    },
+
+    findClientsGst : function(callback) {
+        var search = {};
+        search['gst'] = true;
         Client.find(search).lean().exec(function(err, clients) {
             callback(err, clients);
         });
@@ -255,6 +267,7 @@ var ClientService = {
         search['pytReceived'] = { $ne : '' };
         search['pytAmount'] = { $ne : '' };
         search['recBy'] = { $ne : '' };
+        search['taxToCRA'] = { $ne : '' };
         search['signed'] = { $ne : '' };
         search['packed'] = true;
         Client.find(search).lean().exec(function(err, clients) {
