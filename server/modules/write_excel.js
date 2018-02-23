@@ -824,6 +824,7 @@ function clientToExcel(year, client, fileName) {
                 if (section == 'wife') if (!client.wife) continue;
 
                 for (var cell in fields[section]) {
+                    sheet.cell(cell).style({ shrinkToFit: true });
                     fields[section][cell](sheet.cell(cell), client);
                 }
             }
