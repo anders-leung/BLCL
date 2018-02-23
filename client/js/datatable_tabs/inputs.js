@@ -39,7 +39,6 @@ $(document).ready(function() {
     // Enable editing for any of the tds
     function enableEditing() {
         $('table').each(function() {
-            $(this).on('click', '.toggle', cellCustomEvent);
             $(this).on('click', '.edit', showTextInput);
             $(this).on('click', '.date-edit', showDateInput);
             $(this).on('click', '.select', showSelect);
@@ -53,10 +52,6 @@ $(document).ready(function() {
             adjustTables();
         }
     });
-
-    function cellCustomEvent(e) {
-        $(this).trigger('custom');
-    }
 
     // Show text input on click of td
     function showTextInput(e) {
