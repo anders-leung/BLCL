@@ -13,7 +13,9 @@ function cleanValues(values) {
             values[field] = values[field] == 'Y';
             continue;
         }
-        if (field == 'email') continue;
+        if (field == 'email.value' || 
+            field == 'notes.one' || field == 'notes.two' || field == 'notes.three' ||
+            field == 'comments.one' || field == 'comments.two' || field == 'comments.three') continue;
         if (typeof(values[field]) == 'string') {
             values[field] = values[field].toUpperCase();
         }
