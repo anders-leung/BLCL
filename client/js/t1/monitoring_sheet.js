@@ -46,8 +46,8 @@ $(document).ready(function() {
         }
 
         $(tableId + ' tfoot th').each( function (i) {
-            $(this).html(i);
-            //$(this).html( '<input type="text"/>' );
+            //$(this).html(i);
+            $(this).html( '<input type="text"/>' );
         });
 
         var table;
