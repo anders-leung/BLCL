@@ -240,7 +240,6 @@ function setPRSold(sheet) {
     range.merged(true);
     var cell = sheet.cell('P1');
     cell.style({
-        'border': true,
         'bold': true,
         'horizontalAlignment': 'center'
     });
@@ -248,9 +247,7 @@ function setPRSold(sheet) {
     range = sheet.range('S1:T1');
     range.merged(true);
     range.style({
-        'rightBorder': 'medium',
         'leftBorder': 'medium',
-        'bottomBorder': 'medium',
         'bold': true,
         'fontSize': 14,
         'horizontalAlignment': 'left'
@@ -271,9 +268,10 @@ function setPRSold(sheet) {
         'fill': 'ffff00',
         'underline': true,
         'fontSize': 11,
-        'bold': false
+        'bold': false,
+        'horizontalAlignment': 'left'
     });
-    cell.value('PR SOLD');
+    cell.value('PU DATE');
 
     range = sheet.range('X1:Z1');
     range.merged(true);

@@ -334,9 +334,11 @@ var ClientSchema = new Schema({
     recBy: { type: String, default: '' },
     taxToCRA: { 
         type: String, 
-        enum: [ '', 'Client', 'BLCL' ], 
+        enum: [ '', 'CLIENT', 'BLCL' ], 
         default: '' 
     },
+    t1Efile: { type: String, default: '' },
+    gstEfile: { type: String, default: '' },
     outstandingInfo: { type: String, default: "" },
     remarks: { type: String, default: "" },
     callDate: { type: String, default: "" },

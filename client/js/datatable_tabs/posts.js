@@ -15,6 +15,8 @@ var headersToFields = {
     'PYT Amount' : 'pytAmount',
     'Rec\'d By' : 'recBy',
     'Tax To CRA' : 'taxToCRA',
+    'T1135 EFILE' : 't1Efile',
+    'GST EFILE' : 'gstEfile',
     'Call Date' : 'callDate',
     'Remarks' : 'remarks'
 };
@@ -58,10 +60,6 @@ $(document).ready(function() {
     socket.on('client side update', updateEvent);
 
     $('table').each(function() {
-        $(this).on('custom', '.toggle', function() {
-            saveEdits(this, 'toggle');
-        });
-
         $(this).on('keypress', '.edit', function(e) {
             if (e.which == 13) {
                 saveEdits(this, 'input');
@@ -91,7 +89,6 @@ $(document).ready(function() {
         var fileName = table.row($(row)).data()[0];
         var value = $(that).find('input').val();
         if (type == 'select') value = $(that).find('select').val();
-        if (type == 'toggle') value = $(cell).html() == 'Y' ? '' : 'Y';
         value = value.toUpperCase();
         var field = getField(cell);
         updateHtml(fileName, field, value, true);

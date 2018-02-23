@@ -4,7 +4,7 @@
 
 var exportDatatable = {
     'columnDefs': [
-        { type: 'date', targets: [9, 20, 22, 23, 26, 27] },
+        { type: 'date', targets: [9, 20, 24, 25, 30, 31, 32, 33] },
         { visible: false, searchable: true, targets: 0 }
     ],
     'select': true,
@@ -58,7 +58,7 @@ $(document).ready(function() {
         } else {
             table = $(tableId).DataTable({
                 'columnDefs': [
-                    { type: 'date', targets: [9, 20, 24, 25, 29, 30] },
+                    { type: 'date', targets: [9, 20, 24, 25, 30, 31, 32, 33] },
                     { visible: false, searchable: true, targets: 0 }
                 ],
                 'select': true,
@@ -82,7 +82,7 @@ $(document).ready(function() {
             if (header.hasClass('pyt')) header.css('color', 'red');
         });
 
-        $(tableId).on('dblclick', 'tr td:not(.toggle, .edit, .date-edit, .select)', function() {
+        $(tableId).on('dblclick', 'tr td:not(.edit, .date-edit, .select)', function() {
             window.location = $(this).parent().data('href');
         });
     }
@@ -114,7 +114,7 @@ $(document).ready(function() {
         var packed = row.data()[21] == 'Y';
         var emailed = row.data()[24] != '';
         var signed = row.data()[25] != '';
-        var pyt = row.data()[26] != '' && row.data()[27] != '' && row.data()[28] != '';
+        var pyt = row.data()[26] != '' && row.data()[27] != '' && row.data()[28] != '' && row.data()[29] != '';
         console.log(preparer, packed, emailed, signed, pyt)
 
         if (!preparer) return '#noPreparerTable';
@@ -171,14 +171,16 @@ $(document).ready(function() {
         $(row).find('td').eq(17).addClass('select initials');
         $(row).find('td').eq(18).addClass('edit');
         $(row).find('td').eq(19).addClass('date-edit');
-        $(row).find('td').eq(20).addClass('toggle');
+        $(row).find('td').eq(20).addClass('select toggle');
         $(row).find('td').eq(23).addClass('date-edit');
-        $(row).find('td').eq(24).addClass('date-edit');
+        $(row).find('td').eq(24).addClass('date-edit pyt');
         $(row).find('td').eq(25).addClass('select pyt pytType');
         $(row).find('td').eq(26).addClass('edit pyt');
         $(row).find('td').eq(27).addClass('select pyt initials');
         $(row).find('td').eq(28).addClass('select pyt tax');
-        $(row).find('td').eq(29).addClass('date-edit');
+        $(row).find('td').eq(29).addClass('date-edit pyt');
+        $(row).find('td').eq(30).addClass('date-edit pyt');
+        $(row).find('td').eq(31).addClass('date-edit');
         $(row).find('td').eq(34).addClass('edit');
     }
 });

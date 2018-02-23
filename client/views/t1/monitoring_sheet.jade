@@ -22,6 +22,8 @@ block content
         li.nav-item
             a.nav-link(data-toggle='tab' href='#emailed') Emailed
         li.nav-item
+            a.nav-link(data-toggle='tab' href='#gst') GST
+        li.nav-item
             a.nav-link(data-toggle='tab' href='#osPyt') O/S PYT
         li.nav-item
             a.nav-link(data-toggle='tab' href='#emailedNotPacked') Emailed Not Packed
@@ -60,11 +62,13 @@ block content
                             th GST
                             th Method
                             th Emailed
-                            th Signed
+                            th.pyt Signed
                             th.pyt PYT Rec'd
                             th.pyt PYT Amount
                             th.pyt Rec'd By
                             th.pyt Tax To CRA
+                            th.pyt T1135 EFILE
+                            th.pyt GST EFILE
                             th Call Date
                             th Interview Date
                             th Phone Number
@@ -103,6 +107,8 @@ block content
                             th PYT Amount
                             th Rec'd By
                             th Tax To CRA
+                            th T1135 EFILE
+                            th GST EFILE
                             th Call Date
                             th Interview Date
                             th Phone Number
@@ -135,21 +141,23 @@ block content
                                 td.text-nowrap #{client.group}
                                 td #{client.interviewer}
                                 td.text-nowrap.select.admin.initials #{client.preparer}
-                                td #{client.preparerDone}
+                                td.select.status #{client.preparerDone}
                                 td.select.initials #{client.checker}
                                 td.text-nowrap #{client.outstandingInfo ? 'Y' : ''}
                                 td.text-nowrap.date-edit #{client.readyToPack}
-                                td.toggle #{client.packed ? 'Y' : ''}
+                                td.select.toggle #{client.packed ? 'Y' : ''}
                                 td 
                                     if (client.husband.rental.gstReturn || client.husband.selfEmployed.gstReturn || client.wife.rental.gstReturn || client.wife.selfEmployed.gstReturn)
                                         | Y
                                 td #{client.method}
                                 td.text-nowrap.date-edit #{client.emailed}
-                                td.text-nowrap.date-edit #{client.signed}
+                                td.text-nowrap.date-edit.pyt #{client.signed}
                                 td.text-nowrap.select.pyt.pytType #{client.pytReceived}
                                 td.text-nowrap.edit.pyt #{client.pytAmount}
                                 td.text-nowrap.select.pyt.initials #{client.recBy}
                                 td.text-nowrap.select.pyt.tax #{client.taxToCRA}
+                                td.text-nowrap.date-edit.pyt #{client.t1Efile}
+                                td.text-nowrap.date-edit.pyt #{client.gstEfile}
                                 td.text-nowrap.date-edit #{client.callDate}
                                 td.text-nowrap #{client.interviewDate}
                                 td.text-nowrap #{client.tel.number}
