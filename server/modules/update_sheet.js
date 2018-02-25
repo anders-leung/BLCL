@@ -6,7 +6,7 @@ var XLSX = require('xlsx-populate');
 function setInputStyle(object, border) {
     var styles = {
         'bold': true,
-        'fontSize': 18,
+        'shrinkToFit': true,
         'horizontalAlignment': 'center'
     };
     if (border) styles.border = true;
@@ -16,7 +16,7 @@ function setInputStyle(object, border) {
 function setLabelStyle(object, border, bold) {
     var styles = {
         'bold': false,
-        'fontSize': 11,
+        'shrinkToFit': true,
         'horizontalAlignment': 'left',
         'wrapText': true
     };
@@ -37,7 +37,6 @@ function updateHusbandT4(sheet) {
 
         cell = sheet.cell('E20');
         setLabelStyle(cell);
-        cell.style('horizontalAlignment', 'center');
         cell.value('BLCL');
 
         cell = sheet.cell('F20');
@@ -70,7 +69,6 @@ function updateHusbandT5(sheet) {
 
         cell = sheet.cell('L20');
         setLabelStyle(cell);
-        cell.style('horizontalAlignment', 'center');
         cell.value('BLCL');
 
         cell = sheet.cell('M20');
@@ -91,7 +89,6 @@ function updateHusbandT4A(sheet) {
 
         cell = sheet.cell('E25');
         setLabelStyle(cell);
-        cell.style('horizontalAlignment', 'center');
         cell.value('BLCL');
 
         cell = sheet.cell('F25');
@@ -112,7 +109,6 @@ function updateWifeT4(sheet) {
 
         cell = sheet.cell('S20');
         setLabelStyle(cell);
-        cell.style('horizontalAlignment', 'center');
         cell.value('BLCL');
 
         cell = sheet.cell('T20');
@@ -186,11 +182,11 @@ function setDD(sheet) {
 
 function setTeachingSupplies(sheet) {
     var range = sheet.range('G33:G34');
-    if (range.merged()) return;
+    var cell = sheet.cell('G33');
+    if (range.merged() && cell.value() != '') return;
 
     range.merged(true);
     setLabelStyle(range, true, true);
-    var cell = sheet.cell('G33');
     cell.value('TEACHING SUPPLIES');
 
     range = sheet.range('H33:I34');
@@ -334,18 +330,18 @@ function updateConsultFeeAndPriceQuoted(sheet) {
 
 var UpdateService = {
     updateSheet: function(sheet) {
-            updateHusbandT4(sheet);
-            updateHusbandT5(sheet);
-            updateHusbandT4A(sheet);
-            updateWifeT4(sheet);
-            updateWifeT5(sheet);
-            updateWifeT4A(sheet);
-            setTeachingSupplies(sheet);
-            setHomeAccessibilities(sheet);
-            setPRSold(sheet);
-            setDD(sheet);
-            updateConsultFeeAndPriceQuoted(sheet);
-            setOSI(sheet);
+        updateHusbandT4(sheet);
+        updateHusbandT5(sheet);
+        updateHusbandT4A(sheet);
+        updateWifeT4(sheet);
+        updateWifeT5(sheet);
+        updateWifeT4A(sheet);
+        setTeachingSupplies(sheet);
+        setHomeAccessibilities(sheet);
+        setPRSold(sheet);
+        setDD(sheet);
+        updateConsultFeeAndPriceQuoted(sheet);
+        setOSI(sheet);
     }
 };
 

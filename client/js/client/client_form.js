@@ -60,7 +60,30 @@ $(document).ready(function(e) {
         }
     });
 
+    $('#postalCode').on('keyup', function(e) {
+        var key = e.keyCode || e.charCode;
+        if (key == 8 || key == 46) return false;
+
+        var postalCode = $(this);
+        var value = postalCode.val();
+        if (value.length > 7) {
+            postalCode.val(value.substring(0, value.length - 1));
+        }
+        
+        if (value.length == 3) postalCode.val(value + ' ');
+    })
+
     function populateSelect(name, options) {
+        if (name == 'initials') {
+            $('.' + name).each(function() {
+                for (var i = 0; i < options.length; i++) {
+                    $(this).append($('<option>', {
+                        text: options[i]
+                    }));
+                }
+            });
+            return;
+        }
         for (var i = 0; i < options.length; i++) {
             $('#' + name).append($('<option>', {
                 text: options[i]

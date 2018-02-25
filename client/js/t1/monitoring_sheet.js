@@ -115,6 +115,8 @@ $(document).ready(function() {
         var emailed = row.data()[24] != '';
         var signed = row.data()[25] != '';
         var pyt = row.data()[26] != '' && row.data()[27] != '' && row.data()[28] != '' && row.data()[29] != '';
+        var t1Efiled = row.data()[3] == '0' || row.data()[30] != '';
+        var gstEfiled = row.data()[22] == '' || row.data()[31] != '';
         console.log(preparer, packed, emailed, signed, pyt)
 
         if (!preparer) return '#noPreparerTable';
@@ -122,7 +124,15 @@ $(document).ready(function() {
             if (signed) {
                 if (pyt) {
                     if (packed) {
-                        return '#doneTable';
+                        if (t1Efiled) {
+                            if (gstEfiled) {
+                                return '#doneTable';
+                            } else {
+                                return '#gstTable';
+                            }
+                        } else {
+                            return '#t1Table';
+                        }
                     } else {
                         return '#emailedNotPackedTable';
                     }
@@ -136,7 +146,15 @@ $(document).ready(function() {
             if (packed) {
                 if (signed) {
                     if (pyt) {
-                        return '#doneTable';
+                        if (t1Efiled) {
+                            if (gstEfiled) {
+                                return '#doneTable';
+                            } else {
+                                return '#gstTable';
+                            }
+                        } else {
+                            return '#t1Table';
+                        }
                     } else {
                         return '#osPytTable';
                     }

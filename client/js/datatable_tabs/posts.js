@@ -15,8 +15,8 @@ var headersToFields = {
     'PYT Amount' : 'pytAmount',
     'Rec\'d By' : 'recBy',
     'Tax To CRA' : 'taxToCRA',
-    'T1135 EFILE' : 't1Efile',
-    'GST EFILE' : 'gstEfile',
+    'T1135 EFILED' : 't1Efiled',
+    'GST EFILED' : 'gstEfiled',
     'Call Date' : 'callDate',
     'Remarks' : 'remarks'
 };
