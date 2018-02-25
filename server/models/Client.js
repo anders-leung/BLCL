@@ -337,8 +337,8 @@ var ClientSchema = new Schema({
         enum: [ '', 'CLIENT', 'BLCL' ], 
         default: '' 
     },
-    t1Efile: { type: String, default: '' },
-    gstEfile: { type: String, default: '' },
+    t1Efiled: { type: String, default: '' },
+    gstEfiled: { type: String, default: '' },
     outstandingInfo: { type: String, default: "" },
     remarks: { type: String, default: "" },
     callDate: { type: String, default: "" },
