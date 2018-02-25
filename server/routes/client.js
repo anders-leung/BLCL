@@ -6,17 +6,21 @@ var router = express.Router();
 
 var CookieService = require('./utils/cookies');
 var ClientService = require('../modules/client');
+var UserService = require('../modules/user');
 
 router.get('/', CookieService.isLoggedIn, function(req, res) {
-    res.render('client', { title: 'T1 Interview',
-        client : null,
-        role : CookieService.readCookie(req).role,
-        options : {
-            method : ClientService.getMethods(),
-            t1135 : ClientService.getT1135(),
-            relationship : ClientService.getRelationships()
-        },
-        newClient : true
+    UserService.getInitials(function(err, initials) {
+        res.render('client', { title: 'T1 Interview',
+            client : null,
+            role : CookieService.readCookie(req).role,
+            options : {
+                method : ClientService.getMethods(),
+                t1135 : ClientService.getT1135(),
+                relationship : ClientService.getRelationships(),
+                initials: initials
+            },
+            newClient : true
+        });
     });
 });
 
@@ -28,16 +32,19 @@ router.get('/:client_name', CookieService.isLoggedIn, function(req, res) {
     };
 
     ClientService.findClient(query, function(err, client) {
-        res.render('client', {
-            title : 'T1 Interview',
-            client : client[0],
-            role : CookieService.readCookie(req).role,
-            options : {
-                method : ClientService.getMethods(),
-                t1135 : ClientService.getT1135(),
-                relationship : ClientService.getRelationships()
-            },
-            newClient : false
+        UserService.getInitials(function(err, initials) {
+            res.render('client', {
+                title : 'T1 Interview',
+                client : client[0],
+                role : CookieService.readCookie(req).role,
+                options : {
+                    method : ClientService.getMethods(),
+                    t1135 : ClientService.getT1135(),
+                    relationship : ClientService.getRelationships(),
+                    initials: initials
+                },
+                newClient : false
+            });
         });
     });
 });
