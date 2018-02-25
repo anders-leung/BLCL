@@ -24,7 +24,7 @@ block content
                         input#year.form-control(type='number' name='year' required)
                     .form-group.col-2
                         label(for='interviewer') Interviewer
-                        input#interviewer.form-control(type='text' name='interviewer')
+                        select#interviewer.initials.form-control(name='interviewer')
                     .form-group.col-2
                         label(for='interviewDate') Interview Date
                         input#interviewDate.form-control.datepicker(type='text' name='interviewDate' required)
@@ -838,7 +838,7 @@ block content
                                         option Y
                                 .form-group.col-3
                                     label(for='preparer') Preparer
-                                    input#preparer.form-control(type='text' name='preparer')
+                                    select#preparer.initials.form-control(name='preparer')
                             .row
                                 .form-check
                                     label.form-check-label(for='slips')
