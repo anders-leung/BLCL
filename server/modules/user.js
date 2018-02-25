@@ -44,6 +44,7 @@ var UserService = {
     getInitials : function(callback) {
         User.find({}).distinct('initials', function(err, initials) {
             initials.unshift('');
+            initials.sort();
             callback(err, initials);
         })
     }
