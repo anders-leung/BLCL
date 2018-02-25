@@ -21,7 +21,7 @@ router.get('/', function(req, res) {
 router.post('/', function(req, res) {
     var email = req.body.email;
     var password = req.body.password;
-    UserService.findOneUser({ email: email, password: password }, function(err, user) {
+    UserService.findOneUser({ email: email.toLowerCase(), password: password }, function(err, user) {
         if (err) res.render('error');
         if (user) {
             CookieService.createCookie(req, user.initials, user.role);
