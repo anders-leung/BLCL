@@ -317,6 +317,26 @@ var ClientService = {
         });
     },
 
+    addField : function(field, value, callback) {
+        if (value == '') console.log('yes')
+        Client.find({}).lean().exec(function(err, clients) {
+            if (err) callback(err);
+
+            async.each(clients, function(client, done) {
+                var fileName = client.fileName;
+                var update = {};
+                update[field] = value;
+                Client.update({ fileName: fileName }, update, function(err, test) {
+                    if (err) return done(err);
+                    done();
+                });
+            }, function(err) {
+                if (err) callback(err);
+                callback();
+            });
+        });
+    },
+
     getStatuses : function() {
         return Client.schema.path('preparerDone').enumValues;
     },

@@ -1,0 +1,19 @@
+extends layout
+
+block content
+
+    link(rel='stylesheet', href='/css/update_models.css')
+
+    .container.col-4
+        form(method='post')
+            .form-group
+                label(for='#model') Model
+                input#model.form-control(type='text', name='model')
+            .form-group
+                label(for='#fieldName') Field Name
+                input#fieldName.form-control(type='text', name='fieldName')
+            .form-group
+                label(for='#defaultValue') Default Value
+                input#defaultValue.form-control(type='text', name='defaultValue')
+            br
+            input.btn.btn-success.col-12(type='submit' value='Update')
