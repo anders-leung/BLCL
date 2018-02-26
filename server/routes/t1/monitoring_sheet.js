@@ -59,7 +59,7 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
         },
         
         get_done: function(next) {
-            if (cookie.role != 'Administrator') return next(err, null);
+            if (cookie.role != 'Administrator') return next(null, null);
             ClientService.findClientsDone(function(err, clients) {
                 next(err, clients);
             });

@@ -13,8 +13,9 @@ $(document).ready(function() {
             });
         }
 
-        $(tableId + ' tfoot th').each( function () {
+        $(tableId + ' tfoot th').each( function (i) {
             var title = $(this).text();
+            //$(this).html(i)
             $(this).html( '<input type="text"/>' );
         });
 
@@ -142,6 +143,7 @@ $(document).ready(function() {
         row.remove().draw();
     }
 
+    // jQuery down by 1 index
     function addClassesToRow(row, href) {
         var $row = $(row);
         if (href) $row.attr('data-href', href);
