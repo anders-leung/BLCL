@@ -22,10 +22,12 @@ var UsersSocket = {
         });
     }, updateUser : function(socket) {
         socket.on('update user', function(data) {
-            console.log('update user', data);
             var search = {};
             search['email'] = data.email;
             var values = {};
+            data.value = data.value.toLowerCase();
+            data.value = data.value.charAt(0).toUpperCase() + data.value.slice(1);
+            console.log('update user', data);
             values[data.field] = data.value;
             UserService.updateUser(search, values, function(err) {
                 if (err) {
