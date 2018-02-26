@@ -225,6 +225,7 @@ function setOSI(sheet) {
     range.style('border', 'medium');
     cell = sheet.cell('E55');
     cell.value('');
+    cell.style('horizontalAlignment', 'left');
 }
 
 function setPRSold(sheet) {
