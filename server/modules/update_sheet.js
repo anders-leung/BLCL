@@ -37,6 +37,10 @@ function updateHusbandT4(sheet) {
 
         cell = sheet.cell('E20');
         setLabelStyle(cell);
+        cell.style({
+            shrinkToFit: false,
+            fontSize: 9
+        });
         cell.value('BLCL');
 
         cell = sheet.cell('F20');
@@ -69,6 +73,10 @@ function updateHusbandT5(sheet) {
 
         cell = sheet.cell('L20');
         setLabelStyle(cell);
+        cell.style({
+            shrinkToFit: false,
+            fontSize: 9
+        });
         cell.value('BLCL');
 
         cell = sheet.cell('M20');
@@ -89,6 +97,10 @@ function updateHusbandT4A(sheet) {
 
         cell = sheet.cell('E25');
         setLabelStyle(cell);
+        cell.style({
+            shrinkToFit: false,
+            fontSize: 9
+        });
         cell.value('BLCL');
 
         cell = sheet.cell('F25');
@@ -109,6 +121,10 @@ function updateWifeT4(sheet) {
 
         cell = sheet.cell('S20');
         setLabelStyle(cell);
+        cell.style({
+            shrinkToFit: false,
+            fontSize: 9
+        });
         cell.value('BLCL');
 
         cell = sheet.cell('T20');
@@ -139,6 +155,10 @@ function updateWifeT5(sheet) {
 
         cell = sheet.cell('Y20');
         setLabelStyle(cell);
+        cell.style({
+            shrinkToFit: false,
+            fontSize: 9
+        });
         cell.value('BLCL');
 
         cell = sheet.cell('Z20');
@@ -159,6 +179,10 @@ function updateWifeT4A(sheet) {
 
         cell = sheet.cell('S25');
         setLabelStyle(cell);
+        cell.style({
+            shrinkToFit: false,
+            fontSize: 9
+        });
         cell.value('BLCL');
 
         cell = sheet.cell('T25');
