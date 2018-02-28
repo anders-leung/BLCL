@@ -131,11 +131,7 @@ var ClientService = {
 
     findClientsT1 : function(callback) {
         var search = {};
-        search['signed'] = { $ne : '' };
-        search['pytReceived'] = { $ne : '' };
-        search['pytAmount'] = { $ne : '' };
-        search['recBy'] = { $ne : '' };
-        search['taxToCRA'] = { $ne : '' };
+        search['interviewDate'] = { $ne : '' };
         search['t1Efiled'] = '';
         search['t1135'] = { $ne : 'N' };
         Client.find(search).lean().exec(function(err, clients) {
@@ -145,17 +141,36 @@ var ClientService = {
 
     findClientsGst : function(callback) {
         var search = {};
-        search['signed'] = { $ne : '' };
-        search['pytReceived'] = { $ne : '' };
-        search['pytAmount'] = { $ne : '' };
-        search['recBy'] = { $ne : '' };
-        search['taxToCRA'] = { $ne : '' };
+        search['interviewDate'] = { $ne : '' };
         search['gstEfiled'] = '';
         search['$or'] = [
             { 'husband.rental.gstReturn': true },
             { 'husband.selfEmployed.gstReturn': true },
             { 'wife.rental.gstReturn': true },
-            { 'wife.selfEmployed.gstReturn': true },
+            { 'wife.selfEmployed.gstReturn': true }
+        ]
+        Client.find(search).lean().exec(function(err, clients) {
+            callback(err, clients);
+        });
+    },
+
+    findClientsEfiledDone : function(callback) {
+        var search = {};
+        search['interviewDate'] = { $ne : '' };
+        search['$or'] = [
+            { '$and' : [
+                { 't1135' : { $ne : 'N' } },
+                { 't1Efiled' : { $ne : '' } }
+            ]},
+            { '$and' : [
+                { '$or' : [
+                    { 'husband.rental.gstReturn': true },
+                    { 'husband.selfEmployed.gstReturn': true },
+                    { 'wife.rental.gstReturn': true },
+                    { 'wife.selfEmployed.gstReturn': true }
+                ]},
+                { 'gstEfiled' : { $ne : '' } }
+            ]}
         ]
         Client.find(search).lean().exec(function(err, clients) {
             callback(err, clients);
@@ -297,21 +312,6 @@ var ClientService = {
         search['taxToCRA'] = { $ne : '' };
         search['signed'] = { $ne : '' };
         search['packed'] = true;
-        search['$and'] = [
-            { '$or' : [
-                { 't1135' : 'N'},
-                { 't1Efiled' : { $ne: '' } }    
-            ]},
-            { '$or' : [
-                { '$and' : [
-                    { 'husband.rental.gstReturn' : false },
-                    { 'husband.selfEmployed.gstReturn' : false },
-                    { 'wife.rental.gstReturn' : false },
-                    { 'wife.selfEmployed.gstReturn' : false }
-                ]},
-                { 'gstEfiled' : { $ne: '' } }
-            ]}
-        ]
         Client.find(search).lean().exec(function(err, clients) {
             callback(err, clients);
         });
