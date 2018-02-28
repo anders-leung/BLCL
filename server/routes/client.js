@@ -55,7 +55,7 @@ router.post('/', function(req, res) {
         if (err) {
             res.render('error');
         } else {
-            res.redirect('/t1_directory');
+            res.redirect('/t1');
         }
     });
 });
@@ -66,7 +66,7 @@ router.post('/:client_name', function(req, res) {
         if (err) {
             res.render('error');
         }
-        res.redirect('/t1_directory');
+        res.redirect('/t1');
     })
 });
 
