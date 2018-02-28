@@ -12,6 +12,7 @@ var setup = require('./server/routes/setup');
 var index = require('./server/routes/index');
 var t1 = require('./server/routes/t1/monitoring_sheet');
 var t1_directory = require('./server/routes/t1/directory');
+var t1_efiled = require('./server/routes/t1/efiled');
 var t2 = require('./server/routes/t2');
 var t4 = require('./server/routes/t4');
 var t5 = require('./server/routes/t5');
@@ -49,8 +50,9 @@ app.use(session({
 }));
 
 app.use('/', index);
-app.use('/t1', t1);
-app.use('/t1_directory', t1_directory);
+app.use('/t1', t1_directory);
+app.use('/t1/monitoring', t1);
+app.use('/t1/efiled', t1_efiled);
 app.use('/t2', t2);
 app.use('/t4', t4);
 app.use('/t5', t5);
