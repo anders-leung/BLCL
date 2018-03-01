@@ -178,8 +178,8 @@ $(document).ready(function() {
         $(row).find('td').eq(26).addClass('edit pyt');
         $(row).find('td').eq(27).addClass('select pyt initials');
         $(row).find('td').eq(28).addClass('select pyt tax');
-        $(row).find('td').eq(29).addClass('date-edit pyt');
-        $(row).find('td').eq(30).addClass('date-edit pyt');
+        $(row).find('td').eq(29).addClass('date-edit');
+        $(row).find('td').eq(30).addClass('date-edit');
         $(row).find('td').eq(31).addClass('date-edit');
         $(row).find('td').eq(34).addClass('edit');
     }

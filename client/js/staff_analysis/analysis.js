@@ -46,7 +46,7 @@ $(document).ready(function() {
                 api.columns({ 'filter': 'applied' }).every(function(i) {
                     if (i == 14) {
                         var sum = this.data().sum();
-                        $(this.footer()).html(sum)
+                        $(this.footer()).html(sum.toFixed(2))
                     } else if (i == 7) {
                         var zeroes = ones = twos = 0;
                         var data = this.data();

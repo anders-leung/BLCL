@@ -11,6 +11,7 @@ var previousUrl = '/';
 var login_error = false;
 
 router.get('/', function(req, res) {
+    req.session = null;
     previousUrl = '/';
     var urlTokens = req.originalUrl.split('+');
     if (urlTokens.length > 1) previousUrl = urlTokens[1];
