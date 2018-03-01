@@ -334,7 +334,7 @@ var ClientSchema = new Schema({
     recBy: { type: String, default: '' },
     taxToCRA: { 
         type: String, 
-        enum: [ '', 'CLIENT', 'BLCL' ], 
+        enum: [ '', 'N/A', 'CLIENT', 'BLCL' ], 
         default: '' 
     },
     t1Efiled: { type: String, default: '' },

@@ -22,10 +22,6 @@ block content
         li.nav-item
             a.nav-link(data-toggle='tab' href='#emailed') Emailed
         li.nav-item
-            a.nav-link(data-toggle='tab' href='#t1') T1
-        li.nav-item
-            a.nav-link(data-toggle='tab' href='#gst') GST
-        li.nav-item
             a.nav-link(data-toggle='tab' href='#osPyt') O/S PYT
         li.nav-item
             a.nav-link(data-toggle='tab' href='#emailedNotPacked') Emailed Not Packed
@@ -69,8 +65,6 @@ block content
                             th.pyt PYT Amount
                             th.pyt Rec'd By
                             th.pyt Tax To CRA
-                            th.pyt T1135 EFILED
-                            th.pyt GST EFILED
                             th Call Date
                             th Interview Date
                             th Phone Number
@@ -109,8 +103,6 @@ block content
                             th PYT Amount
                             th Rec'd By
                             th Tax To CRA
-                            th T1135 EFILED
-                            th GST EFILE
                             th Call Date
                             th Interview Date
                             th Phone Number
@@ -158,8 +150,6 @@ block content
                                 td.text-nowrap.edit.pyt #{client.pytAmount}
                                 td.text-nowrap.select.pyt.initials #{client.recBy}
                                 td.text-nowrap.select.pyt.tax #{client.taxToCRA}
-                                td.text-nowrap.date-edit.pyt #{client.t1Efiled}
-                                td.text-nowrap.date-edit.pyt #{client.gstEfiled}
                                 td.text-nowrap.date-edit #{client.callDate}
                                 td.text-nowrap #{client.interviewDate}
                                 td.text-nowrap #{client.tel.number}

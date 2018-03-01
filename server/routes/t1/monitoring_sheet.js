@@ -34,18 +34,6 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
             });
         },
 
-        get_t1: function(next) {
-            ClientService.findClientsT1(function(err, clients) {
-                next(err, clients);
-            });
-        },
-
-        get_gst: function(next) {
-            ClientService.findClientsGst(function(err, clients) {
-                next(err, clients);
-            });
-        },
-
         get_os_pyt: function(next) {
             ClientService.findClientsOSPyt(function(err, clients) {
                 next(err, clients);
@@ -76,8 +64,6 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
             ['noPreparer', results.get_no_preparer],
             ['packed', results.get_packed],
             ['emailed', results.get_emailed],
-            ['t1', results.get_t1],
-            ['gst', results.get_gst],
             ['osPyt', results.get_os_pyt],
             ['emailedNotPacked', results.get_emailed_not_packed]
         ];

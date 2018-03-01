@@ -1,0 +1,55 @@
+extends ../layout
+
+block content
+    script(type="text/javascript", src='/js/jquery.floatThead.js')
+    script(type='text/javascript').
+        var role = !{JSON.stringify(role)};
+    script(src='/js/t1/t1_efiled.js')
+
+    ul.nav.nav-tabs
+        li.nav-item
+            a.nav-link.active(data-toggle='tab' href='#t1') T1
+        li.nav-item
+            a.nav-link(data-toggle='tab' href='#done') Done
+
+    #table.col-12.tab-content(style='border-top: 0')
+        - for (var i = 0; i < clients.length; i++)
+            div(id=clients[i][0]).tab-pane
+                table(id=clients[i][0] + 'Table').cell-border
+                    thead
+                        tr
+                            th
+                            th Husband Last Name
+                            th Husband First Name
+                            th Wife Last Name
+                            th Wife First Name
+                            th Signed
+                            th T1135
+                            th T1135 EFILED
+                    tfoot
+                        tr
+                            th
+                            th Husband Last Name
+                            th Husband First Name
+                            th Wife Last Name
+                            th Wife First Name
+                            th Signed
+                            th 
+                            th 
+                    tbody
+                        each client in clients[i][1]
+                            tr(data-href="/client/" + client.pathName)
+                                td.text-nowrap #{client.fileName}
+                                td.text-nowrap #{client.husband ? client.husband.lastName : ''}
+                                td.text-nowrap #{client.husband ? client.husband.firstName : ''}
+                                td.text-nowrap #{client.wife ? client.wife.lastName : ''}
+                                td.text-nowrap #{client.wife ? client.wife.firstName : ''}
+                                td.text-nowrap.date-edit #{client.signed}
+                                td
+                                    if client.t1135 == 'N' || client.t1135 == ''
+                                        | 0
+                                    if client.t1135 == 'SIMPLE'
+                                        | 1
+                                    if client.t1135 == 'COMPLICATED'
+                                        | 2
+                                td.text-nowrap.date-edit #{client.t1Efiled}
