@@ -27,9 +27,9 @@ $(document).ready(function() {
             api.columns({ 'filter': 'applied' }).every(function(i) {
                 if (i > 8) {
                     var sum = this.data().sum();
-                    $(this.footer()).html(sum)
+                    $(this.footer()).html(sum.toFixed(2))
                     total += sum;
-                    if (i == 15) $(this.footer()).html(total);
+                    if (i == 15) $(this.footer()).html(total.toFixed(2));
                 }
             });
         }
