@@ -154,24 +154,26 @@ var ClientService = {
         });
     },
 
-    findClientsEfiledDone : function(callback) {
+    findClientsT1Done : function(callback) {
+        var search = {};
+        search['interviewDate'] = { $ne : '' };
+        search['t1135'] = { $ne: 'N' };
+        search['t1Efiled'] = { $ne: '' };
+        Client.find(search).lean().exec(function(err, clients) {
+            callback(err, clients);
+        });
+    },
+    
+    findClientsGstDone : function(callback) {
         var search = {};
         search['interviewDate'] = { $ne : '' };
         search['$or'] = [
-            { '$and' : [
-                { 't1135' : { $ne : 'N' } },
-                { 't1Efiled' : { $ne : '' } }
-            ]},
-            { '$and' : [
-                { '$or' : [
-                    { 'husband.rental.gstReturn': true },
-                    { 'husband.selfEmployed.gstReturn': true },
-                    { 'wife.rental.gstReturn': true },
-                    { 'wife.selfEmployed.gstReturn': true }
-                ]},
-                { 'gstEfiled' : { $ne : '' } }
-            ]}
-        ]
+            { 'husband.rental.gstReturn': true },
+            { 'husband.selfEmployed.gstReturn': true },
+            { 'wife.rental.gstReturn': true },
+            { 'wife.selfEmployed.gstReturn': true }
+        ];
+        search['gstEfiled'] = { $ne : '' };
         Client.find(search).lean().exec(function(err, clients) {
             callback(err, clients);
         });
