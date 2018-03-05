@@ -197,7 +197,7 @@ var ClientService = {
         })
     },
 
-    updateClient : function(search, values, callback) {
+    updateClient : function(search, values, writeToFile, callback) {
         Client.findOne(search, function(err, oldClient) {
             oldYear = oldClient.year;
             oldFileName = oldClient.fileName;
@@ -210,6 +210,9 @@ var ClientService = {
                     Client.update(search, { $set: updates }, function(file_name_err) {
                         if (file_name_err) console.log(file_name_err);
                         var id_search = { _id: oldClient._id };
+
+                        if (!writeToFile) return callback(save_err, client);
+
                         Client.findOne(id_search, function(err, client) {
                             WriteExcelService(oldYear, client, oldFileName);
                             if (err) console.log(err);
