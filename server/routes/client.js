@@ -62,7 +62,7 @@ router.post('/', function(req, res) {
 
 router.post('/:client_name', function(req, res) {
     var client_name = req.params.client_name;
-    ClientService.updateClient({ pathName : client_name }, req.body, function(err, client) {
+    ClientService.updateClient({ pathName : client_name }, req.body, true, function(err, client) {
         if (err) {
             res.render('error');
         }
