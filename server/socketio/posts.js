@@ -15,8 +15,6 @@ function getDate() {
     return curr_date + "-" + m_names[curr_month] + "-" + curr_year;
 }
 
-var excelFields = [ 'pickupDate', 'preparer', 'checker' ];
-
 var ClientsSocket = {
     ClientUpdate : function(socket) {
         socket.on('client side update', function (data) {
@@ -38,11 +36,8 @@ var ClientsSocket = {
             if (data.field == 'pytAmount') {
                 update['pytDate'] = getDate();
             }
-
-            var writeToFile = false;
-            if (excelFields.indexOf(data.field) >= 0) writeToFile = true;
             
-            ClientService.updateClient(search, update, writeToFile, function(err, client) {
+            ClientService.updateClient(search, update, false, function(err, client) {
                 if (err) {
                     console.log(err);
                 }

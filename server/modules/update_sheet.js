@@ -61,11 +61,15 @@ function updateHusbandT5(sheet) {
 
         cell = sheet.cell('J20');
         setLabelStyle(cell);
-        cell.style('horizontalAlignment', 'center');
+        cell.style({
+            'horizontalAlignment': 'center',
+            'fontSize': 11
+        });
         cell.value('JT');
 
         cell = sheet.cell('K20');
         setInputStyle(cell);
+        cell.style('fontSize', 18);
         cell.value('');
 
         range = sheet.range('L20:M20');
@@ -143,11 +147,15 @@ function updateWifeT5(sheet) {
 
         cell = sheet.cell('W20');
         setLabelStyle(cell);
-        cell.style('horizontalAlignment', 'center');
+        cell.style({
+            'horizontalAlignment': 'center',
+            'fontSize': 11
+        });
         cell.value('JT');
 
         cell = sheet.cell('X20');
         setInputStyle(cell);
+        cell.style('fontSize', 18);
         cell.value('');
 
         range = sheet.range('Y20:Z20');
@@ -340,7 +348,8 @@ function updateConsultFeeAndPriceQuoted(sheet) {
     setLabelStyle(cell, true, true);
     cell.style({
         'underline': true,
-        'border': 'medium'
+        'border': 'medium',
+        'fontSize': 10
     });
     cell.value('PRICE QUOTED');
 
