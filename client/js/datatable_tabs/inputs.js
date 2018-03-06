@@ -33,6 +33,7 @@ $(document).ready(function() {
         $(this).on('enableEditing', '.edit, .date-edit, .select', function() {
             console.log('enableEditing')
             enableEditing();
+            cell_being_edited = null;
         });
     });
 
@@ -47,7 +48,9 @@ $(document).ready(function() {
 
     $(document).on('keyup', function(e) {
         if (e.which == 27) {
+            if (!cell_being_edited) return;
             $(cell_being_edited).html(previousValue);
+            cell_being_edited = null;
             enableEditing();
             adjustTables();
         }

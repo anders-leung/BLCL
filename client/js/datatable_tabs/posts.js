@@ -71,8 +71,11 @@ $(document).ready(function() {
                 dateFormat: 'yy-M-dd',
                 onSelect: function() {
                     var td = $(this).parent();
-                    if ($(td).find('input').length === 0) return;
+                    if ($(td).find('input').length === 0) {
+                        return;
+                    }
                     saveEdits(td, 'input');
+                    $(this).datepicker('hide');
                 }
             });
         });

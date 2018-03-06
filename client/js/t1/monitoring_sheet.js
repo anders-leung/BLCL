@@ -167,9 +167,9 @@ $(document).ready(function() {
             $(this).addClass('text-nowrap');
         });
         $(row).find('td').eq(8).addClass('date-edit');
-        $(row).find('td').eq(15).addClass('select admin preparer initials');
+        $(row).find('td').eq(15).addClass('select admin initials');
+        $(row).find('td').eq(15).addClass('select admin status');
         $(row).find('td').eq(17).addClass('select initials');
-        $(row).find('td').eq(18).addClass('edit');
         $(row).find('td').eq(19).addClass('date-edit');
         $(row).find('td').eq(20).addClass('select toggle');
         $(row).find('td').eq(23).addClass('date-edit');

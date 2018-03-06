@@ -36,8 +36,8 @@ var ClientsSocket = {
             if (data.field == 'pytAmount') {
                 update['pytDate'] = getDate();
             }
-
-            ClientService.updateClient(search, update, function(err, client) {
+            
+            ClientService.updateClient(search, update, false, function(err, client) {
                 if (err) {
                     console.log(err);
                 }
