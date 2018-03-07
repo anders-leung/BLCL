@@ -3,6 +3,26 @@
  */
 var XLSX = require('xlsx-populate');
 
+function unmergeAll(range, sheet) {
+    console.log('unmergeAll')
+    range = sheet.range(range).merged(false);
+    var addresses = [];
+    range.map((cell, ri, ci, range) => {
+        addresses.push(cell.address());
+    });
+
+    var ranges = [];
+    for (var i = 0; i < addresses.length; i++) {
+        for (var j = i; j < addresses.length; j++) {
+            if (j == i) continue;
+            ranges.push(addresses[i] + ':' + addresses[j]);
+        }
+    }
+    for (var k = 0; k < ranges.length; k++) {
+        sheet.range(ranges[k]).merged(false);
+    }
+}
+
 function setInputStyle(object, border) {
     var styles = {
         'bold': true,
@@ -225,6 +245,7 @@ function setTeachingSupplies(sheet) {
     range.merged(true);
     setInputStyle(range, true);
     cell = sheet.cell('H33');
+    cell.style('fontSize', 18);
     cell.value('');
 }
 
@@ -241,6 +262,7 @@ function setHomeAccessibilities(sheet) {
     range.merged(true);
     setInputStyle(range, true);
     cell = sheet.cell('L33');
+    cell.style('fontSize', 18);
     cell.value('');
 }
 
@@ -248,7 +270,11 @@ function setOSI(sheet) {
     var cell = sheet.cell('D55');
     cell.value('');
     setLabelStyle(cell, true, true);
-    cell.style('border', 'medium');
+    cell.style({
+        'border': 'medium',
+        'horizontalAlignment': 'center',
+        'fontSize': 11
+    });
     cell.value('O/S');
 
     var range = sheet.range('E55:T55');
@@ -370,6 +396,7 @@ var UpdateService = {
         updateWifeT4(sheet);
         updateWifeT5(sheet);
         updateWifeT4A(sheet);
+        unmergeAll('G33:M34', sheet);
         setTeachingSupplies(sheet);
         setHomeAccessibilities(sheet);
         setPRSold(sheet);
