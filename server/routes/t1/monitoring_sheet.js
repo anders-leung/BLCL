@@ -47,8 +47,13 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
         },
         
         get_done: function(next) {
-            if (cookie.role != 'Administrator') return next(null, null);
             ClientService.findClientsDone(function(err, clients) {
+                next(err, clients);
+            });
+        },
+
+        get_all: function(next) {
+            ClientService.findAllInterviewedClients(function(err, clients) {
                 next(err, clients);
             });
         },
@@ -56,19 +61,33 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
         get_initials: function(next) {
             UserService.getInitials(function(err, initials) {
                 next(err, initials);
-            })
+            });
         }
     }, function(err, results) {
+        var missing = results.get_all;
         var clients = [
             ['normal', results.get_normal],
             ['noPreparer', results.get_no_preparer],
             ['packed', results.get_packed],
             ['emailed', results.get_emailed],
             ['osPyt', results.get_os_pyt],
-            ['emailedNotPacked', results.get_emailed_not_packed]
+            ['emailedNotPacked', results.get_emailed_not_packed],
+            ['done', results.get_done],
+            ['all', results.get_all]
         ];
 
-        if (cookie.role == 'Administrator') clients.push(['done', results.get_done]);
+        for (var i = 0; i < clients.length; i++) {
+            for (var k = 0; k < clients[i][1].length; k++) {
+                for (var j = 0; j < missing.length; j++) {
+                    if (clients[i][1][k].fileName == missing[j].fileName) {
+                        missing.splice(j, 1);
+                    }
+                }
+            }
+        }
+
+        if (cookie.role != 'Administrator') clients.pop(6);
+        clients.push(['missing', missing]);
 
         res.render('t1/monitoring_sheet', {
             title: 'T1 Monitoring',
