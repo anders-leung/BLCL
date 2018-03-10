@@ -197,6 +197,14 @@ var ClientService = {
         })
     },
 
+    findAllInterviewedClients: function(callback) {
+        var search = {};
+        search['interviewDate'] = { $ne: '' };
+        Client.find(search).lean().exec(function(err, clients) {
+            callback(err, clients);
+        });
+    },
+
     updateClient : function(search, values, writeToFile, callback) {
         Client.findOne(search, function(err, oldClient) {
             oldYear = oldClient.year;
