@@ -28,6 +28,8 @@ block content
         if role == 'Administrator'
             li.nav-item
                 a.nav-link(data-toggle='tab' href='#done') Done
+        li.nav-item
+            a.nav-link(data-toggle='tab' href='#missing') Missing
 
     #table.col-12.tab-content(style='border-top: 0')
         - for (var i = 0; i < clients.length; i++)
