@@ -70,6 +70,7 @@ var stdout = process.stdout;
 install_hook_to(stdout);
 
 var directory = './logs';
+if (!fs.existsSync(directory)) fs.mkdirSync(directory);
 var fileName = 'log' + '-' + new Date().toLocaleString().replace(/\s/g, '-').replace(/:/g, '.') + '.txt';
 var file = directory + '//' + fileName;
 var logger = fs.createWriteStream(file, {
@@ -80,7 +81,6 @@ stdout.hook('write', function(string, encoding, fd, write) {
     write(string);
     var useless = string.search(/(GET)\s\/(css|js|images)/g);
     if (useless == -1) {
-        if (!fs.existsSync(directory)) fs.mkdirSync(directory);
         logger.write(string + '\n');
     }
 })
