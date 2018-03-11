@@ -207,6 +207,8 @@ var ClientService = {
 
     updateClient : function(search, values, writeToFile, callback) {
         Client.findOne(search, function(err, oldClient) {
+            console.log('updateClient/search: ', search)
+            console.log('updateClient/oldClient: ', oldClient)
             oldYear = oldClient.year;
             oldFileName = oldClient.fileName;
             values = cleanValues(values);
