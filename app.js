@@ -89,13 +89,6 @@ app.use(function(err, req, res, next) {
 var setup = require('./server/routes/utils/setup');
 setup();
 
-/*
-var ClientService = require('./modules/client');
-ClientService.findClient({ 'fileName' : 'ZHU, YAN JIE' }, function(err, client) {
-    if (!err) {
-        var writeFile = require('./modules/write_excel');
-        writeFile('C://Users//ander//Desktop//BLCL Files//Test files//ZHU, YAN JIE.xlsx', client[0]);
-    }
-});
-*/
+var logging = require('./server/logging');
+
 module.exports = app;
