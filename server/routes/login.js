@@ -15,7 +15,12 @@ router.get('/', function(req, res) {
     previousUrl = '/';
     var urlTokens = req.originalUrl.split('+');
     if (urlTokens.length > 1) previousUrl = urlTokens[1];
-    res.render('login', { title : 'BLCL', login_error: login_error});
+    res.render('login', { 
+        title : 'BLCL', 
+        login_error: login_error,
+        options: {},
+        role: null
+    });
     login_error = false;
 });
 
