@@ -396,7 +396,7 @@ var UpdateService = {
         updateWifeT4(sheet);
         updateWifeT5(sheet);
         updateWifeT4A(sheet);
-        unmergeAll('G33:M34', sheet);
+        unmergeAll('G33:Z34', sheet);
         setTeachingSupplies(sheet);
         setHomeAccessibilities(sheet);
         setPRSold(sheet);
