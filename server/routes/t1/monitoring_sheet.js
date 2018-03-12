@@ -64,7 +64,7 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
             });
         }
     }, function(err, results) {
-        var missing = results.get_all;
+        var missing = results.get_all.slice(0);
         var clients = [
             ['normal', results.get_normal],
             ['noPreparer', results.get_no_preparer],
@@ -72,8 +72,7 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
             ['emailed', results.get_emailed],
             ['osPyt', results.get_os_pyt],
             ['emailedNotPacked', results.get_emailed_not_packed],
-            ['done', results.get_done],
-            ['all', results.get_all]
+            ['done', results.get_done]
         ];
 
         for (var i = 0; i < clients.length; i++) {
@@ -86,8 +85,12 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
             }
         }
 
-        if (cookie.role != 'Administrator') clients.pop(6);
+        clients.pop();
         clients.push(['missing', missing]);
+        if (cookie.role == 'Administrator') {
+            clients.push(['done', results.get_done]);
+            clients.push(['all', results.get_all]);
+        }
 
         res.render('t1/monitoring_sheet', {
             title: 'T1 Monitoring',
