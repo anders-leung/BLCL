@@ -17,7 +17,7 @@ function cleanValues(values) {
             field == 'notes.one' || field == 'notes.two' || field == 'notes.three' ||
             field == 'comments.one' || field == 'comments.two' || field == 'comments.three') continue;
         if (typeof(values[field]) == 'string') {
-            values[field] = values[field].toUpperCase();
+            values[field] = values[field].toUpperCase().trim();
         }
     }
 
@@ -33,7 +33,7 @@ var ClientService = {
         client.pathName = clientNames.getPathName(client);
         
         client.save(function(err) {
-            WriteExcelService(client.year, client);
+            WriteExcelService(client, client);
             if (err) console.log(err);
             callback(err, client);
         });
@@ -224,7 +224,7 @@ var ClientService = {
                         if (!writeToFile) return callback(save_err, client);
 
                         Client.findOne(id_search, function(err, client) {
-                            WriteExcelService(oldYear, client, oldFileName);
+                            WriteExcelService(oldClient, client);
                             if (err) console.log(err);
                             if (save_err) console.log(save_err);
                             callback(save_err, client);

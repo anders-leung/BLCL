@@ -808,13 +808,12 @@ ConfigService.getT1Directory(function(err, directory) {
     }
 });
 
-function clientToExcel(year, client, fileName) {
-    var curr_year = client.year;
+function clientToExcel(oldClient, client) {
     ConfigService.getT1Directory(function(err, t1Directory) {
-        var path = t1Directory + '//' + year + '//' + fileName + '.xlsx';
+        var path = t1Directory + '//' + oldClient.year + '//' + oldClient.fileName + '.xlsx';
         if (!fs.existsSync(path)) {
             var previousYear = parseInt(year) - 1;
-            path = t1Directory + '//' + previousYear.toString() + '//' + fileName + '.xlsx';
+            path = t1Directory + '//' + previousYear.toString() + '//' + oldClient.fileName + '.xlsx';
             if (!fs.existsSync(path)) path = t1Directory + '//Templates//1- T1 INTERVIEW-New.xlsx';
         }
         console.log('previous path: ', path);
@@ -830,7 +829,7 @@ function clientToExcel(year, client, fileName) {
                     fields[section][cell](sheet.cell(cell), client);
                 }
             }
-            path = t1Directory + '//' + curr_year;
+            path = t1Directory + '//' + client.year;
             if (!fs.existsSync(path)) {
                 fs.mkdirSync(path);
             }
