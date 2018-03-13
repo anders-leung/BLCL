@@ -812,10 +812,11 @@ function clientToExcel(oldClient, client) {
     ConfigService.getT1Directory(function(err, t1Directory) {
         var path = t1Directory + '//' + oldClient.year + '//' + oldClient.fileName + '.xlsx';
         if (!fs.existsSync(path)) {
-            var previousYear = parseInt(year) - 1;
+            var previousYear = parseInt(client.year) - 1;
             path = t1Directory + '//' + previousYear.toString() + '//' + oldClient.fileName + '.xlsx';
             if (!fs.existsSync(path)) path = t1Directory + '//Templates//1- T1 INTERVIEW-New.xlsx';
         }
+        console.log('Client To Excel');
         console.log('previous path: ', path);
         XLSX.fromFileAsync(path).then(function(workbook) {
             var sheet = workbook.sheet('Interview Sheet');
