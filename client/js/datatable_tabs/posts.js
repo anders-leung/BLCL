@@ -7,7 +7,7 @@ var headersToFields = {
     'PRE' : 'preparer',
     'CKR' : 'checker',
     'Outstanding Info' : 'outstandingInfo',
-    'Ready To Pack' : 'readyToPack',
+    'Ready To PRT/Pack' : 'readyToPack',
     'Packed' : 'packed',
     'Emailed' : 'emailed',
     'Signed' : 'signed',
@@ -17,7 +17,7 @@ var headersToFields = {
     'Tax To CRA' : 'taxToCRA',
     'T1135 EFILED' : 't1Efiled',
     'GST EFILED' : 'gstEfiled',
-    'Call Date' : 'callDate',
+    'Email/Call Pu' : 'callDate',
     'Remarks' : 'remarks'
 };
 
