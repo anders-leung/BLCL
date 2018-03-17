@@ -1,6 +1,21 @@
 /**
  * Created by ander on 2017-09-18.
  */
+
+function colorCells(row) {
+    $(row).find('td:eq(7)').css('color', 'orange');
+    $(row).find('td:eq(8)').css('color', 'orange');
+    $(row).find('td:eq(19)').css('color', 'green');
+    $(row).find('td:eq(21)').css('color', 'red');
+}
+
+function colorHeader(header) {
+    if (header.index() == 7) header.css('color', 'orange');
+    if (header.index() == 8) header.css('color', 'orange');
+    if (header.index() == 19) header.css('color', 'green');
+    if (header.index() == 21) header.css('color', 'red');
+}
+
 $(document).ready(function() {
     // function for setting up tables
     function setTable(tableId) {
@@ -25,7 +40,10 @@ $(document).ready(function() {
                 { visible: false, searchable: true, targets: 0 }
             ],
             'select': true,
-            'scrollX': true
+            'scrollX': true,
+            rowCallback: function(row, data, index, full) {
+                colorCells(row);
+            },
         });
 
         table.columns().every(function() {
@@ -35,9 +53,11 @@ $(document).ready(function() {
                     that.search(this.value).draw();
                 }
             });
+
+            colorHeader($(this.header()));
         });
 
-        $(tableId).on('dblclick', 'tr td:not(.toggle, .edit, .date-edit)', function() {
+        $(tableId).on('dblclick', 'tr td:not(.edit, .date-edit, .select)', function() {
             window.location = $(this).parent().data('href');
         });
     }
@@ -83,7 +103,7 @@ $(document).ready(function() {
         row.push(client.slips ? 'Y' : '');
         row.push(client.selfEmployed ? 'Y' : '');
         if (client.t1135 == 'N') {
-            row.push(0);
+            row.push('0');
         } else {
             row.push(client.t1135 == 'SIMPLE' ? '1' : '2');
         }
@@ -150,8 +170,8 @@ $(document).ready(function() {
         $row.find('td').each(function() {
             $(this).addClass('text-nowrap');
         });
-        $(row).find('td').eq(16).addClass('select');
-        $(row).find('td').eq(17).addClass('edit');
+        $(row).find('td').eq(16).addClass('select status');
+        $(row).find('td').eq(17).addClass('select initials');
         $(row).find('td').eq(18).addClass('date-edit');
         $(row).find('td').eq(20).addClass('date-edit');
         $(row).find('td').eq(21).addClass('date-edit');
