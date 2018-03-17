@@ -38,13 +38,14 @@ $(document).ready(function() {
             });
         }
 
-        $(tableId + ' tfoot th').each( function () {
+        $(tableId + ' tfoot th').each( function (i) {
             var title = $(this).text();
+            //$(this).html(i)
             $(this).html( '<input type="text"/>' );
         });
 
         var table = $(tableId).DataTable({
-            'scrollX': false,
+            'scrollX': true,
             'select': true,
             'columnDefs': [
                 { targets : 14, type : 'date' },
@@ -61,7 +62,7 @@ $(document).ready(function() {
             });
         });
 
-        $(tableId).on('dblclick', 'tr td:not(.toggle, .edit, .date-edit)', function() {
+        $(tableId).on('dblclick', 'tr td:not(.edit, .date-edit, .select)', function() {
             window.location = $(this).parent().data('href');
         });
     });
