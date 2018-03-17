@@ -60,17 +60,17 @@ block content
                             th PRE OK
                             th CKR
                             th Outstanding Info
-                            th Ready To Pack
+                            th Ready To PRT/Pack
                             th Packed
                             th GST
                             th Method
                             th Emailed
-                            th.pyt Signed
-                            th.pyt PYT Rec'd
-                            th.pyt PYT Amount
-                            th.pyt Rec'd By
-                            th.pyt Tax To CRA
-                            th Call Date
+                            th Signed
+                            th PYT Rec'd
+                            th PYT Amount
+                            th Rec'd By
+                            th Tax To CRA
+                            th Email/Call Pu
                             th Interview Date
                             th Phone Number
                             th Cell
@@ -150,11 +150,11 @@ block content
                                         | Y
                                 td #{client.method}
                                 td.text-nowrap.date-edit #{client.emailed}
-                                td.text-nowrap.date-edit.pyt #{client.signed}
-                                td.text-nowrap.select.pyt.pytType #{client.pytReceived}
-                                td.text-nowrap.edit.pyt #{client.pytAmount}
-                                td.text-nowrap.select.pyt.initials #{client.recBy}
-                                td.text-nowrap.select.pyt.tax #{client.taxToCRA}
+                                td.text-nowrap.date-edit #{client.signed}
+                                td.text-nowrap.select.pytType #{client.pytReceived}
+                                td.text-nowrap.edit #{client.pytAmount}
+                                td.text-nowrap.select.initials #{client.recBy}
+                                td.text-nowrap.select.tax #{client.taxToCRA}
                                 td.text-nowrap.date-edit #{client.callDate}
                                 td.text-nowrap #{client.interviewDate}
                                 td.text-nowrap #{client.tel.number}
