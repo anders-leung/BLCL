@@ -86,6 +86,9 @@ stdout.hook('write', function(string, encoding, fd, write) {
 })
 
 process.on('uncaughtException', function(err) {
-    logger.end();
-    process.exit(1);
+    console.log(err);
+    setTimeout(function() {
+        logger.end();
+        process.exit(1);
+    }, 3000);
 });
