@@ -37,7 +37,7 @@ $(document).ready(function() {
             'scrollX': true,
             'select': true,
             'columnDefs': [
-                { targets : 14, type : 'date' },
+                { targets : 13, type : 'date' },
                 { targets : 0, visible : false, searchable : true }
             ],
 
@@ -77,7 +77,7 @@ $(document).ready(function() {
             });
         });
 
-        $(tableId).on('dblclick', 'tr td:not(.toggle, .edit, .date-edit)', function() {
+        $(tableId).on('dblclick', 'tr td:not(.edit, .date-edit, .select)', function() {
             window.location = $(this).parent().data('href');
         });
     });
