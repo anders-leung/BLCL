@@ -322,7 +322,7 @@ var ClientSchema = new Schema({
         enum: [ '', 'WIP', 'OK' ],
         default: ''
     },
-    readyToPack: { type: String, default: '' },
+    readyToPack: { type: String, default: '' }, // Ready To PRT/Pack
     signed: { type: String, default: '' },
     pytReceived: {
         type: String,
@@ -341,7 +341,7 @@ var ClientSchema = new Schema({
     gstEfiled: { type: String, default: '' },
     outstandingInfo: { type: String, default: "" },
     remarks: { type: String, default: "" },
-    callDate: { type: String, default: "" },
+    callDate: { type: String, default: "" }, // Email/Call Pu
     thingsToDo: { type: String, default: "" },
     emailed: { type: String, default: "" },
     packed: { type: Boolean, default: false },
