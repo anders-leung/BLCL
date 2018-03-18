@@ -370,8 +370,12 @@ var fields = {
             cell.value(client.husband.dateOfBirth);
         },
 
+        'H14' : function(cell, client) {
+            cell.value(client.husband.departure.which == '' ? 'DEPT/LAND' : client.husband.departure.which);
+        },
+
         'K14' : function(cell, client) {
-            cell.value(client.husband.departure);
+            cell.value(client.husband.departure.value);
         },
 
         'B15' : function(cell, client) {
@@ -572,7 +576,7 @@ var fields = {
     },
 
     'wife' : {
-        'E4' : function(cell, client) {
+        'F4' : function(cell, client) {
             cell.value(client.wife.citizenship ? 'Y' : '');
         },
 
@@ -596,8 +600,12 @@ var fields = {
             cell.value(client.wife.dateOfBirth);
         },
 
+        'V14' : function(cell, client) {
+            cell.value(client.wife.departure.which == '' ? 'DEPT/LAND' : client.wife.departure.which);
+        },
+
         'X14' : function(cell, client) {
-            cell.value(client.wife.departure);
+            cell.value(client.wife.departure.value);
         },
 
         'P15' : function(cell, client) {
@@ -812,7 +820,7 @@ function clientToExcel(oldClient, client) {
     ConfigService.getT1Directory(function(err, t1Directory) {
         var path = t1Directory + '//' + oldClient.year + '//' + oldClient.fileName + '.xlsx';
         if (!fs.existsSync(path)) {
-            var previousYear = parseInt(year) - 1;
+            var previousYear = parseInt(client.year) - 1;
             path = t1Directory + '//' + previousYear.toString() + '//' + oldClient.fileName + '.xlsx';
             if (!fs.existsSync(path)) path = t1Directory + '//Templates//1- T1 INTERVIEW-New.xlsx';
         }
