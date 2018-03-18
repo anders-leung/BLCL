@@ -3,15 +3,15 @@
  */
 
 function colorCells(row) {
-    $(row).find('td:eq(7)').css('color', 'orange');
-    $(row).find('td:eq(8)').css('color', 'orange');
+    $(row).find('td:eq(7)').css('color', 'red');
+    $(row).find('td:eq(8)').css('color', 'red');
     $(row).find('td:eq(19)').css('color', 'green');
     $(row).find('td:eq(21)').css('color', 'red');
 }
 
 function colorHeader(header) {
-    if (header.index() == 7) header.css('color', 'orange');
-    if (header.index() == 8) header.css('color', 'orange');
+    if (header.index() == 7) header.css('color', 'red');
+    if (header.index() == 8) header.css('color', 'red');
     if (header.index() == 19) header.css('color', 'green');
     if (header.index() == 21) header.css('color', 'red');
 }
