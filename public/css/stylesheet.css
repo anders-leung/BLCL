@@ -38,7 +38,7 @@ body {
 }
 
 /* table stuff */
-input {
+input, td {
     text-transform: uppercase;
 }
 
