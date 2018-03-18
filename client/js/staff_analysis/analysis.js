@@ -1,6 +1,27 @@
 /**
  * Created by ander on 2017-09-14.
  */
+function convert(value, int) {
+    if (int) {
+        var s = value.toString();
+        if (s.length < 3) {
+            var integer = '0';
+            if (s.length == 2) {
+                var decimal = s;
+            } else if (s.length == 1) {
+                var decimal = '0' + s;
+            }
+        } else {
+            var integer = s.substring(0, s.length - 2);
+            var decimal = s.substring(s.length - 2, s.length);
+        }
+        return integer + '.' + decimal;
+    } else {
+        var tokens = value.split('.');
+        return tokens[0] + tokens[1];
+    }
+}
+
 $(document).ready(function() {
     $('.nav-tabs a').each(function(i) {
         if (i == 0) {
@@ -45,8 +66,15 @@ $(document).ready(function() {
                 var api = this.api();
                 api.columns({ 'filter': 'applied' }).every(function(i) {
                     if (i == 14) {
-                        var sum = this.data().sum();
-                        $(this.footer()).html(sum.toFixed(2))
+                        var sum = 0;
+                        var values = this.data();
+                        for (var i = 0; i < values.length; i++) {
+                            if (values[i]) {
+                                values[i] = convert(values[i]);
+                                sum += parseInt(values[i]);
+                            }
+                        }
+                        $(this.footer()).html(convert(sum, true));
                     } else if (i == 7) {
                         var zeroes = ones = twos = 0;
                         var data = this.data();
