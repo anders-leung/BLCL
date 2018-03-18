@@ -2,7 +2,16 @@
  * Created by ander on 2017-09-14.
  */
 
-// Adjust tables so columns are of correct width when DOM is dynamically modified
+function colorCells(row) {
+    $(row).find('td:eq(12)').css('color', 'red');
+    $(row).find('td:eq(13)').css('color', 'red');
+}
+
+function colorHeader(header) {
+    if (header.index() == 12) header.css('color', 'red');
+    if (header.index() == 13) header.css('color', 'red');
+}
+
 function adjustTables() {
     $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
 }
@@ -50,7 +59,10 @@ $(document).ready(function() {
             'columnDefs': [
                 { targets : 14, type : 'date' },
                 { targets : 0, visible : false, searchable : true }
-            ]
+            ],
+            rowCallback: function(row, data, index, full) {
+                colorCells(row);
+            },
         });
 
         table.columns().every(function() {
@@ -60,6 +72,8 @@ $(document).ready(function() {
                     that.search(this.value).draw();
                 }
             });
+            
+            colorHeader($(this.header()));
         });
 
         $(tableId).on('dblclick', 'tr td:not(.edit, .date-edit, .select)', function() {
@@ -109,6 +123,7 @@ $(document).ready(function() {
         $row.find('td').each(function() {
             $(this).addClass('text-nowrap');
         });
-        $(row).find('td').eq(15).addClass('edit');
+        $(row).find('td').eq(11).addClass('select status admin');
+        $(row).find('td').eq(14).addClass('select initials admin');
     }
 });
