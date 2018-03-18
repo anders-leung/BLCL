@@ -2,6 +2,10 @@
  * Created by ander on 2017-05-10.
  */
 $(document).ready(function(e) {
+    $('.scroll-container').onePageScroll({
+        sectionSelector: $('.content-part')
+    });
+    
     if (newClient) {
         $('#newTel').prop('checked', true);
         $('#newCell').prop('checked', true);
@@ -18,7 +22,7 @@ $(document).ready(function(e) {
         dateFormat: 'yy-M-dd',
         changeMonth: true,
         changeYear: true,
-        yearRange: '1920:' + year
+        yearRange: '-80:+0'
     });
 
     // Phone formatting
