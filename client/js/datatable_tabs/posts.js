@@ -92,7 +92,6 @@ $(document).ready(function() {
         var fileName = table.row($(row)).data()[0];
         var value = $(that).find('input').val();
         if (type == 'select') value = $(that).find('select').val();
-        value = value.toUpperCase();
         var field = getField(cell);
         updateHtml(fileName, field, value, true);
         $(that).trigger('enableEditing');
