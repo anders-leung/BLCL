@@ -1,3 +1,11 @@
 #email, #notes1, #notes2, #notes3, #comments1, #comments2, #comments3 {
     text-transform: none;
 }
+
+.red {
+    color: red;
+}
+
+.content-part {
+    margin-bottom: 2%;
+}

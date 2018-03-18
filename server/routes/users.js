@@ -30,10 +30,15 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
                 list.push(entry);
             });
 
-            res.render('users', {
-                role: req.session.role,
-                list: list,
-                options : {}
+            UserService.getInitials(function(err, initials) {
+                res.render('users', {
+                    role: req.session.role,
+                    list: list,
+                    options : { 
+                        initials: initials,
+                        status: ClientService.getStatuses()
+                    }
+                });
             });
         });
     });

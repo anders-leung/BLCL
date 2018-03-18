@@ -72,7 +72,7 @@ block content
                                 td #{client.t777 ? 'Y': ''}
                                 td #{client.stocks ? 'Y' : ''}
                                 td #{client.new ? 'Y' : ''}
-                                td #{client.preparerDone}
+                                td.select.status.admin #{client.preparerDone}
                                 td #{client.confirmPickupDate ? 'Y' : ''}
                                 td.text-nowrap #{client.pickupDate}
-                                td.edit.admin #{client.preparer}
+                                td.select.initials.admin #{client.preparer}

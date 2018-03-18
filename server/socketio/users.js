@@ -25,8 +25,20 @@ var UsersSocket = {
             var search = {};
             search['email'] = data.email;
             var values = {};
-            data.value = data.value.toLowerCase();
-            data.value = data.value.charAt(0).toUpperCase() + data.value.slice(1);
+            switch(data.field) {
+                case ('email'):
+                    data.value = data.value.toLowerCase();
+                    break;
+                case ('initials'):
+                    data.value = data.value.toUpperCase();
+                    break;
+                case ('role'):
+                    data.value = data.value.toLowerCase();
+                    data.value = data.value.charAt(0).toUpperCase() + data.value.slice(1);
+                    break;
+                default:
+                    break;
+            }
             console.log('update user', data);
             values[data.field] = data.value;
             UserService.updateUser(search, values, function(err) {
