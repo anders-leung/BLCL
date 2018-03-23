@@ -114,7 +114,7 @@ $(document).ready(function(e) {
         $('#interviewDate').val(client.interviewDate);
         $('#returns').val(client.numberOfReturns);
         $('#method').val(client.method);
-        $('#t1135').val(client.t1135);
+        //$('#t1135').val(client.t1135);
         $('#group').val(client.group);
         $('#slips').prop('checked', client.slips);
         $('#stocks').prop('checked', client.stocks);
