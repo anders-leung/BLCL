@@ -116,7 +116,6 @@ $(document).ready(function(e) {
         $('#method').val(client.method);
         $('#t1135').val(client.t1135);
         $('#group').val(client.group);
-        $('#prSold').val(client.prSold ? 'Y' : 'N');
         $('#slips').prop('checked', client.slips);
         $('#stocks').prop('checked', client.stocks);
         $('#confirmPickupDate').prop('checked', client.confirmPickupDate);
