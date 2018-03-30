@@ -374,7 +374,7 @@ var fields = {
             cell.value(client.husband.departure.which == '' ? 'DEPT/LAND' : client.husband.departure.which);
         },
 
-        'K14' : function(cell, client) {
+        'L14' : function(cell, client) {
             cell.value(client.husband.departure.value);
         },
 
@@ -604,7 +604,7 @@ var fields = {
             cell.value(client.wife.departure.which == '' ? 'DEPT/LAND' : client.wife.departure.which);
         },
 
-        'X14' : function(cell, client) {
+        'Y14' : function(cell, client) {
             cell.value(client.wife.departure.value);
         },
 
