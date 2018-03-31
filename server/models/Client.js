@@ -87,7 +87,7 @@ var ClientSchema = new Schema({
         lastName: { type: String, default: "" },
         dateOfBirth: { type: String, default: "" },
         departure: {
-            which: { type: String, enum: ['', 'DEPARTURE', 'LAND', null], default: '' },
+            which: { type: String, enum: ['', 'DEPARTURE', 'LAND', 'DECEASED'], default: '' },
             value: { type: String, default: '' }
         },
         sin: { type: String, default: "" },
@@ -178,7 +178,7 @@ var ClientSchema = new Schema({
         lastName: { type: String, default: "" },
         dateOfBirth: { type: String, default: "" },
         departure: {
-            which: { type: String, enum: ['', 'DEPARTURE', 'LAND', null], default: '' },
+            which: { type: String, enum: ['', 'DEPARTURE', 'LAND', 'DECEASED'], default: '' },
             value: { type: String, default: '' }
         },
         sin: { type: String, default: "" },
