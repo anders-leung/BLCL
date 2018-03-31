@@ -4,7 +4,6 @@
 var XLSX = require('xlsx-populate');
 
 function unmergeAll(range, sheet) {
-    console.log('unmergeAll')
     range = sheet.range(range).merged(false);
     var addresses = [];
     range.map((cell, ri, ci, range) => {
@@ -311,7 +310,10 @@ function setPRSold(sheet) {
 
     cell = sheet.cell('U1');
     cell.value('');
-    cell.style('fill', 'ffffff');
+    cell.style({
+        'fill': 'ffffff',
+        'underline': false
+    });
 
     range = sheet.range('V1:Z1');
     range.merged(false);
@@ -324,12 +326,14 @@ function setPRSold(sheet) {
         'underline': true,
         'fontSize': 11,
         'bold': false,
-        'horizontalAlignment': 'left'
+        'horizontalAlignment': 'left',
+        'rightBorder': true
     });
     cell.value('PU DATE');
 
     range = sheet.range('X1:Z1');
     range.merged(true);
+    range.style('leftBorder', 'medium');
     sheet.cell('X1').value('');
 }
 
@@ -388,14 +392,62 @@ function updateConsultFeeAndPriceQuoted(sheet) {
     cell.value('');
 }
 
+function updateHusbandDeparture(sheet) {
+    unmergeAll('H14:M14', sheet);
+    
+    range = sheet.range('H14:J14');
+    range.merged(true);
+    range.style({
+        fontSize: 11,
+        bold: true,
+        horizontalAlignment: 'left',
+        rightBorder: true
+    });
+    sheet.cell('H14').value('');
+
+    range = sheet.range('K14:M14');
+    range.merged(true);
+    range.style({
+        fontSize: 18,
+        bold: true,
+        horizontalAlignment: 'center'
+    });
+    sheet.cell('K14').value('');
+}
+
+function updateWifeDeparture(sheet) {
+    unmergeAll('V14:Z14', sheet);
+    
+    range = sheet.range('V14:W14');
+    range.merged(true);
+    range.style({
+        fontSize: 11,
+        bold: true,
+        horizontalAlignment: 'left',
+        rightBorder: true
+    });
+    sheet.cell('V14').value('');
+
+    range = sheet.range('X14:Z14');
+    range.merged(true);
+    range.style({
+        fontSize: 18,
+        bold: true,
+        horizontalAlignment: 'center'
+    });
+    sheet.cell('X14').value('');
+}
+
 var UpdateService = {
     updateSheet: function(sheet) {
         updateHusbandT4(sheet);
         updateHusbandT5(sheet);
         updateHusbandT4A(sheet);
+        updateHusbandDeparture(sheet);
         updateWifeT4(sheet);
         updateWifeT5(sheet);
         updateWifeT4A(sheet);
+        updateWifeDeparture(sheet);
         unmergeAll('G33:Z34', sheet);
         setTeachingSupplies(sheet);
         setHomeAccessibilities(sheet);
