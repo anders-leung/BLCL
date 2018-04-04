@@ -35,9 +35,9 @@ $(document).ready(function() {
         'buttons': [{
             extend: 'excelHtml5',
             footer: true,
-            title: new Date().toISOString().slice(0,10) + ' Payments',
+            title: new Date().toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' }) + ' Payments',
             exportOptions: {
-                columns: 'visible'
+                columns: ':visible'
             }
         }],
 
