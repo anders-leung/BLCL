@@ -1,7 +1,7 @@
 /**
  * Created by ander on 2017-06-02.
  */
-
+var to = require('../../helpers/to');
 var Client = require('../models/client');
 var WriteExcelService = require('./write_excel');
 var clientNames = require('./utils/client');
@@ -106,15 +106,20 @@ var ClientService = {
         });
     },
 
-    findClientsPacked : function(callback) {
+    findClientsPacked : async function(preparer) {
         var search = {};
+        var method = 'find';
+        if (preparer) {
+            search = { preparer: preparer };
+            method = 'count';
+        }
         search['interviewDate'] = { $ne : '' };
         search['packed'] = true;
         search['emailed'] = '';
         search['signed'] = '';
-        Client.find(search).lean().exec(function(err, clients) {
-            callback(err, clients);
-        });
+        [err, clients] = await to(Client[method](search).lean().exec());
+        if (err) return err;
+        return clients;
     },
 
     findClientsPytRec : function(callback) {
@@ -191,10 +196,16 @@ var ClientService = {
         });
     },
 
-    findAllClients : function(callback) {
-        Client.find({}).lean().exec(function(err, clients) {
-            callback(err, clients);
-        })
+    findAllClients : async function(preparer) {
+        var search = {};
+        var method = 'find';
+        if (preparer) {
+            search = { preparer: preparer };
+            method = 'count';
+        }
+        [err, clients] = await to(Client[method](search).lean().exec());
+        if (err) return err;
+        return clients;
     },
 
     findAllInterviewedClients: function(callback) {
@@ -262,64 +273,76 @@ var ClientService = {
         });
     },
 
-    findClientsWithUserNew : function(user, callback) {
+    findClientsWithUserNew : async function(user, count) {
         var search = {};
         search['preparer'] = user;
         search['preparerDone'] = '';
         search['readyToPack'] = '';
         search['emailed'] = '';
-        Client.find(search).lean().exec(function(err, clients) {
-            callback(err, clients);
-        });
+        var method = 'find';
+        if (count) method = 'count';
+        [err, client] = await to(Client[method](search).lean().exec());
+        if (err) return err;
+        return client;
     },
 
-    findClientsWithUserWIP : function(user, callback) {
+    findClientsWithUserWIP : async function(user, count) {
         var search = {};
         search['preparer'] = user;
         search['preparerDone'] = 'WIP';
         search['readyToPack'] = '';
         search['emailed'] = '';
-        Client.find(search).lean().exec(function(err, clients) {
-            callback(err, clients);
-        });
+        var method = 'find';
+        if (count) method = 'count';
+        [err, client] = await to(Client[method](search).lean().exec());
+        if (err) return err;
+        return client;
     },
 
-    findClientsWithUserOK : function(user, callback) {
+    findClientsWithUserOK : async function(user, count) {
         var search = {};
         search['preparer'] = user;
         search['preparerDone'] = 'OK';
         search['readyToPack'] = '';
         search['emailed'] = '';
-        Client.find(search).lean().exec(function(err, clients) {
-            callback(err, clients);
-        });
+        var method = 'find';
+        if (count) method = 'count';
+        [err, client] = await to(Client[method](search).lean().exec());
+        if (err) return err;
+        return client;
     },
 
-    findClientsWithUserEmailed : function(user, callback) {
+    findClientsWithUserEmailed : async function(user) {
         var search = {};
         search['preparer'] = user;
         search['preparerDone'] = 'OK';
         search['readyToPack'] = '';
         search['emailed'] = { $ne : '' };
-        Client.find(search).lean().exec(function(err, clients) {
-            callback(err, clients);
-        });
+        [err, client] = await to(Client.find(search).lean().exec());
+        if (err) return err;
+        return client;
     },
 
-    findClientsPreparerDone : function(user, callback) {
+    findClientsPreparerDone : async function(user, count) {
         var search = {};
         search['preparer'] = user;
         search['preparerDone'] = 'OK';
         search['readyToPack'] = { $ne : '' };
-        Client.find(search).lean().exec(function(err, clients) {
-            callback(err, clients);
-        });
+        var method = 'find';
+        if (count) method = 'count';
+        [err, client] = await to(Client[method](search).lean().exec());
+        if (err) return err;
+        return client;
     },
 
-    findClientsDone : function(callback) {
+    findClientsDone : async function(preparer) {
         var search = {};
+        var method = 'find';
+        if (preparer) {
+            method = 'count';
+        }
         search['interviewDate'] = { $ne : '' };
-        search['preparer'] = { $ne : '' };
+        search['preparer'] = preparer ? preparer : { $ne : '' };
         search['preparerDone'] = 'OK';
         search['pytReceived'] = { $ne : '' };
         search['pytAmount'] = { $ne : '' };
@@ -327,9 +350,9 @@ var ClientService = {
         search['taxToCRA'] = { $ne : '' };
         search['signed'] = { $ne : '' };
         search['packed'] = true;
-        Client.find(search).lean().exec(function(err, clients) {
-            callback(err, clients);
-        });
+        [err, clients] = await to(Client[method](search).lean().exec());
+        if (err) return err;
+        return clients;
     },
 
     addField : function(field, value, callback) {
@@ -351,7 +374,7 @@ var ClientService = {
             });
         });
     },
-
+    
     getStatuses : function() {
         return Client.schema.path('preparerDone').enumValues;
     },

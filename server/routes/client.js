@@ -3,24 +3,24 @@
  */
 var express = require('express');
 var router = express.Router();
+var to = require('../../helpers/to');
 
 var CookieService = require('./utils/cookies');
 var ClientService = require('../modules/client');
 var UserService = require('../modules/user');
 
-router.get('/', CookieService.isLoggedIn, function(req, res) {
-    UserService.getInitials(function(err, initials) {
-        res.render('client', { title: 'T1 Interview',
-            client : null,
-            role : CookieService.readCookie(req).role,
-            options : {
-                method : ClientService.getMethods(),
-                t1135 : ClientService.getT1135(),
-                relationship : ClientService.getRelationships(),
-                initials: initials
-            },
-            newClient : true
-        });
+router.get('/', CookieService.isLoggedIn, async function(req, res) {
+    [err, initials] = await to(UserService.getInitials());
+    res.render('client', { title: 'T1 Interview',
+        client : null,
+        role : CookieService.readCookie(req).role,
+        options : {
+            method : ClientService.getMethods(),
+            t1135 : ClientService.getT1135(),
+            relationship : ClientService.getRelationships(),
+            initials: initials
+        },
+        newClient : true
     });
 });
 
@@ -31,20 +31,19 @@ router.get('/:client_name', CookieService.isLoggedIn, function(req, res) {
         'pathName': client_name
     };
 
-    ClientService.findClient(query, function(err, client) {
-        UserService.getInitials(function(err, initials) {
-            res.render('client', {
-                title : 'T1 Interview',
-                client : client[0],
-                role : CookieService.readCookie(req).role,
-                options : {
-                    method : ClientService.getMethods(),
-                    t1135 : ClientService.getT1135(),
-                    relationship : ClientService.getRelationships(),
-                    initials: initials
-                },
-                newClient : false
-            });
+    ClientService.findClient(query, async function(err, client) {
+        [err, initials] = await to(UserService.getInitials());
+        res.render('client', {
+            title : 'T1 Interview',
+            client : client[0],
+            role : CookieService.readCookie(req).role,
+            options : {
+                method : ClientService.getMethods(),
+                t1135 : ClientService.getT1135(),
+                relationship : ClientService.getRelationships(),
+                initials: initials
+            },
+            newClient : false
         });
     });
 });

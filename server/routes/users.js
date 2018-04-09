@@ -1,6 +1,7 @@
 var express = require('express');
 var async = require('async');
 var router = express.Router();
+var to = require('../../helpers/to');
 
 var CookieService = require('./utils/cookies');
 var ClientService = require('../modules/client');
@@ -22,7 +23,7 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
                     callback();
                 }
             });
-        }, function() {
+        }, async function() {
             var list = [];
             Object.keys(dict).sort().forEach(function(key) {
                 var entry = [key];
@@ -30,15 +31,14 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
                 list.push(entry);
             });
 
-            UserService.getInitials(function(err, initials) {
-                res.render('users', {
-                    role: req.session.role,
-                    list: list,
-                    options : { 
-                        initials: initials,
-                        status: ClientService.getStatuses()
-                    }
-                });
+            [err, initials] = await to(UserService.getInitials());
+            res.render('users', {
+                role: req.session.role,
+                list: list,
+                options : { 
+                    initials: initials,
+                    status: ClientService.getStatuses()
+                }
             });
         });
     });

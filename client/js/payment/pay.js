@@ -26,7 +26,7 @@ $(document).ready(function() {
     var table = $('table').DataTable({
         'iDisplayLength': 10,
         'select': true,
-        'scrollX': false,
+        'scrollX': true,
         'columnDefs' : [
             { type: 'date', targets: 1 },
             { visible: false, searchable: true, targets: 0 }
@@ -35,9 +35,9 @@ $(document).ready(function() {
         'buttons': [{
             extend: 'excelHtml5',
             footer: true,
-            title: new Date().toISOString().slice(0,10) + ' Payments',
+            title: new Date().toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' }) + ' Payments',
             exportOptions: {
-                columns: 'visible'
+                columns: ':visible'
             }
         }],
 
