@@ -26,7 +26,7 @@ $(document).ready(function() {
     var table = $('table').DataTable({
         'iDisplayLength': 10,
         'select': true,
-        'scrollX': false,
+        'scrollX': true,
         'columnDefs' : [
             { type: 'date', targets: 1 },
             { visible: false, searchable: true, targets: 0 }

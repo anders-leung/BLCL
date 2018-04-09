@@ -1,6 +1,5 @@
 var express = require('express');
 var mongoose = require('mongoose');
-var uniqueArrayPlugin = require('mongoose-unique-array');
 var path = require('path');
 var session = require('cookie-session');
 var favicon = require('serve-favicon');
@@ -25,6 +24,7 @@ var payment = require('./server/routes/payment');
 var manage_users = require('./server/routes/manage_users');
 var staff_analysis = require('./server/routes/staff_analysis');
 var update_models = require('./server/routes/update_models');
+var summary = require('./server/routes/summary');
 
 mongoose.Promise = require('bluebird');
 mongoose.connect('mongodb://localhost:27017/');
@@ -67,6 +67,7 @@ app.use('/payment', payment);
 app.use('/manage_users', manage_users);
 app.use('/staff_analysis', staff_analysis);
 app.use('/update_models', update_models);
+app.use('/summary', summary);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

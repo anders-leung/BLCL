@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var async = require('async');
+var to = require('../../../helpers/to');
 
 var CookieService = require('./../utils/cookies');
 var ClientService = require('../../modules/client');
@@ -22,10 +23,10 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
             });
         },
         
-        get_packed: function(next) {
-            ClientService.findClientsPacked(function(err, clients) {
-                next(err, clients);
-            });
+        get_packed: async function() {
+            [err, clients] = await to(ClientService.findClientsPacked());
+            if (err) return err;
+            return clients;
         },
         
         get_emailed: function(next) {
@@ -46,10 +47,10 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
             });
         },
         
-        get_done: function(next) {
-            ClientService.findClientsDone(function(err, clients) {
-                next(err, clients);
-            });
+        get_done: async function() {
+            [err, clients] = await to(ClientService.findClientsDone());
+            if (err) return err;
+            return clients;
         },
 
         get_all: function(next) {
@@ -58,12 +59,15 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
             });
         },
 
-        get_initials: function(next) {
-            UserService.getInitials(function(err, initials) {
-                next(err, initials);
-            });
+        get_initials: async function() {
+            [err, clients] = await to(UserService.getInitials());
+            if (err) return err;
+            return clients;
         }
+
     }, function(err, results) {
+        if (err) console.log(err);
+
         var missing = results.get_all.slice(0);
         var clients = [
             ['normal', results.get_normal],

@@ -1,7 +1,7 @@
 /**
  * Created by ander on 2017-09-12.
  */
-
+var to = require('../../helpers/to');
 var User = require('../models/user');
 
 var UserService = {
@@ -41,12 +41,11 @@ var UserService = {
         return User.schema.path('role').enumValues;
     },
 
-    getInitials : function(callback) {
-        User.find({}).distinct('initials', function(err, initials) {
-            initials.unshift('');
-            initials.sort();
-            callback(err, initials);
-        })
+    getInitials : async function() {
+        [err, initials] = await to(User.find({}).distinct('initials'));
+        if (err) return err;
+        initials.sort();
+        return initials;
     }
 };
 
