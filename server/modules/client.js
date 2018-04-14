@@ -72,6 +72,31 @@ var ClientService = {
         });
     },
 
+    findClientsOSSigned: function(callback) {
+        var normal = {};
+        normal['interviewDate'] = { $ne: '' };
+        normal['packed'] = true;
+        normal['signed'] = '';
+        normal['pytReceived'] = { $ne: '' };
+        normal['pytAmount'] = { $ne: '' };
+        normal['recBy'] = { $ne: '' };
+        normal['taxToCRA'] = { $ne: '' };
+
+        var emailed = {};
+        emailed['interviewDate'] = { $ne : '' };
+        emailed['packed'] = false;
+        emailed['signed'] = '';
+        emailed['emailed'] = { $ne : '' };
+        emailed['pytReceived'] = { $ne: '' };
+        emailed['pytAmount'] = { $ne: '' };
+        emailed['recBy'] = { $ne: '' };
+        emailed['taxToCRA'] = { $ne: '' };
+        
+        Client.find({ $or: [normal, emailed] }).lean().exec(function(err, clients) {
+            callback(err, clients);
+        });
+    },
+
     findClientsNoPreparer : function(callback) {
         var search = {};
         search['preparer'] = '';
@@ -101,6 +126,12 @@ var ClientService = {
         search['interviewDate'] = { $ne : '' };
         search['emailed'] = { $ne : '' };
         search['signed'] = '';
+        search['$or'] = [
+            { 'pytReceived': '' },
+            { 'pytAmount': '' },
+            { 'recBy': '' },
+            { 'taxToCRA': '' }
+        ]
         Client.find(search).lean().exec(function(err, clients) {
             callback(err, clients);
         });
@@ -117,6 +148,14 @@ var ClientService = {
         search['packed'] = true;
         search['emailed'] = '';
         search['signed'] = '';
+        search['$or'] = [
+            { 'pytReceived' : '' },
+            { 'pytAmount' : '' },
+            { 'recBy' : '' },
+            { 'taxToCRA' : '' }
+        ]
+
+        let err, clients;
         [err, clients] = await to(Client[method](search).lean().exec());
         if (err) return err;
         return clients;
@@ -203,6 +242,7 @@ var ClientService = {
             search = { preparer: preparer };
             method = 'count';
         }
+        let err, clients;
         [err, clients] = await to(Client[method](search).lean().exec());
         if (err) return err;
         return clients;
@@ -281,9 +321,10 @@ var ClientService = {
         search['emailed'] = '';
         var method = 'find';
         if (count) method = 'count';
-        [err, client] = await to(Client[method](search).lean().exec());
+        let err, clients;
+        [err, clients] = await to(Client[method](search).lean().exec());
         if (err) return err;
-        return client;
+        return clients;
     },
 
     findClientsWithUserWIP : async function(user, count) {
@@ -294,9 +335,10 @@ var ClientService = {
         search['emailed'] = '';
         var method = 'find';
         if (count) method = 'count';
-        [err, client] = await to(Client[method](search).lean().exec());
+        let err, clients;
+        [err, clients] = await to(Client[method](search).lean().exec());
         if (err) return err;
-        return client;
+        return clients;
     },
 
     findClientsWithUserOK : async function(user, count) {
@@ -307,9 +349,10 @@ var ClientService = {
         search['emailed'] = '';
         var method = 'find';
         if (count) method = 'count';
-        [err, client] = await to(Client[method](search).lean().exec());
+        let err, clients;
+        [err, clients] = await to(Client[method](search).lean().exec());
         if (err) return err;
-        return client;
+        return clients;
     },
 
     findClientsWithUserEmailed : async function(user) {
@@ -318,9 +361,10 @@ var ClientService = {
         search['preparerDone'] = 'OK';
         search['readyToPack'] = '';
         search['emailed'] = { $ne : '' };
-        [err, client] = await to(Client.find(search).lean().exec());
+        let err, clients;
+        [err, clients] = await to(Client.find(search).lean().exec());
         if (err) return err;
-        return client;
+        return clients;
     },
 
     findClientsPreparerDone : async function(user, count) {
@@ -330,9 +374,10 @@ var ClientService = {
         search['readyToPack'] = { $ne : '' };
         var method = 'find';
         if (count) method = 'count';
-        [err, client] = await to(Client[method](search).lean().exec());
+        let err, clients;
+        [err, clients] = await to(Client[method](search).lean().exec());
         if (err) return err;
-        return client;
+        return clients;
     },
 
     findClientsDone : async function(preparer) {
@@ -350,6 +395,7 @@ var ClientService = {
         search['taxToCRA'] = { $ne : '' };
         search['signed'] = { $ne : '' };
         search['packed'] = true;
+        let err, clients;
         [err, clients] = await to(Client[method](search).lean().exec());
         if (err) return err;
         return clients;

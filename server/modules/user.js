@@ -45,6 +45,7 @@ var UserService = {
         [err, initials] = await to(User.find({}).distinct('initials'));
         if (err) return err;
         initials.sort();
+        initials.unshift('');
         return initials;
     }
 };
