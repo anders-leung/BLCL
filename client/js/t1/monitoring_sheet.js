@@ -151,6 +151,9 @@ $(document).ready(function() {
                     return '#osPytTable';
                 }
             } else {
+                if (pyt) {
+                    return "osSignedTable";
+                }
                 return '#emailedTable';
             }
         } else {
@@ -162,6 +165,9 @@ $(document).ready(function() {
                         return '#osPytTable';
                     }
                 } else {
+                    if (pyt) {
+                        return "#osSignedTable";
+                    }
                     return '#packedTable';
                 }
             } else {

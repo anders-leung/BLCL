@@ -9,6 +9,7 @@ var CookieService = require('./../utils/cookies');
 var ClientService = require('../../modules/client');
 
 router.get('/', CookieService.isLoggedIn, async function(req, res) {
+    let err, clients;
     [err, clients] = await to(ClientService.findAllClients());
     res.render('t1/directory', {
         clients: clients,

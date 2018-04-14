@@ -39,6 +39,7 @@ async function loadUserStats(initials) {
     for (let user of initials) {
         dict[user] = {};
         for (let fn in functions) {
+            let err, clients;
             [err, clients] = await functions[fn](user);
             if (err) error = err;
             dict[user][fn] = clients;

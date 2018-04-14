@@ -24,6 +24,7 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
         },
         
         get_packed: async function() {
+            let err, clients;
             [err, clients] = await to(ClientService.findClientsPacked());
             if (err) return err;
             return clients;
@@ -31,6 +32,12 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
         
         get_emailed: function(next) {
             ClientService.findClientsEmailed(function(err, clients) {
+                next(err, clients);
+            });
+        },
+
+        get_os_signed: function(next) {
+            ClientService.findClientsOSSigned(function(err, clients) {
                 next(err, clients);
             });
         },
@@ -48,6 +55,7 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
         },
         
         get_done: async function() {
+            let err, clients;
             [err, clients] = await to(ClientService.findClientsDone());
             if (err) return err;
             return clients;
@@ -60,6 +68,7 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
         },
 
         get_initials: async function() {
+            let err, clients;
             [err, clients] = await to(UserService.getInitials());
             if (err) return err;
             return clients;
@@ -74,6 +83,7 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
             ['noPreparer', results.get_no_preparer],
             ['packed', results.get_packed],
             ['emailed', results.get_emailed],
+            ['osSigned', results.get_os_signed],
             ['osPyt', results.get_os_pyt],
             ['emailedNotPacked', results.get_emailed_not_packed],
             ['done', results.get_done]
