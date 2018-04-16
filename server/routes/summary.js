@@ -37,6 +37,7 @@ async function loadUserStats(initials) {
     let error;
 
     for (let user of initials) {
+        if (!user) continue;
         dict[user] = {};
         for (let fn in functions) {
             let err, clients;
