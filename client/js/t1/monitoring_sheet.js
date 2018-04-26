@@ -74,7 +74,7 @@ $(document).ready(function() {
         });
 
         var table;
-        if (role == 'Administrator' && (tableId == '#osPytTable' || tableId == '#normalTable')) {
+        if (role == 'Administrator' && (tableId == '#osPytTable' || tableId == '#normalTable' || tableId == '#osSignedTable' || tableId == '#emailedNotPacked')) {
             table = $(tableId).DataTable(exportDatatable);
             $("div.toolbar").html('<p>Exported Excel file name: <input class="title" type="text"></p>');
             $('.dt-buttons').find('button').appendTo($('div.toolbar').find('p'));
