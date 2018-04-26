@@ -6,6 +6,7 @@ var Client = require('../models/client');
 var WriteExcelService = require('./write_excel');
 var clientNames = require('./utils/client');
 var async = require('async');
+var moment = require('moment');
 
 function cleanValues(values) {
     for (var field in values) {
@@ -228,6 +229,9 @@ var ClientService = {
                     var updates = {}
                     updates['fileName'] = clientNames.getFileName(client);
                     updates['pathName'] = clientNames.getPathName(client);
+                    if (client.pytReceived && client.pytAmount && client.recBy && client.taxToCRA) {
+                        updates['pytDate'] = moment().format('YYYY-MMM-DD').toUpperCase();
+                    }
                     Client.update(search, { $set: updates }, function(file_name_err) {
                         if (file_name_err) console.log(file_name_err);
                         var id_search = { _id: oldClient._id };
