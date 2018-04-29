@@ -52,11 +52,13 @@ function exportDatatable(name) {
         columns = [3, 8, 9, 10, 11, 12, 13, 14, 16, 17, 18, 20, 21, 22];
     }
 
+    var options = { year: 'numeric', month: 'short', day: 'numeric' };
+
     exportDatatable.buttons = [{
         extend: 'excelHtml5',
         footer: true,
         filename: function() {
-            return $('#' + name + 'Title').val() || name;
+            return $('#' + name + 'Title').val() || (new Date()).toLocaleDateString('en-CA', options) + ' - ' + name;
         },
         exportOptions: {
             columns: columns
