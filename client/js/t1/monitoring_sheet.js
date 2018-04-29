@@ -26,28 +26,44 @@ function colorHeader(header) {
     if (header.index() == 29) header.css('color', 'purple');
 }
 
-var exportDatatable = {
-    'columnDefs': [
-        { type: 'date', targets: [9, 20, 24, 25, 30, 31, 32, 33] },
-        { visible: false, searchable: true, targets: 0 }
-    ],
-    'select': true,
-    'scrollX': true,
-    rowCallback: function(row, data, index, full) {
-        colorCells(row);
-    },
-    'iDisplayLength': 10,
-    'dom': '<"toolbar">lBfrtip',
-    'buttons': [{
+var exportTables = ['normal', 'noPreparer', 'osSigned', 'osPyt', 'emailedNotPacked'];
+
+function exportDatatable(name) {
+    var exportDatatable = {
+        'columnDefs': [
+            { type: 'date', targets: [9, 20, 24, 25, 30, 31, 32, 33] },
+            { visible: false, searchable: true, targets: 0 }
+        ],
+        'select': true,
+        'scrollX': true,
+        rowCallback: function(row, data, index, full) {
+            colorCells(row);
+        },
+        'iDisplayLength': 10,
+        'dom': '<"toolbar">lBfrtip'
+    }
+
+    var columns = [10, 11, 12, 13, 14, 20, 22, 23, 24, 25];
+    if (name == 'osSigned') {
+        columns = [10, 11, 12, 13, 14, 20, 22, 23, 24, 26, 30];
+    } else if (name == 'noPreparer') {
+        columns = [8, 9, 10, 11, 12, 13, 14, 15, 16];
+    } else if (name == 'normal') {
+        columns = [3, 8, 9, 10, 11, 12, 13, 14, 16, 17, 18, 20, 21, 22];
+    }
+
+    exportDatatable.buttons = [{
         extend: 'excelHtml5',
         footer: true,
         filename: function() {
-            return $('.title').val();
+            return $('#' + name + 'Title').val() || name;
         },
         exportOptions: {
-            columns: [9, 10, 11, 12, 13, 27]
+            columns: columns
         }
     }]
+
+    return exportDatatable;
 }
 
 
@@ -74,10 +90,12 @@ $(document).ready(function() {
         });
 
         var table;
-        if (role == 'Administrator' && (tableId == '#osPytTable' || tableId == '#normalTable' || tableId == '#osSignedTable' || tableId == '#emailedNotPacked')) {
-            table = $(tableId).DataTable(exportDatatable);
-            $("div.toolbar").html('<p>Exported Excel file name: <input class="title" type="text"></p>');
-            $('.dt-buttons').find('button').appendTo($('div.toolbar').find('p'));
+        var name = tableId.substring(1, tableId.length - 5);
+        if (role == 'Administrator' && exportTables.includes(name)) {
+            var title = name + 'Title';
+            table = $(tableId).DataTable(exportDatatable(name));
+            $('#' + name).find('div.toolbar').html('<p>Exported Excel file name: <input id="' + title + '" type="text"></p>');
+            $('.dt-buttons').find('button').appendTo($('#' + name).find('div.toolbar').find('p'));
         } else {
             table = $(tableId).DataTable({
                 'columnDefs': [
