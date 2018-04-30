@@ -24,14 +24,31 @@ $(document).ready(function() {
             $(this).html( '<input type="text"/>' );
         });
 
+        var name = tableId.substring(1, tableId.length - 5);
+        var options = { year: 'numeric', month: 'short', day: 'numeric' };
         var table = $(tableId).DataTable({
             'columnDefs': [
                 { type: 'date', targets: [5, 7] },
                 { visible: false, searchable: true, targets: 0 }
             ],
-            'select': true
+            'select': true,
+            'dom': '<"toolbar">lBfrtip',
+            'buttons': [{
+                extend: 'excelHtml5',
+                filename: function() {
+                    return $('#' + name + 'Title').val() || (new Date()).toLocaleDateString('en-CA', options) + ' - ' + name;
+                },
+                exportOptions: {
+                    columns: ':visible'
+                }
+            }]
         });
-        
+
+        if (role == 'Administrator') {
+            var title = name + 'Title';
+            $('#' + name).find('div.toolbar').html('<p>Exported Excel file name: <input id="' + title + '" type="text"></p>');
+            $('.dt-buttons').find('button').appendTo($('#' + name).find('div.toolbar').find('p'));
+        }
 
         table.columns().every(function() {
             var that = this;
