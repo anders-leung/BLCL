@@ -26,7 +26,7 @@ function colorHeader(header) {
     if (header.index() == 29) header.css('color', 'purple');
 }
 
-var exportTables = ['normal', 'noPreparer', 'osSigned', 'osPyt', 'emailedNotPacked'];
+var exportTables = ['normal', 'noPreparer', 'packed', 'osSigned', 'osPyt', 'emailedNotPacked'];
 
 function exportDatatable(name) {
     var exportDatatable = {
@@ -50,6 +50,8 @@ function exportDatatable(name) {
         columns = [8, 9, 10, 11, 12, 13, 14, 15, 16];
     } else if (name == 'normal') {
         columns = [3, 8, 9, 10, 11, 12, 13, 14, 16, 17, 18, 20, 21, 22];
+    } else if (name == 'packed') {
+        columns = [3, 8, 9, 10, 11, 12, 13, 14, 16, 17, 18, 20, 22];
     }
 
     var options = { year: 'numeric', month: 'short', day: 'numeric' };
