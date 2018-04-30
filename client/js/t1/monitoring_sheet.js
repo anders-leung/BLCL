@@ -58,7 +58,6 @@ function exportDatatable(name) {
 
     exportDatatable.buttons = [{
         extend: 'excelHtml5',
-        footer: true,
         filename: function() {
             return $('#' + name + 'Title').val() || (new Date()).toLocaleDateString('en-CA', options) + ' - ' + name;
         },
