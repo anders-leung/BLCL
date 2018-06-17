@@ -1,0 +1,169 @@
+extends ../layout
+
+block content
+    if role == 'Administrator'
+        script(type='text/javascript', src='/js/datatables/jquery.dataTables.min.js')
+        script(type='text/javascript', src='/js/datatables/dataTables.buttons.min.js')
+        script(type='text/javascript', src='/js/datatables/jszip.min.js')
+        script(type='text/javascript', src='/js/datatables/buttons.html5.min.js')
+        script(type='text/javascript', src='/js/datatables/datatables-sum.js')
+    script(type="text/javascript", src='/js/jquery.floatThead.js')
+    script(type='text/javascript').
+        var role = !{JSON.stringify(role)};
+        var user = !{JSON.stringify(user)};
+    script(src='/js/t1/monitoring.js')
+
+    ul.nav.nav-tabs
+        li.nav-item
+            a.nav-link.active(data-toggle='tab' href='#normal') Normal
+        li.nav-item
+            a.nav-link(data-toggle='tab' href='#noPreparer') No PRE
+        li.nav-item
+            a.nav-link(data-toggle='tab' href='#packed') Packed
+        li.nav-item
+            a.nav-link(data-toggle='tab' href='#emailed') Emailed
+        li.nav-item
+            a.nav-link(data-toggle='tab' href='#osSigned') O/S Signed
+        li.nav-item
+            a.nav-link(data-toggle='tab' href='#osPyt') O/S PYT
+        li.nav-item
+            a.nav-link(data-toggle='tab' href='#emailedNotPacked') Emailed Not Packed
+        li.nav-item
+            a.nav-link(data-toggle='tab' href='#missing') Missing
+        if role == 'Administrator'
+            li.nav-item
+                a.nav-link(data-toggle='tab' href='#done') Done
+            li.nav-item
+                a.nav-link(data-toggle='tab' href='#all') All
+        
+
+    #table.col-12.tab-content(style='border-top: 0')
+        - for (var i = 0; i < clients.length; i++)
+            div(id=clients[i][0]).tab-pane
+                table(id=clients[i][0] + 'Table').cell-border
+                    thead
+                        tr
+                            th
+                            th Slip
+                            th Self Empl
+                            th T1135
+                            th Rental
+                            th 777
+                            th Stock
+                            th New
+                            th CFM PU
+                            th Pickup Date
+                            th Husband Last Name
+                            th Husband First Name
+                            th Wife Last Name
+                            th Wife First Name
+                            th Group
+                            th IN
+                            th PRE
+                            th PRE OK
+                            th CKR
+                            th Outstanding Info
+                            th Remarks
+                            th Ready To PRT/Pack
+                            th Packed
+                            th GST
+                            th Method
+                            th T1 e Si
+                            th H Si
+                            th W Si
+                            th PYT Rec'd
+                            th PYT Amount
+                            th Rec'd By
+                            th Tax To CRA
+                            th Email/Call Pu
+                            th Interview Date
+                            th Phone Number
+                            th Cell
+                            th Email
+                    tfoot
+                        tr
+                            th
+                            th Slip
+                            th Self Empl
+                            th T1135
+                            th Rental
+                            th 777
+                            th Stock
+                            th New
+                            th CFM PU
+                            th Pickup Date
+                            th Husband Last Name
+                            th Husband First Name
+                            th Wife Last Name
+                            th Wife First Name
+                            th Group
+                            th IN
+                            th PRE
+                            th PRE OK
+                            th CKR
+                            th Outstanding Info
+                            th Remarks
+                            th Ready To Pack
+                            th Packed
+                            th GST
+                            th Method
+                            th T1 e Si
+                            th H Si
+                            th W Si
+                            th PYT Rec'd
+                            th PYT Amount
+                            th Rec'd By
+                            th Tax To CRA
+                            th Call Date
+                            th Interview Date
+                            th Phone Number
+                            th Cell
+                            th Email
+                    tbody
+                        each client in clients[i][1]
+                            tr(data-href="/client/" + client.pathName)
+                                td.text-nowrap #{client.fileName}
+                                td #{client.slips ? 'Y' : ''}
+                                td #{client.selfEmployed ? 'Y' : ''}
+                                td
+                                    if client.t1135 == 'N' || client.t1135 == ''
+                                        | 0
+                                    if client.t1135 == 'SIMPLE'
+                                        | 1
+                                    if client.t1135 == 'COMPLICATED'
+                                        | 2
+                                td #{client.rental ? 'Y' : ''}
+                                td #{client.t777 ? 'Y' : ''}
+                                td #{client.stocks ? 'Y' : ''}
+                                td #{client.new ? 'Y' : ''}
+                                td #{client.confirmPickupDate ? 'Y' : ''}
+                                td.text-nowrap.date-edit #{client.pickupDate}
+                                td.text-nowrap #{client.husband ? client.husband.lastName : ''}
+                                td.text-nowrap #{client.husband ? client.husband.firstName : ''}
+                                td.text-nowrap #{client.wife ? client.wife.lastName : ''}
+                                td.text-nowrap #{client.wife ? client.wife.firstName : ''}
+                                td.text-nowrap #{client.group}
+                                td #{client.interviewer}
+                                td.text-nowrap.select.admin.initials #{client.preparer}
+                                td.select.status.admin #{client.preparerDone}
+                                td.select.initials #{client.checker}
+                                td.text-nowrap #{client.outstandingInfo ? 'Y' : ''}
+                                td.text-nowrap.edit #{client.remarks}
+                                td.text-nowrap.date-edit #{client.readyToPack}
+                                td.select.toggle #{client.packed ? 'Y' : ''}
+                                td 
+                                    if (client.husband.rental.gstReturn || client.husband.selfEmployed.gstReturn || client.wife.rental.gstReturn || client.wife.selfEmployed.gstReturn)
+                                        | Y
+                                td #{client.method}
+                                td.text-nowrap.date-edit #{client.emailed}
+                                td.text-nowrap.date-edit #{client.husband.signed}
+                                td.text-nowrap.date-edit #{client.wife.signed}
+                                td.text-nowrap.select.pytType #{client.pytReceived}
+                                td.text-nowrap.edit #{client.pytAmount}
+                                td.text-nowrap.select.initials #{client.recBy}
+                                td.text-nowrap.select.tax #{client.taxToCRA}
+                                td.text-nowrap.date-edit #{client.callDate}
+                                td.text-nowrap #{client.interviewDate}
+                                td.text-nowrap #{client.tel.number}
+                                td.text-nowrap #{client.cell.number}
+                                td.text-nowrap #{client.email.value}

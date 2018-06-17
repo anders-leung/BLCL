@@ -3,10 +3,10 @@
  */
 var express = require('express');
 var router = express.Router();
-var to = require('../../../helpers/to');
+var to = require('../../helpers/to');
 
 var CookieService = require('./../utils/cookies');
-var ClientService = require('../../modules/client');
+var ClientService = require('../../modules/t1/client');
 
 router.get('/', CookieService.isLoggedIn, async function(req, res) {
     let err, clients;

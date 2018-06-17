@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var ClientService = require('../modules/client');
+var ClientService = require('../modules/t1/client');
 var UserService = require('../modules/user');
 
 router.get('/', function(req, res) {

@@ -2,7 +2,7 @@
  * Created by ander on 2017-09-21.
  */
 
-var ClientService = require('../client');
+var ClientService = require('../../modules/t1/client');
 var UserService = require('../../modules/user');
 
 module.exports = function() {

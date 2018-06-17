@@ -1,7 +1,7 @@
 /**
  * Created by ander on 2017-11-22.
  */
-var ClientService = require('../modules/client');
+var ClientService = require('../modules/t1/client');
 
 var m_names = ["JAN", "FEB", "MAR",
     "APR", "MAY", "JUN", "JUL", "AUG", "SEP",
