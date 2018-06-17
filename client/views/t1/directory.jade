@@ -11,8 +11,19 @@ block content
         table.cell-border
             thead
                 tr
-                    th Client Names
+                    th Client Name
+                    th Preparer
+                    th T1135
+
             tbody
                 each client in clients
                     tr(data-href="/client/" + client.pathName)
                         td.text-nowrap #{client.fileName}
+                        td #{client.preparer}
+                        td
+                            if client.t1135 == 'N' || client.t1135 == ''
+                                | 0
+                            if client.t1135 == 'SIMPLE'
+                                | 1
+                            if client.t1135 == 'COMPLICATED'
+                                | 2
