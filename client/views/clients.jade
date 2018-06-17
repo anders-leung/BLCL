@@ -54,6 +54,7 @@ block content
                             th Phone Number
                             th Cell
                             th Email
+                            th Remarks
                     tfoot
                         tr
                             th
@@ -83,6 +84,7 @@ block content
                             th Phone Number
                             th Cell
                             th Email
+                            th Remarks
                     tbody
                         each client in clients[i][1]
                             tr(data-href="/client/" + client.pathName)
@@ -119,3 +121,4 @@ block content
                                 th.text-nowrap #{client.tel.number}
                                 th.text-nowrap #{client.cell.number}
                                 th.text-nowrap #{client.email.value}
+                                th.text-nowrap #{client.remarks}
