@@ -6,9 +6,9 @@ var clientNames = {
     getFileName : function(client) {
         var clientName = '';
 
-        if (client.husband.firstName) {
+        if (client.husband && client.husband.firstName) {
             clientName += client.husband.lastName + ', ' + client.husband.firstName;
-            if (client.wife.firstName) {
+            if (client.wife && client.wife.firstName) {
                 clientName += ' and ';
                 clientName += client.wife.lastName + ', ' + client.wife.firstName;
             }
@@ -21,10 +21,10 @@ var clientNames = {
     getPathName : function(client) {
         var clientName = '';
 
-        if (client.husband.firstName) {
+        if (client.husband && client.husband.firstName) {
             clientName += client.husband.lastName.replace(/ /g,'') + '-' +
                 client.husband.firstName.replace(/ /g,'');
-            if (client.wife.firstName) {
+            if (client.wife && client.wife.firstName) {
                 clientName += '&';
                 clientName += client.wife.lastName.replace(/ /g,'') + '-' +
                     client.wife.firstName.replace(/ /g,'');
