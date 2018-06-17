@@ -81,6 +81,7 @@ var ClientSchema = new Schema({
         sin: { type: String, default: "" }
     },
     husband: {
+        signed: { type: String, default: '' },
         citizenship: { type: Boolean, default: false },
         election: { type: Boolean, default: false },
         firstName: { type: String, default: "" },
@@ -172,6 +173,7 @@ var ClientSchema = new Schema({
         studentLoan: { type: Boolean, default: false }
     },
     wife: {
+        signed: { type: String, default: '' },
         citizenship: { type: Boolean, default: false },
         election: { type: Boolean, default: false },
         firstName: { type: String, default: "" },
@@ -326,7 +328,7 @@ var ClientSchema = new Schema({
     signed: { type: String, default: '' },
     pytReceived: {
         type: String,
-        enum: [ '', 'ADV', 'CA', 'CK', 'DD', 'ET', 'INV', 'OS' ],
+        enum: [ '', 'ADV', 'CA', 'CHQ', 'DD', 'ET', 'INV', 'OS' ],
         default: ''
     },
     pytAmount: { type: String, default: '' },
