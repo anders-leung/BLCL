@@ -88,9 +88,8 @@ block content
                         .row
                             each service in ['nr6', 'nr4', 's216', 's115', 'cc']
                                 .form-check
-                                    - var name = 'services' + service.charAt(0).toUpperCase() + service.slice(1);
-                                    label.form-check-label(for=name)
-                                        input(id=name).form-check-input(type='checkbox' name="services.#{service}")
+                                    label.form-check-label(for=service)
+                                        input(id=service).form-check-input(type='checkbox' name="#{service}")
                                         | #{service.toUpperCase()}
             #properties.content-part(data-title='Properties')
                 .content-inner
