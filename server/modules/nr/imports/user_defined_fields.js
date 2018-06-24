@@ -12,7 +12,13 @@ module.exports = {
     '4': fn('remarks'),
     '6': fn('startYear'),
     '7': function(value, client) {
-        client.services = value.split(', ').map(x => { return { service: x } });
+        for (let service of value.split(', ')) {
+            if (service == 'NR6') client.nr6 = {};
+            if (service == 'NR4') client.nr4 = {};
+            if (service == 'S216') client.s216 = {};
+            if (service == 'CC') client.cc = {};
+            if (service == 'S116') client.s116 = {};
+        }
     },
     '8': fn('status'),
     '9': fn('owner.sin'),
@@ -27,29 +33,27 @@ module.exports = {
     '18': fn('properties[3]'),
     '19': fn('properties[4]'),
     '20': fn('properties[5]'),
-    '21': fn('bankInfo'),
-    '22': fn('name'),
-    '23': fn('address'),
-    '24': fn('number'),
-    '25': fn('tel'),
-    '26': fn('fax'),
-    '27': fn('cell'),
-    '28': fn('pager'),
-    '29': fn('email'),
-    '65': fn('rental.contact'),
-    '67': fn('rental.mortgage.contact'),
-    '68': fn('rental.mortgage.bank'),
-    '69': fn('rental.mortgage.number'),
-    '70': fn('rental.bank.tel'),
-    '71': fn('rental.bank.fax'),
-    '72': fn('rental.bank.contact'),
-    '76': fn('cc.usage'),
-    '77': fn('cc.completionDates[0]'),
-    '78': fn('cc.completionDates[1]'),
-    '79': fn('cc.lawFirm.name'),
-    '80': fn('cc.lawFirm.address'),
-    '81': fn('cc.conveyancer'),
-    '82': fn('cc.lawFirm.tel'),
-    '83': fn('cc.lawFirm.fax'),
-    '84': fn('cc.lawFirm.email')
+    '22': function(value, client) {
+        client.agent = { name: value }
+    },
+    '23': fn('agent.address'),
+    '24': fn('agent.number'),
+    '25': fn('agent.tel'),
+    '26': fn('agent.fax'),
+    '27': fn('agent.cell'),
+    '28': fn('agent.pager'),
+    '29': fn('agent.email'),
+    '77': function(value, client) {
+        if (!client.cc) client.cc = {};
+        client.cc.completionDate = value;
+    },
+    '79': function(value, client) {
+        client.lawyer = { name: value }
+    },
+    '80': function (value, client) {
+        client.lawyer.address = { street: value };
+    },
+    '82': fn('lawyer.tel'),
+    '83': fn('lawyer.fax'),
+    '84': fn('lawyer.email')
 }
