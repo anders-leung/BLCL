@@ -8,15 +8,6 @@ $(document).ready(function() {
 
     // function for setting up tables
     function setTable(tableId) {
-        if (tableId == '#osSignedTable') {
-            $('.tab-pane').each(function (i) {
-                if (i == 0) {
-                    $(this).addClass('in');
-                    $(this).addClass('active');
-                }
-            });
-        }
-
         $(tableId + ' tfoot th').each( function (i) {
             //$(this).html(i);
             $(this).html( '<input type="text"/>' );
@@ -24,11 +15,9 @@ $(document).ready(function() {
 
         var table = $(tableId).DataTable({
             'columnDefs': [
-                { type: 'date', targets: [10] },
                 { visible: false, searchable: true, targets: 0 }
             ],
-            'select': true,
-            'scrollX': true
+            'select': true
         });
 
         table.columns().every(function() {
