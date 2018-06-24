@@ -7,66 +7,91 @@ block content
     script(src='/js/nr/monitoring.js')
 
     ul.nav.nav-tabs
-        li.nav-item
-            a.nav-link.active(data-toggle='tab' href='#osSigned') O/S Signed
-        li.nav-item
-            a.nav-link(data-toggle='tab' href='#osPyt') O/S PYT        
+        li.nav-item.dropdown
+            a.nav-link.dropdown-toggle(data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false')='Year: ' + year
+            div.dropdown-menu
+                each year in years
+                    a.dropdown-item(href='/nr/monitoring/#{year}')=year
+        - for (var i = 0; i < clients.length; i++)
+            li.nav-item
+                if i == 0
+                    a.nav-link.active(data-toggle='tab' href='#' + clients[i][0])=clients[i][0].toUpperCase()
+                else 
+                    a.nav-link(data-toggle='tab' href='#' + clients[i][0])=clients[i][0].toUpperCase()
 
     #table.col-12.tab-content(style='border-top: 0')
         - for (var i = 0; i < clients.length; i++)
-            div(id=clients[i][0]).tab-pane
-                table(id=clients[i][0] + 'Table').cell-border
-                    thead
-                        tr
-                            th
-                            th NR6
-                            th NR4
-                            th S216
-                            th S115
-                            th CC
-                            th Owner Last Name
-                            th Owner First Name
-                            th Co-owner Last Name
-                            th Co-owner First Name
-                            th Signed
-                            th PYT Rec'd
-                            th PYT Amount
-                    tfoot
-                        tr
-                            th
-                            th NR6
-                            th NR4
-                            th S216
-                            th S115
-                            th CC
-                            th Owner Last Name
-                            th Owner First Name
-                            th Co-owner Last Name
-                            th Co-owner First Name
-                            th Signed
-                            th PYT Rec'd
-                            th PYT Amount
-                    tbody
-                        each client in clients[i][1]
-                            tr(data-href="/nr/client/" + client.pathName)
-                                td.text-nowrap #{client.fileName}
-                                td 
-                                    each service in client.services
-                                        |   #{service == 'NR6' ? 'Y' : ''}
-                                td 
-                                    each service in client.services
-                                        |   #{service == 'NR4' ? 'Y' : ''}
-                                td 
-                                    each service in client.services
-                                        |   #{service == 'S216' ? 'Y' : ''}
-                                td 
-                                    each service in client.services
-                                        |   #{service == 'S115' ? 'Y' : ''}
-                                td #{client.cc}
-                                td #{client.owner.firstName}
-                                td #{client.owner.lastName}
-                                td #{client.coOwner ? client.coOwner.firstName : ''}
-                                td #{client.coOwner ? client.coOwner.lastName : ''}
-                                td.date-edit #{client.signed}
-                                td.select.pytType #{client.pytRec}
-                                td.edit #{client.pytAmount}
+            if i == 0
+                div(id=clients[i][0]).tab-pane.active.in
+                    table(id=clients[i][0] + 'Table').cell-border
+                        thead
+                            tr
+                                th
+                                th Owner Last Name
+                                th Owner First Name
+                                th Co-owner Last Name
+                                th Co-owner First Name
+                                th Services
+                        tfoot
+                            tr
+                                th
+                                th Owner Last Name
+                                th Owner First Name
+                                th Co-owner Last Name
+                                th Co-owner First Name
+                                th Services
+                        tbody
+                            each client in clients[i][1]
+                                tr(data-href="/nr/client/" + client.pathName)
+                                    td #{client.name}
+                                    td #{client.owner.firstName}
+                                    td #{client.owner.lastName}
+                                    td #{client.coOwner ? client.coOwner.firstName : ''}
+                                    td #{client.coOwner ? client.coOwner.lastName : ''}
+                                    td #{client.services}
+            else
+                div(id=clients[i][0]).tab-pane
+                    table(id=clients[i][0] + 'Table').cell-border
+                        thead
+                            tr
+                                th
+                                th Owner Last Name
+                                th Owner First Name
+                                th Co-owner Last Name
+                                th Co-owner First Name
+                                th Signed
+                                th CRA
+                                th Invoiced
+                                th Invoice #
+                                th PYT Rec'd
+                                th PYT Amount
+                                th Agent Signed
+                        tfoot
+                            tr
+                                th
+                                th Owner Last Name
+                                th Owner First Name
+                                th Co-owner Last Name
+                                th Co-owner First Name
+                                th Signed
+                                th CRA
+                                th Invoiced
+                                th Invoice #
+                                th PYT Rec'd
+                                th PYT Amount
+                                th Agent Signed
+                        tbody
+                            each client in clients[i][1]
+                                tr(data-href="/nr/client/" + client.pathName)
+                                    td.text-nowrap #{client.name}
+                                    td #{client.owner.firstName}
+                                    td #{client.owner.lastName}
+                                    td #{client.coOwner ? client.coOwner.firstName : ''}
+                                    td #{client.coOwner ? client.coOwner.lastName : ''}
+                                    td.date-edit #{client[clients[i][0]].signed}
+                                    td.date-edit #{client[clients[i][0]].cra}
+                                    td.date-edit #{client[clients[i][0]].invoice ? client.invoice.date : ''}
+                                    td.date-edit #{client[clients[i][0]].invoice ? client.invoice.number : ''}
+                                    td.select.pytType #{client[clients[i][0]].payment ? client[clients[i][0]].payment.type : ''}
+                                    td.edit #{client[clients[i][0]].payment ? client[clients[i][0]].payment.amount : ''}
+                                    td.date-edit #{client[clients[i][0]].agentSigned}
