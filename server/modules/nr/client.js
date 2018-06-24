@@ -6,6 +6,10 @@ let ClientService = {
         return await to(Client.find(query).lean().exec());
     },
 
+    getYears: async function() {
+        return await to(Client.find({}).distinct('year'));
+    },
+
     findOsPyt: async function() {
         let search = {};
         search['pytRec'] = { $ne: '' };
