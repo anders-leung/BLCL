@@ -23,14 +23,14 @@ $(document).ready(function() {
     if (client) {
         var paths = keyify(client);
         for (var i = 0; i < paths.length; i++) {
-            if (paths[i].includes('_')) continue;
             var name = paths[i];
             name = name.replace(/(\[)(\])/g, '\\\\$1\\\\$2');
-            if (paths[i].includes('services')) {
-                var service = Object.byString(client, paths[i]).toLowerCase();
-                $('[name="services.' + service + '"]').prop('checked', true);
+            if (paths[i].includes('_')) {
+                name = paths[i].split('._')[0];
+                $('[name="' + name + '"]').prop('checked', true);
+            } else {
+                $('[name="' + name + '"]').val(Object.byString(client, paths[i]));
             }
-            $('[name="' + name + '"]').val(Object.byString(client, paths[i]));
         }
     }
 });
@@ -61,7 +61,13 @@ function keyify(obj, prefix = '') {
                     return el + '[' + i + ']'
                 }
             });
-            if (Array.isArray(map[0])) return [...res, ...map[0]];
+            if (Array.isArray(map[0])) {
+                var temp = [];
+                map.map(function(x) {
+                    temp = temp.concat(x);
+                });
+                map = temp;
+            }
             return [...res, ...map];
         } else if( obj[el] !== null && typeof(obj[el]) === 'object' ) {
             return [...res, ...keyify(obj[el], prefix + el + '.')];
