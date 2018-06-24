@@ -1,5 +1,12 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var NR6 = require('./Services').NR6;
+var NR4 = require('./Services').NR4;
+var S216 = require('./Services').S216;
+var CC = require('./Services').CC;
+var S116 = require('./Services').S116;
+var Address = require('../Address');
+var Contact = require('./Contact');
 
 var NRSchema = new Schema({
     name: {
@@ -25,52 +32,20 @@ var NRSchema = new Schema({
     phones: [ String ],
     fax: String,
     nr: String,
-    services: [{
-        service: String,
-        signed: String,
-        cra: String,
-        invoiced: String,
-        invoiceNumber: String,
-        pytRec: String,
-        pytAmount: String
-    }],
     startYear: String,
     status: {
         type: String,
-        enum: [ 'ACTIVE', 'INACTIVE', 'PENDING' ]
+        enum: [ 'ACTIVE', 'INACTIVE' ]
     },
-    address: {
-        apartment: String,
-        street: String,
-        city: String,
-        province: String,
-        postal: String,
-        country: String
-    },
-    agent: {
-        type: Schema.Types.ObjectId,
-        ref: 'Contact'
-    },
-    propertyManager: {
-        type: Schema.Types.ObjectId,
-        ref: 'Contact'
-    },
-    lawyer: {
-        type: Schema.Types.ObjectId,
-        ref: 'Contact'
-    },
-    properties: [{
-        apartment: String,
-        street: String,
-        city: String,
-        province: String,
-        postal: String
-    }],
-    purhcaser: {
+    address: Address.schema,
+    agent: Contact.schema,
+    propertyManager: Contact.schema,
+    lawyer: Contact.schema,
+    properties: [ Address.schema ],
+    purchaser: {
         type: String,
         enum: [ 'YES', 'NO' ]
     },
-    bankInfo: String,
     signed: String,
     pytRec: String,
     pytAmount: String,
@@ -88,19 +63,13 @@ var NRSchema = new Schema({
             contact: String
         }
     },
-    cc: {
-        usage: String,
-        completionDates: [ String ],
-        conveyancer: String,
-        lawFirm: {
-            name: String,
-            address: String,
-            tel: String,
-            fax: String,
-            email: String
-        }
-    },
-    year: Number
+    nr6: NR6.schema,
+    nr4: NR4.schema,
+    s216: S216.schema,
+    cc: CC.schema,
+    s116: S116.schema,
+    year: Number,
+    closed: Boolean
 });
 
 module.exports = mongoose.model('NR', NRSchema);

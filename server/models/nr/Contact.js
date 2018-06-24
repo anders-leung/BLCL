@@ -1,23 +1,16 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+let mongoose = require('mongoose');
+let Schema = mongoose.Schema;
+let Address = require('../Address');
 
-var ContactSchema = new Schema({
-    type: String,
+let ContactSchema = new Schema({
     number: String,
     name: String,
-    address: {
-        type: Schema.Types.ObjectId,
-        ref: 'Address'
-    },
+    address: Address.schema,
     tel: String,
     fax: String,
     cell: String,
     pager: String,
     email: String,
-    nr: {
-        type: Schema.Types.ObjectId,
-        ref: 'NR'
-    },
     contact: {
         company: String,
         person: String
