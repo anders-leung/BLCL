@@ -24,11 +24,7 @@ var CookieService = {
         if (CookieService.readCookie(req)) {
             next();
         } else {
-            var newUrl = '/login';
-            var previousUrl = req.originalUrl;
-            previousUrl = previousUrl.substring(1, previousUrl.length);
-            if (previousUrl) newUrl += '+' + previousUrl;
-            res.redirect(newUrl);
+            res.redirect('/login');
         }
     }
 };
