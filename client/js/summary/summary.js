@@ -5,6 +5,9 @@ $(document).ready(function() {
         'scrollX': false,
         'paging': false,
         'searching': false,
+        'columnDefs': [
+            { type: 'date', targets: [0, 7] },
+        ],
         
         drawCallback: function() {
             var api = this.api();

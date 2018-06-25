@@ -3,18 +3,6 @@
  */
 var ClientService = require('../modules/t1/client');
 
-var m_names = ["JAN", "FEB", "MAR",
-    "APR", "MAY", "JUN", "JUL", "AUG", "SEP",
-    "OCT", "NOV", "DEC"];
-
-function getDate() {
-    var d = new Date();
-    var curr_date = d.getDate();
-    var curr_month = d.getMonth();
-    var curr_year = d.getFullYear() - 2000;
-    return curr_date + "-" + m_names[curr_month] + "-" + curr_year;
-}
-
 var ClientsSocket = {
     ClientUpdate : function(socket) {
         socket.on('client side update', function (data) {
@@ -32,10 +20,6 @@ var ClientsSocket = {
             search['fileName'] = data.fileName;
             var update = {};
             update[data.field] = data.value;
-
-            if (data.field == 'pytAmount') {
-                update['pytDate'] = getDate();
-            }
             
             ClientService.updateClient(search, update, false, function(err, client) {
                 if (err) {
