@@ -3,11 +3,12 @@ var router = express.Router();
 var to = require('../../helpers/to');
 
 var CookieService = require('../utils/cookies');
+var paymentTypes = require('../../modules/t1/client').getPayments;
 var ClientService = require('../../modules/nr/client');
 
 router.get('/*', CookieService.isLoggedIn, async function(req, res) {
-    let year = req.params.year;
-    if (!year) year = 2018;
+    let year = req.params['0'];
+    if (!year) return res.redirect('/nr/monitoring/2018');
     
     let err, nr4, nr6, s216, cc, years;
     [err, all] = await ClientService.find({ year: year});
@@ -43,7 +44,9 @@ router.get('/*', CookieService.isLoggedIn, async function(req, res) {
         user: req.session.initials,
         years: years,
         year: year,
-        options: {}
+        options: {
+            pytType: paymentTypes()
+        }
     });
 });
 
