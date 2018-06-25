@@ -13,7 +13,8 @@ let service = {
     },
     applyTin: Boolean,
     applyAgentNumber: Boolean,
-    agentSigned: String
+    agentSigned: String,
+    outstandingInfo: String
 }
 
 let NR4Schema = new Schema(service);
