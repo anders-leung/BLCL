@@ -1,6 +1,7 @@
 extends ../layout
 
 block content
+    script(type="text/javascript", src='/js/datatable_tabs/nr_posts.js')
     script(type="text/javascript", src='/js/jquery.floatThead.js')
     script(type='text/javascript').
         var role = !{JSON.stringify(role)};
@@ -83,15 +84,16 @@ block content
                         tbody
                             each client in clients[i][1]
                                 tr(data-href="/nr/client/" + client.pathName)
+                                    - var service = clients[i][0]
                                     td.text-nowrap #{client.name}
                                     td #{client.owner.firstName}
                                     td #{client.owner.lastName}
                                     td #{client.coOwner ? client.coOwner.firstName : ''}
                                     td #{client.coOwner ? client.coOwner.lastName : ''}
-                                    td.date-edit #{client[clients[i][0]].signed}
-                                    td.date-edit #{client[clients[i][0]].cra}
-                                    td.date-edit #{client[clients[i][0]].invoice ? client.invoice.date : ''}
-                                    td.date-edit #{client[clients[i][0]].invoice ? client.invoice.number : ''}
-                                    td.select.pytType #{client[clients[i][0]].payment ? client[clients[i][0]].payment.type : ''}
-                                    td.edit #{client[clients[i][0]].payment ? client[clients[i][0]].payment.amount : ''}
-                                    td.date-edit #{client[clients[i][0]].agentSigned}
+                                    td.date-edit #{client[service].signed}
+                                    td.date-edit #{client[service].cra}
+                                    td.date-edit #{client[service].invoice ? client[service].invoice.date : ''}
+                                    td.edit #{client[service].invoice ? client[service].invoice.number : ''}
+                                    td.select.pytType #{client[service].payment ? client[service].payment.type : ''}
+                                    td.edit #{client[service].payment ? client[service].payment.amount : ''}
+                                    td.date-edit #{client[service].agentSigned}
