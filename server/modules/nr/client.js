@@ -6,6 +6,10 @@ let ClientService = {
         return await to(Client.find(query).lean().exec());
     },
 
+    update: async function(search, update) {
+        return await to(Client.update(search, update).lean().exec());
+    },
+
     getYears: async function() {
         return await to(Client.find({}).distinct('year'));
     },
