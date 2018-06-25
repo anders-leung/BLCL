@@ -67,6 +67,7 @@ block content
                                 th PYT Rec'd
                                 th PYT Amount
                                 th Agent Signed
+                                th Outstanding Info
                         tfoot
                             tr
                                 th
@@ -81,6 +82,7 @@ block content
                                 th PYT Rec'd
                                 th PYT Amount
                                 th Agent Signed
+                                th Outstanding Info
                         tbody
                             each client in clients[i][1]
                                 tr(data-href="/nr/client/" + client.pathName)
@@ -97,3 +99,4 @@ block content
                                     td.select.pytType #{client[service].payment ? client[service].payment.type : ''}
                                     td.edit #{client[service].payment ? client[service].payment.amount : ''}
                                     td.date-edit #{client[service].agentSigned}
+                                    td.edit #{client[service].outstandingInfo}
