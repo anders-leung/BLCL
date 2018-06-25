@@ -33,11 +33,4 @@ $(document).ready(function() {
             window.location = $(this).parent().data('href');
         });
     }
-
-    var socket = io();
-    socket.on('nr get response', function(data) {
-        if (data.user == user) {
-            updateTables(data.clients);
-        }
-    })
 });
