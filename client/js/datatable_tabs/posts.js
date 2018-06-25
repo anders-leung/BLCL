@@ -60,6 +60,7 @@ $(document).ready(function() {
     socket.on('client side update', updateEvent);
 
     $('table').each(function() {
+        if (window.location.pathname.includes('/nr')) return;
         $(this).on('keypress', '.edit', function(e) {
             if (e.which == 13) {
                 saveEdits(this, 'input');
@@ -102,6 +103,7 @@ $(document).ready(function() {
     }
 
     function updateHtml(fileName, field, value, emit) {
+        if (window.location.pathname.includes('/nr')) return;
         var column = getColumn(field);
         console.log(column);
         $('table').each(function() {
