@@ -11,7 +11,6 @@ block content
     script(src='/js/jquery.onepage-scroll-0.0.1.min.js')
     script(src="/js/jquery/jquery.easing.min.js")
 
-
     .scroll-container
         h1=title
         br
@@ -70,10 +69,10 @@ block content
                             each index in [0, 1, 2]
                                 .col-2
                                     label(for='phones[' + index + ']') Phone #{index + 1}
-                                    input.form-control(id='phones[' + index + ']' type='text' name='phones[' + index +']')
+                                    input.phone.form-control(id='phones[' + index + ']' type='text' name='phones[' + index +']')
                             .col-2
                                 label(for='fax') Fax
-                                input#fax.form-control(type='text' name='fax')
+                                input.phone.form-control(type='text' name='fax')
                         
                         .row
                             .col-6
@@ -89,14 +88,14 @@ block content
                             each service in ['nr6', 'nr4', 's216', 's115', 'cc']
                                 .form-check
                                     label.form-check-label(for=service)
-                                        input(id=service).form-check-input(type='checkbox' name="#{service}")
+                                        input.form-check-input(id=service type='checkbox' name="#{service}")
                                         | #{service.toUpperCase()}
             #properties.content-part(data-title='Properties')
                 .content-inner
                     .form-group
                         legend Properties
                         hr
-                        if client && client.properties
+                        if client && client.properties.length > 0
                             each property, index in client.properties
                                 - var field = 'properties[' + index + ']'
                                 - var country = false
@@ -107,10 +106,10 @@ block content
                             - var country = false
                             - var required = false
                             include ../templates/address.jade
-                    button#addProperty.btn.btn-secondary(style='margin-bottom: 10px') Add Property
+                    input#addProperty.btn.btn-secondary(type='button' style='margin-bottom: 10px' value='Add Property')
                         
             each val in ['agent', 'propertyManager', 'lawyer']
-                div(id=val).content-part(data-title="#{val == 'propertyManager' ? 'Property Manager' : val.charAt(0).toUpperCase() + val.slice(1) }")
+                div.content-part(id=val data-title="#{val == 'propertyManager' ? 'Property Manager' : val.charAt(0).toUpperCase() + val.slice(1) }")
                     .form-group
                         legend
                             if val == 'propertyManager'
@@ -138,7 +137,7 @@ block content
                         .form-group
                             label Address
                             hr
-                            - var field = val
+                            - var field = val + '.address'
                             - var country = false
                             - var required = false
                             include ../templates/address.jade
@@ -153,3 +152,4 @@ block content
                                 .col-4
                                     label(for='person') Person
                                     input#person.form-control(type='text' name=val + '.person')
+            input.btn.btn-success.offset-1.col-10(type='submit' value='Done' style='margin-top:1%; margin-bottom:3%;')
