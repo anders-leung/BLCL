@@ -1,10 +1,18 @@
 $(document).ready(function() {
-    $('.scroll-container').onePageScroll({
-        sectionSelector: $('.content-part')
+    var removeButton = '<p class="btn btn-danger" style="margin:20px 10px 0 10px"><i class="fa fa-trash-alt"></i></p>'
+
+    $('#properties').find('.row').each(function(e) {
+        $(this).append(removeButton)
     });
 
+    $(this).on('click', 'p', function(e) {
+        var children = $(this).parent().parent().children();
+        if (children.length > 3) {
+            $(this).parent().remove();
+        }
+    })
+
     $('#addProperty').on('click', function(e) {
-        e.preventDefault();
         var properties = $('#properties').find('.row input');
         var last = properties[properties.length - 1];
         var index = parseInt(last.name.split('[')[1][0]) + 1;
@@ -17,6 +25,7 @@ $(document).ready(function() {
             if (fields[i] == 'Province') size = 1;
             html += col(size, label(property + fields[i], fields[i]) + input(property + fields[i], property + '.' + fields[i].toLowerCase()));
         }
+        html += removeButton;
         $(last).closest('.row').after(div(html));
     });
 
