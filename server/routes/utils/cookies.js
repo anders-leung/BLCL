@@ -23,7 +23,7 @@ var CookieService = {
     isLoggedIn : function(req, res, next) {
         if (CookieService.readCookie(req)) {
             if (req.originalUrl.includes('/nr/')) {
-                if (req.session.role == 'Administrator' || req.session.initials == 'AMY') next();
+                if (req.session.role == 'Administrator' || req.session.initials == 'AMY') return next();
                 else return res.redirect('/');
             }
             next();
