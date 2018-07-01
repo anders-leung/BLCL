@@ -17,7 +17,6 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
 router.get('/:client_name', CookieService.isLoggedIn, async (req, res) => {
     let err, client;
     [err, client] = await ClientService.find({ pathName: req.params.client_name });
-    console.log(client)
     res.render('nr/client', {
         title: 'NR Client',
         role: req.session.role,
@@ -25,5 +24,19 @@ router.get('/:client_name', CookieService.isLoggedIn, async (req, res) => {
         client: client[0]
     });
 });
+
+router.post('/', CookieService.isLoggedIn, async (req, res, next) => {
+    let err, result;
+    [err, result] = await ClientService.create(req.body);
+    if (err) return next(err);
+    res.redirect('/nr/directory');
+});
+
+router.post('/:client_name', CookieService.isLoggedIn, async (req, res, next) => {
+    let err, result;
+    [err, result] = await ClientService.update({ pathName: req.params.client_name }, req.body);
+    if (err) return next(err);
+    res.redirect('/nr/directory');
+})
 
 module.exports = router;
