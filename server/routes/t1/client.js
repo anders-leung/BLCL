@@ -11,7 +11,7 @@ var UserService = require('../../modules/user');
 
 router.get('/', CookieService.isLoggedIn, async function(req, res) {
     [err, initials] = await to(UserService.getInitials());
-    res.render('client', { title: 'T1 Interview',
+    res.render('t1/client', { title: 'T1 Interview',
         client : null,
         role : CookieService.readCookie(req).role,
         options : {

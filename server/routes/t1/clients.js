@@ -39,7 +39,7 @@ router.get('/', CookieService.isLoggedIn, async function(req, res) {
         ['emailed', emailed],
         ['done', done]
     ];
-    res.render('clients', {
+    res.render('t1/clients', {
         clients: clients,
         initials: initials,
         options: { 
