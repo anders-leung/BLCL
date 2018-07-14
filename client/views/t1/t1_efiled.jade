@@ -43,7 +43,7 @@ block content
                             th 
                     tbody
                         each client in clients[i][1]
-                            tr(data-href="/client/" + client.pathName)
+                            tr(data-href="/t1/client/" + client.pathName)
                                 td.text-nowrap #{client.fileName}
                                 td.text-nowrap #{client.husband ? client.husband.lastName : ''}
                                 td.text-nowrap #{client.husband ? client.husband.firstName : ''}

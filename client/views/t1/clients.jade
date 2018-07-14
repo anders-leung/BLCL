@@ -87,7 +87,7 @@ block content
                             th Remarks
                     tbody
                         each client in clients[i][1]
-                            tr(data-href="/client/" + client.pathName)
+                            tr(data-href="/t1/client/" + client.pathName)
                                 td.text-nowrap #{client.fileName}
                                 td #{client.slips ? 'Y' : ''}
                                 td #{client.selfEmployed ? 'Y' : ''}
