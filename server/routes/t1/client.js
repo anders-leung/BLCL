@@ -33,7 +33,7 @@ router.get('/:client_name', CookieService.isLoggedIn, function(req, res) {
 
     ClientService.findClient(query, async function(err, client) {
         [err, initials] = await to(UserService.getInitials());
-        res.render('client', {
+        res.render('t1/client', {
             title : 'T1 Interview',
             client : client[0],
             role : CookieService.readCookie(req).role,
