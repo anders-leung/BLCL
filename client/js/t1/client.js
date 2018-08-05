@@ -67,7 +67,7 @@ $(document).ready(function(e) {
         $('#street').val(client.address.street);
         $('#city').val(client.address.city);
         $('#province').val(client.address.province);
-        $('#postalCode').val(client.address.postalCode);
+        $('.postalCode').val(client.address.postalCode);
         //$('#country').val(client.address.country);
 
         $('#dependent1').val(client.dependent1.name);
