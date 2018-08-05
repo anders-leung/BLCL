@@ -88,7 +88,7 @@ $(document).ready(function() {
         }
 
         $(tableId + ' tfoot th').each( function (i) {
-            //$(this).html(i);
+            // $(this).html(i);
             $(this).html( '<input type="text"/>' );
         });
 
@@ -153,10 +153,10 @@ $(document).ready(function() {
 
     function findTableForRow(row) {
         var preparer = row.data()[16] != '';
-        var packed = row.data()[21] == 'Y';
-        var emailed = row.data()[24] != '';
-        var signed = row.data()[25] != '';
-        var pyt = row.data()[26] != '' && row.data()[27] != '' && row.data()[28] != '' && row.data()[29] != '';
+        var packed = row.data()[22] == 'Y';
+        var emailed = row.data()[25] != '';
+        var signed = row.data()[26] != '';
+        var pyt = row.data()[27] != '' && row.data()[28] != '' && row.data()[29] != '' && row.data()[30] != '';
         console.log(preparer, packed, emailed, signed, pyt)
 
         if (!preparer) return '#noPreparerTable';
