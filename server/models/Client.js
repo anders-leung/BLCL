@@ -81,7 +81,6 @@ var ClientSchema = new Schema({
         sin: { type: String, default: "" }
     },
     husband: {
-        signed: { type: String, default: '' },
         citizenship: { type: Boolean, default: false },
         election: { type: Boolean, default: false },
         firstName: { type: String, default: "" },
@@ -173,7 +172,6 @@ var ClientSchema = new Schema({
         studentLoan: { type: Boolean, default: false }
     },
     wife: {
-        signed: { type: String, default: '' },
         citizenship: { type: Boolean, default: false },
         election: { type: Boolean, default: false },
         firstName: { type: String, default: "" },
