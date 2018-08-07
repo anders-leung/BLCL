@@ -214,16 +214,13 @@ $(document).ready(function() {
         $(row).find('td').eq(16).addClass('select admin status');
         $(row).find('td').eq(17).addClass('select initials');
         $(row).find('td').eq(19).addClass('date-edit');
-        $(row).find('td').eq(20).addClass('select toggle');
-        $(row).find('td').eq(23).addClass('date-edit');
+        $(row).find('td').eq(21).addClass('select toggle');
         $(row).find('td').eq(24).addClass('date-edit');
-        $(row).find('td').eq(25).addClass('select pytType');
-        $(row).find('td').eq(26).addClass('edit');
-        $(row).find('td').eq(27).addClass('select initials');
-        $(row).find('td').eq(28).addClass('select tax');
-        $(row).find('td').eq(29).addClass('date-edit');
+        $(row).find('td').eq(25).addClass('date-edit');
+        $(row).find('td').eq(26).addClass('select pytType');
+        $(row).find('td').eq(27).addClass('edit');
+        $(row).find('td').eq(28).addClass('select initials');
+        $(row).find('td').eq(29).addClass('select tax');
         $(row).find('td').eq(30).addClass('date-edit');
-        $(row).find('td').eq(31).addClass('date-edit');
-        $(row).find('td').eq(34).addClass('edit');
     }
 });
