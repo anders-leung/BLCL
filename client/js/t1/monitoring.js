@@ -213,7 +213,7 @@ $(document).ready(function() {
         $(row).find('td').eq(15).addClass('select admin initials');
         $(row).find('td').eq(16).addClass('select admin status');
         $(row).find('td').eq(17).addClass('select initials');
-        $(row).find('td').eq(19).addClass('date-edit');
+        $(row).find('td').eq(20).addClass('date-edit');
         $(row).find('td').eq(21).addClass('select toggle');
         $(row).find('td').eq(24).addClass('date-edit');
         $(row).find('td').eq(25).addClass('date-edit');
