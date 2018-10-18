@@ -23,7 +23,7 @@ $(document).ready(function() {
             var size = 2;
             if (fields[i] == 'Street') size = 3;
             if (fields[i] == 'Province') size = 1;
-            html += col(size, label(property + fields[i], fields[i]) + input(property + fields[i], property + '.' + fields[i].toLowerCase()));
+            html += col(size, label(property + fields[i], fields[i]) + input(property + fields[i], property + '[' + fields[i].toLowerCase() + ']'));
         }
         html += removeButton;
         $(last).closest('.row').after(div(html));

@@ -9,17 +9,6 @@ function cleanValues(data) {
     let address = {};
     
     for (let key in data) {
-        if (key.includes('phones[')) phones.push(data[key]);
-        if (key.includes('emailes[')) emails.push(data[key]);
-        if (key.includes('properties[')) {
-            if (!data[key]) continue;
-            let k = key.split('.')[1];
-            if (k in address) {
-                properties.push(JSON.parse(JSON.stringify(address)));
-                address = {};
-            }
-            address[k] = data[key].toUpperCase().trim();
-        }
         data[key] = data[key].toUpperCase().trim();
     }
     if (Object.keys(address).length > 0) properties.push(address);
