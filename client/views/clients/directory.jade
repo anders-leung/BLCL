@@ -8,8 +8,9 @@ block content
         table.cell-border
             thead
                 tr
-                    th Client Names
+                    th Client Name
             tbody
                 each client in clients
-                    tr(data-href="/nr/client/" + client.pathName)
+                    //- tr(data-href="/nr/client/" + client.pathName)
+                    tr
                         td.text-nowrap #{client.name}
