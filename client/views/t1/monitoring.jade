@@ -68,12 +68,12 @@ block content
                             th Packed
                             th GST
                             th Method
-                            th T1 e Si
-                            th Signed
-                            th PYT Rec'd
-                            th PYT Amount
                             th Rec'd By
                             th Tax To CRA
+                            th PYT Type
+                            th PYT Amount
+                            th Signed
+                            th Emailed to Si
                             th Email/Call Pu
                             th Interview Date
                             th Phone Number
@@ -106,12 +106,12 @@ block content
                             th Packed
                             th GST
                             th Method
-                            th T1 e Si
-                            th Signed
-                            th PYT Rec'd
-                            th PYT Amount
                             th Rec'd By
                             th Tax To CRA
+                            th PYT Type
+                            th PYT Amount
+                            th Signed
+                            th Emailed to Si
                             th Call Date
                             th Interview Date
                             th Phone Number
@@ -153,12 +153,12 @@ block content
                                     if (client.husband.rental.gstReturn || client.husband.selfEmployed.gstReturn || client.wife.rental.gstReturn || client.wife.selfEmployed.gstReturn)
                                         | Y
                                 td #{client.method}
-                                td.text-nowrap.date-edit #{client.emailed}
-                                td.text-nowrap.date-edit #{client.signed}
-                                td.text-nowrap.select.pytType #{client.pytReceived}
-                                td.text-nowrap.edit #{client.pytAmount}
                                 td.text-nowrap.select.initials #{client.recBy}
                                 td.text-nowrap.select.tax #{client.taxToCRA}
+                                td.text-nowrap.select.pytType #{client.pytReceived}
+                                td.text-nowrap.edit #{client.pytAmount}
+                                td.text-nowrap.date-edit #{client.signed}
+                                td.text-nowrap.date-edit #{client.emailed}
                                 td.text-nowrap.date-edit #{client.callDate}
                                 td.text-nowrap #{client.interviewDate}
                                 td.text-nowrap #{client.tel.number}
