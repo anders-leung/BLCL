@@ -3,7 +3,7 @@
  */
 var XLSX = require('xlsx');
 var fs = require('fs');
-var Client = require('../models/client');
+var Client = require('../models/t1/client');
 var clientNames = require('./utils/client');
 
 var fields = {
