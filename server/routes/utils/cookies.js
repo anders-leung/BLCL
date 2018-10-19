@@ -22,13 +22,13 @@ var CookieService = {
 
     isLoggedIn : function(req, res, next) {
         if (CookieService.readCookie(req)) {
+            if (req.originalUrl.includes('/nr/')) {
+                if (req.session.role == 'Administrator' || req.session.initials == 'AMY') return next();
+                else return res.redirect('/');
+            }
             next();
         } else {
-            var newUrl = '/login';
-            var previousUrl = req.originalUrl;
-            previousUrl = previousUrl.substring(1, previousUrl.length);
-            if (previousUrl) newUrl += '+' + previousUrl;
-            res.redirect(newUrl);
+            res.redirect('/login');
         }
     }
 };

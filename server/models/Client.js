@@ -326,7 +326,7 @@ var ClientSchema = new Schema({
     signed: { type: String, default: '' },
     pytReceived: {
         type: String,
-        enum: [ '', 'ADV', 'CA', 'CK', 'DD', 'ET', 'INV', 'OS' ],
+        enum: [ '', 'ADV', 'CA', 'CHQ', 'DD', 'ET', 'INV' ],
         default: ''
     },
     pytAmount: { type: String, default: '' },

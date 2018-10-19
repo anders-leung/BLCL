@@ -27,7 +27,7 @@ block content
                     th ADV
                     th INV
                     th CA
-                    th CK
+                    th CHQ
                     th DD
                     th ET
                     th
@@ -64,7 +64,7 @@ block content
                         td.text-nowrap #{client.pytReceived == 'ADV' ? client.pytAmount : ''}
                         td.text-nowrap #{client.pytReceived == 'INV' ? client.pytAmount : ''}
                         td.text-nowrap #{client.pytReceived == 'CA' ? client.pytAmount : ''}
-                        td.text-nowrap #{client.pytReceived == 'CK' ? client.pytAmount : ''}
+                        td.text-nowrap #{client.pytReceived == 'CK' || client.pytReceived == 'CHQ' ? client.pytAmount : ''}
                         td.text-nowrap #{client.pytReceived == 'DD' ? client.pytAmount : ''}
                         td.text-nowrap #{client.pytReceived == 'ET' ? client.pytAmount : ''}
                         td

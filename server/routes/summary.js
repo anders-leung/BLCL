@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
-var to = require('../../helpers/to.js');
+var to = require('../helpers/to');
 
 var CookieService = require('./utils/cookies');
-var ClientService = require('../modules/client');
+var ClientService = require('../modules/t1/client');
 var UserService = require('../modules/user');
 
 var functions = {
@@ -37,8 +37,10 @@ async function loadUserStats(initials) {
     let error;
 
     for (let user of initials) {
+        if (!user) continue;
         dict[user] = {};
         for (let fn in functions) {
+            let err, clients;
             [err, clients] = await functions[fn](user);
             if (err) error = err;
             dict[user][fn] = clients;

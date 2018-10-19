@@ -78,9 +78,9 @@ var logger = fs.createWriteStream(file, {
 })
 
 stdout.hook('write', function(string, encoding, fd, write) {
-    write(string);
-    var useless = string.search(/(GET)\s\/(css|js|images|favicon)/g);
+    var useless = string.search(/(GET)\s\/(css|js|images|favicon|fontawesome)/g);
     if (useless == -1) {
+        write(string);
         logger.write(string + '\n');
     }
 })

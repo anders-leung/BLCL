@@ -1,0 +1,102 @@
+extends ../layout
+
+block content
+    script(type="text/javascript", src='/js/datatable_tabs/nr_posts.js')
+    script(type="text/javascript", src='/js/jquery.floatThead.js')
+    script(type='text/javascript').
+        var role = !{JSON.stringify(role)};
+    script(src='/js/nr/monitoring.js')
+
+    ul.nav.nav-tabs
+        li.nav-item.dropdown
+            a.nav-link.dropdown-toggle(data-toggle='dropdown' href='#' role='button' aria-haspopup='true' aria-expanded='false')='Year: ' + year
+            div.dropdown-menu
+                each year in years
+                    a.dropdown-item(href='/nr/monitoring/#{year}')=year
+        - for (var i = 0; i < clients.length; i++)
+            li.nav-item
+                if i == 0
+                    a.nav-link.active(data-toggle='tab' href='#' + clients[i][0])=clients[i][0].toUpperCase()
+                else 
+                    a.nav-link(data-toggle='tab' href='#' + clients[i][0])=clients[i][0].toUpperCase()
+
+    #table.col-12.tab-content(style='border-top: 0')
+        - for (var i = 0; i < clients.length; i++)
+            if i == 0
+                div(id=clients[i][0]).tab-pane.active.in
+                    table(id=clients[i][0] + 'Table').cell-border
+                        thead
+                            tr
+                                th
+                                th Owner Last Name
+                                th Owner First Name
+                                th Co-owner Last Name
+                                th Co-owner First Name
+                                th Services
+                        tfoot
+                            tr
+                                th
+                                th Owner Last Name
+                                th Owner First Name
+                                th Co-owner Last Name
+                                th Co-owner First Name
+                                th Services
+                        tbody
+                            each client in clients[i][1]
+                                tr(data-href="/nr/client/" + client.pathName)
+                                    td #{client.name}
+                                    td #{client.owner.firstName}
+                                    td #{client.owner.lastName}
+                                    td #{client.coOwner ? client.coOwner.firstName : ''}
+                                    td #{client.coOwner ? client.coOwner.lastName : ''}
+                                    td #{client.services}
+            else
+                div(id=clients[i][0]).tab-pane
+                    table(id=clients[i][0] + 'Table').cell-border
+                        thead
+                            tr
+                                th
+                                th Owner Last Name
+                                th Owner First Name
+                                th Co-owner Last Name
+                                th Co-owner First Name
+                                th Signed
+                                th CRA
+                                th Invoiced
+                                th Invoice #
+                                th PYT Rec'd
+                                th PYT Amount
+                                th Agent Signed
+                                th Outstanding Info
+                        tfoot
+                            tr
+                                th
+                                th Owner Last Name
+                                th Owner First Name
+                                th Co-owner Last Name
+                                th Co-owner First Name
+                                th Signed
+                                th CRA
+                                th Invoiced
+                                th Invoice #
+                                th PYT Rec'd
+                                th PYT Amount
+                                th Agent Signed
+                                th Outstanding Info
+                        tbody
+                            each client in clients[i][1]
+                                tr(data-href="/nr/client/" + client.pathName)
+                                    - var service = clients[i][0]
+                                    td.text-nowrap #{client.name}
+                                    td #{client.owner.firstName}
+                                    td #{client.owner.lastName}
+                                    td #{client.coOwner ? client.coOwner.firstName : ''}
+                                    td #{client.coOwner ? client.coOwner.lastName : ''}
+                                    td.date-edit #{client[service].signed}
+                                    td.date-edit #{client[service].cra}
+                                    td.date-edit #{client[service].invoice ? client[service].invoice.date : ''}
+                                    td.edit #{client[service].invoice ? client[service].invoice.number : ''}
+                                    td.select.pytType #{client[service].payment ? client[service].payment.type : ''}
+                                    td.edit #{client[service].payment ? client[service].payment.amount : ''}
+                                    td.date-edit #{client[service].agentSigned}
+                                    td.edit #{client[service].outstandingInfo}

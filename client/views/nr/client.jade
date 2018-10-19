@@ -1,0 +1,155 @@
+extends ../layout
+
+block content
+
+    script(type="text/javascript").
+        var client = !{JSON.stringify(client)};
+        var options = !{JSON.stringify(options)};
+        var client = !{JSON.stringify(client)};
+    script(src='/js/nr/client.js')
+    link(rel='stylesheet', href='/css/jquery.onepage-scroll-0.0.1.min.css')
+    script(src='/js/jquery.onepage-scroll-0.0.1.min.js')
+    script(src="/js/jquery/jquery.easing.min.js")
+
+    .scroll-container
+        h1=title
+        br
+        form(method='post')
+            #owner.content-part(data-title='owner')
+                .content-inner
+                    .form-group
+                        legend Owner
+                        hr
+                        .row
+                            .col-2
+                                label(for='ownerFirstName') First Name
+                                input#ownerFirstName.form-control(type='text' name='owner.firstName')
+                            .col-2
+                                label(for='ownerLastName') Last Name
+                                input#ownerLastName.form-control(type='text' name='owner.lastName')
+                            .col-2
+                                label(for='ownerDob') Date of Birth
+                                input#ownerDob.form-control.datepickerChangeYear(type='text' name='owner.dob')
+                            .col-2
+                                label(for='ownerSin') SIN
+                                input#ownerSin.form-control.sin(type='text' name='owner.sin')
+            #co-owner.content-part(data-title='Co-owner')
+                .content-inner
+                    .form-group
+                        legend Co-owner
+                        hr
+                        .row
+                            .col-2
+                                label(for='coOwnerFirstName') First Name
+                                input#coOwnerFirstName.form-control(type='text' name='coOwner.firstName')
+                            .col-2
+                                label(for='coOwnerLastName') Last Name
+                                input#coOwnerLastName.form-control(type='text' name='coOwner.lastName')
+                            .col-2
+                                label(for='coOwnerDob') Date of Birth
+                                input#coOwnerDob.form-control.datepickerChangeYear(type='text' name='coOwner.dob')
+                            .col-2
+                                label(for='coOwnerSin') SIN
+                                input#coOwnerSin.form-control.sin(type='text' name='coOwner.sin')
+            #address.content-part(data-title='Address')
+                .content-inner
+                    .form-group
+                        legend Address
+                        hr
+                        - var field = 'address'
+                        - var country = true
+                        - var required = true
+                        include ../templates/address.jade
+            #contact-info.content-part(data-title='Contact Info')
+                .content-inner
+                    .form-group
+                        legend Contact Info
+                        hr
+                        .row
+                            each index in [0, 1, 2]
+                                .col-2
+                                    label(for='phones[' + index + ']') Phone #{index + 1}
+                                    input.phone.form-control(id='phones[' + index + ']' type='text' name='phones[' + index +']')
+                            .col-2
+                                label(for='fax') Fax
+                                input.phone.form-control(type='text' name='fax')
+                        
+                        .row
+                            .col-6
+                                label Emails
+                                each index in [0, 1, 2]
+                                    input.form-control(id='emails[' + index + ']' type='text' name='emails[' + index + ']' style='margin-bottom: 10px')
+
+            #services.content-part(data-title='Services')
+                .content-inner
+                    .form-group
+                        legend Services
+                        .row
+                            each service in ['nr6', 'nr4', 's216', 's115', 'cc']
+                                .form-check
+                                    label.form-check-label(for=service)
+                                        input.form-check-input(id=service type='checkbox' name="#{service}")
+                                        | #{service.toUpperCase()}
+            #properties.content-part(data-title='Properties')
+                .content-inner
+                    .form-group
+                        legend Properties
+                        hr
+                        if client && client.properties.length > 0
+                            each property, index in client.properties
+                                - var field = 'properties[' + index + ']'
+                                - var country = false
+                                - var required = false
+                                include ../templates/address.jade
+                        else
+                            - var field = 'properties[0]'
+                            - var country = false
+                            - var required = false
+                            include ../templates/address.jade
+                    input#addProperty.btn.btn-secondary(type='button' style='margin-bottom: 10px' value='Add Property')
+                        
+            each val in ['agent', 'propertyManager', 'lawyer']
+                div.content-part(id=val data-title="#{val == 'propertyManager' ? 'Property Manager' : val.charAt(0).toUpperCase() + val.slice(1) }")
+                    .form-group
+                        legend
+                            if val == 'propertyManager'
+                                | Property Manager
+                            else
+                                =val.charAt(0).toUpperCase() + val.slice(1)
+                        hr
+                        .row
+                            .col-2
+                                label(for='number') Number
+                                input#number.form-control(type='text' name=val + '.number')
+                            .col-2
+                                label(for='name') Name
+                                input#name.form-control(type='text' name=val + '.name')
+                            .col-2
+                                label(for='phoneNumber') Phone Number
+                                input#phoneNumber.form-control(type='text' name=val + '.phoneNumber')
+                            .col-2
+                                label(for='faxNumber') Fax Number
+                                input#faxNumber.form-control(type='text' name=val + '.faxNumber')
+                            .col-2
+                                label(for='email') Email
+                                input#email.form-control(type='text' name=val + '.email')
+                            
+                        .form-group
+                            label Address
+                            hr
+                            - var field = val + '.address'
+                            - var country = false
+                            - var required = false
+                            include ../templates/address.jade
+
+                        .form-group
+                            label Contact
+                            hr
+                            .row
+                                .col-4
+                                    label(for='company') Company
+                                    input#company.form-control(type='text' name=val + '.company')
+                                .col-4
+                                    label(for='person') Person
+                                    input#person.form-control(type='text' name=val + '.person')
+            input.btn.btn-success.offset-1.col-10(type='submit' value='Done' style='margin-top:1%; margin-bottom:3%;')

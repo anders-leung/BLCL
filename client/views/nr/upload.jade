@@ -1,0 +1,15 @@
+extends ../layout
+
+block content
+    .container
+        form(method='post')
+            .form-group
+                label(for='filepath') Filepath
+                input#filepath.form-control(name='filepath' type='text')
+            .form-group
+                label(for='type') Type
+                select#type.form-control(name='type')
+                    option Maximizer - Contact List
+                    option Maximizer - User Defined
+                    option Profile
+            input#submit.btn.btn-success(type='submit' value='Read NR data from file')

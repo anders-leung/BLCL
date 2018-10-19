@@ -8,6 +8,8 @@ html
         link(rel='stylesheet', href='/css/stylesheet.css')
         link(rel='stylesheet', href='/css/datatables/datatables.min.css')
         link(rel='stylesheet', href='/js/jquery-ui-1.12.1.custom/jquery-ui.min.css')
+        //link(rel='stylesheet', href='/js/fontawesome-free-5.1.0-web/css/all.css')
+        link(rel='stylesheet', href='/fontawesome-free/css/all.css')
         script(type="text/javascript", src='/js/jquery/jquery-3.1.1.min.js')
         script(type='text/javascript', src='/js/jquery-ui-1.12.1.custom/jquery-ui.min.js')
         script(type="text/javascript", src='/js/tether/tether.js')
@@ -17,7 +19,7 @@ html
         script(type='text/javascript', src='/js/fnFindCellRowIndexes.js')
         script(type="text/javascript", src='/js/moment.min.js')
         script(type="text/javascript", src='/js/datetime-moment.js')
-        script(type="text/javascript", src='/js/utils/datepicker.js')
+        script(type="text/javascript", src='/js/utils/classes.js')
         script(type="text/javascript", src='/socket.io/socket.io.js')
         script(type='text/javascript').
             var role = !{JSON.stringify(role)};
@@ -36,22 +38,21 @@ html
                         li.nav-item.dropdown
                             a#t1Dropdown.nav-link.dropdown-toggle(href='#' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false') T1
                             .dropdown-menu(aria-labelledby='t1Dropdown')
-                                a.dropdown-item(href='/t1') Directory
-                                a.dropdown-item(href='/t1/monitoring') Monitoring Sheet
-                                a.dropdown-item(href='/t1/t1_efiled') T1 Efiled Sheet
-                                a.dropdown-item(href='/t1/gst_efiled') GST Efiled Sheet
-                        //li.nav-item
-                        //    a.nav-link(href='/t2') T2
-                        //li.nav-item
-                        //    a.nav-link(href='/t2') T4
-                        //li.nav-item
-                        //    a.nav-link(href='/t2') T5
+                                a.dropdown-item(href='/t1/clients') My Clients
+                                a.dropdown-item(href='/t1/client') New Client
+                                a.dropdown-item(href='/t1/directory') Directory
+                                a.dropdown-item(href='/t1/monitoring') Monitoring
+                                a.dropdown-item(href='/t1/t1_efiled') T1 Efiled
+                                a.dropdown-item(href='/t1/gst_efiled') GST Efiled
+                        li.nav-item.dropdown
+                            a#nrDropdown.nav-link.dropdown-toggle(href='#' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false') NR
+                            .dropdown-menu(aria-labelledby='nrDropdown')
+                                //a.dropdown-item(href='/nr/clients') My Clients
+                                a.dropdown-item(href='/nr/client') New Client
+                                a.dropdown-item(href='/nr/directory') Directory
+                                a.dropdown-item(href='/nr/monitoring') Monitoring
 
                     ul.nav.navbar-nav.pull-right
-                        li.nav-item
-                            a.nav-link(href='/clients') My Clients
-                        li.nav-item
-                            a.nav-link(href='/client') New Clients
                         li.nav-item
                             a.nav-link(href='/login') Logout
                         if role == 'Administrator'

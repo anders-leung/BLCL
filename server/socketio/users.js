@@ -23,7 +23,7 @@ var UsersSocket = {
     }, updateUser : function(socket) {
         socket.on('update user', function(data) {
             var search = {};
-            search['email'] = data.email;
+            search['email'] = data.fileName;
             var values = {};
             switch(data.field) {
                 case ('email'):

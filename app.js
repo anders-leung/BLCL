@@ -6,25 +6,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
-var setup = require('./server/routes/setup');
-var index = require('./server/routes/index');
-var t1 = require('./server/routes/t1/monitoring_sheet');
-var t1_directory = require('./server/routes/t1/directory');
-var t1_efiled = require('./server/routes/t1/t1_efiled');
-var gst_efiled = require('./server/routes/t1/gst_efiled');
-var t2 = require('./server/routes/t2');
-var t4 = require('./server/routes/t4');
-var t5 = require('./server/routes/t5');
-var login = require('./server/routes/login');
-var users = require('./server/routes/users');
-var client = require('./server/routes/client');
-var clients = require('./server/routes/clients');
-var payment = require('./server/routes/payment');
-var manage_users = require('./server/routes/manage_users');
-var staff_analysis = require('./server/routes/staff_analysis');
-var update_models = require('./server/routes/update_models');
-var summary = require('./server/routes/summary');
+var fs = require('fs');
 
 mongoose.Promise = require('bluebird');
 mongoose.connect('mongodb://localhost:27017/');
@@ -43,6 +25,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'client')));
+app.use(express.static(path.join(__dirname, 'node_modules/@fortawesome')));
 
 app.use(session({
     name : 'session',
@@ -50,46 +33,58 @@ app.use(session({
     maxAge : 12 * 60 * 60 * 1000
 }));
 
-app.use('/', index);
-app.use('/t1', t1_directory);
-app.use('/t1/monitoring', t1);
-app.use('/t1/t1_efiled', t1_efiled);
-app.use('/t1/gst_efiled', gst_efiled);
-app.use('/t2', t2);
-app.use('/t4', t4);
-app.use('/t5', t5);
-app.use('/setup', setup);
-app.use('/login*', login);
-app.use('/users', users);
-app.use('/client', client);
-app.use('/clients', clients);
-app.use('/payment', payment);
-app.use('/manage_users', manage_users);
-app.use('/staff_analysis', staff_analysis);
-app.use('/update_models', update_models);
-app.use('/summary', summary);
+let init = (dir, done) => {
+    fs.readdir(dir, (err, list) => {
+        if (err) return done(err);
+        var pending = list.length;
+        if (!pending) return done(null);
+        list.forEach(file => {
+            file = path.resolve(dir, file);
+            fs.stat(file, (err, stat) => {
+                if (stat && stat.isDirectory()) {
+                    init(file, err => {
+                        if (!--pending) done(null);
+                    });
+                } else {
+                    if (!file.includes('utils')) {
+                        let route = file.split('routes')[1].replace(/\\/g, '/').replace(/\.js/g, '');
+                        file = './server/routes' + route;
+                        if (route.includes('index')) route = '/';
+                        if (route.includes('login')) route = '/login*';
+                        app.use(route, require(file));
+                    }
+                    if (!--pending) done(null);
+                }
+            });
+        });
+    });
+};
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
+init('./server/routes', err => {
+    if (err) console.log('Error in init: ', err);
+    // catch 404 and forward to error handler
+    app.use(function(req, res, next) {
+        var err = new Error('Not Found');
+        err.status = 404;
+        next(err);
+    });
+    
+    // error handler
+    app.use(function(err, req, res, next) {
+        // set locals, only providing error in development
+        res.locals.message = err.message;
+        res.locals.error = req.app.get('env') === 'development' ? err : {};
+    
+        // render the error page
+        res.status(err.status || 500);
+        res.render('error');
+    });
+    
+    var setup = require('./server/routes/utils/setup');
+    setup();
+    
+    var logging = require('./server/logging');
+    
 });
-
-// error handler
-app.use(function(err, req, res, next) {
-    // set locals, only providing error in development
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-    // render the error page
-    res.status(err.status || 500);
-    res.render('error');
-});
-
-var setup = require('./server/routes/utils/setup');
-setup();
-
-var logging = require('./server/logging');
 
 module.exports = app;

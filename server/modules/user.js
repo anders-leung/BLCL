@@ -1,7 +1,7 @@
 /**
  * Created by ander on 2017-09-12.
  */
-var to = require('../../helpers/to');
+var to = require('../helpers/to');
 var User = require('../models/user');
 
 var UserService = {
@@ -45,6 +45,7 @@ var UserService = {
         [err, initials] = await to(User.find({}).distinct('initials'));
         if (err) return err;
         initials.sort();
+        initials.unshift('');
         return initials;
     }
 };

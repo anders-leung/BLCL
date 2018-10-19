@@ -5,7 +5,7 @@ var express = require('express');
 var router = express.Router();
 
 var CookieService = require('./utils/cookies');
-var ClientService = require('../modules/client');
+var ClientService = require('../modules/t1/client');
 
 /* GET home page. */
 router.get('/', CookieService.isLoggedIn, function(req, res) {
