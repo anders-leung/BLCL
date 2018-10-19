@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    console.log('hello')
     $('table').DataTable({
         scrollY: '70vh',
         paging: false

@@ -1,6 +1,3 @@
-/**
- * Created by ander on 2017-11-22.
- */
 var headersToFields = {
     'PRE OK' : 'preparerDone',
     'Pickup Date' : 'pickupDate',
@@ -11,7 +8,7 @@ var headersToFields = {
     'Packed' : 'packed',
     'Emailed' : 'emailed',
     'Signed' : 'signed',
-    'PYT Rec\'d' : 'pytReceived',
+    'PYT Type' : 'pytReceived',
     'PYT Amount' : 'pytAmount',
     'Rec\'d By' : 'recBy',
     'Tax To CRA' : 'taxToCRA',
@@ -57,7 +54,7 @@ function getColumn(field) {
 $(document).ready(function() {
     var socket = io();
 
-    socket.on('client side update', updateEvent);
+    socket.on('client side update', updateHtml);
 
     $('table').each(function() {
         if (window.location.pathname.includes('/nr')) return;
@@ -90,26 +87,24 @@ $(document).ready(function() {
         var cell = $(that).closest('td');
         var table = $(that).closest('table').DataTable();
         var row = $(that).closest('tr');
-        var fileName = table.row($(row)).data()[0];
+        var id = table.row($(row)).data()[0];
         var value = $(that).find('input').val();
         if (type == 'select') value = $(that).find('select').val();
         var field = getField(cell);
-        updateHtml(fileName, field, value, true);
+        updateHtml({ id, field, value }, true);
         $(that).trigger('enableEditing');
     }
 
-    function updateEvent(data) {
-        updateHtml(data.fileName, data.field, data.value);
-    }
-
-    function updateHtml(fileName, field, value, emit) {
-        if (window.location.pathname.includes('/nr')) return;
+    function updateHtml(data, emit) {
+        const { id, field, value } = data;
+        console.log('data: ', data)
+        if (pathIncludes('nr')) return;
         var column = getColumn(field);
         console.log(column);
         $('table').each(function() {
             var table = $(this).DataTable();
             table.rows().every(function(row) {
-                if (this.data()[0] == fileName) {
+                if (this.data()[0] == id) {
                     table.cell(row, column).data(value);
                     adjustTables();
                 }
@@ -118,19 +113,21 @@ $(document).ready(function() {
 
         if (!emit) return;
 
-        if (fileName.indexOf('@') > -1) {
-            socket.emit('update user', {
-                email: fileName,
-                field : field,
-                value : value
-            });
-            return;
+        let event = 'client side update';
+
+        if (pathIncludes('manage_users')) {
+            event = 'update user';
+        } else if (pathIncludes('invoice')) {
+            event = 'update invoice';
         }
 
-        socket.emit('client side update', {
-            fileName : fileName,
-            field : field,
-            value : value
-        });
+        console.log('event: ', event)
+        console.log('emit: ', data)
+        socket.emit(event, data);
     }
 });
+
+function pathIncludes(lookingFor) {
+    if (window.location.pathname.includes(`/${lookingFor}`)) return true;
+    return false;
+}

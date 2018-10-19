@@ -2,7 +2,7 @@
  * Created by ander on 2017-06-02.
  */
 var to = require('../../helpers/to');
-var Client = require('../../models/client');
+var Client = require('../../models/t1/client');
 var WriteExcelService = require('./write_excel');
 var clientNames = require('../utils/client');
 var async = require('async');

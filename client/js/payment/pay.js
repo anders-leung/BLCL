@@ -60,6 +60,7 @@ $(document).ready(function() {
                     total += sum;
                 }
             });
+            $('table').DataTable().columns.adjust();
         }
     });
 

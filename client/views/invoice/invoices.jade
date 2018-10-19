@@ -1,0 +1,49 @@
+extends ../layout
+
+block content
+    if role == 'Administrator'
+        script(type='text/javascript', src='/js/datatables/jquery.dataTables.min.js')
+        script(type='text/javascript', src='/js/datatables/dataTables.buttons.min.js')
+        script(type='text/javascript', src='/js/datatables/jszip.min.js')
+        script(type='text/javascript', src='/js/datatables/buttons.html5.min.js')
+        script(type='text/javascript', src='/js/datatables/datatables-sum.js')
+    script(type="text/javascript", src='/js/jquery.floatThead.js')
+    script(type='text/javascript').
+    script(src='/js/invoice/invoices.js')
+
+    #table.col-12.tab-content
+        table.cell-border(style='width: 100%')
+            thead
+                tr
+                    th
+                    th Invoice #
+                    th Client
+                    th Services
+                    th Issue Date
+                    th PYT Type
+                    th Amount Owing
+            tfoot
+                tr
+                    th
+                    th Invoice #
+                    th Client
+                    th Services
+                    th Issue Date
+                    th PYT Type
+                    th Amount Owing
+            tbody
+                each invoice in invoices
+                    tr(data-href="/invoice/invoice/" + invoice._id)
+                        - var client = invoice.client;
+                        if client
+                            - client = client.name
+                        else
+                            - client = invoice.clientString
+                            
+                        td #{invoice._id}
+                        td #{invoice.number}
+                        td #{client}
+                        td #{invoice.services.service || invoice.services.map(x => x.service).join(', ')}
+                        td=invoice.issueDate.toLocaleString('en-US', { year: 'numeric', month: 'short', day: '2-digit' })
+                        td.select.pytType #{invoice.pytReceived}
+                        td #{invoice.services.total || invoice.total}

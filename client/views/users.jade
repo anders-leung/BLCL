@@ -53,7 +53,7 @@ block content
                             th PRE
                     tbody
                         each client in list[i][1]
-                            tr(data-href="/client/" + client.pathName)
+                            tr(data-href="/t1/client/" + client.pathName)
                                 td.text-nowrap #{client.fileName}
                                 td.text-nowrap #{client.husband ? client.husband.lastName : ''}
                                 td.text-nowrap #{client.husband ? client.husband.firstName : ''}

@@ -11,7 +11,7 @@ function colorCells(row) {
     $(row).find('td:eq(26)').css('color', 'red');
     $(row).find('td:eq(27)').css('color', 'red');
     $(row).find('td:eq(28)').css('color', 'red');
-    $(row).find('td:eq(29)').css('color', 'purple');
+    $(row).find('td:eq(29)').css('color', 'red');
 }
 
 function colorHeader(header) {
@@ -102,7 +102,7 @@ $(document).ready(function() {
         } else {
             table = $(tableId).DataTable({
                 'columnDefs': [
-                    { type: 'date', targets: [9, 20, 24, 25, 30, 31] },
+                    { type: 'date', targets: [9, 20, 28, 29, 30, 31] },
                     { visible: false, searchable: true, targets: 0 }
                 ],
                 'select': true,
@@ -134,7 +134,7 @@ $(document).ready(function() {
     socket.on('client side update', checkRows);
 
     function checkRows(data) {
-        var row = getRow(data.fileName);
+        var row = getRow(data.id);
         console.log(data);
         var tableId = findTableForRow(row);
         if (tableId) moveRow(row, tableId);
@@ -154,42 +154,49 @@ $(document).ready(function() {
     function findTableForRow(row) {
         var preparer = row.data()[16] != '';
         var packed = row.data()[22] == 'Y';
-        var emailed = row.data()[25] != '';
-        var signed = row.data()[26] != '';
-        var pyt = row.data()[27] != '' && row.data()[28] != '' && row.data()[29] != '' && row.data()[30] != '';
+        var emailed = row.data()[30] != '';
+        var signed = row.data()[29] != '';
+        var pyt = row.data()[25] != '' && row.data()[26] != '' && row.data()[27] != '' && row.data()[28] != '';
         console.log(preparer, packed, emailed, signed, pyt)
 
-        if (!preparer) return '#noPreparerTable';
+        var table = ''
+        if (!preparer) table = '#noPreparerTable';
         if (emailed) {
             if (signed) {
                 if (pyt) {
                     if (packed) {
-                        return '#doneTable';
+                        table = '#doneTable';
                     } else {
-                        return '#emailedNotPackedTable';
+                        table = '#emailedNotPackedTable';
                     }
                 } else {
-                    return '#osPytTable';
+                    table = '#osPytTable';
                 }
             } else {
-                return '#emailedTable';
+                table = '#emailedTable';
             }
         } else {
             if (packed) {
                 if (signed) {
                     if (pyt) {
-                        return '#doneTable';
+                        table = '#doneTable';
                     } else {
-                        return '#osPytTable';
+                        table = '#osPytTable';
                     }
                 } else {
-                    return '#packedTable';
+                    if (pyt) {
+                        table = '#osSignedTable';
+                    } else {
+                        table = '#packedTable';
+                    }
                 }
             } else {
-                return '#normalTable';
+                table = '#normalTable';
             }
         }
-        return '#missingTable';
+        if (!table) table = '#missingTable';
+        console.log('move to table ' + table)
+        return table;
     }
 
     function moveRow(row, tableId) {
@@ -215,12 +222,12 @@ $(document).ready(function() {
         $(row).find('td').eq(17).addClass('select initials');
         $(row).find('td').eq(20).addClass('date-edit');
         $(row).find('td').eq(21).addClass('select toggle');
-        $(row).find('td').eq(24).addClass('date-edit');
-        $(row).find('td').eq(25).addClass('date-edit');
+        $(row).find('td').eq(24).addClass('select initials');
+        $(row).find('td').eq(25).addClass('select tax');
         $(row).find('td').eq(26).addClass('select pytType');
         $(row).find('td').eq(27).addClass('edit');
-        $(row).find('td').eq(28).addClass('select initials');
-        $(row).find('td').eq(29).addClass('select tax');
+        $(row).find('td').eq(28).addClass('date-edit');
+        $(row).find('td').eq(29).addClass('date-edit');
         $(row).find('td').eq(30).addClass('date-edit');
     }
 });

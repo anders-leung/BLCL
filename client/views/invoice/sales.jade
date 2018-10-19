@@ -1,0 +1,64 @@
+//
+   Created by ander on 2017-11-01.
+
+extends ../layout
+
+block content
+    script(type='text/javascript', src='/js/datatables/jquery.dataTables.min.js')
+    script(type='text/javascript', src='/js/datatables/dataTables.buttons.min.js')
+    script(type='text/javascript', src='/js/datatables/jszip.min.js')
+    script(type='text/javascript', src='/js/datatables/buttons.html5.min.js')
+    script(type='text/javascript', src='/js/datatables/datatables-sum.js')
+    script(type='text/javascript', src='/js/invoice/sales.js')
+
+    .row
+        .col-4.form-group
+            label(for='weeks') Week of
+            select#weeks.form-control(name='weeks')
+                each week in weeks
+                    option(value=week)=week
+        .col-4.form-group
+            label(for='company') Company
+            select#company.form-control(name='company')
+                option(value='blcl') Benjamin Leung & Co., Ltd.
+                option(value='cantrust') Cantrust Business Service Ltd.
+
+    #table.col-12.tab-content
+        table.cell-border(style='width: 100%')
+            thead
+                tr
+                    th Invoice #
+                    th Client Name
+                    each service in services
+                        th=service.toUpperCase()
+                    th GST Rec
+                    th Total A/R
+            tfoot
+                tr
+                    th
+                    th
+                    each service in services
+                        th
+                    th
+                    th
+            tbody
+                each invoice in invoices
+                    tr.clickable-row(data-href="/invoice/" + invoice._id)
+                        - var client = invoice.client;
+                        if client
+                            - client = client.name
+                        else
+                            - client = invoice.clientString
+
+                        td.text-nowrap #{invoice.number}
+                        td.text-nowrap #{client}
+                        - var gst = 0
+                        each service in services
+                            - var match = invoice.services.filter((x) => x.service === service)[0]
+                            - var value = ''
+                            if (match)
+                                - value = parseFloat(match.amount).toFixed(2)
+                                - gst = gst + parseFloat(match.gst)
+                            td=value
+                        td.text-nowrap #{gst.toFixed(2)}
+                        td

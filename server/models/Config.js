@@ -5,7 +5,10 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var ConfigSchema = new Schema({
-    t1_directory: String
+    invoice_directory: String,
+    t1_directory: String,
+    gst: String,
+    pst: String,
 });
 
 module.exports = mongoose.model('Config', ConfigSchema);

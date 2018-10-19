@@ -1,0 +1,16 @@
+extends ../layout
+
+block content
+
+    script(type='text/javascript', src='/js/directory.js')
+
+    #table.col-12
+        table.cell-border
+            thead
+                tr
+                    th Client Name
+            tbody
+                each client in clients
+                    //- tr(data-href="/nr/client/" + client.pathName)
+                    tr
+                        td.text-nowrap #{client.name}
