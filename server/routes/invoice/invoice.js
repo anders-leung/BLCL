@@ -5,7 +5,7 @@ const fs = require('fs');
 
 const CookieService = require('../utils/cookies');
 const InvoiceService = require('../../modules/invoice/invoice');
-const ClientService = require('../../modules/t2/client');
+const ClientService = require('../../modules/clients/client');
 const ConfigService = require('../../modules/config');
 
 /* GET home page. */

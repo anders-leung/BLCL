@@ -50,7 +50,7 @@ const InvoiceService = {
                 { $unwind: '$services' },
                 { $match: { 'services.service': service } },
                 { $lookup: {
-                    from: 't2',
+                    from: 'client',
                     localField: 'client',
                     foreignField: '_id',
                     as: 'client'

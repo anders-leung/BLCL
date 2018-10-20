@@ -10,7 +10,7 @@ var InvoiceSchema = new Schema({
     total: String,
     client: {
         type: Schema.Types.ObjectId,
-        ref: 'T2',
+        ref: 'Client',
     },
     clientString: String,
     services: [{
