@@ -9,7 +9,7 @@ var bodyParser = require('body-parser');
 var fs = require('fs');
 
 mongoose.Promise = require('bluebird');
-mongoose.connect('mongodb://localhost:27017/');
+mongoose.connect('mongodb://localhost:27017/test');
 
 var app = express();
 
