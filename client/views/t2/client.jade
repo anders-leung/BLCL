@@ -1,0 +1,62 @@
+extends ../layout
+
+block content
+    .container
+        h1 T2
+        hr
+        form(method='post')
+            .form-group
+                legend Personal Info
+                .row
+                    .col-6
+                        label(for='clientFirstName') Client First Name
+                        input#clientFirstName.form-control(type='text' name='client.firstName')
+                    .col-6
+                        label(for='clientFirstName') Client Last Name
+                        input#clientLasstName.form-control(type='text' name='client.lastName')
+                .row
+                    .col-6
+                        label(for='spouseFirstName') Spouse First Name
+                        input#spouseFirstName.form-control(type='text' name='client.spouseFirstName')
+                    .col-6
+                        label(for='spouseFirstName') Spouse Last Name
+                        input#spouseLastName.form-control(type='text' name='client.spouseLastName')
+                .row
+                    .col-6
+                        label(for='phone') Phone
+                        input#phone.form-control(type='text' name='client.phone')
+                    .col-6
+                        label(for='mobile') Mobile
+                        input#mobile.form-control(type='text' name='client.mobile')
+                .row
+                    .col-6
+                        label(for='email') Email
+                        input#email.form-control(type='text' name='client.email')
+            .form-group
+                legend Address
+                hr
+                .row
+                    .col-12
+                        - var field = 'address'
+                        - var country = true
+                        - var required = true
+                        include ../templates/address.jade
+            
+            .form-group
+                legend Details
+                .row
+                    .col-6
+                        label(for='status') Status
+                        input#status.form-control(type='text' name='status')
+                    .col-6
+                        label(for='bnNumber') BN Number
+                        input#bnNumber.form-control(type='text' name='bnNumber')
+                .row
+                    .col-6
+                        label(for='yearEnd') Year End
+                        input#yearEnd.form-control(type='text' name='yearEnd')
+                    .col-6
+                        label(for='services') Services
+                        input#services.form-control(type='text' name='services')
+                    
+            input.btn.btn-success.offset-1.col-10(type='submit' value='Done' style='margin-top:1%; margin-bottom:3%;')
