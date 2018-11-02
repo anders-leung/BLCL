@@ -52,7 +52,7 @@ router.post('/', function(req, res) {
     req.body.new = true;
     ClientService.saveClient(req.body, function(err, client) {
         if (err) {
-            res.render('error');
+            return res.render('error');
         } else {
             res.redirect('/t1/directory');
         }
@@ -63,7 +63,7 @@ router.post('/:client_name', function(req, res) {
     var client_name = req.params.client_name;
     ClientService.updateClient({ pathName : client_name }, req.body, true, function(err, client) {
         if (err) {
-            res.render('error');
+            return res.render('error');
         }
         res.redirect('/t1/directory');
     })
