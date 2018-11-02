@@ -104,7 +104,7 @@ function input(id, name) {
     if (name.includes('amount')) {
         fixed += ' fixed';
         type = 'number';
-        extra = ' step="0.01" min=0 ';
+        extra = ' step="0.01" ';
     }
     if (name.includes('to') || name.includes('from')) fixed += ' datepicker'
     if (name.includes('gst')) value = ' value="0.00"';
