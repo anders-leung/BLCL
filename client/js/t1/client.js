@@ -57,7 +57,6 @@ $(document).ready(function(e) {
         $('#stocks').prop('checked', client.stocks);
         $('#confirmPickupDate').prop('checked', client.confirmPickupDate);
         $('#t777').prop('checked', client.t777);
-        $('#new').prop('checked', client.new);
         $('#selfEmployed').prop('checked', client.selfEmployed);
         $('#rental').prop('checked', client.rental);
         $('#tel').val(client.tel.number);
@@ -261,7 +260,10 @@ $(document).ready(function(e) {
 
     $('form').on('submit', function() {
         // to each unchecked checkbox
-        $('input[type="checkbox"]:not(:checked)').each(function () {
+        $('input[type=checkbox]').each(function () {
+            $(this).val(1);
+        });
+        $('input[type=checkbox]:not(:checked)').each(function () {
             // set value 0 and check it
             $(this).prop('checked', true).val(0);
         });
