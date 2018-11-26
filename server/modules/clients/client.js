@@ -9,6 +9,12 @@ const ClientService = {
 
     get: async (query) => {
         return await to(Client.find(query));
+    },
+
+    update: async (query, update, one = true) => {
+        let updateType = 'updateOne';
+        if (!one) updateType = 'updateMany';
+        return await to(Client[updateType](query, update));
     }
 };
 
