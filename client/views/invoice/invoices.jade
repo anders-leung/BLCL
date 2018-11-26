@@ -16,7 +16,7 @@ block content
             thead
                 tr
                     th
-                    th Invoice #
+                    th #
                     th Client
                     th Services
                     th Issue Date
@@ -25,7 +25,7 @@ block content
             tfoot
                 tr
                     th
-                    th Invoice #
+                    th #
                     th Client
                     th Services
                     th Issue Date
@@ -38,7 +38,7 @@ block content
                         if client
                             - client = client.name
                         else
-                            - client = invoice.clientString
+                            - client = invoice.oneTimeClient.name
                             
                         td #{invoice._id}
                         td #{invoice.number}

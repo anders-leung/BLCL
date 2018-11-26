@@ -27,7 +27,7 @@ block content
         table.cell-border(style='width: 100%')
             thead
                 tr
-                    th Invoice #
+                    th #
                     th Client Name
                     th ADV
                     th INV
@@ -54,7 +54,7 @@ block content
                         if client
                             - client = client.name
                         else
-                            - client = invoice.clientString
+                            - client = invoice.oneTimeClient.name
 
                         td.text-nowrap #{invoice.number}
                         td.text-nowrap #{client}
