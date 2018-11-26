@@ -1,7 +1,8 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Address = require('./Address');
+const Schema = mongoose.Schema;
 
-var InvoiceSchema = new Schema({
+const InvoiceSchema = new Schema({
     company: String,
     issueDate: Date,
     issuedBy: String,
@@ -12,11 +13,17 @@ var InvoiceSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Client',
     },
-    clientString: String,
+    oneTimeClient: {
+        name: String,
+        address: Address.schema,
+        phone: String,
+        fax: String,
+        email: String,
+    },
     services: [{
         service: {
             type: String,
-            enum: ['FS', 'PR', 'T1', 'T2', 'T3', 'T4', 'T5', 'CON', 'CRA', 'MISC', 'NR', 'NON', 'OT1', 'BK', 'SEC', 'DISC'],
+            enum: ['FS', 'PR', 'T1', 'T2', 'T2054', 'T3', 'T4', 'T5', 'CON', 'CRA', 'MISC', 'NR', 'NR DPT', 'CCRA', 'NON', 'OT1', 'BK', 'SEC', 'DISC', 'OTHER'],
         },
         amount: String,
         details: String,
