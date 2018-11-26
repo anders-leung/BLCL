@@ -1,6 +1,10 @@
 var removeButton = '<div class="col-1"><div class="form-group"><p class="btn btn-danger" style="margin-top:25px"><i class="fa fa-trash-alt"></i></p></div></div>'
 
 $(document).ready(function() {
+    if (invoice) {
+        populateFields(invoice);
+    }
+
     $('#clientString').autocomplete({
         source: clients.map((client) => {
             return {
@@ -18,6 +22,13 @@ $(document).ready(function() {
             $(this).val(ui.item.label);
             $('#client').val(ui.item.value);
         },
+    });
+
+    $('#newClient').on('click', function() {
+        let show = this.checked;
+        $('.toggle').each(function() {
+            $(this).attr('hidden', !show);
+        });
     });
     
     $(this).on('click', 'i', function() {
@@ -60,25 +71,34 @@ $(document).ready(function() {
         setTotal();
     });
 
-    $('#addService').on('click', () => {
-        var services = $('#services').find('.row input');
-        var last = services[services.length - 1];
-        var index = parseInt(last.name.split('[')[1][0]) + 1;
-        var html = '';
-        var service = 'services[' + index + ']';
-        html += col(2, label(service + 'Service', 'Service') + select(service + 'Service', service + '[service]'));
-        html += col(9, label(service + 'Details', 'Details') + input(service + 'Details', service + '[details]'));
-        html += removeButton;
-        html += col(3, label(service + 'Amount', 'Amount') + input(service + 'Amount', service + '[amount]'), 'offset-4');
-        html += col(2, label(service + 'Gst', 'GST') + input(service + 'Gst', service + '[gst]'));
-        html += col(2, label(service + 'Pst', 'PST', true) + input(service + 'Pst', service + '[pst]'));
-        $(last).closest('.row').after(div(html));
-    });
+    $('#addService').on('click', addService);
 
     $('form').on('submit', function(e) {
         window.open('/invoice/invoices');
-    })
+    });
+
+    $(this).on('change', 'select', function() {
+        if (this.name === 'company') return;
+        var textarea = $(this).parent().parent().parent().find('textarea');
+        var service = $(this).val().toLowerCase();
+        textarea.val(descriptions[service]);
+    });
 });
+
+function addService() {
+    var services = $('#services').find('.row input');
+    var last = services[services.length - 1];
+    var index = parseInt(last.name.split('[')[1][0]) + 1;
+    var html = '';
+    var service = 'services[' + index + ']';
+    html += col(2, label(service + 'Service', 'Service') + select(service + 'Service', service + '[service]'));
+    html += col(9, label(service + 'Details', 'Details') + input(service + 'Details', service + '[details]'));
+    html += removeButton;
+    html += col(3, label(service + 'Amount', 'Amount') + input(service + 'Amount', service + '[amount]'), 'offset-4');
+    html += col(2, label(service + 'Gst', 'GST') + input(service + 'Gst', service + '[gst]'));
+    html += col(2, label(service + 'Pst', 'PST', true) + input(service + 'Pst', service + '[pst]'));
+    $(last).closest('.row').after(div(html));
+}
 
 function div(string) {
     return '<div class="row">' + string + '</div>';
@@ -157,4 +177,41 @@ function setTotal() {
     if (isNaN(sum)) sum = 0;
 
     $('#total').val(convert(sum));
+}
+
+function populateFields(invoice) {
+    var client = invoice.client;
+    if (!client) {
+        client = invoice.oneTimeClient;
+        $('#newClient').click();
+        $('.toggle').each(function() {
+            $(this).attr('hidden', false);
+        });
+        const name = '[name="client[address]';
+        const { address, phone, fax, email } = client;
+        $(`${name}[apartment]`).val(address.apartment);
+        $(`${name}[street]`).val(address.street);
+        $(`${name}[city]`).val(address.city);
+        $(`${name}[province]`).val(address.province);
+        $(`${name}[postalCode]`).val(address.postalCode);
+        $('#phone').val(phone);
+        $('#fax').val(fax);
+        $('#email').val(email);
+    } else {
+        $('#client').val(client._id);
+    }
+    $('#clientString').val(client.name);
+
+    $('#company').val(invoice.company);
+    invoice.services.map(function (s, index) {
+        if (index > 0) addService();
+        const name = `[name="services[${index}]`;
+        const { service, details, amount, gst, pst } = s;
+        $(`select${name}[service]"`).val(service);
+        $(`textarea${name}[details]"`).val(details);
+        $(`input${name}[amount]"`).val(amount);
+        $(`input${name}[gst]"`).val(gst);
+        $(`input${name}[pst]"`).val(pst);
+    });
+    $('#total').val(invoice.total)
 }

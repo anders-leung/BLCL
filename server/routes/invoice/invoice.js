@@ -13,6 +13,7 @@ router.get('/*', CookieService.isLoggedIn, async (req, res) => {
     let err, invoice;
     if (req.params['0']) {
         [err, invoice] = await InvoiceService.get({ _id: req.params[0] });
+        invoice = invoice[0];
     }
 
     const [clientErr, clients] = await ClientService.get({});
@@ -30,16 +31,43 @@ router.get('/*', CookieService.isLoggedIn, async (req, res) => {
         invoice,
         clients,
         services,
+        descriptions: InvoiceService.getDescriptions(),
     });
 });
 
-router.post('/', CookieService.isLoggedIn, async (req, res) => {
+router.post('/*', CookieService.isLoggedIn, async (req, res) => {
+    let query, err, invoice;
+    if (req.params['0']) {
+        query = { _id: req.params[0] };
+    }
     const data = req.body;
     data.issuedBy = req.session.initials
-    const path = await InvoiceService.create(data);
-    const invoice = fs.readFileSync(path);
+    
+    const { client } = data;
+    if (!client[0]) {
+        client.name = data.clientString;
+        client.address.apartment = client[1].address.apartment;
+        delete client[0];
+        delete client[1];
+        data.oneTimeClient = client;
+        delete data.client;
+    } else {
+        data.client = client[0];
+    }
+
+    if (query) {
+        [err, invoice] = await InvoiceService.update(query, data);
+    } else {
+        [err, invoice] = await InvoiceService.create(data);
+    }
+
+    if (err) return res.render(err);
+
+    const path = await InvoiceService.createPdf(invoice);
+
+    const pdf = fs.readFileSync(path);
     res.contentType('application/pdf');
-    res.send(invoice);
+    res.send(pdf);
 });
 
 module.exports = router;

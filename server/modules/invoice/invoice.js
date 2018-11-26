@@ -1,6 +1,7 @@
 const to = require('../../helpers/to');
 const Invoice = require('../../models/invoice');
 const pdf = require('./invoice-pdf');
+const descriptions = require('./descriptions');
 
 const InvoiceService = {
     create: async (invoice) => {
@@ -13,12 +14,10 @@ const InvoiceService = {
             service.total = convert(parseFloat(service.amount) + parseFloat(service.gst));
         }
 
-        const [e, newInvoice] = await to(new Invoice(Object.assign({
+        return await to(new Invoice(Object.assign({
             number,
             issueDate: new Date(),
         }, invoice)).save());
-
-        return await pdf(newInvoice);
     },
 
     update: async (query, data) => {
@@ -72,7 +71,11 @@ const InvoiceService = {
     },
 
     createPdf: async (invoice) => {
-        pdf(invoice);
+        return await pdf(invoice);
+    },
+
+    getDescriptions: () => {
+        return descriptions;
     }
 };
 
