@@ -30,6 +30,7 @@ const ClientSchema = new Schema({
     phone: String,
     fax: String,
     address: Address.schema,
+    email: String,
 });
 
 ClientSchema.virtual('contactString').get(function() {
