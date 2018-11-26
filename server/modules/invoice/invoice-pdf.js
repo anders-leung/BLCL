@@ -103,7 +103,7 @@ const addDivider = (doc, x, y) => {
 
 const setAttention = (doc, invoice) => {
     const gst = company[invoice.company].gst;
-    const client = invoice.client;
+    let client = invoice.client || invoice.oneTimeClient;
     const dateString = invoice.issueDate.toLocaleString('en-US', {
         month: 'long',
         year: 'numeric',
@@ -124,7 +124,7 @@ const setAttention = (doc, invoice) => {
     const address = [{ value: (client.address ? client.address.fullAddress : ''), start: column2, fontSize: 9 }];
 
     let phonesString = '';
-    if (client.phone) phonesString += `TEL: ${client.phone}  `;
+    if (client.phone) phonesString += `TEL: ${client.phone}     `;
     if (client.fax) phonesString += `FAX: ${client.fax}`;
     const phones = [{ value: phonesString, start: column2, fontSize: 9 }];
 
@@ -137,7 +137,7 @@ const setAttention = (doc, invoice) => {
 
     const attn = [
         { value: 'Attn.:', start: column1, font: 'Times-Bold', fontSize: 12 },
-        { value: client.contactString, start: column2, font: 'Times-Roman' },
+        { value: client.contactString || client.name, start: column2, font: 'Times-Roman' },
         { value: 'GST NO.', start: column3, font: 'Times-Bold' },
         { value: gst, font: 'Times-Roman' },
     ]
@@ -163,7 +163,7 @@ const setAttention = (doc, invoice) => {
     const addressLines = splitLine(doc, address[0].value, 230);
     for (var i = 0; i < addressLines.length; i++) {
         const line = addressLines[i];
-        if (line) writeLine(doc, { value: line, start: column2 }, 0.1);
+        if (line) writeLine(doc, [{ value: line, start: column2 }], 0.1);
     }
     
     if (phonesString) writeLine(doc, phones, 0.1);
