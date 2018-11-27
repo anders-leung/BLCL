@@ -11,6 +11,7 @@ const ConfigService = require('../../modules/config');
 /* GET home page. */
 router.get('/*', CookieService.isLoggedIn, async (req, res) => {
     let err, invoice;
+    invoice = null;
     if (req.params['0']) {
         [err, invoice] = await InvoiceService.get({ _id: req.params[0] });
         invoice = invoice[0];
