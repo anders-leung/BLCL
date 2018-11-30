@@ -25,7 +25,7 @@ const ClientSchema = new Schema({
     contact: {
         title: String,
         firstName: String,
-        LastName: String,
+        lastName: String,
     },
     phone: String,
     fax: String,
