@@ -13,15 +13,8 @@ router.get('/', CookieService.isLoggedIn, async (req, res) => {
     }
 
     const weeks = getWeeks();
-    const query = {
-        $or: [
-            { pytReceived: '' },
-            { pytReceived: { $exists: false } },
-        ],
-    };
-
     const services = InvoiceService.getServices();
-    const [err, invoices] = await InvoiceService.getByWeek(query, 'issueDate', weeks[0]);
+    const [err, invoices] = await InvoiceService.getByWeek({}, 'issueDate', weeks[0]);
 
     if (err) return res.render('error', err);
 
