@@ -60,7 +60,7 @@ let init = (dir, done) => {
     });
 };
 
-init('./server/routes', err => {
+init('./server/routes', async (err) => {
     if (err) console.log('Error in init: ', err);
     // catch 404 and forward to error handler
     app.use(function(req, res, next) {
@@ -84,7 +84,25 @@ init('./server/routes', err => {
     setup();
     
     var logging = require('./server/logging');
-    
+
+    const ConfigService = require('./server/modules/config');
+    let config;
+    [err, config] = await ConfigService.getConfig();
+    if (err) return console.log('init config err: ', err);
+
+    global.t1Directory = config.t1_directory;
+    global.invoiceDirectory = config.invoice_directory;
+
+    const DescriptionService = require('./server/modules/invoice/description');
+    let descriptions;
+    [err, descriptions] = await DescriptionService.get({});
+    if (err) return console.log('init description err: ', err);
+    if (descriptions.length === 0) {
+        await DescriptionService.setup();
+    }
 });
+
+// require('./server/modules/email/email')();
+// require('./server/modules/invoice/os-emailing')();
 
 module.exports = app;
