@@ -15,7 +15,8 @@ var headersToFields = {
     'T1135 EFILED' : 't1Efiled',
     'GST EFILED' : 'gstEfiled',
     'Email/Call Pu' : 'callDate',
-    'Remarks' : 'remarks'
+    'Remarks' : 'remarks',
+    'Sign Date': 'signDate'
 };
 
 function adjustTables() {
