@@ -64,9 +64,15 @@ $(document).ready(function() {
 
     $(this).on('keyup', '.col-3 input', function(e) {
         var int = e.target.value;
-        var gst = int * GST;
         var parentGroup = $(this).parent().parent();
-        $(parentGroup).next().find('input').val(convert(gst));
+        
+        var gstGroup = $(parentGroup).next();
+        var enableGst = $(gstGroup).find('i').hasClass('fa-lock-open')
+        if (enableGst) {
+            var gst = int * GST;
+            $(gstGroup).find('input').val(convert(gst));
+        }
+
         var pstGroup = $(parentGroup).next().next();
         var enablePst = $(pstGroup).find('i').hasClass('fa-lock-open')
         if (enablePst) {
