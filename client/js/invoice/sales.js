@@ -29,12 +29,13 @@ $(document).ready(function() {
     var table = $('table').DataTable({
         'iDisplayLength': 10,
         'scrollX': true,
+        'scrollY': true,
         'select': true,
         'dom': 'RlBfrtip',
         'buttons': [{
             extend: 'excelHtml5',
             footer: true,
-            title: `Payments Received From ${$('#weeks').val()}`,
+            title: `Sales From ${$('#weeks').val()}`,
             exportOptions: {
                 columns: ':visible'
             }
