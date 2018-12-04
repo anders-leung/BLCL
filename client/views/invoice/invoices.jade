@@ -20,7 +20,9 @@ block content
                     th Client
                     th Services
                     th Issue Date
+                    th Sign Date
                     th PYT Type
+                    th Remarks
                     th Amount Owing
             tfoot
                 tr
@@ -29,7 +31,9 @@ block content
                     th Client
                     th Services
                     th Issue Date
+                    th Sign Date
                     th PYT Type
+                    th Remarks
                     th Amount Owing
             tbody
                 each invoice in invoices
@@ -45,5 +49,7 @@ block content
                         td #{client}
                         td #{invoice.services.service || invoice.services.map(x => x.service).join(', ')}
                         td=invoice.issueDate.toLocaleString('en-US', { year: 'numeric', month: 'short', day: '2-digit' })
+                        td.date-edit=invoice.signDate ? invoice.signDate.toLocaleString('en-US', { year: 'numeric', month: 'short', day: '2-digit' }) : ''
                         td.select.pytType #{invoice.pytReceived}
-                        td #{invoice.services.total || invoice.total}
+                        td.edit #{invoice.remarks}
+                        td #{invoice.total}
