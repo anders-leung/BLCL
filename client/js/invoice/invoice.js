@@ -42,9 +42,14 @@ $(document).ready(function() {
         } else {
             $(input).attr('disabled', false);
             $(input).attr('readonly', true);
-            var amount = $(input).parent().parent().prev().prev().find('input').val();
-            var pst = amount * PST;
-            $(input).val(pst ? convert(pst) : '0.00');
+            var amount = $(input).parent().parent().prev();
+            var tax = 0;
+            if (input[0].name.includes('gst')) {
+                tax = $(amount).find('input').val() * GST;
+            } else {
+                tax = $(amount).prev().find('input').val() * PST;
+            }
+            $(input).val(tax ? convert(tax) : '0.00');
         }
         setTotal();
     })
@@ -95,8 +100,8 @@ function addService() {
     html += col(9, label(service + 'Details', 'Details') + input(service + 'Details', service + '[details]'));
     html += removeButton;
     html += col(3, label(service + 'Amount', 'Amount') + input(service + 'Amount', service + '[amount]'), 'offset-4');
-    html += col(2, label(service + 'Gst', 'GST') + input(service + 'Gst', service + '[gst]'));
-    html += col(2, label(service + 'Pst', 'PST', true) + input(service + 'Pst', service + '[pst]'));
+    html += col(2, label(service + 'Gst', 'GST', 'gst') + input(service + 'Gst', service + '[gst]'));
+    html += col(2, label(service + 'Pst', 'PST', 'pst') + input(service + 'Pst', service + '[pst]'));
     $(last).closest('.row').after(div(html));
 }
 
@@ -108,8 +113,13 @@ function col(size, content, offset='') {
     return '<div class="' + offset + ' col-' + size + '">' + '<div class="form-group">' + content + '</div></div>';
 }
 
-function label(name, label, pst) {
-    return '<label for="' + name + '"> ' + label + (pst ? '<i class="fas fa-lock"></i>' : '') + '</label>';
+function label(name, label, tax) {
+    var lock = '<i class="fas fa-lock-open"></i>';
+    if (tax === 'pst') {
+        lock = '<i class="fas fa-lock"></i>';
+    }
+
+    return '<label for="' + name + '"> ' + label + (tax ? lock : '') + '</label>';
 }
 
 function input(id, name) {
