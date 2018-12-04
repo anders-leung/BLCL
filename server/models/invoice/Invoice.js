@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Address = require('./Address');
+const Address = require('../Address');
 const Schema = mongoose.Schema;
 
 const InvoiceSchema = new Schema({
@@ -23,7 +23,7 @@ const InvoiceSchema = new Schema({
     services: [{
         service: {
             type: String,
-            enum: ['FS', 'PR', 'T1', 'T2', 'T2054', 'T3', 'T4', 'T5', 'CON', 'CRA', 'MISC', 'NR', 'NR DPT', 'NTR', 'CCRA', 'NON', 'OT1', 'BK', 'SEC', 'DISC', 'OTHER'],
+            enum: ['FS', 'PR', 'T1', 'T2054', 'T3', 'T4', 'T5', 'CON', 'CRA', 'MISC', 'NR', 'NR DPT', 'CCRA', 'NON', 'OT1', 'BK', 'SEC', 'DISC', 'OTHER'],
         },
         amount: String,
         details: String,
@@ -37,6 +37,8 @@ const InvoiceSchema = new Schema({
     },
     pytDate: Date,
     number: Number,
+    remarks: String,
+    signDate: Date,
 });
 
 module.exports = mongoose.model('Invoice', InvoiceSchema);
