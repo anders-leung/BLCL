@@ -9,16 +9,19 @@ block content
         var services = !{JSON.stringify(services)};
         var descriptions = !{JSON.stringify(descriptions)};
     script(src='/js/invoice/invoice.js')
+    link(rel='stylesheet', href='/css/invoice.css')
 
-    .offset-1.col-10
-        h1=title
-        br
+    .card.offset-1.col-10
         form(method='post')
+            h1=title
+            
             hr
+            br
+
             .row
                 .form-group.col-10
                     label(for='clientString') Client
-                    input#clientString.form-control(name='clientString')
+                    input#clientString.form-control(name='clientString' required)
                     input#client(name='client' hidden)
                 .col-2(style='margin-top:25px')
                     label(for="newClient")
@@ -47,22 +50,23 @@ block content
                     .col-2
                         .form-group
                             label(for='service') Service
-                            select.form-control(type='text' name='services[0][service]')
+                            select.form-control(type='text' name='services[0][service]' required)
                                 option
                                 each service in services
                                     option(value=service)=service
                     .col-9
                         .form-group
                             label(for='description') Details
-                            textarea.form-control(type='text' name='services[0][details]' rows=4)
+                            textarea.form-control(type='text' name='services[0][details]' rows=4 required)
                 .row
                     .offset-4.col-3
                         .form-group
                             label(for='amount') Amount
-                            input.form-control(type='number' step='0.01' name='services[0][amount]')
+                            input.form-control(type='number' step='0.01' name='services[0][amount]' required)
                     .col-2
                         .form-group
                             label(for='gst') GST
+                                i.fas.fa-lock-open
                             input.form-control(type='text' name='services[0][gst]' readonly value='0.00')
                     .col-2
                         .form-group
@@ -77,4 +81,6 @@ block content
                         label(for='total') Total
                         input#total.form-control(type='text' name='total' readonly)
 
-            input.btn.btn-success.offset-1.col-10(type='submit' value='Done' style='margin-top:1%; margin-bottom:3%;')
+            br
+
+            input.btn.btn-success.offset-9.col-2(type='submit' value='Save' style='margin-top:1%;')
