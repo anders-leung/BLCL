@@ -54,11 +54,13 @@ block content
                         td.text-nowrap #{client}
                         - var gst = 0
                         each service in services
-                            - var match = invoice.services.filter((x) => x.service === service)[0]
-                            - var value = ''
-                            if (match)
-                                - value = parseFloat(match.amount).toFixed(2)
-                                - gst = gst + parseFloat(match.gst)
-                            td=value
-                        td.text-nowrap #{gst.toFixed(2)}
-                        td
+                            - var matches = invoice.services.filter((x) => x.service === service)
+                            - var amount = 0
+                            if (matches.length > 0)
+                                - matches.map((match) => {
+                                -     amount += parseFloat(match.amount);
+                                -     gst += parseFloat(match.gst);
+                                - })
+                            td.text-nowrap #{amount ? amount.toFixed(2) : ''}
+                        td.text-nowrap #{gst}
+                        td.text-nowrap #{invoice.total}
