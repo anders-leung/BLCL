@@ -85,7 +85,7 @@ $(document).ready(function() {
     $(this).on('change', 'select', function() {
         if (this.name === 'company') return;
         var textarea = $(this).parent().parent().parent().find('textarea');
-        var service = $(this).val().toLowerCase();
+        var service = $(this).val();
         textarea.val(descriptions[service]);
     });
 });
