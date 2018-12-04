@@ -11,7 +11,13 @@ const InvoiceService = {
 
         for (let i = 0; i < invoice.services.length; i++) {
             const service = invoice.services[i];
-            service.total = convert(parseFloat(service.amount) + parseFloat(service.gst));
+            if (!service.amount) service.amount = '0.00';
+            if (!service.gst) service.gst = '0.00';
+            if (!service.pst) service.pst = '0.00';
+            let total = parseFloat(service.amount);
+            total += parseFloat(service.gst);
+            total += parseFloat(service.pst);
+            service.total = convert(total);
         }
 
         return await to(new Invoice(Object.assign({
