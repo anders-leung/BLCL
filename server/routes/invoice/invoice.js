@@ -5,6 +5,7 @@ const fs = require('fs');
 
 const CookieService = require('../utils/cookies');
 const InvoiceService = require('../../modules/invoice/invoice');
+const DescriptionService = require('../../modules/invoice/description');
 const ClientService = require('../../modules/clients/client');
 const ConfigService = require('../../modules/config');
 
@@ -18,11 +19,12 @@ router.get('/*', CookieService.isLoggedIn, async (req, res) => {
     }
 
     const [clientErr, clients] = await ClientService.get({});
-    if (clientErr) return res.render('error');
+    if (clientErr) return res.render('error', clientErr);
     
     const [configErr, tax] = await ConfigService.getTax();
-    const services = InvoiceService.getServices();
-    if (configErr) return res.render('error');
+    const [dErr, descriptions] = await DescriptionService.getAll();
+    if (configErr) return res.render('error', configErr);
+    if (dErr) return res.render('error', dErr);
 
     res.render('invoice/invoice', {
         title: 'Invoice',
@@ -31,8 +33,8 @@ router.get('/*', CookieService.isLoggedIn, async (req, res) => {
         pst: tax.pst,
         invoice,
         clients,
-        services,
-        descriptions: InvoiceService.getDescriptions(),
+        services: Object.keys(descriptions).sort(),
+        descriptions,
     });
 });
 
