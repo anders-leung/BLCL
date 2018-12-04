@@ -21,10 +21,7 @@ const InvoiceSchema = new Schema({
         email: String,
     },
     services: [{
-        service: {
-            type: String,
-            enum: ['FS', 'PR', 'T1', 'T2054', 'T3', 'T4', 'T5', 'CON', 'CRA', 'MISC', 'NR', 'NR DPT', 'CCRA', 'NON', 'OT1', 'BK', 'SEC', 'DISC', 'OTHER'],
-        },
+        service: String,
         amount: String,
         details: String,
         total: String,
