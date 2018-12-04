@@ -30,6 +30,8 @@ block content
 
             .form-group.toggle(hidden)
                 - var field = 'client[address]'
+                - var country = false
+                - var required = { street: false, city: false, province: false, postalCode: false }
                 include ../templates/address.jade
             .form-group.toggle(hidden)
                 label(for='phone') Tel
@@ -83,4 +85,4 @@ block content
 
             br
 
-            input.btn.btn-success.offset-9.col-2(type='submit' value='Save' style='margin-top:1%;')
+            input.btn.btn-success.offset-1.col-10(type='submit' value='Save' style='margin-top:1%;')
