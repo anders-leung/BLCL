@@ -1,0 +1,102 @@
+extends ../layout
+
+block content
+
+    link(rel='stylesheet', href='/css/jquery.onepage-scroll-0.0.1.min.css')
+    script(src='/js/jquery.onepage-scroll-0.0.1.min.js')
+    script(src="/js/jquery/jquery.easing.min.js")
+
+    if (!client)
+        - client = {};
+
+    .card.offset-1.col-10
+        .scroll-container
+            form(method='post')
+
+                legend Client
+                hr
+                .form-group
+                    .row
+                        .col-8
+                            label(for='name') Name
+                            input#name.form-control(name='name' value=client.name)
+                        .col-4
+                            label(for='status') Status
+                            select#status.form-control(name='status')
+                                each status in ['Active', 'Pending', 'Inactive']
+                                    - var value = status.toLowerCase()
+                                    if (status === client.status)
+                                        option(value=value selected='selected')=status
+                                    else
+                                        option(value=value)=status
+                
+                br
+
+                legend Contact
+                hr
+                .form-group
+                    .row
+                        .col-2
+                            label(for='title') Title
+                            input#title.form-control(name='contact[title]' value=client.contact ? client.contact.title : '')
+                        .col-5
+                            label(for='firstName') First Name
+                            input#firstName.form-control(name='contact[firstName]' value=client.contact ? client.contact.firstName : '')
+                        .col-5
+                            label(for='lastName') Last Name
+                            input#lastName.form-control(name='contact[lastName]' value=client.contact ? client.contact.lastName : '')
+                .form-group
+                    .row
+                        .col-6
+                            label(for='phone') Phone
+                            input#phone.form-control(name='phone' value=client.phone)
+                        .col-6
+                            label(for='fax') Fax
+                            input#fax.form-control(name='fax' value=client.fax)
+
+                .form-group
+                    .row
+                        .col-12
+                            label(for='email') Email
+                            input#email.form-control(name='email' value=client.email)
+
+                .form-group
+                    - var field = 'address'
+                    - var country = true
+                    - var values = client.address
+                    include ../templates/address.jade
+
+                br
+
+                legend Other
+                hr
+                .form-group
+                    .row
+                        .col-2
+                            label(for='incorpDate') Incorp Date
+                            input#incorpDate.form-control(name='incorp[date]' value=client.incorp ? client.incorp.date : '')
+                        .col-2
+                            label(for='incorpNumber') Incorp Number
+                            input#incorpNumber.form-control(name='incorp[number]' value=client.incorp ? client.incorp.number : '')
+                        .col-2
+                            label(for='bnNumber') BN Number
+                            input#bnNumber.form-control(name='bnNumber' value=client.bnNumber)
+                        .col-2
+                            label(for='pstNumber') PST Number
+                            input#pstNumber.form-control(name='pstNumber' value=client.pstNumber)
+                        .col-2
+                            label(for='wcbNumber') WCB Number
+                            input#wcbNumber.form-control(name='wcbNumber' value=client.wcbNumber)
+                        .col-2
+                            label(for='yearEnd') Year End
+                            input#yearEnd.form-control(name='yearEnd' value=client.yearEnd)
+
+                .form-group
+                    .row
+                        .col-12
+                            label(for='services') Services - (Please separate services by a comma)
+                            input#services.form-control(name='services' value=client.services ? client.services.join(', ') : '')
+                    
+                br
+
+                input.btn.btn-success.offset-1.col-10(type='submit' value='Save')
