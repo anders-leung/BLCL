@@ -1,4 +1,5 @@
 const InvoiceService = require('../../modules/invoice/invoice');
+const DescriptionService = require('../../modules/invoice/description');
 
 module.exports = async (socket, search) => {
     const { field, week, company } = search;
@@ -26,7 +27,7 @@ module.exports = async (socket, search) => {
         case 'pytDate':
             data = getPaymentData(invoices);
         case 'issueDate':
-            data = getSalesData(invoices);
+            data = await getSalesData(invoices);
     }
     socket.emit('update payments data', data);
 };
@@ -50,8 +51,8 @@ function getPaymentData(invoices) {
     });
 }
 
-function getSalesData(invoices) {
-    const services = InvoiceService.getServices();
+async function getSalesData(invoices) {
+    const [err, services] = await DescriptionService.getServices();
     return invoices.map((invoice) => {
         let client = invoice.client;
         if (!client) client = invoice.oneTimeClient;
