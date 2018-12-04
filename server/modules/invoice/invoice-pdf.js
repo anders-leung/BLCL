@@ -48,7 +48,7 @@ module.exports = async (invoice) => {
     
     width = doc.page.width - margin * 2;
 
-    const path = `${directory}/${invoice.company.toUpperCase()}/Invoice${invoice.number}.pdf`;
+    const path = `${directory}/${invoice.company.toUpperCase()}/${invoice.number}.pdf`;
     const writeStream = fs.createWriteStream(path);
     doc.pipe(writeStream);
     // doc.pipe(fs.createWriteStream(directory + '/Invoice' + 0 + '.pdf'));
@@ -67,7 +67,10 @@ module.exports = async (invoice) => {
     const end = new Promise((resolve, reject) => {
         writeStream.on('finish', () => resolve());
         writeStream.on('end', () => resolve());
-        writeStream.on('error', () => reject());
+        writeStream.on('error', (err) => {
+            console.log('writeStream err: ', err);
+            reject(err)
+        });
     });
 
     await end;
@@ -221,15 +224,18 @@ const setFooter = (doc, invoice) => {
     doc.y = doc.page.height - doc.page.margins.bottom - 22 - size;
 
     if (invoice.company === 'blcl') {
-        const line1 = [{ value: 'Pleased be advised that the Swift Code to transfer money is TDOMCATTTOR', start: margin * 1.5 }];
-        const line2 = [{ value: 'For the Account of Benjamin Leung & Co. Ltd. Account No. 97250-004-0176-5211426', start: margin * 1.5 }];
+        const line1 = [{ value: 'Please add $15 to TT charges on your payment and mark Swift Code \'TDOMCATTTOR\'', start: margin * 1.5 }];
+        const line2 = [
+            { value: '(3)', font: 'Times-Bold', start: 72},
+            { value: 'TT indicate "For the Account of Benjamin Leung & Co. Ltd. Account No. 97250-004-0176-5211426"', font: 'Times-Roman', start: margin * 1.5 }
+        ];
         const line3 = [
             { value: '(2)', font: 'Times-Bold', start: 72 },
-            { value: 'E-Transfer to our email address accounts@ben-cpa.com OR', font: 'Times-Roman', start: margin * 1.5 },
+            { value: 'E-Transfer to our email accounts@ben-cpa.com and indicate your Invoice No. with your payment ; or', font: 'Times-Roman', start: margin * 1.5 },
         ];
         const line4 = [
             { value: '(1)', font: 'Times-Bold', start: 72 },
-            { value: 'Issue a cheque payable to Benjamin Leung & Co. Ltd.', font: 'Times-Roman', start: margin * 1.5 },
+            { value: 'Issue a cheque payable to Benjamin Leung & Co. Ltd., please mark your Invoice No. on the cheque', font: 'Times-Roman', start: margin * 1.5 },
         ];
         const line5 = [{ value: 'Settlement of Invoice', font: 'Times-Bold', start: margin }];
 
