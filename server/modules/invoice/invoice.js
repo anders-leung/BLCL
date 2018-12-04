@@ -1,5 +1,5 @@
 const to = require('../../helpers/to');
-const Invoice = require('../../models/invoice');
+const Invoice = require('../../models/invoice/Invoice');
 const pdf = require('./invoice-pdf');
 const descriptions = require('./descriptions');
 
@@ -64,10 +64,6 @@ const InvoiceService = {
                     'services.service': true
                 }}
             ]));
-    },
-
-    getServices: () => {
-        return Invoice.schema.path('services').schema.path('service').enumValues;
     },
 
     createPdf: async (invoice) => {
