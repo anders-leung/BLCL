@@ -6,6 +6,7 @@ let NRService = require('../modules/nr/client');
 
 const updateInvoice = require('./invoices/update');
 const weekChange = require('./invoices/week-change');
+const description = require('./invoices/description');
 
 let ClientsSocket = {
     ClientUpdate : async function(socket) {
@@ -48,6 +49,10 @@ let ClientsSocket = {
 
         socket.on('invoice week change', async (search) => {
             await weekChange(socket, search);
+        });
+
+        socket.on('description update', async (data) => {
+            await description(socket, data);
         });
     }
 };
