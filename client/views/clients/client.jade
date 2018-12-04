@@ -74,7 +74,7 @@ block content
                     .row
                         .col-2
                             label(for='incorpDate') Incorp Date
-                            input#incorpDate.form-control(name='incorp[date]' value=client.incorp ? client.incorp.date : '')
+                            input#incorpDate.form-control.datepicker(name='incorp[date]' value=client.incorp ? client.incorp.date : '')
                         .col-2
                             label(for='incorpNumber') Incorp Number
                             input#incorpNumber.form-control(name='incorp[number]' value=client.incorp ? client.incorp.number : '')
