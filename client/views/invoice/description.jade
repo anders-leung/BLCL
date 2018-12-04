@@ -1,0 +1,36 @@
+extends ../layout
+
+block content
+    script(type="text/javascript", src='/js/jquery.floatThead.js')
+    script(type='text/javascript').
+        var descriptions = !{JSON.stringify(descriptions)};
+    script(src='/js/invoice/description.js')
+
+    .card.offset-1.col-10
+        h1 Descriptions
+        hr
+
+        form(action='post')
+            p Pick a service and modify the description for the selected service.
+            p Press save when done editing the selected service.
+
+            br
+
+            .row
+                .form-group.col-8
+                    label(for='newService') Add a service
+                    input#newService.form-control(name='newService')
+                .form-group.col-2
+                    input#addService.btn.btn-success(name='addService' value='Add Service' style='margin-top:22px')
+
+            .row
+                .form-group.col-2
+                    label(for='service') Service
+                    select#service.form-control(size='15')
+                        each service in services
+                            option(value=service)=service.toUpperCase()
+                .form-group.col-10
+                    label(for='description') Description
+                    textarea#description.form-control(name='description' rows='15')
+
+            input#save.btn.btn-success.offset-1.col-10(type='submit' value='Save')
