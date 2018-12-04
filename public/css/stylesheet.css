@@ -37,11 +37,6 @@ body {
     cursor: pointer;
 }
 
-/* table stuff */
-input, td {
-    text-transform: uppercase;
-}
-
 .header {
     background-color: white;
 }
@@ -123,4 +118,14 @@ tfoot input {
     max-height: 200px;
     overflow-y: auto;
     overflow-x: hidden;
+}
+
+table.dataTable tbody th,
+table.dataTable tbody td {
+    white-space:  nowrap;
+}
+
+.card {
+    margin-bottom: 25px;
+    padding: 25px;
 }
