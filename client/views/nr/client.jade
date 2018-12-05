@@ -5,151 +5,171 @@ block content
     script(type="text/javascript").
         var client = !{JSON.stringify(client)};
         var options = !{JSON.stringify(options)};
-        var client = !{JSON.stringify(client)};
     script(src='/js/nr/client.js')
     link(rel='stylesheet', href='/css/jquery.onepage-scroll-0.0.1.min.css')
     script(src='/js/jquery.onepage-scroll-0.0.1.min.js')
     script(src="/js/jquery/jquery.easing.min.js")
 
-    .scroll-container
-        h1=title
-        br
-        form(method='post')
-            #owner.content-part(data-title='owner')
-                .content-inner
-                    .form-group
-                        legend Owner
-                        hr
-                        .row
-                            .col-2
-                                label(for='ownerFirstName') First Name
-                                input#ownerFirstName.form-control(type='text' name='owner.firstName')
-                            .col-2
-                                label(for='ownerLastName') Last Name
-                                input#ownerLastName.form-control(type='text' name='owner.lastName')
-                            .col-2
-                                label(for='ownerDob') Date of Birth
-                                input#ownerDob.form-control.datepickerChangeYear(type='text' name='owner.dob')
-                            .col-2
-                                label(for='ownerSin') SIN
-                                input#ownerSin.form-control.sin(type='text' name='owner.sin')
-            #co-owner.content-part(data-title='Co-owner')
-                .content-inner
-                    .form-group
-                        legend Co-owner
-                        hr
-                        .row
-                            .col-2
-                                label(for='coOwnerFirstName') First Name
-                                input#coOwnerFirstName.form-control(type='text' name='coOwner.firstName')
-                            .col-2
-                                label(for='coOwnerLastName') Last Name
-                                input#coOwnerLastName.form-control(type='text' name='coOwner.lastName')
-                            .col-2
-                                label(for='coOwnerDob') Date of Birth
-                                input#coOwnerDob.form-control.datepickerChangeYear(type='text' name='coOwner.dob')
-                            .col-2
-                                label(for='coOwnerSin') SIN
-                                input#coOwnerSin.form-control.sin(type='text' name='coOwner.sin')
-            #address.content-part(data-title='Address')
-                .content-inner
-                    .form-group
-                        legend Address
-                        hr
-                        - var field = 'address'
-                        - var country = true
-                        - var required = false
-                        include ../templates/address.jade
-            #contact-info.content-part(data-title='Contact Info')
-                .content-inner
-                    .form-group
+    if (!client)
+        - client = {};
+
+    .card.offset-1.col-10
+        .scroll-container
+            form(method='post')
+                #owner.content-part(data-title='Owner')
+                    .content-inner
+                        .form-group
+                            legend Owner
+                            hr
+                            .row
+                                .col-2
+                                    label(for='ownerFirstName') First Name
+                                    input#ownerFirstName.form-control(name='owner[firstName]' value=client.owner ? client.owner.firstName : '')
+                                .col-2
+                                    label(for='ownerLastName') Last Name
+                                    input#ownerLastName.form-control(name='owner[lastName]' value=client.owner ? client.owner.lastName : '')
+                                .col-2
+                                    label(for='ownerDob') Date of Birth
+                                    input#ownerDob.form-control.datepickerChangeYear(name='owner[dob]' value=client.owner ? client.owner.dob : '')
+                                .col-2
+                                    label(for='ownerSin') SIN
+                                    input#ownerSin.form-control.sin(name='owner[sin]' value=client.owner ? client.owner.sin : '')
+                #co-owner.content-part(data-title='Co-owner')
+                    .content-inner
+                        .form-group
+                            legend Co-owner
+                            hr
+                            .row
+                                .col-2
+                                    label(for='coOwnerFirstName') First Name
+                                    input#coOwnerFirstName.form-control(name='coOwner[firstName]' value=client.coOwner ? client.coOwner.firstName : '')
+                                .col-2
+                                    label(for='coOwnerLastName') Last Name
+                                    input#coOwnerLastName.form-control(name='coOwner[lastName]' value=client.coOwner ? client.coOwner.lastName : '')
+                                .col-2
+                                    label(for='coOwnerDob') Date of Birth
+                                    input#coOwnerDob.form-control.datepickerChangeYear(name='coOwner[dob]' value=client.coOwner ? client.coOwner.dob : '')
+                                .col-2
+                                    label(for='coOwnerSin') SIN
+                                    input#coOwnerSin.form-control.sin(name='coOwner[sin]' value=client.coOwner ? client.coOwner.sin : '')
+
+                br
+
+                #address.content-part(data-title='Address')
+                    .content-inner
+                        .form-group
+                            legend Address
+                            hr
+                            - var field = 'address'
+                            - var country = true
+                            - var required = { street: false, city: false, province: false, postalCode: false }
+                            - var values = client.address
+                            include ../templates/address.jade
+
+                br
+
+                #contact-info.content-part(data-title='Contact Info')
+                    .content-inner
                         legend Contact Info
                         hr
-                        .row
-                            each index in [0, 1, 2]
-                                .col-2
-                                    label(for='phones[' + index + ']') Phone #{index + 1}
-                                    input.phone.form-control(id='phones[' + index + ']' type='text' name='phones[' + index +']')
-                            .col-2
-                                label(for='fax') Fax
-                                input.phone.form-control(type='text' name='fax')
-                        
-                        .row
-                            .col-6
-                                label Emails
-                                each index in [0, 1, 2]
-                                    input.form-control(id='emails[' + index + ']' type='text' name='emails[' + index + ']' style='margin-bottom: 10px')
+                        .form-group
+                            .row
+                                .col-12
+                                    label(for='phones') Phones - (Please separate phone numbers with a comma)
+                                    input.phones.form-control(id='phones' name='phones' value=client.phones ? client.phones.join(', ') : '')
+                        .form-group
+                            .row
+                                .col-12
+                                    label(for='fax') Fax
+                                    input.phone.form-control(name='fax' value=client.fax)
+                        .form-group
+                            .row
+                                .col-12
+                                    label Emails - (Please separate emails with a comma)
+                                    input.form-control(id='emails' name='emails' value=client.emails ? client.emails.join(', ') : '')
 
-            #services.content-part(data-title='Services')
-                .content-inner
-                    .form-group
+                br
+
+                #services.content-part(data-title='Services')
+                    .content-inner
                         legend Services
-                        .row
-                            each service in ['nr6', 'nr4', 's216', 's115', 'cc']
-                                .form-check
-                                    label.form-check-label(for=service)
-                                        input.form-check-input(id=service type='checkbox' name="#{service}")
-                                        | #{service.toUpperCase()}
-            #properties.content-part(data-title='Properties')
-                .content-inner
-                    .form-group
+                        .form-group
+                            .row
+                                each service in ['nr6', 'nr4', 's216', 's115', 'cc']
+                                    .form-check
+                                        label.form-check-label(for=service)
+                                            input.form-check-input(id=service type='checkbox' name="#{service}" checked=client[service])
+                                            | #{service.toUpperCase()}
+                br
+
+                #properties.content-part(data-title='Properties')
+                    .content-inner
                         legend Properties
                         hr
-                        if client && client.properties.length > 0
+
+                        - var country = false
+                        - var required = { city: false, province: false, postalCode: false }
+
+                        if client.properties && client.properties.length > 0
                             each property, index in client.properties
-                                - var field = 'properties[' + index + ']'
-                                - var country = false
-                                - var required = false
-                                include ../templates/address.jade
+                                .form-group
+                                    - var field = 'properties[' + index + ']'
+                                    - var values = client.properties[index]
+                                    include ../templates/address.jade
                         else
-                            - var field = 'properties[0]'
-                            - var country = false
-                            - var required = false
-                            include ../templates/address.jade
-                    input#addProperty.btn.btn-secondary(type='button' style='margin-bottom: 10px' value='Add Property')
-                        
-            each val in ['agent', 'propertyManager', 'lawyer']
-                div.content-part(id=val data-title="#{val == 'propertyManager' ? 'Property Manager' : val.charAt(0).toUpperCase() + val.slice(1) }")
-                    .form-group
+                            .form-group
+                                - var field = 'properties[0]'
+                                include ../templates/address.jade
+                        input#addProperty.btn.btn-success(type='button' style='margin-bottom: 10px' value='Add Property')
+
+                br
+
+                each val in ['agent', 'propertyManager', 'lawyer']
+                    div.content-part(id=val data-title="#{val == 'propertyManager' ? 'Property Manager' : val.charAt(0).toUpperCase() + val.slice(1) }")
                         legend
                             if val == 'propertyManager'
                                 | Property Manager
                             else
                                 =val.charAt(0).toUpperCase() + val.slice(1)
                         hr
-                        .row
-                            .col-2
-                                label(for='number') Number
-                                input#number.form-control(type='text' name=val + '.number')
-                            .col-2
-                                label(for='name') Name
-                                input#name.form-control(type='text' name=val + '.name')
-                            .col-2
-                                label(for='phoneNumber') Phone Number
-                                input#phoneNumber.form-control(type='text' name=val + '.phoneNumber')
-                            .col-2
-                                label(for='faxNumber') Fax Number
-                                input#faxNumber.form-control(type='text' name=val + '.faxNumber')
-                            .col-2
-                                label(for='email') Email
-                                input#email.form-control(type='text' name=val + '.email')
+
+                        .form-group
+                            .row
+                                .col-8
+                                    label(for='name') Name
+                                    input#name.form-control(name=val + '[name]' value=client[val] ? client[val].name : '')
+                                .col-4
+                                    label(for='number') Number
+                                    input#number.form-control(name=val + '[number]' value=client[val] ? client[val].number : '')
+                        .form-group
+                            .row
+                                .col-3
+                                    label(for='phoneNumber') Phone Number
+                                    input#phoneNumber.form-control(name=val + '[tel]' value=client[val] ? client[val].tel : '')
+                                .col-3
+                                    label(for='faxNumber') Fax
+                                    input#faxNumber.form-control(name=val + '[fax]' value=client[val] ? client[val].fax : '')
+                                .col-6
+                                    label(for='email') Email
+                                    input#email.form-control(name=val + '[email]' value=client[val] ? client[val].email : '')
                             
                         .form-group
-                            label Address
-                            hr
-                            - var field = val + '.address'
+                            - var field = val + '[address]'
                             - var country = false
-                            - var required = false
+                            - var required = { city: false, province: false, postalCode: false , street: false }
+                            - var values = client[val] ? client[val].address : {}
                             include ../templates/address.jade
 
                         .form-group
-                            label Contact
-                            hr
                             .row
                                 .col-4
-                                    label(for='company') Company
-                                    input#company.form-control(type='text' name=val + '.company')
+                                    label(for='company') Contact Company
+                                    input#company.form-control(name=val + '[company]')
                                 .col-4
-                                    label(for='person') Person
-                                    input#person.form-control(type='text' name=val + '.person')
-            input.btn.btn-success.offset-1.col-10(type='submit' value='Done' style='margin-top:1%; margin-bottom:3%;')
+                                    label(for='person') Contact Person
+                                    input#person.form-control(name=val + '[person]')
+                        br
+
+                br
+
+                input.btn.btn-success.offset-1.col-10(type='submit' value='Save' style='margin-top:1%;')
