@@ -2,34 +2,16 @@ let to = require('../../helpers/to');
 let Client = require('../../models/nr/NR');
 let helper = require('./imports/client');
 
-function cleanValues(data) {
-    let phones = [];
-    let emails = [];
-    let properties = [];
-    let address = {};
-    
-    for (let key in data) {
-        data[key] = data[key].toUpperCase().trim();
-    }
-    if (Object.keys(address).length > 0) properties.push(address);
-    
-    data.phones = phones.filter((x) => { return x });
-    data.emails = emails.filter((x) => { return x });
-    data.properties = properties.filter((x) => { return x });
-}
-
 let ClientService = {
     find: async function(query) {
         return await to(Client.find(query).lean().exec());
     },
 
     update: async function(search, update) {
-        cleanValues(update);
-        return await to(Client.update(search, update).lean().exec());
+        return await to(Client.findOneAndUpdate(search, update, { new: true }));
     },
 
     create: async function(data) {
-        cleanValues(data);
         let client = new Client(data);
         client.name = helper.getFileName(client);
         client.pathName = helper.getPathName(client);
