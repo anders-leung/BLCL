@@ -1,102 +1,66 @@
-$(document).ready(function() {
-    var removeButton = '<p class="btn btn-danger" style="margin:20px 10px 0 10px"><i class="fa fa-trash-alt"></i></p>'
+var removeButton = '<p class="btn btn-danger" style="margin:20px 10px 0 10px"><i class="fa fa-trash-alt"></i></p>'
 
+$(document).ready(function() {
     $('#properties').find('.row').each(function(e) {
         $(this).append(removeButton)
     });
 
-    $(this).on('click', 'p', function(e) {
-        var children = $(this).parent().parent().children();
-        if (children.length > 3) {
-            $(this).parent().remove();
+    $('#properties').on('click', '.btn.btn-danger', function(e) {
+        var parent = $(this).parent().parent().parent();
+        var children = $(parent).children();
+        if (children.length > 4) {
+            $(this).parent().parent().remove();
         }
-    })
+        updateIndices();
+    });
 
     $('#addProperty').on('click', function(e) {
         var properties = $('#properties').find('.row input');
         var last = properties[properties.length - 1];
         var index = parseInt(last.name.split('[')[1][0]) + 1;
-        var html = '';
-        var property = 'properties[' + index + ']';
-        var fields = [ 'Apartment', 'Street', 'City', 'Province', 'Postal Code' ];
-        for (var i = 0; i < fields.length; i++) {
-            var size = 2;
-            if (fields[i] == 'Street') size = 3;
-            if (fields[i] == 'Province') size = 1;
-            html += col(size, label(property + fields[i], fields[i]) + input(property + fields[i], property + '[' + fields[i].toLowerCase() + ']'));
-        }
-        html += removeButton;
-        $(last).closest('.row').after(div(html));
+        $(last).closest('.form-group').after(address(index));
     });
+    
 
-    if (client) {
-        var paths = keyify(client);
-        for (var i = 0; i < paths.length; i++) {
-            var name = paths[i];
-            name = name.replace(/(\[)(\])/g, '\\\\$1\\\\$2');
-            if (paths[i].includes('_')) {
-                name = paths[i].split('._')[0];
-                $('[name="' + name + '"]').prop('checked', true);
-            } else {
-                $('[name="' + name + '"]').val(Object.byString(client, paths[i]));
-            }
-        }
+    function updateIndices() {
+        $('#properties').find('.form-group').each(function (i) {
+            $(this).find('input').each(function () {
+                var oldName = $(this).attr('name');
+                var oldNameTokens = oldName.split('properties[');
+                var newName = 'properties[' + i + oldNameTokens[1].substring(1, oldNameTokens[1].length);
+                $(this).attr('name', newName);
+            });
+        });
     }
 });
 
-function div(string) {
-    return '<div class="row">' + string + '</div>';
-}
-
-function col(size, content) {
-    return '<div class="col-' + size + '">' + content + '</div>';
-}
-
-function label(name, label) {
-    return '<label for="' + name + '"> ' + label + '</label>';
-}
-
-function input(id, name) {
-    return '<input id="' + id + '" class="form-control" type="text" name="' + name + '">';
-}
-
-function keyify(obj, prefix = '') {
-    return Object.keys(obj).reduce(function(res, el) {
-        if (Array.isArray(obj[el])) {
-            var map = obj[el].map(function(x, i) {
-                if (typeof(x) === 'object') {
-                    return keyify(x, el + '[' + i + ']' + '.');
-                } else {
-                    return el + '[' + i + ']'
-                }
-            });
-            if (Array.isArray(map[0])) {
-                var temp = [];
-                map.map(function(x) {
-                    temp = temp.concat(x);
-                });
-                map = temp;
-            }
-            return [...res, ...map];
-        } else if( obj[el] !== null && typeof(obj[el]) === 'object' ) {
-            return [...res, ...keyify(obj[el], prefix + el + '.')];
-        } else {
-            return [...res, prefix + el];
-        }
-    }, []);
-}
-
-  Object.byString = function(o, s) {
-    s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
-    s = s.replace(/^\./, '');           // strip a leading dot
-    var a = s.split('.');
-    for (var i = 0, n = a.length; i < n; ++i) {
-        var k = a[i];
-        if (k in o) {
-            o = o[k];
-        } else {
-            return;
-        }
-    }
-    return o;
+function address(index) {
+    return (
+        `<div class="form-group">
+            <div class="row">
+                <div class="col-2">
+                    <label>Apartment</label>
+                    <input class="form-control" name="properties[${index}][apartment]"/>
+                </div>
+                <div class="col-3">
+                    <label>Street</label>
+                    <input class="form-control" name="properties[${index}][street]" required/>
+                </div>
+                <div class="col-2">
+                    <label>City</label>
+                    <input class="form-control" name="properties[${index}][city]"/>
+                </div>
+                <div class="col-1">
+                    <label>Province</label>
+                    <input class="form-control" name="properties[${index}][province]"/>
+                </div>
+                <div class="col-2">
+                    <label>Postal Code</label>
+                    <input class="form-control" name="properties[${index}][postalCode]"/>
+                </div>
+                ${removeButton}
+            </div>
+        </div>
+        `
+    );
 }
