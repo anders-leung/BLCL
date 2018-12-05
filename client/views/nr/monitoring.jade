@@ -43,7 +43,7 @@ block content
                                 th Services
                         tbody
                             each client in clients[i][1]
-                                tr(data-href="/nr/client/" + client.pathName)
+                                tr(data-href="/nr/client/" + client._id)
                                     td #{client.name}
                                     td #{client.owner.firstName}
                                     td #{client.owner.lastName}
@@ -85,7 +85,7 @@ block content
                                 th Agent Signed
                         tbody
                             each client in clients[i][1]
-                                tr(data-href="/nr/client/" + client.pathName)
+                                tr(data-href="/nr/client/" + client._id)
                                     - var service = clients[i][0]
                                     td.text-nowrap #{client.name}
                                     td #{client.owner.firstName}
