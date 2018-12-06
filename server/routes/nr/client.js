@@ -36,6 +36,12 @@ router.post('/*', CookieService.isLoggedIn, async (req, res, next) => {
     }
 
     const commaSeparated = ['phones', 'emails'];
+    const services = ['nr6', 'nr4', 's216', 's115', 'cc'];
+    services.map((service) => {
+        if (!body[service]) {
+            body[service] = undefined;
+        }
+    });
 
     Object.keys(body).map((key) => {
         if (body[key] === 'on') {
