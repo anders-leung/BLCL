@@ -23,11 +23,11 @@ router.get('/*', CookieService.isLoggedIn, async function(req, res) {
         return client;
     });
 
-    [err, nr6] = await ClientService.find({ year: year, nr6: { $exists: true } });
-    [err, nr4] = await ClientService.find({ year: year, nr4: { $exists: true } });
-    [err, s216] = await ClientService.find({ year: year, s216: { $exists: true } });
-    [err, cc] = await ClientService.find({ year: year, cc: { $exists: true } });
-    [err, s116] = await ClientService.find({ year: year, s116: { $exists: true } });
+    [err, nr6] = await ClientService.find({ year: year, nr6: { $exists: true, $ne: null } });
+    [err, nr4] = await ClientService.find({ year: year, nr4: { $exists: true, $ne: null } });
+    [err, s216] = await ClientService.find({ year: year, s216: { $exists: true, $ne: null } });
+    [err, cc] = await ClientService.find({ year: year, cc: { $exists: true, $ne: null } });
+    [err, s116] = await ClientService.find({ year: year, s116: { $exists: true, $ne: null } });
     [err, years] = await ClientService.getYears();
 
     let clients = [
