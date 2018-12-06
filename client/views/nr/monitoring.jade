@@ -45,10 +45,10 @@ block content
                             each client in clients[i][1]
                                 tr(data-href="/nr/client/" + client._id)
                                     td #{client.name}
-                                    td #{client.owner.firstName}
                                     td #{client.owner.lastName}
-                                    td #{client.coOwner ? client.coOwner.firstName : ''}
+                                    td #{client.owner.firstName}
                                     td #{client.coOwner ? client.coOwner.lastName : ''}
+                                    td #{client.coOwner ? client.coOwner.firstName : ''}
                                     td #{client.services}
             else
                 div(id=clients[i][0]).tab-pane
@@ -88,10 +88,10 @@ block content
                                 tr(data-href="/nr/client/" + client._id)
                                     - var service = clients[i][0]
                                     td.text-nowrap #{client.name}
-                                    td #{client.owner.firstName}
                                     td #{client.owner.lastName}
-                                    td #{client.coOwner ? client.coOwner.firstName : ''}
+                                    td #{client.owner.firstName}
                                     td #{client.coOwner ? client.coOwner.lastName : ''}
+                                    td #{client.coOwner ? client.coOwner.firstName : ''}
                                     td.edit #{client[service].outstandingInfo}
                                     td.date-edit #{client[service].signed}
                                     td.date-edit #{client[service].cra}
