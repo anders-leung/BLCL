@@ -43,6 +43,6 @@ module.exports = {
         const services = descriptions.map((description) => {
             return description.service;
         });
-        return [err, services];
+        return [err, services.sort()];
     }
 }
