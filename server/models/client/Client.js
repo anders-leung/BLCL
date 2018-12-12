@@ -14,7 +14,7 @@ const ClientSchema = new Schema({
     bnNumber: String,
     pstNumber: String,
     wcbNumber: String,
-    yearEnd: String,
+    yearEnd: Date,
     services: {
         type: [String],
     },
