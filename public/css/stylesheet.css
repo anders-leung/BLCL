@@ -82,8 +82,8 @@ input[type=checkbox] {
     margin-right: 10px;
 }
 
-.group label {
-    margin-bottom: -20px;
+.group .form-check-input {
+    margin-top: 17px;
 }
 
 .group-joint .form-group:first-child {
@@ -128,4 +128,13 @@ table.dataTable tbody td {
 .card {
     margin-bottom: 25px;
     padding: 25px;
+}
+
+input[type="checkbox"] {
+    margin-left: 20px;
+}
+
+.form-check-label {
+    margin-top: -17px;
+    margin-left: 25px;
 }
