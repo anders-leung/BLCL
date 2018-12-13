@@ -1,7 +1,7 @@
 const moment = require('moment');
 
 function getWeeks() {
-    const weekRanges = [];
+    const weekRanges = ['All'];
     let currentWeek = moment().week();
     for (let i = 0; i < 52; i++) {
         const beginningOfWeek = moment().week(currentWeek).startOf('week');
