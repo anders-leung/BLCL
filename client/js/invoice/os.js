@@ -34,7 +34,7 @@ $(document).ready(function() {
         'buttons': [{
             extend: 'excelHtml5',
             footer: true,
-            title: `O/S Invoices From ${$('#weeks').val()}`,
+            title: `O/S Invoices From ${$('#company').val().toUpperCase()}`,
             exportOptions: {
                 columns: ':visible'
             }
