@@ -29,13 +29,13 @@ block content
                 tr
                     th #
                     th Client Name
+                    th Total Received
                     th ADV
                     th INV
                     th CA
                     th CHQ
                     th DD
                     th ET
-                    th Total Received
             tfoot
                 tr
                     th
@@ -58,10 +58,10 @@ block content
 
                         td.text-nowrap #{invoice.number}
                         td.text-nowrap #{client}
+                        td
                         td.text-nowrap #{invoice.pytReceived == 'ADV' ? invoice.total : ''}
                         td.text-nowrap #{invoice.pytReceived == 'INV' ? invoice.total : ''}
                         td.text-nowrap #{invoice.pytReceived == 'CA' ? invoice.total : ''}
                         td.text-nowrap #{invoice.pytReceived == 'CK' || invoice.pytReceived == 'CHQ' ? invoice.total : ''}
                         td.text-nowrap #{invoice.pytReceived == 'DD' ? invoice.total : ''}
                         td.text-nowrap #{invoice.pytReceived == 'ET' ? invoice.total : ''}
-                        td

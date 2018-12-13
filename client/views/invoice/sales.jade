@@ -29,10 +29,10 @@ block content
                 tr
                     th #
                     th Client Name
+                    th Total A/R
                     each service in services
                         th=service.toUpperCase()
                     th GST Rec
-                    th Total A/R
             tfoot
                 tr
                     th
@@ -52,6 +52,7 @@ block content
 
                         td.text-nowrap #{invoice.number}
                         td.text-nowrap #{client}
+                        td.text-nowrap #{invoice.total}
                         - var gst = 0
                         each service in services
                             - var matches = invoice.services.filter((x) => x.service === service)
@@ -63,4 +64,3 @@ block content
                                 - })
                             td.text-nowrap #{amount ? amount.toFixed(2) : ''}
                         td.text-nowrap #{gst}
-                        td.text-nowrap #{invoice.total}
