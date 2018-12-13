@@ -35,6 +35,10 @@ const InvoiceService = {
     },
 
     getByWeek: async (query, field, week) => {
+        if (week === 'All') {
+            return await InvoiceService.get(query);
+        }
+
         const weekRange = week.split(' - ');
         const weekStart = new Date(weekRange[0]);
         const weekEnd = new Date(weekRange[1]);
