@@ -70,14 +70,11 @@ $(document).ready(function() {
             });
         }
     });
-
-    var data = { field: 'issueDate' };
     
     $('#company').on('change', function() {
-        socket.emit('invoice week change', Object.assign({}, data, {
-            week: $('#weeks').val(),
+        socket.emit('invoice week change', {
             company: $(this).val()
-        }));
+        });
     });
 
     socket.on('update payments data', function(data) {
