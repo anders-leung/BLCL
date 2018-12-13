@@ -9,11 +9,6 @@ module.exports = async (socket, search) => {
             $ne: '',
             $exists: true,
         };
-    } else {
-        query.$or = [
-            { pytReceived: '' },
-            { pytReceived: { $exists: false } },
-        ];
     }
 
     let err, invoices;
@@ -77,7 +72,7 @@ async function getSalesData(invoices) {
             }
         }
         data.push(gst.toFixed(2));
-        data.push((gst + total).toFixed(2));
+        data.splice(2, 0, (gst + total).toFixed(2));
         return data;
     });
 }
