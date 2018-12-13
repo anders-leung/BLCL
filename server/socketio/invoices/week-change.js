@@ -11,6 +11,13 @@ module.exports = async (socket, search) => {
         };
     }
 
+    if (!field && !week) {
+        query.$or = [
+            { pytReceived: { $exists: false } },
+            { pytReceived: '' }
+        ]
+    }
+
     let err, invoices;
     if (week) [err, invoices] = await InvoiceService.getByWeek(query, field, week);
     else [err, invoices] = await InvoiceService.get(query);
@@ -21,7 +28,7 @@ module.exports = async (socket, search) => {
     switch(field) {
         case 'pytDate':
             data = getPaymentData(invoices);
-        case 'issueDate':
+        default:
             data = await getSalesData(invoices);
     }
     socket.emit('update payments data', data);
