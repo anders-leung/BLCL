@@ -23,6 +23,7 @@ block content
                     th Sign Date
                     th PYT Type
                     th Remarks
+                    th Preparer
                     th Amount Owing
             tfoot
                 tr
@@ -34,6 +35,7 @@ block content
                     th Sign Date
                     th PYT Type
                     th Remarks
+                    th Preparer
                     th Amount Owing
             tbody
                 each invoice in invoices
@@ -52,4 +54,5 @@ block content
                         td.date-edit=invoice.signDate ? invoice.signDate.toLocaleString('en-US', { year: 'numeric', month: 'short', day: '2-digit' }) : ''
                         td.select.pytType #{invoice.pytReceived}
                         td.edit #{invoice.remarks}
+                        td=invoice.issuedBy
                         td #{invoice.total}
