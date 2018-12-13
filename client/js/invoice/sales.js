@@ -43,12 +43,8 @@ $(document).ready(function() {
 
         drawCallback: function() {
             var api = this.api();
-            var total = 0;
-            var lastIndex = api.columns()[0].length - 1;
             api.columns({ 'filter': 'applied' }).every(function(i) {
-                if (i == lastIndex) {
-                    $(this.footer()).html(convert(total, true));
-                } else if (i > 1) {
+                if (i > 1) {
                     var sum = 0;
                     var values = this.data();
                     for (var i = 0; i < values.length; i++) {
@@ -58,7 +54,6 @@ $(document).ready(function() {
                         }
                     }
                     $(this.footer()).html(convert(sum, true));
-                    total += sum;
                 }
             });
             $('table').DataTable().columns.adjust();
