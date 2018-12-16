@@ -4,7 +4,7 @@ const UserService = require('../user');
 const InvoiceService = require('../invoice/invoice');
 const emailClient = require('../email/email');
 
-const email = schedule.scheduleJob('* * 9 * * *', osEmail);
+const email = schedule.scheduleJob('* 0 * * * *', osEmail);
 
 async function osEmail() {
     const firstEmail = {
