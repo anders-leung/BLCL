@@ -36,6 +36,10 @@ const InvoiceSchema = new Schema({
     number: Number,
     remarks: String,
     signDate: Date,
+    emailed: {
+        when: Date,
+        attempt: Number,
+    },
 });
 
 module.exports = mongoose.model('Invoice', InvoiceSchema);
