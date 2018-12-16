@@ -1,7 +1,3 @@
-/**
- * Created by ander on 2017-11-01.
- */
-
 function convert(value, int) {
     if (int) {
         var s = value.toString();
@@ -35,7 +31,9 @@ $(document).ready(function() {
         'buttons': [{
             extend: 'excelHtml5',
             footer: true,
-            title: `Sales From ${$('#weeks').val()}`,
+            title: function () {
+                return `Sales From ${$('#weeks option:selected').val()}`;
+            },
             exportOptions: {
                 columns: ':visible'
             }
@@ -58,6 +56,10 @@ $(document).ready(function() {
             });
             $('table').DataTable().columns.adjust();
         }
+    });
+    
+    $('table').on('dblclick', 'tr td:not(.edit, .date-edit, .select)', function() {
+        window.location = $(this).parent().data('href');
     });
 
     table.columns().every(function(i) {

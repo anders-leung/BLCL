@@ -34,7 +34,9 @@ $(document).ready(function() {
         'buttons': [{
             extend: 'excelHtml5',
             footer: true,
-            title: `O/S Invoices From ${$('#company').val().toUpperCase()}`,
+            title: function () {
+                return `O/S Invoices From ${$('#company').val().toUpperCase()} on ${(new Date()).toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' })}`;
+            },
             exportOptions: {
                 columns: ':visible'
             }
@@ -58,6 +60,10 @@ $(document).ready(function() {
             $('table').DataTable().columns.adjust();
         }
     });
+    
+    // $('table').on('dblclick', 'tr td:not(.edit, .date-edit, .select)', function() {
+    //     window.location = $(this).parent().data('href');
+    // });
 
     table.columns().every(function(i) {
         if (i < 2) {
