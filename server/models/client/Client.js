@@ -39,8 +39,13 @@ ClientSchema.virtual('contactString').get(function() {
         string += (this.contact.title ? this.contact.title + ' ' : '');
         string += (this.contact.firstName ? this.contact.firstName + ' ' : '');
         string += (this.contact.lastName ? this.contact.lastName : '');
+    } else {
+        string = this.name;
     }
     return string.trim();
 });
+
+ClientSchema.set('toObject', { virtuals: true });
+ClientSchema.set('toJSON', { virtuals: true });
 
 module.exports = mongoose.model('Client', ClientSchema);
