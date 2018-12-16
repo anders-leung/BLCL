@@ -89,14 +89,20 @@ block content
                             input#wcbNumber.form-control(name='wcbNumber' value=client.wcbNumber)
                         .col-2
                             label(for='yearEnd') Year End
-                            input#yearEnd.form-control(name='yearEnd' value=client.yearEnd)
+                            input#yearEnd.form-control(name='yearEnd' value=(client.yearEnd ? client.yearEnd.toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' }) : ''))
 
+                br
+
+                legend Services
+                p (Hold the "Ctrl" key while clicking to select multiple services, and click an already selected one to deselect it)
+                hr
                 .form-group
                     .row
-                        .col-12
-                            label(for='services') Services - (Please separate services by a comma)
-                            input#services.form-control(name='services' value=client.services ? client.services.join(', ') : '')
-                    
+                        .col-6
+                            select#service.form-control.selectpicker(multiple size=services.length)
+                                each service in services
+                                    option=service
+
                 br
 
                 input.btn.btn-success.offset-1.col-10(type='submit' value='Save')
