@@ -1,7 +1,7 @@
 const jade = require('jade');
 const nodemailer = require('nodemailer');
 
-module.exports = function emailClient(user, client, template, values, options) {
+module.exports = function emailClient(user, client, template, values, options, cb) {
     let transporter = nodemailer.createTransport({
         host: 'smtp.1and1.com',
         port: 587,
@@ -30,9 +30,13 @@ module.exports = function emailClient(user, client, template, values, options) {
     mailOptions = Object.assign(mailOptions, options);
     
     transporter.sendMail(mailOptions, (error, info) => {
+        let success = true;
         if (error) {
-            return console.log(error);
+            success = false;
+            console.log(error);
+        } else {
+            console.log('Message sent: ', info.messageId);
         }
-        console.log('Message sent: ', info.messageId);
+        cb(error, success);
     });
 }
