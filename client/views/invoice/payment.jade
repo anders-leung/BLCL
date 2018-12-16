@@ -29,6 +29,7 @@ block content
                 tr
                     th #
                     th Client Name
+                    th Remarks
                     th Total Received
                     th ADV
                     th INV
@@ -47,9 +48,10 @@ block content
                     th
                     th
                     th
+                    th
             tbody
                 each invoice in invoices
-                    tr.clickable-row(data-href="/invoice/" + invoice._id)
+                    tr.clickable-row(data-href="/invoice/invoice/" + invoice._id)
                         - var client = invoice.client;
                         if client
                             - client = client.name
@@ -58,7 +60,8 @@ block content
 
                         td.text-nowrap #{invoice.number}
                         td.text-nowrap #{client}
-                        td
+                        td.text-nowrap=invoice.remarks
+                        td.text-nowrap=invoice.total
                         td.text-nowrap #{invoice.pytReceived == 'ADV' ? invoice.total : ''}
                         td.text-nowrap #{invoice.pytReceived == 'INV' ? invoice.total : ''}
                         td.text-nowrap #{invoice.pytReceived == 'CA' ? invoice.total : ''}

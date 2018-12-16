@@ -38,7 +38,7 @@ block content
                     th
             tbody
                 each invoice in invoices
-                    tr.clickable-row(data-href="/invoice/" + invoice._id)
+                    tr.clickable-row(data-href="/invoice/invoice/" + invoice._id)
                         - var client = invoice.client;
                         if client
                             - client = client.name
