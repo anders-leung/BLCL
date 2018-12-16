@@ -102,7 +102,12 @@ init('./server/routes', async (err) => {
     }
 });
 
-// require('./server/modules/email/email')();
-// require('./server/modules/invoice/os-emailing')();
+// Run all cron jobs
+const cron = `${__dirname}/server/modules/cron`;
+fs.readdir(cron, (err, list) => {
+    list.map((file) => {
+        require(`${cron}/${file}`);
+    });
+});
 
 module.exports = app;
