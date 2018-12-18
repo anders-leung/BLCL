@@ -2,6 +2,7 @@ const jade = require('jade');
 const nodemailer = require('nodemailer');
 
 module.exports = function emailClient(user, client, template, values, options, cb) {
+    console.log('emailing with user: ', user);
     let transporter = nodemailer.createTransport({
         host: 'smtp.1and1.com',
         port: 587,
@@ -9,6 +10,9 @@ module.exports = function emailClient(user, client, template, values, options, c
         auth: {
             user: user.email,
             pass: user.emailPassword
+        },
+        tls: {
+            rejectUnauthorized: false
         }
     });
     
