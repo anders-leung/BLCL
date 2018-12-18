@@ -36,7 +36,8 @@ async function osEmail(query) {
 
             let reminder = '1st';
             if (invoice.emailed) {
-                const attempt = invoice.emailed.attempt;
+                let attempt = invoice.emailed.attempt;
+                if (!attempt) attempt = 0;
                 reminder = ordinalSuffixOf(attempt + 1);
             }
             reminder += ' Reminder';
