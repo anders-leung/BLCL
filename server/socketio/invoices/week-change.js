@@ -28,8 +28,10 @@ module.exports = async (socket, search) => {
     switch(field) {
         case 'pytDate':
             data = getPaymentData(invoices);
+            break;
         default:
             data = await getSalesData(invoices);
+            break;
     }
     socket.emit('update payments data', data);
 };
@@ -39,17 +41,19 @@ function getPaymentData(invoices) {
     return invoices.map((invoice) => {
         let client = invoice.client;
         if (!client) client = invoice.oneTimeClient;
-        return [
+        var r = [
             invoice.number,
             client.name,
+            (invoice.remarks || ''),
+            invoice.total,
             (invoice.pytReceived == 'ADV' ? invoice.total : ''),
             (invoice.pytReceived == 'INV' ? invoice.total : ''),
             (invoice.pytReceived == 'CA' ? invoice.total : ''),
-            (invoice.pytReceived == 'CHQ' ? invoice.total : ''),
+            (invoice.pytReceived == 'CHQ' || invoice.pytReceived == 'CK' ? invoice.total : ''),
             (invoice.pytReceived == 'DD' ? invoice.total : ''),
             (invoice.pytReceived == 'ET' ? invoice.total : ''),
-            '',
         ];
+        return r;
     });
 }
 
