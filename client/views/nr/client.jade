@@ -34,11 +34,15 @@ block content
                                 .col-2
                                     label(for='ownerSin') SIN
                                     input#ownerSin.form-control.sin(name='owner[sin]' value=client.owner ? client.owner.sin : '')
-                                .offset-2.col-2
+                                .col-2
+                                    label(for='year') Year
+                                    input#year.form-control(name='year' value=client.year)
+                                .col-2
                                     label(for='status') Status
                                     select#status.form-control(name='status')
                                         option(value='ACTIVE' selected=client.status === 'ACTIVE') ACTIVE
                                         option(value='INACTIVE' selected=client.status === 'INACTIVE') INACTIVE
+                                
                 #co-owner.content-part(data-title='Co-owner')
                     .content-inner
                         .form-group
