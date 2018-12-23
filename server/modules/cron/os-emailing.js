@@ -1,6 +1,6 @@
 const schedule = require('node-schedule');
 
-const frequency = '*/5 * * * * *';
+const frequency = '* * * * 11 *';
 const day = 1000 * 60 * 60 * 24;
 
 const notPaid = {
