@@ -99,9 +99,12 @@ block content
                 .form-group
                     .row
                         .col-6
-                            select#service.form-control.selectpicker(multiple size=services.length)
+                            select#services.form-control(multiple size=services.length name='services[]')
                                 each service in services
-                                    option=service
+                                    if (client.services.includes(service))
+                                        option(selected)=service
+                                    else
+                                        option=service
 
                 br
 
