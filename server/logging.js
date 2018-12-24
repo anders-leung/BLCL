@@ -71,7 +71,7 @@ install_hook_to(stdout);
 
 var directory = './logs';
 if (!fs.existsSync(directory)) fs.mkdirSync(directory);
-var fileName = 'log' + '-' + new Date().toLocaleString().replace(/\s/g, '-').replace(/:/g, '.') + '.txt';
+var fileName = 'log' + '-' + new Date().toLocaleString().replace(/\//g, '-').replace(/:/g, '.').replace(/,/g, '') + '.txt';
 var file = directory + '//' + fileName;
 var logger = fs.createWriteStream(file, {
     flags: 'a' // 'a' means appending (old data will be preserved)
