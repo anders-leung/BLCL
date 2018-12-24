@@ -93,19 +93,29 @@ block content
 
                 br
 
-                legend Services
+                legend Service and Invoices
                 p (Hold the "Ctrl" key while clicking to select multiple services, and click an already selected one to deselect it)
                 hr
                 .form-group
                     .row
-                        .col-6
+                        .col-4
                             select#services.form-control(multiple size=services.length name='services[]')
                                 each service in services
                                     if (client.services.includes(service))
                                         option(selected)=service
                                     else
                                         option=service
-
+                        .col-8
+                            - var companies = ['BLCL', 'Cantrust']
+                            .row
+                                each company in companies
+                                    .col-6
+                                        legend=company
+                                        ul.list-group
+                                            each invoice in invoices
+                                                if invoice.company === company.toLowerCase()
+                                                    li.list-group-item
+                                                        a(href=`/invoices/${company.toLowerCase()}\/${invoice.number}.pdf`)=`${invoice.number} issued on ${invoice.issueDate.toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' })}`
                 br
 
                 input.btn.btn-success.offset-1.col-10(type='submit' value='Save')
