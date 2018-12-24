@@ -35,8 +35,6 @@ router.post('/*', CookieService.isLoggedIn, async (req, res) => {
         query = { _id: req.params[0] };
     }
 
-    req.body.services = req.body.services.replace(/\s/g, '').split(',');
-
     if (query) {
         [err, client] = await ClientService.update(query, req.body);
     } else {
