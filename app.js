@@ -62,6 +62,32 @@ let init = (dir, done) => {
 
 init('./server/routes', async (err) => {
     if (err) console.log('Error in init: ', err);
+    
+    const ConfigService = require('./server/modules/config');
+    let config;
+    [err, config] = await ConfigService.getConfig();
+    if (err) return console.log('init config err: ', err);
+
+    global.t1Directory = config.t1_directory;
+    global.invoiceDirectory = config.invoice_directory;
+
+    const DescriptionService = require('./server/modules/invoice/description');
+    let descriptions;
+    [err, descriptions] = await DescriptionService.get({});
+    if (err) return console.log('init description err: ', err);
+    if (descriptions.length === 0) {
+        await DescriptionService.setup();
+    }
+    
+    var setup = require('./server/routes/utils/setup');
+    setup();
+    
+    var logging = require('./server/logging');
+
+    app.use('/invoices/blcl', express.static(`${global.invoiceDirectory}/BLCL`));
+    app.use('/invoices/cantrust', express.static(`${global.invoiceDirectory}/CANTRUST`));
+
+    // error handling must be declared last, or it overrides any other routes.
     // catch 404 and forward to error handler
     app.use(function(req, res, next) {
         var err = new Error('Not Found');
@@ -79,27 +105,6 @@ init('./server/routes', async (err) => {
         res.status(err.status || 500);
         res.render('error');
     });
-    
-    var setup = require('./server/routes/utils/setup');
-    setup();
-    
-    var logging = require('./server/logging');
-
-    const ConfigService = require('./server/modules/config');
-    let config;
-    [err, config] = await ConfigService.getConfig();
-    if (err) return console.log('init config err: ', err);
-
-    global.t1Directory = config.t1_directory;
-    global.invoiceDirectory = config.invoice_directory;
-
-    const DescriptionService = require('./server/modules/invoice/description');
-    let descriptions;
-    [err, descriptions] = await DescriptionService.get({});
-    if (err) return console.log('init description err: ', err);
-    if (descriptions.length === 0) {
-        await DescriptionService.setup();
-    }
 });
 
 // Run all cron jobs
