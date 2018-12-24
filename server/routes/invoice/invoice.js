@@ -68,9 +68,7 @@ router.post('/*', CookieService.isLoggedIn, async (req, res) => {
 
     const path = await InvoiceService.createPdf(invoice);
 
-    const pdf = fs.readFileSync(path);
-    res.contentType('application/pdf');
-    res.send(pdf);
+    res.redirect(`/invoices/${invoice.company}/${invoice.number}.pdf`);
 });
 
 module.exports = router;
