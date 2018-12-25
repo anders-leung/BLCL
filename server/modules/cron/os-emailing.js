@@ -12,7 +12,7 @@ const notPaid = {
 
 const neverEmailed = Object.assign({
     signDate: {
-        $lte: new Date(new Date() - day * 5),
+        $lte: new Date(new Date() - day * 7),
     },
     emailed: {
         $exists: false
