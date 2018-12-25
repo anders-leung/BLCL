@@ -101,7 +101,7 @@ block content
                         .col-4
                             select#services.form-control(multiple size=services.length name='services[]')
                                 each service in services
-                                    if (client.services.includes(service))
+                                    if (client.services && client.services.includes(service))
                                         option(selected)=service
                                     else
                                         option=service
@@ -111,11 +111,16 @@ block content
                                 each company in companies
                                     .col-6
                                         legend=company
-                                        ul.list-group
-                                            each invoice in invoices
-                                                if invoice.company === company.toLowerCase()
-                                                    li.list-group-item
-                                                        a(href=`/invoices/${company.toLowerCase()}\/${invoice.number}.pdf`)=`${invoice.number} issued on ${invoice.issueDate.toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' })}`
+                                        hr
+                                        if (invoices)
+                                            ul.list-group
+                                                each invoice in invoices
+                                                    if invoice.company === company.toLowerCase()
+                                                        li.list-group-item
+                                                            a(href=`/invoices/${company.toLowerCase()}\/${invoice.number}.pdf`)=`${invoice.number} issued on ${invoice.issueDate.toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' })}`
+                                        else
+                                            p=`No invoices from ${company} have been issued yet.`
+
                 br
 
                 input.btn.btn-success.offset-1.col-10(type='submit' value='Save')
