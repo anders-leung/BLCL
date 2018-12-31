@@ -22,14 +22,17 @@ block content
         table.cell-border(style='width: 100%')
             thead
                 tr
+                    th
                     th #
                     th Client Name
                     th Total A/R
                     each service in services
                         th=service.toUpperCase()
                     th GST Rec
+                    th PST Rec
             tfoot
                 tr
+                    th
                     th
                     th
                     each service in services
@@ -38,7 +41,8 @@ block content
                     th
             tbody
                 each invoice in invoices
-                    tr.clickable-row(data-href="/invoice/invoice/" + invoice._id)
+                    tr
+                        td=invoice._id
                         - var client = invoice.client;
                         if client
                             - client = client.name
@@ -49,6 +53,7 @@ block content
                         td.text-nowrap #{client}
                         td.text-nowrap=invoice.total
                         - var gst = 0
+                        - var pst = 0
                         each service in services
                             - var matches = invoice.services.filter((x) => x.service === service)
                             - var amount = 0
@@ -56,6 +61,8 @@ block content
                                 - matches.map((match) => {
                                 -     amount += parseFloat(match.amount);
                                 -     gst += parseFloat(match.gst);
+                                -     pst += (match.pst ? parseFloat(match.pst) : 0);
                                 - })
                             td=(amount ? amount.toFixed(2) : '')
                         td.text-nowrap=gst.toFixed(2)
+                        td.text-nowrap=pst.toFixed(2)

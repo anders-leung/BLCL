@@ -27,6 +27,7 @@ block content
         table.cell-border(style='width: 100%')
             thead
                 tr
+                    th
                     th #
                     th Client Name
                     th Remarks
@@ -49,9 +50,11 @@ block content
                     th
                     th
                     th
+                    th
             tbody
                 each invoice in invoices
-                    tr.clickable-row(data-href="/invoice/invoice/" + invoice._id)
+                    tr
+                        td=invoice._id
                         - var client = invoice.client;
                         if client
                             - client = client.name
