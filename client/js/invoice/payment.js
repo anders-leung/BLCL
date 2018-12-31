@@ -29,6 +29,7 @@ $(document).ready(function() {
         'iDisplayLength': 10,
         'select': true,
         'dom': 'lBfrtip',
+        'columnDefs': [{ visible: false, searchable: false, targets: [0] }],
         'buttons': [{
             extend: 'excelHtml5',
             footer: true,
@@ -59,9 +60,10 @@ $(document).ready(function() {
         }
     });
     
-    // $('table').on('dblclick', 'tr td:not(.edit, .date-edit, .select)', function() {
-    //     window.location = $(this).parent().data('href');
-    // });
+    $('table').on('dblclick', 'tr td:not(.edit, .date-edit, .select)', function() {
+        var id = table.row(this).data()[0];
+        window.location = `/invoice/invoice/${id}`;
+    });
 
     table.columns().every(function(i) {
         if (i < 3) {
