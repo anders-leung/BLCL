@@ -42,6 +42,7 @@ function getPaymentData(invoices) {
         let client = invoice.client;
         if (!client) client = invoice.oneTimeClient;
         var r = [
+            invoice._id,
             invoice.number,
             client.name,
             (invoice.remarks || ''),
@@ -63,11 +64,12 @@ async function getSalesData(invoices) {
         let client = invoice.client;
         if (!client) client = invoice.oneTimeClient;
         const data = [
+            invoice._id,
             invoice.number,
             client.name,
         ]
-        let total = 0;
         let gst = 0;
+        let pst = 0;
         for (const service of services) {
             const matches = invoice.services.filter(x => x.service === service);
             if (matches.length > 0) {
@@ -75,15 +77,18 @@ async function getSalesData(invoices) {
                 matches.map((match) => {
                     amount += parseFloat(match.amount);
                     gst += parseFloat(match.gst);
+                    if (match.pst) {
+                        pst += parseFloat(match.pst);
+                    }
                 });
                 data.push(parseFloat(amount).toFixed(2));
-                total += amount;
             } else {
                 data.push('');
             }
         }
         data.push(gst.toFixed(2));
-        data.splice(2, 0, (gst + total).toFixed(2));
+        data.push(pst.toFixed(2));
+        data.splice(3, 0, invoice.total);
         return data;
     });
 }
