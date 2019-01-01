@@ -44,7 +44,7 @@ $(document).ready(function() {
         drawCallback: function() {
             var api = this.api();
             api.columns({ 'filter': 'applied' }).every(function(i) {
-                if (i > 2) {
+                if (i > 3) {
                     var sum = 0;
                     var values = this.data();
                     for (var i = 0; i < values.length; i++) {
@@ -66,7 +66,7 @@ $(document).ready(function() {
     });
 
     table.columns().every(function(i) {
-        if (i < 3) {
+        if (i < 4) {
             $(this.footer()).html( '<input type="text"/>' );
             var that = this;
             $('input', this.footer()).on('keyup change', function () {
