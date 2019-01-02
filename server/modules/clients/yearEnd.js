@@ -28,6 +28,9 @@ async function readClient(sheet, row) {
 
     const name = getValue(1);
     let yearEnd = getValue(7);
+
+    if (!yearEnd) return;
+
     yearEnd = XLSX.numberToDate(yearEnd);
     
     await ClientService.update({ name }, { yearEnd });
