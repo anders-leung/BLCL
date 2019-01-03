@@ -28,12 +28,14 @@ async function readClient(sheet, row) {
 
     const name = getValue(1);
     let yearEnd = getValue(7);
+    let incorpDate = getValue(14);
 
-    if (!yearEnd) return;
-
-    yearEnd = XLSX.numberToDate(yearEnd);
+    const update = {
+        yearEnd: (yearEnd ? XLSX.numberToDate(yearEnd) : undefined),
+        'incorp.date': (incorpDate ? XLSX.numberToDate(incorpDate) : undefined),
+    }
     
-    await ClientService.update({ name }, { yearEnd });
+    await ClientService.update({ name }, update);
 }
 
 const args = process.argv.slice(2);
