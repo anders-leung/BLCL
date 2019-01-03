@@ -9,21 +9,14 @@ async function osEmail(query) {
 
     if (err) return console.log('osEmailing err: ', err);
 
-    UserService.getAllUsers((err, users) => {
+    UserService.findOneUser({ email: 'ar@ben-cpa.com' }, (err, user) => {
         if (err) return console.log('Invoice error: ', err);
 
-        const userDict = {};
-        users.map((user) => {
-            const { initials } = user;
-            userDict[initials] = user;
-        });
         invoices.map(async (invoice) => {
             let client = invoice.client;
             if (!client) {
                 client = invoice.oneTimeClient;
             }
-
-            const user = userDict[invoice.issuedBy];
 
             const values = {
                 attention: client.contactString || client.name,
