@@ -1,0 +1,15 @@
+extends ../layout
+
+block content
+    script(type='text/javascript', src='/js/clients/templates.js')
+    .container
+        legend Templates
+        p=`${templates.length} templates`
+        hr
+        
+        if (!templates || templates.length === 0)
+            p=`Currently no templates, to add a template, please add a new Word document file to the template directory: ${directory}.`
+
+        ul.list-group
+            each template in templates
+                li.list-group-item=templates[0].split('.')[0]
