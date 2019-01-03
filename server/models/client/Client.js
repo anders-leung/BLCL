@@ -8,7 +8,7 @@ const ClientSchema = new Schema({
         unique: true,
     },
     incorp: {
-        date: String,
+        date: Date,
         number: String,
     },
     bnNumber: String,
