@@ -8,6 +8,9 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var fs = require('fs');
 
+const ConfigService = require('./server/modules/config');
+const DescriptionService = require('./server/modules/invoice/description');
+
 mongoose.Promise = require('bluebird');
 mongoose.connect('mongodb://localhost:27017/test');
 
@@ -63,15 +66,14 @@ let init = (dir, done) => {
 init('./server/routes', async (err) => {
     if (err) console.log('Error in init: ', err);
     
-    const ConfigService = require('./server/modules/config');
     let config;
     [err, config] = await ConfigService.getConfig();
     if (err) return console.log('init config err: ', err);
 
     global.t1Directory = config.t1_directory;
     global.invoiceDirectory = config.invoice_directory;
+    global.templateDirectory = config.template_directory;
 
-    const DescriptionService = require('./server/modules/invoice/description');
     let descriptions;
     [err, descriptions] = await DescriptionService.get({});
     if (err) return console.log('init description err: ', err);
