@@ -10,8 +10,7 @@ $(document).ready(function(e) {
     }
 
     // Setup the year
-    var year = (new Date()).getYear();
-    year = year + 1899;
+    var year = (new Date()).getFullYear();
     $('#year').val(year);
 
     function populateSelect(name, options) {
