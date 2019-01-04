@@ -18,6 +18,7 @@ router.get('/*', CookieService.isLoggedIn, async (req, res) => {
 
     res.render('clients/templates', {
         templates,
+        directory: global.templateDirectory,
         role: req.session.role,
         options: {}
     });
