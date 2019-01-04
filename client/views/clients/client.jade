@@ -74,7 +74,7 @@ block content
                     .row
                         .col-2
                             label(for='incorpDate') Incorp Date
-                            input#incorpDate.form-control.datepicker(name='incorp[date]' value=client.incorp ? client.incorp.date.toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' }) : '')
+                            input#incorpDate.form-control.datepicker(name='incorp[date]' value=client.incorp && client.incorp.date ? client.incorp.date.toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' }) : '')
                         .col-2
                             label(for='incorpNumber') Incorp Number
                             input#incorpNumber.form-control(name='incorp[number]' value=client.incorp ? client.incorp.number : '')
@@ -112,14 +112,14 @@ block content
                                     .col-6
                                         legend=company
                                         hr
-                                        if (invoices)
+                                        if (!invoices || invoices.length === 0)
+                                            p=`No invoices from ${company} have been issued yet.`
+                                        else
                                             ul.list-group
                                                 each invoice in invoices
                                                     if invoice.company === company.toLowerCase()
                                                         li.list-group-item
                                                             a(href=`/invoices/${company.toLowerCase()}\/${invoice.number}.pdf`)=`${invoice.number} issued on ${invoice.issueDate.toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' })}`
-                                        else
-                                            p=`No invoices from ${company} have been issued yet.`
 
                 br
 
