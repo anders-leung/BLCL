@@ -5,11 +5,11 @@ extends ../layout
 
 block content
 
-    script(type="text/javascript").
-        var client = !{JSON.stringify(client)};
-        var options = !{JSON.stringify(options)};
-        var newClient = !{JSON.stringify(newClient)};
-    script(src='/js/t1/client.js')
+    //- script(type="text/javascript").
+    //-     var client = !{JSON.stringify(client)};
+    //-     var options = !{JSON.stringify(options)};
+    //-     var newClient = !{JSON.stringify(newClient)};
+    //- script(src='/js/t1/client.js')
     link(rel='stylesheet', href='/css/client.css')
     link(rel='stylesheet', href='/css/jquery.onepage-scroll-0.0.1.min.css')
     script(src='/js/jquery.onepage-scroll-0.0.1.min.js')
@@ -27,43 +27,48 @@ block content
                             .row
                                 .form-group.col-2
                                     label(for='year') Year
-                                    input#year.form-control(type='number' name='year' required)
+                                    input#year.form-control(type='number' name='year' value=(client.year ? client.year : (new Date()).getFullYear()) required)
                                 .form-group.col-2
                                     label(for='interviewer') Interviewer
-                                    select#interviewer.initials.form-control(name='interviewer')
+                                    select#interviewer.initials.form-control(name='interviewer' value=client.interviewer)
                                 .form-group.col-2
                                     label(for='interviewDate') Interview Date
-                                    input#interviewDate.form-control.datepicker(type='text' name='interviewDate' required)
+                                    input#interviewDate.form-control.datepicker(type='text' name='interviewDate' value=client.interviewDate required)
                                 .form-group.col-2
                                     label(for='returns') Number of Returns
-                                    input#returns.form-control(type='number' name='numberOfReturns')
+                                    input#returns.form-control(type='number' name='numberOfReturns' value=client.numberOfReturns)
                                 .form-group.col-2
                                     label(for='group') Group
-                                    input#group.form-control(type='text' name='group')
+                                    input#group.form-control(type='text' name='group' value=client.group)
                                 .form-group.col-2
                                     label(for='method') Drop or Email
                                     select#method.form-control(name='method')
+                                        each method in options.method
+                                            if (method === client.method)
+                                                option(selected)=method
+                                            else
+                                                option=method
                             .row
                                 .form-group.col-2
                                     label(for='tel') Telephone
-                                    input#tel.form-control.phone(type='text' name='tel[number]')
+                                    input#tel.form-control.phone(type='text' name='tel[number]' value=client.tel ? client.tel.number : '')
                                     .checkbox
                                         label(for='newTel')
-                                            input#newTel(type='checkbox' name='tel[check]')
+                                            input#newTel(type='checkbox' name='tel[check]' value=client.tel ? client.tel.check : true)
                                             | New Telephone
                                 .form-group.col-2
                                     label(for='cell') Cell
-                                    input#cell.form-control.phone(type='text' name='cell[number]')
+                                    input#cell.form-control.phone(type='text' name='cell[number]' value=client.cell ? client.cell.number : '')
                                     .checkbox
                                         label(for='newCell')
-                                            input#newCell(type='checkbox' name='cell[check]')
+                                            input#newCell(type='checkbox' name='cell[check]' value=client.cell ? client.cell.check : true)
                                             | New Cell
                                 .form-group.col-6
                                     label(for='email') Email
-                                    input#email.form-control(type='email' name='email[value]')
+                                    input#email.form-control(type='email' name='email[value]' value=client.email ? client.email.value : '')
                                     .checkbox
                                         label(for='newEmail')
-                                            input#newEmail(type='checkbox' name='email[check]')
+                                            input#newEmail(type='checkbox' name='email[check]' value=client.email ? client.email.check : true)
                                             | New Email
                             .row
                                 .form-group.col-12
@@ -71,22 +76,22 @@ block content
                                     .row
                                         .col-1
                                             label(for='apartment') Unit
-                                            input#apartment.form-control(type='text' name='address[apartment]')
+                                            input#apartment.form-control(type='text' name='address[apartment]' value=client.address ? client.address.apartment : '')
                                         .col-3
                                             label(for='street') Street
-                                            input#street.form-control(type='text' name='address[street]' required)
+                                            input#street.form-control(type='text' name='address[street]' value=client.address ? client.address.street : '' required)
                                         .col-2
                                             label(for='city') City
-                                            input#city.form-control(type='text' name='address[city]' required)
+                                            input#city.form-control(type='text' name='address[city]' value=client.address ? client.address.city : '' required)
                                         .col-1
                                             label(for='province') Province
-                                            input#province.form-control(type='text' name='address[province]' value='BC' required)
+                                            input#province.form-control(type='text' name='address[province]' value=client.address ? client.address.province : 'BC' required)
                                         .col-2
                                             label(for='postalCode') Postal Code
-                                            input.postalCode.form-control(type='text' name='address[postalCode]' required)
+                                            input.postalCode.form-control(type='text' name='address[postalCode]' value=client.address ? client.address.postalCode : '' required)
                                         .checkbox.col-12
                                             label(for='newAddress')
-                                                input#newAddress(type='checkbox' name='address[check]')
+                                                input#newAddress(type='checkbox' name='address[check]' value=client.address ? client.address.check : true)
                                                 | New Address
             #husband.content-part(data-title='Husband')
                 .content-inner
@@ -96,16 +101,16 @@ block content
                             .row
                                 .col-2
                                     label(for='husbandFirstName') First Name
-                                    input#husbandFirstName.form-control(type='text' name='husband[firstName]')
+                                    input#husbandFirstName.form-control(type='text' name='husband[firstName]' value=client.husband ? client.husband.firstName : '')
                                 .col-2
                                     label(for='husbandLastName') Last Name
-                                    input#husbandLastName.form-control(type='text' name='husband[lastName]')
+                                    input#husbandLastName.form-control(type='text' name='husband[lastName]' value=client.husband ? client.husband.lastName : '')
                                 .col-2
                                     label(for='husbandDob') Date of Birth
-                                    input#husbandDob.form-control.datepickerChangeYear(type='text' name='husband[dateOfBirth]')
+                                    input#husbandDob.form-control.datepickerChangeYear(type='text' name='husband[dateOfBirth]' value=client.husband ? client.husband.dateOfBirth : '')
                                 .col-2
                                     label(for='husbandSin') SIN
-                                    input#husbandSin.form-control.sin(type='text' name='husband[sin]')
+                                    input#husbandSin.form-control.sin(type='text' name='husband[sin]' value=client.husband ? client.husband.sin : '')
                             .group-joint
                                 .row
                                     .form-group.col-2
