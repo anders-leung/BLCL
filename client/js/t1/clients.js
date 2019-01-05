@@ -118,6 +118,7 @@ $(document).ready(function() {
         row.push(client.wife ? client.wife.lastName : '');
         row.push(client.wife ? client.wife.firstName : '');
         row.push(client.group);
+        row.push(client.preparerRemarks);
         row.push(client.interviewer);
         row.push(client.preparer);
         row.push(client.preparerDone);
@@ -170,6 +171,7 @@ $(document).ready(function() {
         $row.find('td').each(function() {
             $(this).addClass('text-nowrap');
         });
+        $(row).find('td').eq(13).addClass('edit');
         $(row).find('td').eq(16).addClass('select status');
         $(row).find('td').eq(17).addClass('select initials');
         $(row).find('td').eq(18).addClass('date-edit');
