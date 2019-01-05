@@ -28,6 +28,7 @@ block content
                             th Husband First Name
                             th Wife Last Name
                             th Wife First Name
+                            th GSTe Remarks
                             th Signed
                             th GST
                             th GST EFILED
@@ -39,6 +40,7 @@ block content
                             th Wife Last Name
                             th Wife First Name
                             th Signed
+                            th GSTe Remarks
                             th 
                             th 
                     tbody
@@ -49,6 +51,7 @@ block content
                                 td.text-nowrap #{client.husband ? client.husband.firstName : ''}
                                 td.text-nowrap #{client.wife ? client.wife.lastName : ''}
                                 td.text-nowrap #{client.wife ? client.wife.firstName : ''}
+                                td.text-nowrap.edit #{client.gstRemarks}
                                 td.text-nowrap.date-edit #{client.signed}
                                 td 
                                     if (client.husband.rental.gstReturn || client.husband.selfEmployed.gstReturn || client.wife.rental.gstReturn || client.wife.selfEmployed.gstReturn)
