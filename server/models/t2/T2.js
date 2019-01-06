@@ -10,6 +10,7 @@ var ClientSchema = new Schema({
     client: { // Monitoring
         type: Schema.Types.ObjectId,
         ref: 'Client',
+        unique: true,
     },
     received: Date, // Monitoring
     preparer: [{ // Monitoring
