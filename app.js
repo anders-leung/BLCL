@@ -73,6 +73,7 @@ init('./server/routes', async (err) => {
     global.t1Directory = config.t1_directory;
     global.invoiceDirectory = config.invoice_directory;
     global.templateDirectory = config.template_directory;
+    global.fileDirectory = config.file_directory;
 
     let descriptions;
     [err, descriptions] = await DescriptionService.get({});
