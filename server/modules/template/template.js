@@ -1,18 +1,16 @@
-const fs = require('fs');
-const promisify = require('util').promisify;
-
-const readdir = promisify(fs.readdir);
-
 const to = require('../../helpers/to');
+const Template = require('../../models/template/Template');
 
 module.exports = {
-    get: async (name) => {
-        let [err, files] = await to(readdir(global.templateDirectory));
-        
-        if (name) {
-            files = files.filter(file => file === name);
-        }
+    get: async (query) => {
+        return await to(Template.find(query));
+    },
 
-        return [err, files];
+    update: async (query, update) => {
+        return await to(Template.findOneAndUpdate(query, update, { upsert: true }));
+    },
+
+    delete: async (query) => {
+        return await to(Template.findByIdAndDelete(query));
     }
 }
