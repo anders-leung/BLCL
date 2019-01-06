@@ -8,6 +8,8 @@ const updateInvoice = require('./invoices/update');
 const weekChange = require('./invoices/week-change');
 const description = require('./invoices/description');
 
+const templates = require('./templates/templates');
+
 let ClientsSocket = {
     ClientUpdate : async function(socket) {
         socket.on('client side update', function (data) {
@@ -43,6 +45,8 @@ let ClientsSocket = {
             if (err) console.log(err);
         });
 
+
+        // Invoice socket handling
         socket.on('update invoice', async (data) => {
             await updateInvoice(socket, data);
         });
@@ -53,6 +57,12 @@ let ClientsSocket = {
 
         socket.on('description update', async (data) => {
             await description(socket, data);
+        });
+
+
+        // Template socket handling
+        socket.on('templates', async (data) => {
+            await templates(socket, data);
         });
     }
 };

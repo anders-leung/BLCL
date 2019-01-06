@@ -6,6 +6,7 @@ const express = require('express');
 const router = express.Router();
 
 const CookieService = require('../utils/cookies');
+const ClientService = require('../../modules/clients/client');
 const TemplateService = require('../../modules/template/template');
 
 /* GET home page. */
@@ -13,11 +14,13 @@ router.get('/*', CookieService.isLoggedIn, async (req, res) => {
     const { params } = req;
     
     const [err, templates] = await TemplateService.get();
+    const fields = ClientService.fields();
     
     if (err) return res.render('error');
 
     res.render('clients/templates', {
         templates,
+        fields,
         directory: global.templateDirectory,
         role: req.session.role,
         options: {}
