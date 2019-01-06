@@ -5,38 +5,60 @@ let CookieService = require('../utils/cookies');
 let ClientService = require('../../modules/nr/client');
 
 /* GET home page. */
-router.get('/', CookieService.isLoggedIn, function(req, res) {
-    res.render('nr/client', {
-        title: 'NR Client',
-        role: req.session.role,
-        options: {},
-        client: null
-    });
-});
-
-router.get('/:client_name', CookieService.isLoggedIn, async (req, res) => {
+router.get('/*', CookieService.isLoggedIn, async (req, res) => {
     let err, client;
-    [err, client] = await ClientService.find({ pathName: req.params.client_name });
+    const { params } = req;
+
+    if (params[0]) {
+        query = { _id: params[0] };
+        [err, client] = await ClientService.find(query);
+        if (err) {
+            console.log('NR service find err: ', err);
+            return res.render(err);
+        }
+        client = client[0];
+    }
+
     res.render('nr/client', {
         title: 'NR Client',
         role: req.session.role,
         options: {},
-        client: client[0]
+        client
     });
 });
 
-router.post('/', CookieService.isLoggedIn, async (req, res, next) => {
-    let err, result;
-    [err, result] = await ClientService.create(req.body);
+router.post('/*', CookieService.isLoggedIn, async (req, res, next) => {
+    let query, err, result;
+    const { params, body } = req;
+
+    if (params[0]) {
+        query = { _id: params[0] };
+    }
+
+    const commaSeparated = ['phones', 'emails'];
+    const services = ['nr6', 'nr4', 's216', 's115', 'cc'];
+    services.map((service) => {
+        if (!body[service]) {
+            body[service] = undefined;
+        }
+    });
+
+    Object.keys(body).map((key) => {
+        if (body[key] === 'on') {
+            body[key] = {};
+        } else if (commaSeparated.includes(key)) {
+            body[key] = body[key].replace(/\s/g, '').split(',');
+        }
+    });
+
+    if (query) {
+        [err, result] = await ClientService.update(query, body);
+    } else {
+        [err, result] = await ClientService.create(body);
+    }
+
     if (err) return next(err);
     res.redirect('/nr/directory');
 });
-
-router.post('/:client_name', CookieService.isLoggedIn, async (req, res, next) => {
-    let err, result;
-    [err, result] = await ClientService.update({ pathName: req.params.client_name }, req.body);
-    if (err) return next(err);
-    res.redirect('/nr/directory');
-})
 
 module.exports = router;

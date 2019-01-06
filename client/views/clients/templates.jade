@@ -1,0 +1,34 @@
+extends ../layout
+
+block content
+    script(type='text/javascript').
+        var templates = !{JSON.stringify(templates)};
+    script(src='/js/clients/templates.js')
+    .container
+        legend Templates
+        .row
+            p.col-9=`${templates.length} files in the templates folder - only Word 2007 and later files will be recognized`
+            input#addFile.col-3.btn.btn-primary.form-control(type='button' value='Upload a New Template')
+            input#uploadFile(type='file' style='display:none')
+        hr
+
+        - var hasTemplates = templates && templates.length > 0;
+
+        .row
+            .col-8(style='max-height:700px; overflow-y:scroll')
+                p#noTemplates(style=`display:${hasTemplates ? 'none' : 'block'}`)=`Currently no templates, to add a template, please upload Word documents from: ${directory}.`
+                ul.list-group
+                    if (hasTemplates)
+                        each template in templates
+                            li.list-group-item.d-flex.justify-content-between.align-items-center=template.name
+                                span.badge.badge-danger.badge-pill
+                                    i.fa.fa-times
+
+            #addVariables.col-4(style='padding-top: 25px')
+                label(for='variables') Template Variables </br> Hold 'Ctrl' to select multiple variables
+                br
+                select#variables.form-control(multiple size=15 name='variables[]')
+                    each field in fields
+                        option=field
+                br
+                input#updateTemplate.col-12.btn.btn-success.form-control(type='button', value='Update Template Variables' disabled)

@@ -1,22 +1,32 @@
 doctype
 html
+    - var usuallyRequired = { street: true, city: true, province: true, postalCode: true }
+
+    if (!values)
+        - values = {}
+    
+    if (required)
+        - required = Object.assign(usuallyRequired, required);
+    else
+        - required = usuallyRequired;
+
     .row
         .col-2
             label(for=field + 'Apartment') Apartment
-            input.form-control(id=field + 'Apartment' type='text' name='#{field}.apartment')
+            input.form-control(id=field + 'Apartment' type='text' name='#{field}[apartment]' value=values.apartment)
         .col-3
             label(for=field + 'Street') Street
-            input.form-control(id=field + 'Street' type='text' name='#{field}.street' required=required)
+            input.form-control(id=field + 'Street' type='text' name='#{field}[street]' required=required.street value=values.street)
         .col-2
             label(for=field + 'City') City
-            input.form-control(id=field + 'City' type='text' name='#{field}.city' required=required)
+            input.form-control(id=field + 'City' type='text' name='#{field}[city]' required=required.city value=values.city)
         .col-1
             label(for=field + 'Province') Province
-            input.form-control(id=field + 'Province' type='text' name='#{field}.province' required=required)
+            input.form-control(id=field + 'Province' type='text' name='#{field}[province]' required=required.province value=values.province)
         if country
             .col-2
                 label(for=field + 'Country') Country
-                input.form-control(id=field + 'Country' type='text' name='#{field}.country' required=required)
+                input.form-control(id=field + 'Country' type='text' name='#{field}[country]' required=required.country value=values.country)
         .col-2
             label(for=field + 'PostalCode') Postal Code
-            input.postalCode.form-control(id=field + 'PostalCode' type='text' name='#{field}.postalCode' required=required)
+            input.postalCode.form-control(id=field + 'PostalCode' type='text' name='#{field}[postalCode]' required=required.postalCode value=values.postalCode)

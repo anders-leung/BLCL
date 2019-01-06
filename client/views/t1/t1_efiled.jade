@@ -28,6 +28,7 @@ block content
                             th Husband First Name
                             th Wife Last Name
                             th Wife First Name
+                            th T1e Remarks
                             th Signed
                             th T1135
                             th T1135 EFILED
@@ -38,6 +39,7 @@ block content
                             th Husband First Name
                             th Wife Last Name
                             th Wife First Name
+                            th T1e Remarks
                             th Signed
                             th 
                             th 
@@ -49,6 +51,7 @@ block content
                                 td.text-nowrap #{client.husband ? client.husband.firstName : ''}
                                 td.text-nowrap #{client.wife ? client.wife.lastName : ''}
                                 td.text-nowrap #{client.wife ? client.wife.firstName : ''}
+                                td.text-nowrap.edit #{client.t1Remarks}
                                 td.text-nowrap.date-edit #{client.signed}
                                 td
                                     if client.t1135 == 'N' || client.t1135 == ''

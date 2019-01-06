@@ -18,5 +18,5 @@ gulp.task('serve', function() {
     browserSync.init({
         proxy: 'localhost:3000'
     });
-    gulp.watch('./client/*/**').on('change', browserSync.reload);
+    gulp.watch(['./client/*/**', './public/css/stylesheet.css']).on('change', browserSync.reload);
 });

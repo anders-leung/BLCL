@@ -16,20 +16,26 @@ block content
             thead
                 tr
                     th
-                    th Invoice #
+                    th #
                     th Client
                     th Services
                     th Issue Date
+                    th Sign Date
                     th PYT Type
+                    th Remarks
+                    th Preparer
                     th Amount Owing
             tfoot
                 tr
                     th
-                    th Invoice #
+                    th #
                     th Client
                     th Services
                     th Issue Date
+                    th Sign Date
                     th PYT Type
+                    th Remarks
+                    th Preparer
                     th Amount Owing
             tbody
                 each invoice in invoices
@@ -38,12 +44,15 @@ block content
                         if client
                             - client = client.name
                         else
-                            - client = invoice.clientString
+                            - client = invoice.oneTimeClient.name
                             
                         td #{invoice._id}
                         td #{invoice.number}
                         td #{client}
                         td #{invoice.services.service || invoice.services.map(x => x.service).join(', ')}
                         td=invoice.issueDate.toLocaleString('en-US', { year: 'numeric', month: 'short', day: '2-digit' })
+                        td.date-edit=invoice.signDate ? invoice.signDate.toLocaleString('en-US', { year: 'numeric', month: 'short', day: '2-digit' }) : ''
                         td.select.pytType #{invoice.pytReceived}
-                        td #{invoice.services.total || invoice.total}
+                        td.edit #{invoice.remarks}
+                        td=invoice.issuedBy
+                        td #{invoice.total}

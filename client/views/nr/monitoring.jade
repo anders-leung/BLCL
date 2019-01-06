@@ -43,12 +43,12 @@ block content
                                 th Services
                         tbody
                             each client in clients[i][1]
-                                tr(data-href="/nr/client/" + client.pathName)
+                                tr(data-href="/nr/client/" + client._id)
                                     td #{client.name}
-                                    td #{client.owner.firstName}
                                     td #{client.owner.lastName}
-                                    td #{client.coOwner ? client.coOwner.firstName : ''}
+                                    td #{client.owner.firstName}
                                     td #{client.coOwner ? client.coOwner.lastName : ''}
+                                    td #{client.coOwner ? client.coOwner.firstName : ''}
                                     td #{client.services}
             else
                 div(id=clients[i][0]).tab-pane
@@ -64,9 +64,7 @@ block content
                                 th Signed
                                 th CRA
                                 th Invoiced
-                                th Invoice #
-                                th PYT Type
-                                th PYT Amount
+                                th Remarks
                                 th Agent Signed
                         tfoot
                             tr
@@ -79,24 +77,20 @@ block content
                                 th Signed
                                 th CRA
                                 th Invoiced
-                                th Invoice #
-                                th PYT Type
-                                th PYT Amount
+                                th Remarks
                                 th Agent Signed
                         tbody
                             each client in clients[i][1]
-                                tr(data-href="/nr/client/" + client.pathName)
+                                tr(data-href="/nr/client/" + client._id)
                                     - var service = clients[i][0]
                                     td.text-nowrap #{client.name}
-                                    td #{client.owner.firstName}
                                     td #{client.owner.lastName}
-                                    td #{client.coOwner ? client.coOwner.firstName : ''}
+                                    td #{client.owner.firstName}
                                     td #{client.coOwner ? client.coOwner.lastName : ''}
+                                    td #{client.coOwner ? client.coOwner.firstName : ''}
                                     td.edit #{client[service].outstandingInfo}
                                     td.date-edit #{client[service].signed}
                                     td.date-edit #{client[service].cra}
                                     td.date-edit #{client[service].invoice ? client[service].invoice.date : ''}
-                                    td.edit #{client[service].invoice ? client[service].invoice.number : ''}
-                                    td.select.pytType #{client[service].payment ? client[service].payment.type : ''}
-                                    td.edit #{client[service].payment ? client[service].payment.amount : ''}
+                                    td.edit=client.remarks
                                     td.date-edit #{client[service].agentSigned}

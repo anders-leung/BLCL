@@ -1,7 +1,8 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Address = require('../Address');
+const Schema = mongoose.Schema;
 
-var InvoiceSchema = new Schema({
+const InvoiceSchema = new Schema({
     company: String,
     issueDate: Date,
     issuedBy: String,
@@ -10,14 +11,17 @@ var InvoiceSchema = new Schema({
     total: String,
     client: {
         type: Schema.Types.ObjectId,
-        ref: 'T2',
+        ref: 'Client',
     },
-    clientString: String,
+    oneTimeClient: {
+        name: String,
+        address: Address.schema,
+        phone: String,
+        fax: String,
+        email: String,
+    },
     services: [{
-        service: {
-            type: String,
-            enum: ['FS', 'PR', 'T1', 'T2', 'T3', 'T4', 'T5', 'CON', 'CRA', 'MISC', 'NR', 'NON', 'OT1', 'BK', 'SEC', 'DISC'],
-        },
+        service: String,
         amount: String,
         details: String,
         total: String,
@@ -30,6 +34,12 @@ var InvoiceSchema = new Schema({
     },
     pytDate: Date,
     number: Number,
+    remarks: String,
+    signDate: Date,
+    emailed: {
+        when: Date,
+        attempt: Number,
+    },
 });
 
 module.exports = mongoose.model('Invoice', InvoiceSchema);

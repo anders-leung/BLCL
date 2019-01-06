@@ -22,14 +22,17 @@ block content
         table.cell-border(style='width: 100%')
             thead
                 tr
-                    th Invoice #
+                    th
+                    th #
                     th Client Name
+                    th Total A/R
                     each service in services
                         th=service.toUpperCase()
                     th GST Rec
-                    th Total A/R
+                    th PST Rec
             tfoot
                 tr
+                    th
                     th
                     th
                     each service in services
@@ -38,22 +41,28 @@ block content
                     th
             tbody
                 each invoice in invoices
-                    tr.clickable-row(data-href="/invoice/" + invoice._id)
+                    tr
+                        td=invoice._id
                         - var client = invoice.client;
                         if client
                             - client = client.name
                         else
-                            - client = invoice.clientString
+                            - client = invoice.oneTimeClient.name
 
                         td.text-nowrap #{invoice.number}
                         td.text-nowrap #{client}
+                        td.text-nowrap=invoice.total
                         - var gst = 0
+                        - var pst = 0
                         each service in services
-                            - var match = invoice.services.filter((x) => x.service === service)[0]
-                            - var value = ''
-                            if (match)
-                                - value = parseFloat(match.amount).toFixed(2)
-                                - gst = gst + parseFloat(match.gst)
-                            td=value
-                        td.text-nowrap #{gst.toFixed(2)}
-                        td
+                            - var matches = invoice.services.filter((x) => x.service === service)
+                            - var amount = 0
+                            if (matches.length > 0)
+                                - matches.map((match) => {
+                                -     amount += parseFloat(match.amount);
+                                -     gst += parseFloat(match.gst);
+                                -     pst += (match.pst ? parseFloat(match.pst) : 0);
+                                - })
+                            td=(amount ? amount.toFixed(2) : '')
+                        td.text-nowrap=gst.toFixed(2)
+                        td.text-nowrap=pst.toFixed(2)

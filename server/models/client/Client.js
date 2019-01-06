@@ -8,13 +8,13 @@ const ClientSchema = new Schema({
         unique: true,
     },
     incorp: {
-        date: String,
+        date: Date,
         number: String,
     },
     bnNumber: String,
     pstNumber: String,
     wcbNumber: String,
-    yearEnd: String,
+    yearEnd: Date,
     services: {
         type: [String],
     },
@@ -25,11 +25,17 @@ const ClientSchema = new Schema({
     contact: {
         title: String,
         firstName: String,
-        LastName: String,
+        lastName: String,
     },
     phone: String,
     fax: String,
     address: Address.schema,
+    email: String,
+    files: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Template',
+    }],
+    newClientDate: Date,
 });
 
 ClientSchema.virtual('contactString').get(function() {
@@ -38,8 +44,13 @@ ClientSchema.virtual('contactString').get(function() {
         string += (this.contact.title ? this.contact.title + ' ' : '');
         string += (this.contact.firstName ? this.contact.firstName + ' ' : '');
         string += (this.contact.lastName ? this.contact.lastName : '');
+    } else {
+        string = this.name;
     }
     return string.trim();
 });
+
+ClientSchema.set('toObject', { virtuals: true });
+ClientSchema.set('toJSON', { virtuals: true });
 
 module.exports = mongoose.model('Client', ClientSchema);

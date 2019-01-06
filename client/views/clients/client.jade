@@ -1,0 +1,150 @@
+extends ../layout
+
+block content
+
+    link(rel='stylesheet', href='/css/jquery.onepage-scroll-0.0.1.min.css')
+    script(type='text/javascript').
+        var client = !{JSON.stringify(client)};
+        var files = !{JSON.stringify(files)};
+    script(src='/js/clients/client.js')
+    script(src='/js/jquery.onepage-scroll-0.0.1.min.js')
+    script(src="/js/jquery/jquery.easing.min.js")
+
+    if (!client)
+        - client = {};
+
+    .card.offset-1.col-10
+        .scroll-container
+            form(method='post')
+
+                legend Client
+                hr
+                .form-group
+                    .row
+                        .col-6
+                            label(for='name') Name
+                            input#name.form-control(name='name' value=client.name)
+                        .col-3
+                            label(for='status') Status
+                            select#status.form-control(name='status')
+                                each status in ['Active', 'Pending', 'Inactive']
+                                    - var value = status.toLowerCase()
+                                    if (status === client.status)
+                                        option(value=value selected='selected')=status
+                                    else
+                                        option(value=value)=status
+                        .col-3
+                            label(for='newClientDate') New Client Date
+                            input#newClientDate.form-control.datepicker(name='newClientDate' value=client.newClientDate)
+                
+                br
+
+                legend Contact
+                hr
+                .form-group
+                    .row
+                        .col-2
+                            label(for='title') Title
+                            input#title.form-control(name='contact[title]' value=client.contact ? client.contact.title : '')
+                        .col-5
+                            label(for='firstName') First Name
+                            input#firstName.form-control(name='contact[firstName]' value=client.contact ? client.contact.firstName : '')
+                        .col-5
+                            label(for='lastName') Last Name
+                            input#lastName.form-control(name='contact[lastName]' value=client.contact ? client.contact.lastName : '')
+                .form-group
+                    .row
+                        .col-6
+                            label(for='phone') Phone
+                            input#phone.form-control(name='phone' value=client.phone)
+                        .col-6
+                            label(for='fax') Fax
+                            input#fax.form-control(name='fax' value=client.fax)
+
+                .form-group
+                    .row
+                        .col-12
+                            label(for='email') Email
+                            input#email.form-control(name='email' value=client.email)
+
+                .form-group
+                    - var field = 'address'
+                    - var country = true
+                    - var values = client.address
+                    include ../templates/address.jade
+
+                br
+
+                legend Other
+                hr
+                .form-group
+                    .row
+                        .col-2
+                            label(for='incorpDate') Incorp Date
+                            input#incorpDate.form-control.datepicker(name='incorp[date]' value=client.incorp && client.incorp.date ? client.incorp.date.toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' }) : '')
+                        .col-2
+                            label(for='incorpNumber') Incorp Number
+                            input#incorpNumber.form-control(name='incorp[number]' value=client.incorp ? client.incorp.number : '')
+                        .col-2
+                            label(for='bnNumber') BN Number
+                            input#bnNumber.form-control(name='bnNumber' value=client.bnNumber)
+                        .col-2
+                            label(for='pstNumber') PST Number
+                            input#pstNumber.form-control(name='pstNumber' value=client.pstNumber)
+                        .col-2
+                            label(for='wcbNumber') WCB Number
+                            input#wcbNumber.form-control(name='wcbNumber' value=client.wcbNumber)
+                        .col-2
+                            label(for='yearEnd') Year End
+                            input#yearEnd.form-control(name='yearEnd' value=(client.yearEnd ? client.yearEnd.toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' }) : ''))
+
+                br
+
+                legend Service and Invoices
+                p (Hold the "Ctrl" key while clicking to select multiple services, and click an already selected one to deselect it)
+                hr
+                .form-group
+                    .row
+                        .col-4
+                            select#services.form-control(multiple size=services.length name='services[]')
+                                each service in services
+                                    if (client.services && client.services.includes(service))
+                                        option(selected)=service
+                                    else
+                                        option=service
+                        .col-8
+                            - var companies = ['BLCL', 'Cantrust']
+                            .row
+                                each company in companies
+                                    .col-6
+                                        legend=company
+                                        hr
+                                        if (!invoices || invoices.length === 0)
+                                            p=`No invoices from ${company} have been issued yet.`
+                                        else
+                                            ul.list-group
+                                                each invoice in invoices
+                                                    if invoice.company === company.toLowerCase()
+                                                        li.list-group-item
+                                                            a(href=`/invoices/${company.toLowerCase()}\/${invoice.number}.pdf`)=`${invoice.number} issued on ${invoice.issueDate.toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' })}`
+                br
+
+                legend Files
+                hr
+                if (!client.files)
+                    - client.files = [];
+                .row
+                    p#fileCount.col-8=`Client has ${client.files.length} ${client.files.length === 1 ? 'file' : 'files'}.`
+                    p.col-4 Add files this client by double clicking a template listed here.
+                .row
+                    .col-8(style='max-height:300px;overflow-y:scroll')
+                        ul#files.list-group
+
+                    .col-4
+                        select#templates.form-control(multiple size=10 name='files[]')
+                            each file in files
+                                option(value=file._id)=file.name
+
+                br
+
+                input.btn.btn-success.offset-1.col-10(type='submit' value='Save')

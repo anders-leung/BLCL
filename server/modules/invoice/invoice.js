@@ -1,6 +1,7 @@
 const to = require('../../helpers/to');
-const Invoice = require('../../models/invoice');
+const Invoice = require('../../models/invoice/Invoice');
 const pdf = require('./invoice-pdf');
+const descriptions = require('./descriptions');
 
 const InvoiceService = {
     create: async (invoice) => {
@@ -10,15 +11,19 @@ const InvoiceService = {
 
         for (let i = 0; i < invoice.services.length; i++) {
             const service = invoice.services[i];
-            service.total = convert(parseFloat(service.amount) + parseFloat(service.gst));
+            if (!service.amount) service.amount = '0.00';
+            if (!service.gst) service.gst = '0.00';
+            if (!service.pst) service.pst = '0.00';
+            let total = parseFloat(service.amount);
+            total += parseFloat(service.gst);
+            total += parseFloat(service.pst);
+            service.total = convert(total);
         }
 
-        const [e, newInvoice] = await to(new Invoice(Object.assign({
+        return await to(new Invoice(Object.assign({
             number,
             issueDate: new Date(),
         }, invoice)).save());
-
-        return await pdf(newInvoice);
     },
 
     update: async (query, data) => {
@@ -30,6 +35,10 @@ const InvoiceService = {
     },
 
     getByWeek: async (query, field, week) => {
+        if (week === 'All') {
+            return await InvoiceService.get(query);
+        }
+
         const weekRange = week.split(' - ');
         const weekStart = new Date(weekRange[0]);
         const weekEnd = new Date(weekRange[1]);
@@ -50,7 +59,7 @@ const InvoiceService = {
                 { $unwind: '$services' },
                 { $match: { 'services.service': service } },
                 { $lookup: {
-                    from: 't2',
+                    from: 'client',
                     localField: 'client',
                     foreignField: '_id',
                     as: 'client'
@@ -67,12 +76,12 @@ const InvoiceService = {
             ]));
     },
 
-    getServices: () => {
-        return Invoice.schema.path('services').schema.path('service').enumValues;
+    createPdf: async (invoice) => {
+        return await pdf(invoice);
     },
 
-    createPdf: async (invoice) => {
-        pdf(invoice);
+    getDescriptions: () => {
+        return descriptions;
     }
 };
 

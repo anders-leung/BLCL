@@ -9,7 +9,9 @@ block content
             thead
                 tr
                     th Client Names
+                    th Status
             tbody
                 each client in clients
-                    tr(data-href="/nr/client/" + client.pathName)
-                        td.text-nowrap #{client.name}
+                    tr(data-href="/nr/client/" + client._id)
+                        td.text-nowrap=client.name
+                        td.text-nowrap=client.status

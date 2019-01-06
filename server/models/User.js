@@ -14,7 +14,9 @@ var UserSchema = new Schema({
         type: String,
         enum: ['Administrator', 'Employee']
     },
-    initials: String
+    initials: String,
+    emailPassword: String,
+    name: String,
 });
 
 module.exports = mongoose.model('User', UserSchema);

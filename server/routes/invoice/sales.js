@@ -4,6 +4,8 @@ const router = express.Router();
 const getWeeks = require('./get_weeks');
 const CookieService = require('../utils/cookies');
 const InvoiceService = require('../../modules/invoice/invoice');
+const DescriptionService = require('../../modules/invoice/description');
+
 
 /* GET home page. */
 router.get('/', CookieService.isLoggedIn, async (req, res) => {
@@ -13,17 +15,11 @@ router.get('/', CookieService.isLoggedIn, async (req, res) => {
     }
 
     const weeks = getWeeks();
-    const query = {
-        $or: [
-            { pytReceived: '' },
-            { pytReceived: { $exists: false } },
-        ],
-    };
-
-    const services = InvoiceService.getServices();
-    const [err, invoices] = await InvoiceService.getByWeek(query, 'issueDate', weeks[0]);
+    const [serr, services] = await DescriptionService.getServices();
+    const [err, invoices] = await InvoiceService.getByWeek({}, 'issueDate', weeks[0]);
 
     if (err) return res.render('error', err);
+    if (serr) return res.render('error', serr);
 
     res.render('invoice/sales', {
         invoices,

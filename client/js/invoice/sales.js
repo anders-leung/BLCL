@@ -1,7 +1,3 @@
-/**
- * Created by ander on 2017-11-01.
- */
-
 function convert(value, int) {
     if (int) {
         var s = value.toString();
@@ -29,12 +25,16 @@ $(document).ready(function() {
     var table = $('table').DataTable({
         'iDisplayLength': 10,
         'scrollX': true,
+        'scrollY': true,
         'select': true,
         'dom': 'RlBfrtip',
+        'columnDefs': [{ visible: false, searchable: false, targets: [0] }],
         'buttons': [{
             extend: 'excelHtml5',
             footer: true,
-            title: `Payments Received From ${$('#weeks').val()}`,
+            title: function () {
+                return `Sales From ${$('#weeks option:selected').val()}`;
+            },
             exportOptions: {
                 columns: ':visible'
             }
@@ -42,12 +42,8 @@ $(document).ready(function() {
 
         drawCallback: function() {
             var api = this.api();
-            var total = 0;
-            var lastIndex = api.columns()[0].length - 1;
             api.columns({ 'filter': 'applied' }).every(function(i) {
-                if (i == lastIndex) {
-                    $(this.footer()).html(convert(total, true));
-                } else if (i > 1) {
+                if (i > 2) {
                     var sum = 0;
                     var values = this.data();
                     for (var i = 0; i < values.length; i++) {
@@ -57,15 +53,19 @@ $(document).ready(function() {
                         }
                     }
                     $(this.footer()).html(convert(sum, true));
-                    total += sum;
                 }
             });
             $('table').DataTable().columns.adjust();
         }
     });
+    
+    $('table').on('dblclick', 'tr td:not(.edit, .date-edit, .select)', function() {
+        var id = table.row(this).data()[0];
+        window.location = `/invoice/invoice/${id}`;
+    });
 
     table.columns().every(function(i) {
-        if (i < 2) {
+        if (i < 3) {
             $(this.footer()).html( '<input type="text"/>' );
             var that = this;
             $('input', this.footer()).on('keyup change', function () {

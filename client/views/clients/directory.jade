@@ -9,8 +9,15 @@ block content
             thead
                 tr
                     th Client Name
+                    th Phones
+                    th Contact
+                    th Email
+                    th Status
             tbody
                 each client in clients
-                    //- tr(data-href="/nr/client/" + client.pathName)
-                    tr
-                        td.text-nowrap #{client.name}
+                    tr(data-href="/clients/client/" + client._id)
+                        td=client.name
+                        td=client.phone
+                        td=client.contactString
+                        td=client.email
+                        td=client.status

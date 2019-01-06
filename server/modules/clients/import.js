@@ -3,7 +3,7 @@ const XLSX = require('xlsx-populate');
 const ClientService = require('./client');
 
 mongoose.Promise = require('bluebird');
-mongoose.connect('mongodb://localhost:27017/');
+mongoose.connect('mongodb://localhost:27017/test');
 
 function fn(field) {
     return new Function('value', 'client', 'client.' + field + ' = value;');
@@ -45,7 +45,7 @@ function loadFromExcel(filepath) {
 async function readClient(sheet, row) {
     function getValue(col) {
         let value = sheet.row(row).cell(col).value();
-        if (value) value = value.toString().toUpperCase();
+        if (value) value = value.toString();
         return value;
     }
 

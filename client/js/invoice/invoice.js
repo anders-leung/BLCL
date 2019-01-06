@@ -1,6 +1,10 @@
 var removeButton = '<div class="col-1"><div class="form-group"><p class="btn btn-danger" style="margin-top:25px"><i class="fa fa-trash-alt"></i></p></div></div>'
 
 $(document).ready(function() {
+    if (invoice) {
+        populateFields(invoice);
+    }
+
     $('#clientString').autocomplete({
         source: clients.map((client) => {
             return {
@@ -19,6 +23,13 @@ $(document).ready(function() {
             $('#client').val(ui.item.value);
         },
     });
+
+    $('#newClient').on('click', function() {
+        let show = this.checked;
+        $('.toggle').each(function() {
+            $(this).attr('hidden', !show);
+        });
+    });
     
     $(this).on('click', 'i', function() {
         $(this).toggleClass('fa-lock');
@@ -31,9 +42,14 @@ $(document).ready(function() {
         } else {
             $(input).attr('disabled', false);
             $(input).attr('readonly', true);
-            var amount = $(input).parent().parent().prev().prev().find('input').val();
-            var pst = amount * PST;
-            $(input).val(pst ? convert(pst) : '0.00');
+            var amount = $(input).parent().parent().prev();
+            var tax = 0;
+            if (input[0].name.includes('gst')) {
+                tax = $(amount).find('input').val() * GST;
+            } else {
+                tax = $(amount).prev().find('input').val() * PST;
+            }
+            $(input).val(tax ? convert(tax) : '0.00');
         }
         setTotal();
     })
@@ -48,9 +64,15 @@ $(document).ready(function() {
 
     $(this).on('keyup', '.col-3 input', function(e) {
         var int = e.target.value;
-        var gst = int * GST;
         var parentGroup = $(this).parent().parent();
-        $(parentGroup).next().find('input').val(convert(gst));
+        
+        var gstGroup = $(parentGroup).next();
+        var enableGst = $(gstGroup).find('i').hasClass('fa-lock-open')
+        if (enableGst) {
+            var gst = int * GST;
+            $(gstGroup).find('input').val(convert(gst));
+        }
+
         var pstGroup = $(parentGroup).next().next();
         var enablePst = $(pstGroup).find('i').hasClass('fa-lock-open')
         if (enablePst) {
@@ -60,25 +82,34 @@ $(document).ready(function() {
         setTotal();
     });
 
-    $('#addService').on('click', () => {
-        var services = $('#services').find('.row input');
-        var last = services[services.length - 1];
-        var index = parseInt(last.name.split('[')[1][0]) + 1;
-        var html = '';
-        var service = 'services[' + index + ']';
-        html += col(2, label(service + 'Service', 'Service') + select(service + 'Service', service + '[service]'));
-        html += col(9, label(service + 'Details', 'Details') + input(service + 'Details', service + '[details]'));
-        html += removeButton;
-        html += col(3, label(service + 'Amount', 'Amount') + input(service + 'Amount', service + '[amount]'), 'offset-4');
-        html += col(2, label(service + 'Gst', 'GST') + input(service + 'Gst', service + '[gst]'));
-        html += col(2, label(service + 'Pst', 'PST', true) + input(service + 'Pst', service + '[pst]'));
-        $(last).closest('.row').after(div(html));
-    });
+    $('#addService').on('click', addService);
 
     $('form').on('submit', function(e) {
         window.open('/invoice/invoices');
-    })
+    });
+
+    $(this).on('change', 'select', function() {
+        if (this.name === 'company') return;
+        var textarea = $(this).parent().parent().parent().find('textarea');
+        var service = $(this).val();
+        textarea.val(descriptions[service]);
+    });
 });
+
+function addService() {
+    var services = $('#services').find('.row input');
+    var last = services[services.length - 1];
+    var index = parseInt(last.name.split('[')[1][0]) + 1;
+    var html = '';
+    var service = 'services[' + index + ']';
+    html += col(2, label(service + 'Service', 'Service') + select(service + 'Service', service + '[service]'));
+    html += col(9, label(service + 'Details', 'Details') + input(service + 'Details', service + '[details]'));
+    html += removeButton;
+    html += col(3, label(service + 'Amount', 'Amount') + input(service + 'Amount', service + '[amount]'), 'offset-4');
+    html += col(2, label(service + 'Gst', 'GST', 'gst') + input(service + 'Gst', service + '[gst]'));
+    html += col(2, label(service + 'Pst', 'PST', 'pst') + input(service + 'Pst', service + '[pst]'));
+    $(last).closest('.row').after(div(html));
+}
 
 function div(string) {
     return '<div class="row">' + string + '</div>';
@@ -88,8 +119,13 @@ function col(size, content, offset='') {
     return '<div class="' + offset + ' col-' + size + '">' + '<div class="form-group">' + content + '</div></div>';
 }
 
-function label(name, label, pst) {
-    return '<label for="' + name + '"> ' + label + (pst ? '<i class="fas fa-lock"></i>' : '') + '</label>';
+function label(name, label, tax) {
+    var lock = '<i class="fas fa-lock-open"></i>';
+    if (tax === 'pst') {
+        lock = '<i class="fas fa-lock"></i>';
+    }
+
+    return '<label for="' + name + '"> ' + label + (tax ? lock : '') + '</label>';
 }
 
 function input(id, name) {
@@ -104,7 +140,7 @@ function input(id, name) {
     if (name.includes('amount')) {
         fixed += ' fixed';
         type = 'number';
-        extra = ' step="0.01" min=0 ';
+        extra = ' step="0.01" ';
     }
     if (name.includes('to') || name.includes('from')) fixed += ' datepicker'
     if (name.includes('gst')) value = ' value="0.00"';
@@ -157,4 +193,41 @@ function setTotal() {
     if (isNaN(sum)) sum = 0;
 
     $('#total').val(convert(sum));
+}
+
+function populateFields(invoice) {
+    var client = invoice.client;
+    if (!client) {
+        client = invoice.oneTimeClient;
+        $('#newClient').click();
+        $('.toggle').each(function() {
+            $(this).attr('hidden', false);
+        });
+        const name = '[name="client[address]';
+        const { address, phone, fax, email } = client;
+        $(`${name}[apartment]`).val(address.apartment);
+        $(`${name}[street]`).val(address.street);
+        $(`${name}[city]`).val(address.city);
+        $(`${name}[province]`).val(address.province);
+        $(`${name}[postalCode]`).val(address.postalCode);
+        $('#phone').val(phone);
+        $('#fax').val(fax);
+        $('#email').val(email);
+    } else {
+        $('#client').val(client._id);
+    }
+    $('#clientString').val(client.name);
+
+    $('#company').val(invoice.company);
+    invoice.services.map(function (s, index) {
+        if (index > 0) addService();
+        const name = `[name="services[${index}]`;
+        const { service, details, amount, gst, pst } = s;
+        $(`select${name}[service]"`).val(service);
+        $(`textarea${name}[details]"`).val(details);
+        $(`input${name}[amount]"`).val(amount);
+        $(`input${name}[gst]"`).val(gst);
+        $(`input${name}[pst]"`).val(pst);
+    });
+    $('#total').val(invoice.total)
 }

@@ -346,7 +346,10 @@ var ClientSchema = new Schema({
     emailed: { type: String, default: "" },
     packed: { type: Boolean, default: false },
     teachingSupplies: { type: Boolean, default: false },
-    homeAccessibilities: { type: Boolean, default: false }
+    homeAccessibilities: { type: Boolean, default: false },
+    t1Remarks: String,
+    gstRemarks: String,
+    preparerRemarks: String,
 });
 
 module.exports = mongoose.model('T1', ClientSchema);

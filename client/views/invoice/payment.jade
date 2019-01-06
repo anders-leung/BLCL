@@ -27,15 +27,17 @@ block content
         table.cell-border(style='width: 100%')
             thead
                 tr
-                    th Invoice #
+                    th
+                    th #
                     th Client Name
+                    th Remarks
+                    th Total Received
                     th ADV
                     th INV
                     th CA
                     th CHQ
                     th DD
                     th ET
-                    th Total Received
             tfoot
                 tr
                     th
@@ -47,21 +49,25 @@ block content
                     th
                     th
                     th
+                    th
+                    th
             tbody
                 each invoice in invoices
-                    tr.clickable-row(data-href="/invoice/" + invoice._id)
+                    tr
+                        td=invoice._id
                         - var client = invoice.client;
                         if client
                             - client = client.name
                         else
-                            - client = invoice.clientString
+                            - client = invoice.oneTimeClient.name
 
                         td.text-nowrap #{invoice.number}
                         td.text-nowrap #{client}
+                        td.text-nowrap=invoice.remarks
+                        td.text-nowrap=invoice.total
                         td.text-nowrap #{invoice.pytReceived == 'ADV' ? invoice.total : ''}
                         td.text-nowrap #{invoice.pytReceived == 'INV' ? invoice.total : ''}
                         td.text-nowrap #{invoice.pytReceived == 'CA' ? invoice.total : ''}
                         td.text-nowrap #{invoice.pytReceived == 'CK' || invoice.pytReceived == 'CHQ' ? invoice.total : ''}
                         td.text-nowrap #{invoice.pytReceived == 'DD' ? invoice.total : ''}
                         td.text-nowrap #{invoice.pytReceived == 'ET' ? invoice.total : ''}
-                        td

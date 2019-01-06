@@ -15,50 +15,63 @@ block content
         .col-4.form-group
             label(for='weeks') Week of
             select#weeks.form-control(name='weeks')
-                each week in weeks
-                    option(value=week)=week
+                each week, index in weeks
+                    if (index === 0)
+                        option(value=week selected='selected')=week
+                    else
+                        option(value=week)=week
         .col-4.form-group
             label(for='company') Company
             select#company.form-control(name='company')
-                option(value='blcl') Benjamin Leung & Co., Ltd.
+                option(value='blcl' selected) Benjamin Leung & Co., Ltd.
                 option(value='cantrust') Cantrust Business Service Ltd.
 
     #table.col-12.tab-content
         table.cell-border(style='width: 100%')
             thead
                 tr
-                    th Invoice #
+                    th
+                    th #
                     th Client Name
+                    th Total A/R
                     each service in services
                         th=service.toUpperCase()
                     th GST Rec
-                    th Total A/R
+                    th PST Rec
             tfoot
                 tr
+                    th
                     th
                     th
                     each service in services
                         th
                     th
                     th
+                    th 
             tbody
                 each invoice in invoices
-                    tr.clickable-row(data-href="/invoice/" + invoice._id)
+                    tr
+                        td=invoice._id
                         - var client = invoice.client;
                         if client
                             - client = client.name
                         else
-                            - client = invoice.clientString
+                            - client = invoice.oneTimeClient.name
 
                         td.text-nowrap #{invoice.number}
                         td.text-nowrap #{client}
+                        td.text-nowrap #{invoice.total}
                         - var gst = 0
+                        - var pst = 0
                         each service in services
-                            - var match = invoice.services.filter((x) => x.service === service)[0]
-                            - var value = ''
-                            if (match)
-                                - value = parseFloat(match.amount).toFixed(2)
-                                - gst = gst + parseFloat(match.gst)
-                            td=value
-                        td.text-nowrap #{gst.toFixed(2)}
-                        td
+                            - var matches = invoice.services.filter((x) => x.service === service)
+                            - var amount = 0
+                            if (matches.length > 0)
+                                - matches.map((match) => {
+                                -     amount += parseFloat(match.amount);
+                                -     gst += parseFloat(match.gst);
+                                -     pst += (match.pst ? parseFloat(match.pst) : 0);
+                                - })
+                            td.text-nowrap #{amount ? amount.toFixed(2) : ''}
+                        td.text-nowrap=gst.toFixed(2)
+                        td.text-nowrap=pst.toFixed(2)

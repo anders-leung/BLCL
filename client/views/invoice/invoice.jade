@@ -2,21 +2,46 @@ extends ../layout
 
 block content
     script(type="text/javascript").
-        const GST = #{gst};
-        const PST = #{pst};
-        const clients = !{JSON.stringify(clients)};
-        const services = !{JSON.stringify(services)};
+        var GST = #{gst};
+        var PST = #{pst};
+        var invoice = !{JSON.stringify(invoice)};
+        var clients = !{JSON.stringify(clients)};
+        var services = !{JSON.stringify(services)};
+        var descriptions = !{JSON.stringify(descriptions)};
     script(src='/js/invoice/invoice.js')
+    link(rel='stylesheet', href='/css/invoice.css')
 
-    .offset-1.col-10
-        h1=title
-        br
+    .card.offset-1.col-10
         form(method='post')
+            h1=title
+            
             hr
-            .form-group
-                label(for='clientString') Client
-                input#clientString.form-control(name='clientString')
-                input#client(name='client' hidden)
+            br
+
+            .row
+                .form-group.col-10
+                    label(for='clientString') Client
+                    input#clientString.form-control(name='clientString' required)
+                    input#client(name='client' hidden)
+                .col-2(style='margin-top:25px')
+                    label(for="newClient")
+                        input#newClient.btn.btn-secondary(type='checkbox')
+                        | One Time Client
+
+            .form-group.toggle(hidden)
+                - var field = 'client[address]'
+                - var country = false
+                - var required = { street: false, city: false, province: false, postalCode: false }
+                include ../templates/address.jade
+            .form-group.toggle(hidden)
+                label(for='phone') Tel
+                input#phone.form-control(name='client[phone]')
+            .form-group.toggle(hidden)
+                label(for='fax') Fax
+                input#fax.form-control(name='client[fax]')
+            .form-group.toggle(hidden)
+                label(for='email') Email
+                input#email.form-control(name='client[email]')
             .form-group
                 label(for='company') Company
                 select#company.form-control(name='company')
@@ -27,22 +52,23 @@ block content
                     .col-2
                         .form-group
                             label(for='service') Service
-                            select.form-control(type='text' name='services[0][service]')
+                            select.form-control(type='text' name='services[0][service]' required)
                                 option
                                 each service in services
                                     option(value=service)=service
                     .col-9
                         .form-group
                             label(for='description') Details
-                            textarea.form-control(type='text' name='services[0][details]' rows=4)
+                            textarea.form-control(type='text' name='services[0][details]' rows=4 required)
                 .row
                     .offset-4.col-3
                         .form-group
                             label(for='amount') Amount
-                            input.form-control(type='number' step='0.01' min=0 name='services[0][amount]')
+                            input.form-control(type='number' step='0.01' name='services[0][amount]' required)
                     .col-2
                         .form-group
                             label(for='gst') GST
+                                i.fas.fa-lock-open
                             input.form-control(type='text' name='services[0][gst]' readonly value='0.00')
                     .col-2
                         .form-group
@@ -51,10 +77,12 @@ block content
                             input.form-control(type='text' name='services[0][pst]' disabled value='')
             .row
                 .col-4
-                    input#addService.btn.btn-secondary(type='button' style='margin-top:25px' value='Add Service')
+                    input#addService.btn.btn-secondary(type='button' style='margin-top:24px' value='Add Service')
                 .offset-3.col-4
                     .form-group
                         label(for='total') Total
                         input#total.form-control(type='text' name='total' readonly)
 
-            input.btn.btn-success.offset-1.col-10(type='submit' value='Done' style='margin-top:1%; margin-bottom:3%;')
+            br
+
+            input.btn.btn-success.offset-1.col-10(type='submit' value='Save' style='margin-top:1%;')

@@ -8,8 +8,11 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var fs = require('fs');
 
+const ConfigService = require('./server/modules/config');
+const DescriptionService = require('./server/modules/invoice/description');
+
 mongoose.Promise = require('bluebird');
-mongoose.connect('mongodb://localhost:27017/');
+mongoose.connect('mongodb://localhost:27017/test');
 
 var app = express();
 
@@ -60,8 +63,34 @@ let init = (dir, done) => {
     });
 };
 
-init('./server/routes', err => {
+init('./server/routes', async (err) => {
     if (err) console.log('Error in init: ', err);
+    
+    let config;
+    [err, config] = await ConfigService.getConfig();
+    if (err) return console.log('init config err: ', err);
+
+    global.t1Directory = config.t1_directory;
+    global.invoiceDirectory = config.invoice_directory;
+    global.templateDirectory = config.template_directory;
+    global.fileDirectory = config.file_directory;
+
+    let descriptions;
+    [err, descriptions] = await DescriptionService.get({});
+    if (err) return console.log('init description err: ', err);
+    if (descriptions.length === 0) {
+        await DescriptionService.setup();
+    }
+    
+    var setup = require('./server/routes/utils/setup');
+    setup();
+    
+    var logging = require('./server/logging');
+
+    app.use('/invoices/blcl', express.static(`${global.invoiceDirectory}/BLCL`));
+    app.use('/invoices/cantrust', express.static(`${global.invoiceDirectory}/CANTRUST`));
+
+    // error handling must be declared last, or it overrides any other routes.
     // catch 404 and forward to error handler
     app.use(function(req, res, next) {
         var err = new Error('Not Found');
@@ -79,12 +108,14 @@ init('./server/routes', err => {
         res.status(err.status || 500);
         res.render('error');
     });
-    
-    var setup = require('./server/routes/utils/setup');
-    setup();
-    
-    var logging = require('./server/logging');
-    
+});
+
+// Run all cron jobs
+const cron = `${__dirname}/server/modules/cron`;
+fs.readdir(cron, (err, list) => {
+    list.map((file) => {
+        require(`${cron}/${file}`);
+    });
 });
 
 module.exports = app;

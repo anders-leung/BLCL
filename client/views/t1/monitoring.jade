@@ -10,7 +10,6 @@ block content
     script(type="text/javascript", src='/js/jquery.floatThead.js')
     script(type='text/javascript').
         var role = !{JSON.stringify(role)};
-        var user = !{JSON.stringify(user)};
     script(src='/js/t1/monitoring.js')
 
     ul.nav.nav-tabs
@@ -46,6 +45,7 @@ block content
                             th
                             th Slip
                             th Self Empl
+                            th GST
                             th T1135
                             th Rental
                             th 777
@@ -66,7 +66,6 @@ block content
                             th Remarks
                             th Ready To PRT/Pack
                             th Packed
-                            th GST
                             th Method
                             th Rec'd By
                             th Tax To CRA
@@ -84,6 +83,7 @@ block content
                             th
                             th Slip
                             th Self Empl
+                            th GST
                             th T1135
                             th Rental
                             th 777
@@ -104,7 +104,6 @@ block content
                             th Remarks
                             th Ready To Pack
                             th Packed
-                            th GST
                             th Method
                             th Rec'd By
                             th Tax To CRA
@@ -123,6 +122,9 @@ block content
                                 td.text-nowrap #{client.fileName}
                                 td #{client.slips ? 'Y' : ''}
                                 td #{client.selfEmployed ? 'Y' : ''}
+                                td 
+                                    if (client.husband.rental.gstReturn || client.husband.selfEmployed.gstReturn || client.wife.rental.gstReturn || client.wife.selfEmployed.gstReturn)
+                                        | Y
                                 td
                                     if client.t1135 == 'N' || client.t1135 == ''
                                         | 0
@@ -149,9 +151,6 @@ block content
                                 td.text-nowrap.edit #{client.remarks}
                                 td.text-nowrap.date-edit #{client.readyToPack}
                                 td.select.toggle #{client.packed ? 'Y' : ''}
-                                td 
-                                    if (client.husband.rental.gstReturn || client.husband.selfEmployed.gstReturn || client.wife.rental.gstReturn || client.wife.selfEmployed.gstReturn)
-                                        | Y
                                 td #{client.method}
                                 td.text-nowrap.select.initials #{client.recBy}
                                 td.text-nowrap.select.tax #{client.taxToCRA}
