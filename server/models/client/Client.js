@@ -31,6 +31,11 @@ const ClientSchema = new Schema({
     fax: String,
     address: Address.schema,
     email: String,
+    files: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Template',
+    }],
+    newClientDate: Date,
 });
 
 ClientSchema.virtual('contactString').get(function() {
