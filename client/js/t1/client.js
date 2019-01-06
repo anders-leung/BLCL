@@ -44,7 +44,7 @@ $(document).ready(function(e) {
     if (client) {
         $('#year').val(client.year);
         $('#interviewer').val(client.interviewer);
-        $('#preparer').val(client.preparer);
+        $('#preparer').val(client.preparer || client.oldPreparer);
         $('#checker').val(client.checker);
         $('#pickupDate').val(client.pickupDate);
         $('#interviewDate').val(client.interviewDate);

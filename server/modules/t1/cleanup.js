@@ -28,3 +28,19 @@ Client.update({}, update, { multi: true }, (err, update) => {
     if (err) console.log('ERROR: ', err);
     else console.log(update);
 });
+
+Client.find({ preparer: { $exists: true, $ne: '' } }, (err, clients) => {
+    if (err) console.log('ERROR: ', err);
+    else {
+        clients.map((client) => {
+            const { preparer } = client;
+            if (preparer) {
+                client.oldPreparer = preparer;
+                client.preparer = '';
+            }
+            client.save((err) => {
+                if (err) console.log('ERROR: ', err);
+            });
+        });
+    }
+});

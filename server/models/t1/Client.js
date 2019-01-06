@@ -350,6 +350,7 @@ var ClientSchema = new Schema({
     t1Remarks: String,
     gstRemarks: String,
     preparerRemarks: String,
+    oldPreparer: String,
 });
 
 module.exports = mongoose.model('T1', ClientSchema);
