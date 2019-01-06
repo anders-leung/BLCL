@@ -5,6 +5,7 @@ const CookieService = require('../utils/cookies');
 const ClientService = require('../../modules/clients/client');
 const DescriptionService = require('../../modules/invoice/description');
 const InvoiceService = require('../../modules/invoice/invoice');
+const TemplateService = require('../../modules/template/template');
 
 router.get('/*', CookieService.isLoggedIn, async function(req, res) {
     let err, client, invoices;
@@ -26,8 +27,10 @@ router.get('/*', CookieService.isLoggedIn, async function(req, res) {
     if (err) return res.render('error', err);
 
     [err, services] = await DescriptionService.getServices();
+    [err, files] = await TemplateService.get({});
     
     res.render('clients/client', {
+        files,
         client,
         services,
         invoices,
@@ -42,11 +45,17 @@ router.post('/*', CookieService.isLoggedIn, async (req, res) => {
         query = { _id: req.params[0] };
     }
 
+    if (!req.body.files) {
+        req.body.files = [];
+    }
+
     if (query) {
         [err, client] = await ClientService.update(query, req.body);
     } else {
         [err, client] = await ClientService.create(req.body);
     }
+
+    [err, result] = await ClientService.updateFiles(client._id);
 
     if (err) {
         return res.render(err);
@@ -54,7 +63,7 @@ router.post('/*', CookieService.isLoggedIn, async (req, res) => {
         err = new Error('Posting client failed to create a user');
         return res.render(err);
     } else {
-        res.redirect('/clients/directory');
+        res.redirect(`/clients/client/${client._id}`);
     }
 });
 
