@@ -8,4 +8,6 @@ $(document).ready(function() {
     });
 
     $('div.toolbar').html('<p>See a client\'s info by double clicking on their respective row.</p>')
+
+    $('td').addClass('text-nowrap');
 });
