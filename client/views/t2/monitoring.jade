@@ -1,0 +1,65 @@
+//
+   Created by ander on 2017-12-03.
+
+extends layout
+
+block content
+    script(type='text/javascript', src='/js/t2/monitoring.js')
+
+    #table.col-12.tab-content
+            table(id='t2Table').cell-border
+                thead
+                    tr
+                        th
+                        th Job In
+                        th Job Pickup
+                        th PA Time Allot
+                        th PA Time Actual
+                        th PA Time Variance
+                        th client Name
+                        th Preparer
+                        th Remarks
+                        th Year ended
+                        th Due Date
+                        th Reason
+                        th Status
+                        th T1
+                        th T4
+                        th T5
+                tfoot
+                    tr
+                        th
+                        th Job In
+                        th Job Pickup
+                        th PA Time Allot
+                        th PA Time Actual
+                        th PA Time Variance
+                        th client Name
+                        th Preparer
+                        th Remarks
+                        th Year ended
+                        th Due Date
+                        th Reason
+                        th Status
+                        th T1
+                        th T4
+                        th T5
+                tbody
+                    each client in clients
+                        tr(data-href="/client/" + client.pathName)
+                            td.text-nowrap #{client.fileName}
+                            td.text-nowrap #{client.jobIn}
+                            td.text-nowrap #{client.jobPickup}
+                            td.text-nowrap #{client.paTimeAllot}
+                            td.text-nowrap #{client.paTimeActual}
+                            td.text-nowrap #{client.paTimeVariance}
+                            td.text-nowrap #{client.name}
+                            td=client.preparer
+                            td=client.remarks
+                            td.text-nowrap #{client.yearEnded}
+                            td.text-nowrap #{client.dueDate}
+                            td.text-nowrap #{client.reason}
+                            td.text-nowrap #{client.status}
+                            td=client.t1
+                            td #{client.t4 ? 'Y' : ''}
+                            td #{client.t5 ? 'Y' : ''}
