@@ -13,4 +13,4 @@ block content
             tbody
                 each client in clients
                     tr(data-href="/t2/client/" + client._id)
-                        td.text-nowrap #{client.name}
+                        td=client.client.name
