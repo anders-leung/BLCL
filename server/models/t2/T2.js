@@ -5,7 +5,6 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var ClientSchema = new Schema({
-    yearEnd: String, // Monitoring
     due: Date, // Monitoring
     client: { // Monitoring
         type: Schema.Types.ObjectId,
@@ -18,7 +17,10 @@ var ClientSchema = new Schema({
         initials: String,
     }],
     taxOwing: String, // Monitoring
-    remarks: String, // Monitoring
+    remarks: {
+        monitoring: String,
+        preparer: String,
+    }, // Monitoring
     completed: Date, // Monitoring sheet show based on completion
     estimated: [{ // Monitoring
         year: Number,
