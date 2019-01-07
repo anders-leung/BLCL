@@ -16,62 +16,7 @@ block content
     .card.offset-1.col-10
         .scroll-container
             form(method='post')
-
-                legend Client
-                hr
-                .form-group
-                    .row
-                        .col-6
-                            label(for='name') Name
-                            input#name.form-control(name='name' value=client.name)
-                        .col-3
-                            label(for='status') Status
-                            select#status.form-control(name='status')
-                                each status in ['Active', 'Pending', 'Inactive']
-                                    - var value = status.toLowerCase()
-                                    if (status === client.status)
-                                        option(value=value selected='selected')=status
-                                    else
-                                        option(value=value)=status
-                        .col-3
-                            label(for='newClientDate') New Client Date
-                            input#newClientDate.form-control.datepicker(name='newClientDate' value=client.newClientDate)
-                
-                br
-
-                legend Contact
-                hr
-                .form-group
-                    .row
-                        .col-2
-                            label(for='title') Title
-                            input#title.form-control(name='contact[title]' value=client.contact ? client.contact.title : '')
-                        .col-5
-                            label(for='firstName') First Name
-                            input#firstName.form-control(name='contact[firstName]' value=client.contact ? client.contact.firstName : '')
-                        .col-5
-                            label(for='lastName') Last Name
-                            input#lastName.form-control(name='contact[lastName]' value=client.contact ? client.contact.lastName : '')
-                .form-group
-                    .row
-                        .col-6
-                            label(for='phone') Phone
-                            input#phone.form-control(name='phone' value=client.phone)
-                        .col-6
-                            label(for='fax') Fax
-                            input#fax.form-control(name='fax' value=client.fax)
-
-                .form-group
-                    .row
-                        .col-12
-                            label(for='email') Email
-                            input#email.form-control(name='email' value=client.email)
-
-                .form-group
-                    - var field = 'address'
-                    - var country = true
-                    - var values = client.address
-                    include ../templates/address.jade
+                include ../templates/client.jade
 
                 br
 
