@@ -1,0 +1,68 @@
+doctype
+html
+
+    if (!client._id)
+        - client = {}
+
+    script(type='text/javascript').
+        var client = !{JSON.stringify(client)};
+        var clients = !{JSON.stringify(clients)};
+    script(src='/js/templates/client.js')
+    
+    div
+        legend Client
+        hr
+        .form-group
+            .row
+                .col-6
+                    label(for='clientString') Name
+                    input#clientString.form-control(name='name' value=client.name disabled=disabled && !needsClient)
+                    input#name(name=needsClient ? 'client' : '' style='display:none')
+                .col-3
+                    label(for='status') Status
+                    select#status.form-control(name='status' disabled=disabled)
+                        each status in ['Active', 'Pending', 'Inactive']
+                            - var value = status.toLowerCase()
+                            if (status === client.status)
+                                option(value=value selected='selected')=status
+                            else
+                                option(value=value)=status
+                .col-3
+                    label(for='newClientDate') New Client Date
+                    input#newClientDate.form-control.datepicker(name='newClientDate' value=client.newClientDate disabled=disabled)
+        
+        br
+
+        legend Contact
+        hr
+        .form-group
+            .row
+                .col-2
+                    label(for='title') Title
+                    input#title.form-control(name='contact[title]' value=(client.contact ? client.contact.title : '') disabled=disabled)
+                .col-5
+                    label(for='firstName') First Name
+                    input#firstName.form-control(name='contact[firstName]' value=(client.contact ? client.contact.firstName : '') disabled=disabled)
+                .col-5
+                    label(for='lastName') Last Name
+                    input#lastName.form-control(name='contact[lastName]' value=(client.contact ? client.contact.lastName : '') disabled=disabled)
+        .form-group
+            .row
+                .col-6
+                    label(for='phone') Phone
+                    input#phone.form-control(name='phone' value=client.phone disabled=disabled)
+                .col-6
+                    label(for='fax') Fax
+                    input#fax.form-control(name='fax' value=client.fax disabled=disabled)
+
+        .form-group
+            .row
+                .col-12
+                    label(for='email') Email
+                    input#email.form-control(name='email' value=client.email disabled=disabled)
+
+        .form-group
+            - var field = 'address'
+            - var country = true
+            - var values = client.address
+            include ../templates/address.jade

@@ -13,20 +13,20 @@ html
     .row
         .col-2
             label(for=field + 'Apartment') Apartment
-            input.form-control(id=field + 'Apartment' type='text' name='#{field}[apartment]' value=values.apartment)
+            input.form-control(id=field + 'Apartment' type='text' name='#{field}[apartment]' value=values.apartment disabled=disabled)
         .col-3
             label(for=field + 'Street') Street
-            input.form-control(id=field + 'Street' type='text' name='#{field}[street]' required=required.street value=values.street)
+            input.form-control(id=field + 'Street' type='text' name='#{field}[street]' required=required.street value=values.street disabled=disabled)
         .col-2
             label(for=field + 'City') City
-            input.form-control(id=field + 'City' type='text' name='#{field}[city]' required=required.city value=values.city)
+            input.form-control(id=field + 'City' type='text' name='#{field}[city]' required=required.city value=values.city disabled=disabled)
         .col-1
             label(for=field + 'Province') Province
-            input.form-control(id=field + 'Province' type='text' name='#{field}[province]' required=required.province value=values.province)
+            input.form-control(id=field + 'Province' type='text' name='#{field}[province]' required=required.province value=values.province disabled=disabled)
         if country
             .col-2
                 label(for=field + 'Country') Country
-                input.form-control(id=field + 'Country' type='text' name='#{field}[country]' required=required.country value=values.country)
+                input.form-control(id=field + 'Country' type='text' name='#{field}[country]' required=required.country value=values.country disabled=disabled)
         .col-2
             label(for=field + 'PostalCode') Postal Code
-            input.postalCode.form-control(id=field + 'PostalCode' type='text' name='#{field}[postalCode]' required=required.postalCode value=values.postalCode)
+            input.postalCode.form-control(id=field + 'PostalCode' type='text' name='#{field}[postalCode]' required=required.postalCode value=values.postalCode disabled=disabled)
