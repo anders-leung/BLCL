@@ -10,6 +10,7 @@ var fs = require('fs');
 
 const ConfigService = require('./server/modules/config');
 const DescriptionService = require('./server/modules/invoice/description');
+const T2Service = require('./server/modules/t2/client');
 
 mongoose.Promise = require('bluebird');
 mongoose.connect('mongodb://localhost:27017/test');
@@ -81,6 +82,8 @@ init('./server/routes', async (err) => {
     if (descriptions.length === 0) {
         await DescriptionService.setup();
     }
+
+    await T2Service.setup();
     
     var setup = require('./server/routes/utils/setup');
     setup();
