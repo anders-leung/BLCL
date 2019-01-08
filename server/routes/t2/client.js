@@ -18,9 +18,11 @@ router.get('/*', CookieService.isLoggedIn, async (req, res) => {
 
     [err, initials] = await UserService.getInitials();
     [err, clients] = await ClientService.get({});
-    if (err) return res.render('error')
+    if (err) return res.render('error');
+    const statuses = ClientService.getStatus();
 
     res.render('t2/client', { title: 'T2 Interview',
+        statuses,
         t2,
         clients,
         role : CookieService.readCookie(req).role,
