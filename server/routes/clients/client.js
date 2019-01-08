@@ -28,8 +28,11 @@ router.get('/*', CookieService.isLoggedIn, async function(req, res) {
 
     [err, services] = await DescriptionService.getServices();
     [err, files] = await TemplateService.get({});
+
+    const statuses = ClientService.getStatus();
     
     res.render('clients/client', {
+        statuses,
         files,
         client,
         services,

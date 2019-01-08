@@ -20,6 +20,8 @@ const ClientSchema = new Schema({
     },
     status: {
         type: String,
+        enum: ['Active', 'Inactive', 'Struck Out', 'Taken Over', 'No YE', 'Dissolved', 'New'],
+        default: 'Active'
     },
     remark: String,
     contact: {

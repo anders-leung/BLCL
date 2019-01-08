@@ -43,6 +43,10 @@ const ClientService = {
         });
 
         return [null, null];
+    },
+
+    getStatus: () => {
+        return Client.schema.path('status').enumValues;
     }
 };
 
