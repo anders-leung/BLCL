@@ -19,7 +19,7 @@ block content
                 each client in clients
                     tr(data-href="/t1/client/" + client.pathName)
                         td.text-nowrap #{client.fileName}
-                        td #{client.preparer}
+                        td #{client.preparer || client.oldPreparer}
                         td
                             if client.t1135 == 'N' || client.t1135 == ''
                                 | 0

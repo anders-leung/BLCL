@@ -21,12 +21,11 @@ html
                 .col-3
                     label(for='status') Status
                     select#status.form-control(name='status' disabled=disabled)
-                        each status in ['Active', 'Pending', 'Inactive']
-                            - var value = status.toLowerCase()
+                        each status in statuses
                             if (status === client.status)
-                                option(value=value selected='selected')=status
+                                option(selected)=status
                             else
-                                option(value=value)=status
+                                option=status
                 .col-3
                     label(for='newClientDate') New Client Date
                     input#newClientDate.form-control.datepicker(name='newClientDate' value=client.newClientDate disabled=disabled)

@@ -1,5 +1,7 @@
 $(document).ready(function() {
+    $('table').css('width', '100%');
     $('table').DataTable({
+        scrollX: true,
         scrollY: '70vh',
         paging: false,
         dom: '<"toolbar">frtip'

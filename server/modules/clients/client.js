@@ -1,7 +1,4 @@
 const fs = require('fs');
-const promisify = require('util').promisify
-
-const unlink = promisify(fs.unlink);
 
 const to = require('../../helpers/to');
 const Client = require('../../models/client/Client');
@@ -46,6 +43,10 @@ const ClientService = {
         });
 
         return [null, null];
+    },
+
+    getStatus: () => {
+        return Client.schema.path('status').enumValues;
     }
 };
 
