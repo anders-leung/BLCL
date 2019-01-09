@@ -9,11 +9,14 @@ const UserService = require('../../modules/user');
 router.get('/*', CookieService.isLoggedIn, async (req, res) => {
     let err, t2, initials, clients;
     const { params } = req;
-    const { _id } = params;
+    const _id = params[0];
     const query = { _id };
 
     if (_id) {
-        [err, t2] = await T2Service.find(query);
+        [err, t2] = await T2Service.get(query);
+        t2 = t2[0];
+    } else {
+        t2 = {};
     }
 
     [err, initials] = await UserService.getInitials();
@@ -35,7 +38,15 @@ router.get('/*', CookieService.isLoggedIn, async (req, res) => {
 router.post('/*', async (req, res) => {
     let err, client;
     const { body } = req;
-    const query = { client: body.client };
+    const { params } = req;
+    const _id = params[0];
+    const query = {};
+
+    if (_id) {
+        query._id = _id;
+    } else {
+        query.client = body.client;
+    }
 
     [err, client] = await T2Service.update(query, req.body);
 
