@@ -10,7 +10,7 @@ async function osEmail(query) {
     if (err) return console.log('osEmailing err: ', err);
 
     UserService.findOneUser({ email: 'ar@ben-cpa.com' }, (err, user) => {
-        if (err) return console.log('Invoice error: ', err);
+        if (err || !user) return console.log('Invoice error: ', err || new Error('No AR user'));
 
         invoices.map(async (invoice) => {
             let client = invoice.client;
