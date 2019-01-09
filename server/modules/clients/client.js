@@ -46,7 +46,7 @@ const ClientService = {
     },
 
     getStatus: () => {
-        return Client.schema.path('status').enumValues;
+        return Client.schema.path('status').enumValues.sort();
     }
 };
 
