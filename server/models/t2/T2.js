@@ -41,7 +41,7 @@ var ClientSchema = new Schema({
     secretary: String,
     shareholders: [{
         name: String,
-        percentage: Number // Or string
+        percent: Number // Or string
     }],
     outstanding: [{ // Monitoring, email on existence
         info: String,
