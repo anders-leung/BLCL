@@ -29,7 +29,16 @@ $(document).ready(function () {
                         $(this).attr('selected', true);
                     }
                 });
-                $('#newClientDate').val(client.newClientDate);
+
+                var newClientDate = client.newClientDate;
+                if (newClientDate) {
+                    if (typeof newClientDate === 'string') {
+                        newClientDate = new Date(newClientDate);
+                    }
+                    newClientDate = newClientDate.toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' });
+                }
+                
+                $('#newClientDate').val(newClientDate);
                 $('#title').val(client.contact.title);
                 $('#firstName').val(client.contact.firstName);
                 $('#lastName').val(client.contact.lastName);
