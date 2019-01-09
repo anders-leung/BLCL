@@ -2,6 +2,13 @@
  * Created by ander on 2017-10-30.
  */
 $(document).ready(function(e) {
+    $('.multiselect').multiselect({
+        maxHeight: 300,
+        enableCaseInsensitiveFiltering: true,
+        buttonWidth: 700,
+        numberDisplayed: 100
+    });
+    
     $('.datepicker').datepicker({
         dateFormat: 'yy-M-dd'
     });

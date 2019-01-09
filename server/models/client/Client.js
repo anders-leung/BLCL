@@ -15,9 +15,10 @@ const ClientSchema = new Schema({
     pstNumber: String,
     wcbNumber: String,
     yearEnd: Date,
-    services: {
-        type: [String],
-    },
+    services: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Service',
+    }],
     status: {
         type: String,
         enum: ['Active', 'Inactive', 'Struck Out', 'Taken Over', 'No YE', 'Dissolved', 'New'],

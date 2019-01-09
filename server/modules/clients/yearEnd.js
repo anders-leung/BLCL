@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const XLSX = require('xlsx-populate');
 const ClientService = require('./client');
+const ServiceService = require('./service');
 
 mongoose.Promise = require('bluebird');
 mongoose.connect('mongodb://localhost:27017/test');
@@ -18,6 +19,8 @@ function loadFromExcel(filepath) {
     });
 }
 
+let servicesList = [];
+
 async function readClient(sheet, row) {
     function getValue(col) {
         let value = sheet.row(row).cell(col).value();
@@ -28,6 +31,7 @@ async function readClient(sheet, row) {
 
     const name = getValue(1);
     let yearEnd = getValue(7);
+    let services = getValue(8);
     let incorpDate = getValue(14);
 
     const update = {
@@ -36,7 +40,21 @@ async function readClient(sheet, row) {
     }
     
     await ClientService.update({ name }, update);
+
+    if (services) {
+        services.split(', ').map((service) => {
+            if (servicesList.indexOf(service) === -1) {
+                servicesList.push(service.toUpperCase());
+            }
+        });
+    }
+}
+
+function setServices() {
+    let err, services = await ServiceService.get
 }
 
 const args = process.argv.slice(2);
 loadFromExcel(args[0]);
+
+setServices();

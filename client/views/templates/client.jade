@@ -28,7 +28,7 @@ html
                                 option=status
                 .col-3
                     label(for='newClientDate') New Client Date
-                    input#newClientDate.form-control.datepicker(name='newClientDate' value=client.newClientDate ? client.newClientDate.toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' }) : '' disabled=disabled)
+                    input#newClientDate.form-control.datepicker(name='newClientDate' value=client.newClientDate ? convertDate(client.newClientDate) : '' disabled=disabled)
         
         br
 

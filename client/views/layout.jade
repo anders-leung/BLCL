@@ -12,6 +12,8 @@ html
         link(rel='stylesheet', href='/js/jquery-ui-1.12.1.custom/jquery-ui.theme.min.css')
         //- link(rel='stylesheet', href='/js/fontawesome-free-5.1.0-web/css/all.css')
         link(rel='stylesheet', href='/fontawesome-free/css/all.css')
+        link(rel="stylesheet" href="/css/bootstrap-multiselect.css")
+
         script(type="text/javascript", src='/js/jquery/jquery-3.1.1.min.js')
         script(type='text/javascript', src='/js/jquery-ui-1.12.1.custom/jquery-ui.min.js')
         script(type="text/javascript", src='/js/tether/tether.js')
@@ -28,7 +30,8 @@ html
             var options = !{JSON.stringify(options)};
         script(src='/js/datatable_tabs/inputs.js')
         script(type='text/javascript', src='/js/datatable_tabs/posts.js')
-
+        script(type="text/javascript" src="/js/bootstrap-multiselect.js")
+        
     body
         nav.navbar.navbar-default.navbar-toggleable-md.fixed-top(role='navigation')
             button.navbar-toggler.navbar-toggler-right(type='button' data-toggle='collapse' data-target='#navbar' aria-controls='navbar' aria-expanded='false' aria-label='Toggle navigation')
@@ -85,4 +88,5 @@ html
                                     a.dropdown-item(href='/staff_analysis') Staff Analysis
                                     a.dropdown-item(href='/summary') Summary
         #content
+            include ./templates/convert_date.jade
             block content

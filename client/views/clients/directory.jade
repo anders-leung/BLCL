@@ -12,6 +12,7 @@ block content
                     th Phones
                     th Contact
                     th Email
+                    th Year End
                     th Status
             tbody
                 each client in clients
@@ -20,4 +21,5 @@ block content
                         td=client.phone
                         td=client.contactString
                         td=client.email
+                        td=client.yearEnd ? convertDate(client.yearEnd) : ''
                         td=client.status
