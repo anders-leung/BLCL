@@ -52,9 +52,9 @@ block content
                             select#services.multiselect(multiple size=services.length name='services[]')
                                 each service in services
                                     if (client.services && client.services.includes(service._id))
-                                        option(selected)=service
+                                        option(selected value=service._id)=service.name
                                     else
-                                        option=service
+                                        option(value=service._id)=service.name
 
                 br
 
