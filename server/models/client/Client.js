@@ -39,6 +39,10 @@ const ClientSchema = new Schema({
         ref: 'Template',
     }],
     newClientDate: Date,
+    industry: {
+        type: String,
+        enum: ['Restaurant', 'Realtor', 'Farm', 'Retail', 'Export', 'Medical', 'Printing', 'Construction'],
+    },
 });
 
 ClientSchema.virtual('contactString').get(function() {

@@ -30,8 +30,10 @@ router.get('/*', CookieService.isLoggedIn, async function(req, res) {
     [err, files] = await TemplateService.get({});
 
     const statuses = ClientService.getStatus();
+    const industries = ClientService.getIndustries();
     
     res.render('clients/client', {
+        industries,
         statuses,
         files,
         client,
