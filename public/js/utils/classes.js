@@ -2,12 +2,16 @@
  * Created by ander on 2017-10-30.
  */
 $(document).ready(function(e) {
-    $('.multiselect').multiselect({
-        buttonClass: 'btn btn-secondary',
-        maxHeight: 300,
-        enableCaseInsensitiveFiltering: true,
-        buttonWidth: 700,
-        numberDisplayed: 100
+    $('.multiselect').each(function () {
+        var that = $(this);
+        var width = that.data('width');
+        that.multiselect({
+            buttonClass: 'btn btn-secondary',
+            maxHeight: 300,
+            enableCaseInsensitiveFiltering: true,
+            buttonWidth: width,
+            numberDisplayed: 100
+        });
     });
     
     $('.datepicker').datepicker({
