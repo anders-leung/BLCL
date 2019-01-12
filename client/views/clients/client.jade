@@ -49,8 +49,11 @@ block content
                     .row
                         .col
                             label(for='services') Services
-                            select#services.multiselect(multiple size=services.length name='services[]')
-                                - var clientServices = client.services.map(service => service.toString())
+                            select#services.multiselect(multiple size=services.length name='services[]' data-width='700')
+                                if (client.services)
+                                    - var clientServices = client.services.map(service => service.toString())
+                                else
+                                    - var clientServices = [];
                                 each service in services
                                     if clientServices.includes(service._id.toString())
                                         option(selected value=service._id)=service.name
