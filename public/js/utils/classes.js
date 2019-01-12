@@ -3,6 +3,7 @@
  */
 $(document).ready(function(e) {
     $('.multiselect').multiselect({
+        buttonClass: 'btn btn-secondary',
         maxHeight: 300,
         enableCaseInsensitiveFiltering: true,
         buttonWidth: 700,
