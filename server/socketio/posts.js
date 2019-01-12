@@ -10,6 +10,8 @@ const description = require('./invoices/description');
 
 const templates = require('./templates/templates');
 
+const directoryDelete = require('./directories/delete');
+
 let ClientsSocket = {
     ClientUpdate : async function(socket) {
         socket.on('client side update', function (data) {
@@ -61,9 +63,10 @@ let ClientsSocket = {
 
 
         // Template socket handling
-        socket.on('templates', async (data) => {
-            await templates(socket, data);
-        });
+        socket.on('templates', templates);
+        
+        // Client deletion
+        socket.on('directory delete', directoryDelete);
     }
 };
 

@@ -33,6 +33,10 @@ let ClientService = {
         let search = {};
         search['signed'] = { $ne: '' };
         return await to(Client.find(search).lean().exec());
+    },
+
+    delete: async (id) => {
+        return await to(Client.findByIdAndDelete(id));
     }
 }
 

@@ -47,6 +47,10 @@ const ClientService = {
 
     getStatus: () => {
         return Client.schema.path('status').enumValues.sort();
+    },
+
+    delete: async (id) => {
+        return await to(Client.findByIdAndDelete(id));
     }
 };
 

@@ -24,12 +24,10 @@ router.get('/', CookieService.isLoggedIn, async function(req, res) {
     });
 });
 
-router.get('/:client_name', CookieService.isLoggedIn, function(req, res) {
-    var client_name = req.params.client_name;
+router.get('/:id', CookieService.isLoggedIn, function(req, res) {
+    var _id = req.params.id;
 
-    var query = {
-        'pathName': client_name
-    };
+    var query = { _id };
 
     ClientService.findClient(query, async function(err, client) {
         [err, initials] = await to(UserService.getInitials());

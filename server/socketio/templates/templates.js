@@ -1,6 +1,6 @@
 const TemplateService = require('../../modules/template/template');
 
-module.exports = async (socket, data) => {
+module.exports = async (data) => {
     const { action, _id } = data;
     let { variables } = data;
     delete data.action;

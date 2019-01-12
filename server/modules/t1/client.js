@@ -447,6 +447,10 @@ var ClientService = {
 
     getTax : function() {
         return Client.schema.path('taxToCRA').enumValues;
+    },
+
+    delete: async (id) => {
+        return await to(Client.findByIdAndDelete(id));
     }
 };
 
