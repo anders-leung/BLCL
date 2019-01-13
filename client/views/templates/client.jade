@@ -16,7 +16,7 @@ html
             .row
                 .col-6
                     label(for='clientString') Name
-                    input#clientString.form-control(name='name' value=client.name disabled=disabled && !needsClient)
+                    input#clientString.form-control(name='name' value=client.name disabled=disabled && !needsClient required=needsClient)
                     input#name(name=needsClient ? 'client' : '' style='display:none')
                 .col-3
                     label(for='status') Status
