@@ -2,13 +2,20 @@ extends ../layout
 
 block content
 
-    if (!client)
-        - client = {};
-
     .card.offset-1.col-10
         form(method='post')
+            - var schema = { shareholders: ['name', 'percent'], banks: ['name', 'accountNumber'], directors: [], };
+            - var object = JSON.parse(JSON.stringify(t2));
             - var disabled = true;
-            - var needsClient = true;
+            - var needsClient = false;
+            
+            if (!t2 || !t2.client)
+                - t2 = {};
+                - client = {};
+                - needsClient = true;
+            else
+                - client = t2.client;
+
             include ../templates/client.jade
 
             br
@@ -16,14 +23,21 @@ block content
             legend T2 Info
             hr
             .row
-                .form-group.col-2
+                .form-group.col
+                    label(for='president') President
+                    input#president.form-control(name='president' value=t2.president)
+                .form-group.col
+                    label(for='secretary') Secretary
+                    input#secretary.form-control.datepicker(name='secretary' value=t2.secretary)
+                .form-group.col
                     label(for='due') Due
-                    input#due.form-control.datepicker(name='due' value=client.due)
-                .form-group.col-2
-                    label(for='bank') Bank
-                    input#bank.form-control(name='bank' value=client.bank ? client.bank.name : '')
-                .form-group.col-2
-                    label(for='bankNumber') Bank Number
-                    input#bankNumber.form-control(name='bankNumber' value=client.bank ? client.bank.number : '')
+                    input#due.form-control.datepicker(name='due' value=t2.due)
+
+            br
+
+            - listMapping = { 'Directors': ['Name'], 'Banks': ['Name', 'Account Number'], 'Shareholders': ['Name', 'Percentage'] };
+            include ../templates/editable-list.jade
+
+            br
 
             input.btn.btn-success.offset-1.col-10(type='submit' value='Done' style='margin-top:1%')

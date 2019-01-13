@@ -1,0 +1,20 @@
+doctype
+html
+
+    script(type='text/javascript').
+        var schema = !{JSON.stringify(schema)};
+        var object = !{JSON.stringify(object)};
+    script(src='/js/editable-list.js')
+
+    each value, key in listMapping
+        legend=key
+        hr
+        ul.list-group(id=key.toLowerCase())
+            li.list-group-item
+                each field in value
+                    .col
+                        label=field
+                .col-1
+                    span.add.btn.btn-primary(data-field=key.toLowerCase())
+                        i.fa.fa-plus
+        br
