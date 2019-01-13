@@ -30,7 +30,7 @@ var ClientSchema = new Schema({
         year: Number,
         hours: Number,
     }],
-    bank: [{
+    banks: [{
         name: String,
         accountNumber: String,
     }],
@@ -47,10 +47,6 @@ var ClientSchema = new Schema({
         info: String,
         date: Date,
     }],
-    billing: [{
-        year: Number,
-        amount: String,
-    }]
 });
 
 module.exports = mongoose.model('T2', ClientSchema);
