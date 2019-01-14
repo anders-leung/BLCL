@@ -194,7 +194,7 @@ const setContent = (doc, invoice) => {
             if (i === 0) {
                 writeLine(doc, [
                     { value: line, start: margin },
-                    { value: `$${numberWithCommas(service.amount)}`, }
+                    { value: (service.amount ? `$${numberWithCommas(service.amount)}` : ''), }
                 ], 1);
             } else {
                 writeLine(doc, [{ value: line, start: margin }], 0.1);

@@ -11,6 +11,8 @@ html
     
     div
         legend Client
+        if disabled && client && client._id
+            p Click <a href=/clients/client/#{client._id}>here</a> to go to this client's page and edit their info (<u>Ctrl + click</u> or <u>mouse middle click</u> to open the page in a new tab)
         hr
         .form-group
             .row
@@ -20,15 +22,25 @@ html
                     input#name(name=needsClient ? 'client' : '' style='display:none')
                 .col-3
                     label(for='status') Status
-                    select#status.form-control(name='status' disabled=disabled)
+                    select#status.form-control.multiselect(name='status[]' disabled=disabled data-width='450' multiple)
                         each status in statuses
-                            if (status === client.status)
+                            if (client.status.includes(status))
                                 option(selected)=status
                             else
                                 option=status
-                .col-3
+        .form-group
+            .row
+                .col-6
                     label(for='newClientDate') New Client Date
-                    input#newClientDate.form-control.datepicker(name='newClientDate' value=client.newClientDate ? client.newClientDate.toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' }) : '' disabled=disabled)
+                    input#newClientDate.form-control.datepicker(name='newClientDate' value=client.newClientDate ? convertDate(client.newClientDate) : '' disabled=disabled)
+                .col-6
+                    label(for='industry') Industry
+                    select#industry.form-control(name='industry' disabled=disabled)
+                        each industry in industries
+                            if (client.industry === industry)
+                                option(selected)=industry
+                            else
+                                option=industry
         
         br
 

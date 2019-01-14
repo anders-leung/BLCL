@@ -12,7 +12,10 @@ block content
                     th Phones
                     th Contact
                     th Email
+                    th Year End
                     th Status
+                    if (role === 'Administrator')
+                        th
             tbody
                 each client in clients
                     tr(data-href="/clients/client/" + client._id)
@@ -20,4 +23,9 @@ block content
                         td=client.phone
                         td=client.contactString
                         td=client.email
+                        td=client.yearEnd ? convertDate(client.yearEnd) : ''
                         td=client.status
+                        if (role === 'Administrator')
+                            td
+                                span.badge.badge-danger.badge-pill
+                                    i.fa.fa-times

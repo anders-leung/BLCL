@@ -2,6 +2,18 @@
  * Created by ander on 2017-10-30.
  */
 $(document).ready(function(e) {
+    $('.multiselect').each(function () {
+        var that = $(this);
+        var width = that.data('width');
+        that.multiselect({
+            buttonClass: 'btn btn-secondary',
+            maxHeight: 300,
+            enableCaseInsensitiveFiltering: true,
+            buttonWidth: width,
+            numberDisplayed: 100
+        });
+    });
+    
     $('.datepicker').datepicker({
         dateFormat: 'yy-M-dd'
     });

@@ -3,7 +3,7 @@ const router = express.Router();
 
 const CookieService = require('../utils/cookies');
 const ClientService = require('../../modules/clients/client');
-const DescriptionService = require('../../modules/invoice/description');
+const ServiceService = require('../../modules/clients/service');
 const InvoiceService = require('../../modules/invoice/invoice');
 const TemplateService = require('../../modules/template/template');
 
@@ -26,12 +26,14 @@ router.get('/*', CookieService.isLoggedIn, async function(req, res) {
 
     if (err) return res.render('error', err);
 
-    [err, services] = await DescriptionService.getServices();
+    [err, services] = await ServiceService.get({});
     [err, files] = await TemplateService.get({});
 
     const statuses = ClientService.getStatus();
+    const industries = ClientService.getIndustries();
     
     res.render('clients/client', {
+        industries,
         statuses,
         files,
         client,

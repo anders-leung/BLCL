@@ -10,8 +10,14 @@ block content
                 tr
                     th Client Names
                     th Status
+                    if (role === 'Administrator')
+                        th
             tbody
                 each client in clients
                     tr(data-href="/nr/client/" + client._id)
                         td.text-nowrap=client.name
                         td.text-nowrap=client.status
+                        if (role === 'Administrator')
+                            td
+                                span.badge.badge-danger.badge-pill
+                                    i.fa.fa-times

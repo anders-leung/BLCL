@@ -9,8 +9,14 @@ block content
             thead
                 tr
                     th Client Name
+                    if (role === 'Administrator')
+                        th
 
             tbody
                 each client in clients
                     tr(data-href="/t2/client/" + client._id)
                         td=client.client.name
+                        if (role === 'Administrator')
+                            td
+                                span.badge.badge-danger.badge-pill
+                                    i.fa.fa-times

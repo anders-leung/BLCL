@@ -1,5 +1,5 @@
 /**
- * Created by ander on 2017-05-07.
+ * Created by ander on 2019-01-13.
  */
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
@@ -14,7 +14,10 @@ var ClientSchema = new Schema({
     received: Date, // Monitoring
     preparer: [{ // Monitoring
         year: Number,
-        initials: String,
+        user: {
+            type: Schema.Types.ObjectId,
+            ref: 'Users',
+        },
     }],
     taxOwing: String, // Monitoring
     remarks: {
@@ -47,6 +50,10 @@ var ClientSchema = new Schema({
         info: String,
         date: Date,
     }],
+    job: {
+        in: Date,
+        pickup: Date,
+    },
 });
 
 module.exports = mongoose.model('T2', ClientSchema);

@@ -26,7 +26,7 @@ block content
                     .row
                         .col-2
                             label(for='incorpDate') Incorp Date
-                            input#incorpDate.form-control.datepicker(name='incorp[date]' value=client.incorp && client.incorp.date ? client.incorp.date.toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' }) : '')
+                            input#incorpDate.form-control.datepicker(name='incorp[date]' value=client.incorp && client.incorp.date ? convertDate(client.incorp.date) : '')
                         .col-2
                             label(for='incorpNumber') Incorp Number
                             input#incorpNumber.form-control(name='incorp[number]' value=client.incorp ? client.incorp.number : '')
@@ -41,37 +41,42 @@ block content
                             input#wcbNumber.form-control(name='wcbNumber' value=client.wcbNumber)
                         .col-2
                             label(for='yearEnd') Year End
-                            input#yearEnd.form-control(name='yearEnd' value=(client.yearEnd ? client.yearEnd.toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' }) : ''))
+                            input#yearEnd.form-control(name='yearEnd' value=(client.yearEnd ? convertDate(client.yearEnd) : ''))
 
                 br
 
-                legend Service and Invoices
-                p (Hold the "Ctrl" key while clicking to select multiple services, and click an already selected one to deselect it)
-                hr
                 .form-group
                     .row
-                        .col-4
-                            select#services.form-control(multiple size=services.length name='services[]')
+                        .col
+                            label(for='services') Services
+                            select#services.multiselect(multiple size=services.length name='services[]' data-width='700')
+                                if (client.services)
+                                    - var clientServices = client.services.map(service => service.toString())
+                                else
+                                    - var clientServices = [];
                                 each service in services
-                                    if (client.services && client.services.includes(service))
-                                        option(selected)=service
+                                    if clientServices.includes(service._id.toString())
+                                        option(selected value=service._id)=service.name
                                     else
-                                        option=service
-                        .col-8
-                            - var companies = ['BLCL', 'Cantrust']
-                            .row
-                                each company in companies
-                                    .col-6
-                                        legend=company
-                                        hr
-                                        if (!invoices || invoices.length === 0)
-                                            p=`No invoices from ${company} have been issued yet.`
-                                        else
-                                            ul.list-group
-                                                each invoice in invoices
-                                                    if invoice.company === company.toLowerCase()
-                                                        li.list-group-item
-                                                            a(href=`/invoices/${company.toLowerCase()}\/${invoice.number}.pdf`)=`${invoice.number} issued on ${invoice.issueDate.toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' })}`
+                                        option(value=service._id)=service.name
+
+                br
+
+                legend Invoices
+                hr
+                - var companies = ['BLCL', 'Cantrust']
+                .row
+                    each company in companies
+                        .form-group.col-6
+                            h5=company
+                            if (!invoices || invoices.length === 0)
+                                p=`No invoices from ${company} have been issued yet.`
+                            else
+                                ul.list-group
+                                    each invoice in invoices
+                                        if invoice.company === company.toLowerCase()
+                                            li.list-group-item
+                                                a(href=`/invoices/${company.toLowerCase()}\/${invoice.number}.pdf`)=`${invoice.number} issued on ${convertDate(invoice.issueDate)}`
                 br
 
                 legend Files

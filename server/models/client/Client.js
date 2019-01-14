@@ -15,14 +15,15 @@ const ClientSchema = new Schema({
     pstNumber: String,
     wcbNumber: String,
     yearEnd: Date,
-    services: {
-        type: [String],
-    },
-    status: {
+    services: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Service',
+    }],
+    status: [{
         type: String,
         enum: ['Active', 'Inactive', 'Struck Out', 'Taken Over', 'No YE', 'Dissolved', 'New'],
         default: 'Active'
-    },
+    }],
     remark: String,
     contact: {
         title: String,
@@ -38,6 +39,10 @@ const ClientSchema = new Schema({
         ref: 'Template',
     }],
     newClientDate: Date,
+    industry: {
+        type: String,
+        enum: ['Restaurant', 'Realtor', 'Farm', 'Retail', 'Export', 'Medical', 'Printing', 'Construction'],
+    },
 });
 
 ClientSchema.virtual('contactString').get(function() {

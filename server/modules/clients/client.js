@@ -46,7 +46,15 @@ const ClientService = {
     },
 
     getStatus: () => {
-        return Client.schema.path('status').enumValues.sort();
+        return Client.schema.path('status').options.type[0].enum.sort();
+    },
+
+    getIndustries: () => {
+        return Client.schema.path('industry').enumValues.sort();
+    },
+
+    delete: async (id) => {
+        return await to(Client.findByIdAndDelete(id));
     }
 };
 

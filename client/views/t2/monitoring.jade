@@ -1,7 +1,4 @@
-//
-   Created by ander on 2017-12-03.
-
-extends layout
+extends ../layout
 
 block content
     script(type='text/javascript', src='/js/t2/monitoring.js')
@@ -10,16 +7,15 @@ block content
             table(id='t2Table').cell-border
                 thead
                     tr
-                        th
+                        th Name
                         th Job In
                         th Job Pickup
                         th PA Time Allot
                         th PA Time Actual
                         th PA Time Variance
-                        th client Name
                         th Preparer
                         th Remarks
-                        th Year ended
+                        th Year Ended
                         th Due Date
                         th Reason
                         th Status
@@ -28,16 +24,15 @@ block content
                         th T5
                 tfoot
                     tr
-                        th
+                        th Name
                         th Job In
                         th Job Pickup
                         th PA Time Allot
                         th PA Time Actual
                         th PA Time Variance
-                        th client Name
                         th Preparer
                         th Remarks
-                        th Year ended
+                        th Year Ended
                         th Due Date
                         th Reason
                         th Status
@@ -45,21 +40,20 @@ block content
                         th T4
                         th T5
                 tbody
-                    each client in clients
-                        tr(data-href="/client/" + client.pathName)
-                            td.text-nowrap #{client.fileName}
-                            td.text-nowrap #{client.jobIn}
-                            td.text-nowrap #{client.jobPickup}
-                            td.text-nowrap #{client.paTimeAllot}
-                            td.text-nowrap #{client.paTimeActual}
-                            td.text-nowrap #{client.paTimeVariance}
-                            td.text-nowrap #{client.name}
-                            td=client.preparer
-                            td=client.remarks
-                            td.text-nowrap #{client.yearEnded}
-                            td.text-nowrap #{client.dueDate}
-                            td.text-nowrap #{client.reason}
-                            td.text-nowrap #{client.status}
-                            td=client.t1
-                            td #{client.t4 ? 'Y' : ''}
-                            td #{client.t5 ? 'Y' : ''}
+                    each t2 in t2s
+                        tr(data-href="/t2/" + t2._id)
+                            td.text-nowrap=t2.client.name
+                            td.text-nowrap #{t2.jobIn}
+                            td.text-nowrap #{t2.jobPickup}
+                            td.text-nowrap #{t2.paTimeAllot}
+                            td.text-nowrap #{t2.paTimeActual}
+                            td.text-nowrap #{t2.paTimeVariance}
+                            td=t2.preparer
+                            td=t2.remarks ? t2.remarks.monitoring : ''
+                            td.text-nowrap=t2.client.yearEnd ? t2.client.yearEnd : ''
+                            td.text-nowrap #{t2.due}
+                            td.text-nowrap #{t2.reason}
+                            td.text-nowrap #{t2.status}
+                            td=t2.t1 ? 'Y': ''
+                            td=t2.t4 ? 'Y' : ''
+                            td=t2.t5 ? 'Y' : ''

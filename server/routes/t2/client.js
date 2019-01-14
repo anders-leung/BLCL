@@ -23,8 +23,10 @@ router.get('/*', CookieService.isLoggedIn, async (req, res) => {
     [err, clients] = await ClientService.get({});
     if (err) return res.render('error');
     const statuses = ClientService.getStatus();
+    const industries = ClientService.getIndustries();
 
     res.render('t2/client', { title: 'T2 Interview',
+        industries,
         statuses,
         t2,
         clients,
