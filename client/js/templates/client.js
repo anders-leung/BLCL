@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    console.log('statuses: ', statuses)
     $('#clientString').autocomplete({
         source: clients.map((client) => {
             return {
@@ -14,7 +15,9 @@ $(document).ready(function () {
         },
         select: function(event, ui) {
             event.preventDefault();
-            $(this).val(ui.item.label);
+            var that = $(this);
+            if (that.val() === ui.item.label) return;
+            that.val(ui.item.label);
             $('#name').val(ui.item.value);
             updateUI(ui.item.value);
         },
@@ -23,13 +26,6 @@ $(document).ready(function () {
     function updateUI(id) {
         clients.map((client) => {
             if (client._id === id) {
-                $('#status options').each(function () {
-                    var value = $(this).val();
-                    if (client.status === value) {
-                        $(this).attr('selected', true);
-                    }
-                });
-
                 var newClientDate = client.newClientDate;
                 if (newClientDate) {
                     if (typeof newClientDate === 'string') {
@@ -51,6 +47,33 @@ $(document).ready(function () {
                 $('#addressProvince').val(client.address.province);
                 $('#addressCountry').val(client.address.country);
                 $('#addressPostalCode').val(client.address.postalCode);
+
+                $('#industry option').each(function () {
+                    var that = $(this);
+                    if (client.industry === that.val()) {
+                        that.attr('selected', true);
+                    }
+                });
+
+                var select = $('#status');
+                var clone = select.clone();
+                var span = select.parent();
+                var parent = span.parent();
+                statuses.map((status) => {
+                    var hasStatus = client.status.includes(status);
+                    clone.append(`
+                        <option ${hasStatus ? 'selected' : ''}>${status}</option>
+                    `)
+                });
+                var width = clone.data('width');
+                span.remove();
+                clone.appendTo(parent);
+                clone.multiselect({
+                    maxHeight: 300,
+                    enableCaseInsensitiveFiltering: true,
+                    buttonWidth: width,
+                    numberDisplayed: 100
+                });
             }
         });
     }

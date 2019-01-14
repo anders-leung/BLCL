@@ -7,6 +7,7 @@ html
     script(type='text/javascript').
         var client = !{JSON.stringify(client)};
         var clients = !{JSON.stringify(clients)};
+        var statuses = !{JSON.stringify(statuses)};
     script(src='/js/templates/client.js')
     
     div
@@ -23,11 +24,12 @@ html
                 .col-3
                     label(for='status') Status
                     select#status.form-control.multiselect(name='status[]' disabled=disabled data-width='450' multiple)
-                        each status in statuses
-                            if (client.status.includes(status))
-                                option(selected)=status
-                            else
-                                option=status
+                        if typeof client.status !== 'undefined'
+                            each status in statuses
+                                if (client.status.includes(status))
+                                    option(selected)=status
+                                else
+                                    option=status
         .form-group
             .row
                 .col-6
