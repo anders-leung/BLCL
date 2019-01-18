@@ -42,11 +42,14 @@ var UserService = {
     },
 
     getInitials : async function() {
+        const ignore = ['AND', 'ADMIN'];
         [err, initials] = await to(User.find({}).distinct('initials'));
-        if (err) return err;
         initials.sort();
         initials.unshift('');
-        return initials;
+        initials = initials.filter((initial) => {
+            return !ignore.includes(initial);
+        });
+        return [err, initials];
     }
 };
 

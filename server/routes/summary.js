@@ -52,7 +52,7 @@ async function loadUserStats(initials) {
 }
 
 router.get('/', CookieService.isLoggedIn, async function(req, res) {
-    [err, initials] = await to(UserService.getInitials());
+    [err, initials] = await UserService.getInitials();
     if (err) res.render('error', err);
 
     [err, data] = await loadUserStats(initials);

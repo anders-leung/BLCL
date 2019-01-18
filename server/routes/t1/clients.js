@@ -9,6 +9,8 @@ var CookieService = require('../utils/cookies');
 var ClientService = require('../../modules/t1/client');
 var UserService = require('../../modules/user');
 
+const TABLE = require('../../tables/t1/clients');
+
 router.get('/', CookieService.isLoggedIn, async function(req, res) {
     var query = { 'initials' : req.session.initials };
     var initials = req.session.initials;
@@ -28,7 +30,7 @@ router.get('/', CookieService.isLoggedIn, async function(req, res) {
     [err, done] = await to(ClientService.findClientsPreparerDone(initials));
     if (err) res.render('error', err);
     
-    [err, staffInitials] = await to(UserService.getInitials());
+    [err, staffInitials] = await UserService.getInitials();
     if (err) res.render('error', err);
 
     var cookie = CookieService.readCookie(req);
@@ -40,6 +42,7 @@ router.get('/', CookieService.isLoggedIn, async function(req, res) {
         ['done', done]
     ];
     res.render('t1/clients', {
+        TABLE,
         clients: clients,
         initials: initials,
         options: { 

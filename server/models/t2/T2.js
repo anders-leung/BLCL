@@ -11,7 +11,6 @@ var ClientSchema = new Schema({
         ref: 'Client',
         unique: true,
     },
-    received: Date, // Monitoring
     preparer: [{ // Monitoring
         year: Number,
         user: {
@@ -25,13 +24,11 @@ var ClientSchema = new Schema({
         preparer: String,
     }, // Monitoring
     completed: Date, // Monitoring sheet show based on completion
-    estimated: [{ // Monitoring
+    hours: [{
         year: Number,
-        hours: Number,
-    }],
-    actual: [{ // Monitoring
-        year: Number,
-        hours: Number,
+        estimated: Number,
+        actual: Number,
+        variance: Number,
     }],
     banks: [{
         name: String,
@@ -52,8 +49,10 @@ var ClientSchema = new Schema({
     }],
     job: {
         in: Date,
-        pickup: Date,
+        start: Date,
+        finish: Date,
     },
+    fileClosed: Boolean,
 });
 
 module.exports = mongoose.model('T2', ClientSchema);

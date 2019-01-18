@@ -10,6 +10,7 @@ block content
     script(type="text/javascript", src='/js/jquery.floatThead.js')
     script(type='text/javascript').
         var role = !{JSON.stringify(role)};
+        var TABLE = !{JSON.stringify(TABLE)};
     script(src='/js/t1/monitoring.js')
 
     ul.nav.nav-tabs
@@ -37,12 +38,28 @@ block content
         
 
     #table.col-12.tab-content(style='border-top: 0')
-        - for (var i = 0; i < clients.length; i++)
+        each client in clients
+            div(id=client[0]).tab-pane
+                table(id=client[0] + 'Table').cell-border
+                    thead
+                        tr
+                            each column in TABLE
+                                th=column.header
+                    tfoot
+                        tr
+                            each column in TABLE
+                                th
+                    tbody
+                        each t1 in client[1]
+                            tr(data-href="/t1/client/" + t1._id)
+                                each column in TABLE
+                                    td(class=column.classes ? column.classes.join(' ') : '')=column.value(t1)
+
+        //- - for (var i = 0; i < clients.length; i++)
             div(id=clients[i][0]).tab-pane
                 table(id=clients[i][0] + 'Table').cell-border
                     thead
                         tr
-                            th
                             th Slip
                             th Self Empl
                             th GST
@@ -80,7 +97,6 @@ block content
                             th Email
                     tfoot
                         tr
-                            th
                             th Slip
                             th Self Empl
                             th GST
@@ -118,8 +134,7 @@ block content
                             th Email
                     tbody
                         each client in clients[i][1]
-                            tr(data-href="/t1/client/" + client.pathName)
-                                td.text-nowrap #{client.fileName}
+                            tr(data-href="/t1/client/" + client._id)
                                 td #{client.slips ? 'Y' : ''}
                                 td #{client.selfEmployed ? 'Y' : ''}
                                 td 
@@ -147,7 +162,7 @@ block content
                                 td.text-nowrap.select.admin.initials #{client.preparer}
                                 td.select.status.admin #{client.preparerDone}
                                 td.select.initials #{client.checker}
-                                td.text-nowrap #{client.outstandingInfo ? 'Y' : ''}
+                                td.text-nowrap.edit #{client.outstandingInfo ? 'Y' : ''}
                                 td.text-nowrap.edit #{client.remarks}
                                 td.text-nowrap.date-edit #{client.readyToPack}
                                 td.select.toggle #{client.packed ? 'Y' : ''}

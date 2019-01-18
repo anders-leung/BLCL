@@ -10,7 +10,7 @@ var ClientService = require('../../modules/t1/client');
 var UserService = require('../../modules/user');
 
 router.get('/', CookieService.isLoggedIn, async function(req, res) {
-    [err, initials] = await to(UserService.getInitials());
+    [err, initials] = await UserService.getInitials();
     res.render('t1/client', { title: 'T1 Interview',
         client : null,
         role : CookieService.readCookie(req).role,
@@ -30,7 +30,7 @@ router.get('/:id', CookieService.isLoggedIn, function(req, res) {
     var query = { _id };
 
     ClientService.findClient(query, async function(err, client) {
-        [err, initials] = await to(UserService.getInitials());
+        [err, initials] = await UserService.getInitials();
         res.render('t1/client', {
             title : 'T1 Interview',
             client : client[0],

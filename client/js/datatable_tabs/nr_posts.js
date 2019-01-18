@@ -37,7 +37,7 @@ function getColumn(field) {
 $(document).ready(function() {
     var socket = io();
 
-    socket.on('client side update', updateEvent);
+    socket.on('update nr', updateEvent);
 
     $('table').each(function() {
         $(this).on('keypress', '.edit', function(e) {
@@ -97,7 +97,7 @@ $(document).ready(function() {
 
         if (!emit) return;
 
-        socket.emit('nr update', {
+        socket.emit('update nr', {
             year: year,
             service: service,
             fileName : fileName,

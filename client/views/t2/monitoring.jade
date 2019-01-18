@@ -1,59 +1,24 @@
 extends ../layout
 
 block content
-    script(type='text/javascript', src='/js/t2/monitoring.js')
+    script(type='text/javascript').
+        var TABLE = !{JSON.stringify(TABLE)};
+    script(src='/js/t2/monitoring.js')
 
     #table.col-12.tab-content
             table(id='t2Table').cell-border
                 thead
                     tr
-                        th Name
-                        th Job In
-                        th Job Pickup
-                        th PA Time Allot
-                        th PA Time Actual
-                        th PA Time Variance
-                        th Preparer
-                        th Remarks
-                        th Year Ended
-                        th Due Date
-                        th Reason
-                        th Status
-                        th T1
-                        th T4
-                        th T5
+                        each column in TABLE
+                            th=column.header
                 tfoot
                     tr
-                        th Name
-                        th Job In
-                        th Job Pickup
-                        th PA Time Allot
-                        th PA Time Actual
-                        th PA Time Variance
-                        th Preparer
-                        th Remarks
-                        th Year Ended
-                        th Due Date
-                        th Reason
-                        th Status
-                        th T1
-                        th T4
-                        th T5
+                        each column in TABLE
+                            th
                 tbody
                     each t2 in t2s
-                        tr(data-href="/t2/" + t2._id)
-                            td.text-nowrap=t2.client.name
-                            td.text-nowrap #{t2.jobIn}
-                            td.text-nowrap #{t2.jobPickup}
-                            td.text-nowrap #{t2.paTimeAllot}
-                            td.text-nowrap #{t2.paTimeActual}
-                            td.text-nowrap #{t2.paTimeVariance}
-                            td=t2.preparer
-                            td=t2.remarks ? t2.remarks.monitoring : ''
-                            td.text-nowrap=t2.client.yearEnd ? t2.client.yearEnd : ''
-                            td.text-nowrap #{t2.due}
-                            td.text-nowrap #{t2.reason}
-                            td.text-nowrap #{t2.status}
-                            td=t2.t1 ? 'Y': ''
-                            td=t2.t4 ? 'Y' : ''
-                            td=t2.t5 ? 'Y' : ''
+                        tr(data-href="/t2/client/" + t2._id)
+                            each column, index in TABLE
+                                - var value = column.value(t2);
+                                - var classes = column.classes ? column.classes.join(' ') : '';
+                                td.text-nowrap(class=classes)=value

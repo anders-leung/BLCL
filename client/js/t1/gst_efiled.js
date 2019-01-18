@@ -66,7 +66,7 @@ $(document).ready(function() {
 
     var socket = io();
 
-    socket.on('client side update', checkRows);
+    socket.on('update t1', checkRows);
 
     function checkRows(data) {
         var row = getRow(data.fileName);

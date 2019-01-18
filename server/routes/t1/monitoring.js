@@ -7,6 +7,8 @@ var CookieService = require('./../utils/cookies');
 var ClientService = require('../../modules/t1/client');
 var UserService = require('../../modules/user');
 
+const TABLE = require('../../tables/t1/monitoring');
+
 /* GET home page. */
 router.get('/', CookieService.isLoggedIn, function(req, res) {
     var cookie = CookieService.readCookie(req);
@@ -69,13 +71,16 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
 
         get_initials: async function() {
             let err, clients;
-            [err, clients] = await to(UserService.getInitials());
+            [err, clients] = await UserService.getInitials();
             if (err) return err;
             return clients;
         }
 
     }, function(err, results) {
-        if (err) console.log(err);
+        if (err) {
+            console.log(err);
+            return res.render('error', err);
+        }
 
         var missing = results.get_all.slice(0);
         var clients = [
@@ -107,6 +112,7 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
         }
 
         res.render('t1/monitoring', {
+            TABLE,
             title: 'T1 Monitoring',
             clients: clients,
             options: {

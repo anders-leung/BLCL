@@ -3,17 +3,19 @@
  */
 
 function colorCells(row) {
-    $(row).find('td:eq(7)').css('color', 'red');
-    $(row).find('td:eq(8)').css('color', 'red');
-    $(row).find('td:eq(19)').css('color', 'green');
-    $(row).find('td:eq(21)').css('color', 'red');
+    $(row).find('td').each(function (i) {
+        var color = TABLE[i].color;
+        if (color) {
+            $(this).css('color', color);
+        }
+    });
 }
 
 function colorHeader(header) {
-    if (header.index() == 7) header.css('color', 'red');
-    if (header.index() == 8) header.css('color', 'red');
-    if (header.index() == 19) header.css('color', 'green');
-    if (header.index() == 21) header.css('color', 'red');
+    var color = TABLE[header.index()].color;
+    if (color) {
+        header.css('color', color);
+    }
 }
 
 $(document).ready(function() {
@@ -69,7 +71,7 @@ $(document).ready(function() {
 
     var socket = io();
 
-    socket.on('client side update', checkRows);
+    socket.on('update t1', checkRows);
     socket.on('job assignment', addRow);
 
     function checkRows(data) {

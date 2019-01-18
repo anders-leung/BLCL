@@ -1,7 +1,8 @@
 /**
  * Created by ander on 2017-05-10.
  */
-$(document).ready(function(e) {    
+$(document).ready(function(e) {
+    console.log('options: ', options)
     if (newClient) {
         $('#newTel').prop('checked', true);
         $('#newCell').prop('checked', true);

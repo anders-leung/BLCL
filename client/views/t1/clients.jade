@@ -7,6 +7,7 @@ block content
     script(type='text/javascript').
         var statuses = "#{statuses}";
         var initials = "#{initials}";
+        var TABLE = !{JSON.stringify(TABLE)};
     script(src='/js/t1/clients.js')
 
     ul.nav.nav-tabs
@@ -27,101 +28,16 @@ block content
                 table(id=clients[i][0] + 'Table').cell-border
                     thead
                         tr
-                            th
-                            th Slip
-                            th Self Empl
-                            th T1135
-                            th Rental
-                            th 777
-                            th Stock
-                            th New
-                            th CFM PU
-                            th Pickup Date
-                            th Husband Last Name
-                            th Husband First Name
-                            th Wife Last Name
-                            th Wife First Name
-                            th Group
-                            th My Remarks
-                            th IN
-                            th PRE
-                            th PRE OK
-                            th CKR
-                            th Outstanding Info
-                            th Ready To PRT/Pack
-                            th Emailed
-                            th Signed
-                            th Interview Date
-                            th Phone Number
-                            th Cell
-                            th Email
-                            th Remarks
+                            each column in TABLE
+                                th=column.header
                     tfoot
                         tr
-                            th
-                            th Slip
-                            th Self Empl
-                            th T1135
-                            th Rental
-                            th 777
-                            th Stock
-                            th New
-                            th CFM PU
-                            th Pickup Date
-                            th Husband Last Name
-                            th Husband First Name
-                            th Wife Last Name
-                            th Wife First Name
-                            th Group
-                            th My Remarks
-                            th IN
-                            th PRE
-                            th PRE OK
-                            th CKR
-                            th Outstanding Info
-                            th Ready To PRT/Pack
-                            th Emailed
-                            th Signed
-                            th Interview Date
-                            th Phone Number
-                            th Cell
-                            th Email
-                            th Remarks
+                            each column in TABLE
+                                th
                     tbody
                         each client in clients[i][1]
-                            tr(data-href="/t1/client/" + client.pathName)
-                                td.text-nowrap #{client.fileName}
-                                td #{client.slips ? 'Y' : ''}
-                                td #{client.selfEmployed ? 'Y' : ''}
-                                td
-                                    if client.t1135 == 'N' || client.t1135 == ''
-                                        | 0
-                                    if client.t1135 == 'SIMPLE'
-                                        | 1
-                                    if client.t1135 == 'COMPLICATED'
-                                        | 2
-                                td #{client.rental ? 'Y' : ''}
-                                td #{client.t777 ? 'Y' : ''}
-                                td #{client.stocks ? 'Y' : ''}
-                                td #{client.new ? 'Y' : ''}
-                                td #{client.confirmPickupDate ? 'Y' : ''}
-                                td.text-nowrap #{client.pickupDate}
-                                td.text-nowrap #{client.husband ? client.husband.lastName : ''}
-                                td.text-nowrap #{client.husband ? client.husband.firstName : ''}
-                                td.text-nowrap #{client.wife ? client.wife.lastName : ''}
-                                td.text-nowrap #{client.wife ? client.wife.firstName : ''}
-                                td.text-nowrap #{client.group}
-                                td.text-nowrap.edit #{client.preparerRemarks}
-                                td #{client.interviewer}
-                                td.text-nowrap #{client.preparer}
-                                td.select.status #{client.preparerDone}
-                                td.select.initials #{client.checker}
-                                td.text-nowrap #{client.outstandingInfo}
-                                td.text-nowrap.date-edit #{client.readyToPack}
-                                td.text-nowrap.date-edit #{client.emailed}
-                                td.text-nowrap.date-edit #{client.signed}
-                                th.text-nowrap #{client.interviewDate}
-                                th.text-nowrap #{client.tel.number}
-                                th.text-nowrap #{client.cell.number}
-                                th.text-nowrap #{client.email.value}
-                                th.text-nowrap #{client.remarks}
+                            tr(data-href="/t1/client/" + client._id)
+                                each column in TABLE
+                                    - var value = column.value(client);
+                                    - var classes = column.classes ? column.classes.join(' ') : '';
+                                    td.text-nowrap(class=classes)=value

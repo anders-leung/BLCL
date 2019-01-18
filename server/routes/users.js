@@ -31,7 +31,7 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
                 list.push(entry);
             });
 
-            [err, initials] = await to(UserService.getInitials());
+            [err, initials] = await UserService.getInitials();
             res.render('users', {
                 role: req.session.role,
                 list: list,

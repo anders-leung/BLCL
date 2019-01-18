@@ -774,16 +774,19 @@ block content
                                     .form-group.col-3
                                         label(for='pickupDate') Pickup Date
                                         input#pickupDate.form-control.datepicker(type='text' name='pickupDate')
-                                    .form-group.col-3
-                                        label.red(for='t1135') T1135
-                                        select#t1135.form-control(name='t1135' required)
-                                    .form-group.col-3
+                                    .form-group.col-2
+                                        label.red(for='husbandT1135') T1135 H
+                                        input#husbandT1135.form-control(type='number' min=0 max=2 name='husband[t1135]' required)
+                                    .form-group.col-2
+                                        label.red(for='wifeT1135') T1135 H
+                                        input#wifeT1135.form-control(type='number' min=0 max=2 name='wife[t1135]' required)
+                                    .form-group.col-2
                                         label.red(for='prSold') PR Sold
                                         select#prSold.form-control(name='prSold' required)
                                             option
                                             option N
                                             option Y
-                                    .form-group.col-3
+                                    .form-group.col-2
                                         label(for='preparer') Preparer
                                         select#preparer.initials.form-control(name='preparer')
                                 br

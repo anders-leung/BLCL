@@ -3,27 +3,19 @@
  */
 
 function colorCells(row) {
-    $(row).find('td:eq(7)').css('color', 'red');
-    $(row).find('td:eq(8)').css('color', 'red');
-    $(row).find('td:eq(19)').css('color', 'green');
-    $(row).find('td:eq(24)').css('color', 'red');
-    $(row).find('td:eq(25)').css('color', 'red');
-    $(row).find('td:eq(26)').css('color', 'red');
-    $(row).find('td:eq(27)').css('color', 'red');
-    $(row).find('td:eq(28)').css('color', 'red');
-    $(row).find('td:eq(29)').css('color', 'red');
+    $(row).find('td').each(function (i) {
+        var color = TABLE[i].color;
+        if (color) {
+            $(this).css('color', color);
+        }
+    });
 }
 
 function colorHeader(header) {
-    if (header.index() == 7) header.css('color', 'red');
-    if (header.index() == 8) header.css('color', 'red');
-    if (header.index() == 19) header.css('color', 'green');
-    if (header.index() == 24) header.css('color', 'red');
-    if (header.index() == 25) header.css('color', 'red');
-    if (header.index() == 26) header.css('color', 'red');
-    if (header.index() == 27) header.css('color', 'red');
-    if (header.index() == 28) header.css('color', 'red');
-    if (header.index() == 29) header.css('color', 'purple');
+    var color = TABLE[header.index()].color;
+    if (color) {
+        header.css('color', color);
+    }
 }
 
 var exportTables = ['normal', 'noPreparer', 'packed', 'osSigned', 'osPyt', 'emailedNotPacked'];
@@ -32,7 +24,6 @@ function exportDatatable(name) {
     var exportDatatable = {
         'columnDefs': [
             { type: 'date', targets: [9, 20, 24, 25, 30, 31, 32, 33] },
-            { visible: false, searchable: true, targets: 0 }
         ],
         'select': true,
         'scrollX': true,
@@ -88,8 +79,8 @@ $(document).ready(function() {
         }
 
         $(tableId + ' tfoot th').each( function (i) {
-            // $(this).html(i);
-            $(this).html( '<input type="text"/>' );
+            $(this).html(i);
+            // $(this).html( '<input type="text"/>' );
         });
 
         var table;
@@ -102,8 +93,7 @@ $(document).ready(function() {
         } else {
             table = $(tableId).DataTable({
                 'columnDefs': [
-                    { type: 'date', targets: [9, 20, 28, 29, 30, 31] },
-                    { visible: false, searchable: true, targets: 0 }
+                    { type: 'date', targets: [9, 20, 28, 29, 30, 31] }
                 ],
                 'select': true,
                 'scrollX': true,
@@ -131,36 +121,63 @@ $(document).ready(function() {
 
     var socket = io();
 
-    socket.on('client side update', checkRows);
+    socket.on('update t1', checkRows);
 
     function checkRows(data) {
         var row = getRow(data.id);
-        console.log(data);
         var tableId = findTableForRow(row);
+        var id = $(row.node()).closest('table').attr('id');
+        if (tableId.includes(id)) return;
         if (tableId) moveRow(row, tableId);
     }
 
-    function getRow(fileName) {
+    function getRow(id) {
         var row;
         $('table').not('#doneTable, #allTable').each(function() {
             var table = $(this).DataTable();
             table.rows().every(function() {
-                if (this.data()[0] == fileName) row = this;
+                var href = $(this.node()).data('href');
+                if (href && href.includes(id)) {
+                    row = this;
+                }
             });
         });
+        console.log('getRows: ', row.data())
         return row;
     }
 
     function findTableForRow(row) {
-        var preparer = row.data()[16] != '';
-        var packed = row.data()[22] == 'Y';
-        var emailed = row.data()[30] != '';
-        var signed = row.data()[29] != '';
-        var pyt = row.data()[25] != '' && row.data()[26] != '' && row.data()[27] != '' && row.data()[28] != '';
+        var data = row.data();
+        var preparer, packed, emailed, received, tax, type, amount, signed;
+        TABLE.map((column, i) => {
+            var value = data[i] != '';
+            var header = column.header;
+            switch (header) {
+                case 'PRE':
+                    return preparer = value;
+                case 'Packed':
+                    return packed = value;
+                case 'Emailed to Si':
+                    return emailed = value;
+                case 'Rec\'d By':
+                    return received = value;
+                case 'Tax To CRA':
+                    return tax = value;
+                case 'PYT Type':
+                    return type = value;
+                case 'PYT Amount':
+                    return amount = value;
+                case 'Signed':
+                    return signed = value;
+                default:
+                    return;
+            }
+        });
+        var pyt = received && tax && type && amount;
         console.log(preparer, packed, emailed, signed, pyt)
 
         var table = ''
-        if (!preparer) table = '#noPreparerTable';
+        if (!preparer) return '#noPreparerTable';
         if (emailed) {
             if (signed) {
                 if (pyt) {
@@ -206,28 +223,68 @@ $(document).ready(function() {
         var rowNode = table.row.add(row.data()).draw().node();
         var href = $(row.node()).attr('data-href');
         addClassesToRow(rowNode, href);
+
+        $(row.node())
+        var name = getName(row);
+        toast(`${name} has been moved to <u>${tableId.substring(1, tableId.length - 5)} table</u>`);
+
         row.remove().draw();
     }
 
-    // This is behind by 1
     function addClassesToRow(row, href) {
-        var $row = $(row);
-        $row.attr('data-href', href);
-        $row.find('td').each(function() {
-            $(this).addClass('text-nowrap');
+        row = $(row);
+        row.attr('data-href', href);
+        row.find('td').each(function(i) {
+            var that = $(this);
+            that.addClass('text-nowrap');
+
+            var classes = TABLE[i].classes;
+            if (classes) {
+                that.addClass(classes.join(' '));
+            }
         });
-        $(row).find('td').eq(8).addClass('date-edit');
-        $(row).find('td').eq(15).addClass('select admin initials');
-        $(row).find('td').eq(16).addClass('select admin status');
-        $(row).find('td').eq(17).addClass('select initials');
-        $(row).find('td').eq(20).addClass('date-edit');
-        $(row).find('td').eq(21).addClass('select toggle');
-        $(row).find('td').eq(24).addClass('select initials');
-        $(row).find('td').eq(25).addClass('select tax');
-        $(row).find('td').eq(26).addClass('select pytType');
-        $(row).find('td').eq(27).addClass('edit');
-        $(row).find('td').eq(28).addClass('date-edit');
-        $(row).find('td').eq(29).addClass('date-edit');
-        $(row).find('td').eq(30).addClass('date-edit');
+    }
+
+    function toast(text) {
+        var toasts = $('#toasts');
+        var toast = (`
+            <div style="margin:0; display: none" class="toast">
+                <div class="alert alert-warning alert-dismissible pull-right" role="alert" style="display:inline-flex; opacity: 0.8">
+                    <div style="display: inline-table">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="padding:2px 5px">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <p style="margin:0 5px">${text}</p>
+                    </div>
+                </div>
+            </div>
+        `)
+
+        toast = $(toast).appendTo(toasts);
+        toast.fadeIn()
+        setTimeout(() => {
+            toast.fadeOut();
+        }, 5000);
+    }
+
+    // On 'tables/t1/monitoring.js' change
+    function getName(row) {
+        var data = row.data();
+        var name = [];
+        var names = ['Husband Last Name', 'Husband First Name', 'Wife Last Name', 'Wife First Name'];
+        var indices = TABLE.map((column, i) => {
+            return names.includes(column.header) ? i : false;
+        }).filter(index => index);
+        
+        indices.map((index) => {
+            var value = data[index];
+            value ? name.push(value) : '';
+        });
+
+        if (name.length === 4) {
+            name[1] = `${name[1]} and ${name[2]}`;
+        }
+
+        return name.join(', ');
     }
 });

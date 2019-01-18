@@ -4,7 +4,7 @@ const T2 = require('../../models/t2/T2');
 
 const T2Service = {
     get: async (query) => {
-        return await to(T2.find(query).populate('client'));
+        return await to(T2.find(query).populate({ path: 'client', populate: { path: 'services', model: 'Service' } }));
     },
 
     update: async (query, update) => {

@@ -18,7 +18,7 @@ function cleanValues(values) {
             field == 'notes.one' || field == 'notes.two' || field == 'notes.three' ||
             field == 'comments.one' || field == 'comments.two' || field == 'comments.three') continue;
         if (typeof(values[field]) == 'string') {
-            values[field] = values[field].toUpperCase().trim();
+            values[field] = values[field].trim();
         }
     }
 

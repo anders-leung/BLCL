@@ -29,7 +29,9 @@ html
             var role = !{JSON.stringify(role)};
             var options = !{JSON.stringify(options)};
         script(src='/js/datatable_tabs/inputs.js')
-        script(type='text/javascript', src='/js/datatable_tabs/posts.js')
+        script(type='text/javascript').
+            if (TABLE) var TABLE = !{JSON.stringify(TABLE)};
+        script(src='/js/datatable_tabs/posts.js')
         script(type="text/javascript" src="/js/bootstrap-multiselect.js")
         
     body
@@ -97,5 +99,6 @@ html
                                     a.dropdown-item(href='/staff_analysis') Staff Analysis
                                     a.dropdown-item(href='/summary') Summary
         #content
+            #toasts(style='position: absolute; top:60px; right:0; z-index:100; padding: 10px; white-space: nowrap')
             include ./templates/convert_date.jade
             block content

@@ -81,6 +81,11 @@ var ClientSchema = new Schema({
         sin: { type: String, default: "" }
     },
     husband: {
+        t1135: {
+            type: String,
+            enum: ['', '0', '1', '2'],
+            default: '',
+        },
         citizenship: { type: Boolean, default: false },
         election: { type: Boolean, default: false },
         firstName: { type: String, default: "" },
@@ -172,6 +177,11 @@ var ClientSchema = new Schema({
         studentLoan: { type: Boolean, default: false }
     },
     wife: {
+        t1135: {
+            type: String,
+            enum: ['', '0', '1', '2'],
+            default: '',
+        },
         citizenship: { type: Boolean, default: false },
         election: { type: Boolean, default: false },
         firstName: { type: String, default: "" },

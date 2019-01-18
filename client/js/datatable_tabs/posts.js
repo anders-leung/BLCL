@@ -1,3 +1,5 @@
+var service, page;
+
 var headersToFields = {
     'PRE OK' : 'preparerDone',
     'Pickup Date' : 'pickupDate',
@@ -27,6 +29,7 @@ function adjustTables() {
 }
 
 function getField(cell) {
+    return TABLE[$(cell).index()].field;
     var header;
     $('table').first().find('thead tr th').each(function(index) {
         if ($(cell).index() == index) header = $(this).html();
@@ -37,11 +40,19 @@ function getField(cell) {
 }
 
 function getColumn(field) {
+    var column = -1;
+    TABLE.map((col, index) => {
+        if (col.field === field) {
+            column = index;
+        }
+    });
+    console.log('column: ', column)
+    return column;
     var columnIndex = -1;
     for (var header in headersToFields) {
         if (headersToFields[header] == field) {
             $('table').first().find('thead tr th').each(function(index) {
-                if ($(this).html() == header) columnIndex = index + 1;
+                if ($(this).html() == header) columnIndex = index;
             });
         }
     }
@@ -58,7 +69,13 @@ function getColumn(field) {
 $(document).ready(function() {
     var socket = io();
 
-    socket.on('client side update', updateHtml);
+    var uri = window.location.pathname;
+    var uriTokens = uri.split('/');
+    service = uriTokens[1];
+    page = uriTokens[2];
+    if (uriTokens.length > 3) return;
+
+    socket.on('update t1', updateHtml);
 
     $('table').each(function() {
         if (window.location.pathname.includes('/nr')) return;
@@ -89,9 +106,8 @@ $(document).ready(function() {
 
     function saveEdits(that, type) {
         var cell = $(that).closest('td');
-        var table = $(that).closest('table').DataTable();
         var row = $(that).closest('tr');
-        var id = table.row($(row)).data()[0];
+        var id = row.attr('data-href').split('/')[3];
         var value = $(that).find('input').val();
         if (type == 'select') value = $(that).find('select').val();
         var field = getField(cell);
@@ -105,24 +121,34 @@ $(document).ready(function() {
         if (pathIncludes('nr')) return;
         var column = getColumn(field);
         console.log(column);
-        $('table').each(function() {
-            var table = $(this).DataTable();
-            table.rows().every(function(row) {
-                if (this.data()[0] == id) {
+        console.log('value: ', value)
+        var rows = $('tr').filter(function () {
+            var href = $(this).data('href');
+            return href && href.includes(id);
+        });
+        rows.each(function () {
+            var that = $(this);
+            var table = that.closest('table').DataTable();
+            table.rows().every(function (row) {
+                var href = $(this.node()).data('href');
+                if (href && href.includes(id)) {
+
                     table.cell(row, column).data(value);
-                    adjustTables();
                 }
             });
         });
+        adjustTables();
 
         if (!emit) return;
 
-        let event = 'client side update';
+        let event = 'update t1';
 
         if (pathIncludes('manage_users')) {
             event = 'update user';
         } else if (pathIncludes('invoice')) {
             event = 'update invoice';
+        } else if (pathIncludes('t2')) {
+            event = 'update t2';
         }
 
         console.log('event: ', event)
