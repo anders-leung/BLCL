@@ -9,6 +9,8 @@ async function osEmail(query) {
 
     if (err) return console.log('osEmailing err: ', err);
 
+    if (process.env.NODE_ENV === 'test') return;
+
     UserService.findOneUser({ email: 'ar@ben-cpa.com' }, (err, user) => {
         if (err || !user) return console.log('Invoice error: ', err || new Error('No AR user'));
 
