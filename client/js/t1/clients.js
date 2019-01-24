@@ -4,7 +4,7 @@
 
 function colorCells(row) {
     $(row).find('td').each(function (i) {
-        var color = TABLE[i].color;
+        var color = TABLE.columns[i].color;
         if (color) {
             $(this).css('color', color);
         }
@@ -12,14 +12,14 @@ function colorCells(row) {
 }
 
 function colorHeader(header) {
-    var color = TABLE[header.index()].color;
+    var color = TABLE.columns[header.index()].color;
     if (color) {
         header.css('color', color);
     }
 }
 
-$(document).ready(function() {
-    // function for setting up tables
+ $(document).ready(function() {
+    // function for setting up tables    
     function setTable(tableId) {
         if (tableId == '#newTable') {
             $('.tab-pane').each(function (i) {
@@ -38,8 +38,7 @@ $(document).ready(function() {
 
         var table = $(tableId).DataTable({
             'columnDefs': [
-                { type: 'date', targets: [9, 19, 21, 22, 23] },
-                { visible: false, searchable: true, targets: 0 }
+                { type: 'date', targets: [9, 19, 21, 22, 23] }
             ],
             'select': true,
             'scrollX': true,
@@ -72,86 +71,75 @@ $(document).ready(function() {
     var socket = io();
 
     socket.on('update t1', checkRows);
-    socket.on('job assignment', addRow);
 
     function checkRows(data) {
-        console.log(data);
-        var row = getRow(data.fileName);
+        console.log('check rows: ', data);
+        if (data.field === 'preparer') {
+            if (data.value.toLowerCase() !== initials.toLowerCase()) {
+                return removeRow(data);
+            } else {
+                return newClient(data);
+            }
+        }
+        var row = getRow(data.id);
         if (!row) return;
         var tableId = findTableForRow(row);
+        console.log('check rows tableId: ', tableId);
         if (tableId) moveRow(row, tableId);
     }
 
-    function addRow(data) {
-        if (data.value.toLowerCase() != initials.toLowerCase()) return removeRow(data);
-        data.client.preparer = data.value;
-        var status = data.client.preparerDone;
-        if (status == '') status = 'new';
-        console.log(status);
-        var table = $('#' + status.toLowerCase() + 'Table').DataTable();
-        var rowNode = table.row.add(createRow(data.client)).draw().node();
-        addClassesToRow(rowNode);
-        $(rowNode).attr('data-href', data.client.pathName);
+    function newClient(data) {
+        var row = createClient(data.client);
+        var tableId = findTableForRow(row);
+        var table = $(tableId).DataTable();
+        var rowNode = table.row.add(row).draw().node();
+        addClassesToRow(rowNode, `/t1/client/${data.client.id}`);
+        var name = data.client.name;
+        var text = `${name} has been assigned to you in <u>${tableId}</u>`;
+        $(document).trigger('toast', [text, true]);
     }
 
     function removeRow(data) {
-        var row = getRow(data.fileName);
-        if (row) row.remove().draw();
-    }
-
-    function createRow(client) {
-        var row = [];
-        row.push(client.fileName);
-        row.push(client.slips ? 'Y' : '');
-        row.push(client.selfEmployed ? 'Y' : '');
-        if (client.t1135 == 'N') {
-            row.push('0');
-        } else {
-            row.push(client.t1135 == 'SIMPLE' ? '1' : '2');
+        var row = getRow(data.id);
+        if (row) {
+            row.remove().draw();
+            var name = data.client.name;
+            $(document).trigger('toast', [`${name} has been assigned to another staff member`, true]);
         }
-        row.push(client.rental ? 'Y' : '');
-        row.push(client.t777 ? 'Y' : '');
-        row.push(client.stocks ? 'Y' : '');
-        row.push(client.new ? 'Y' : '');
-        row.push(client.confirmPickUpDate ? 'Y' : '');
-        row.push(client.pickupDate);
-        row.push(client.husband ? client.husband.lastName : '');
-        row.push(client.husband ? client.husband.firstName : '');
-        row.push(client.wife ? client.wife.lastName : '');
-        row.push(client.wife ? client.wife.firstName : '');
-        row.push(client.group);
-        row.push(client.preparerRemarks);
-        row.push(client.interviewer);
-        row.push(client.preparer);
-        row.push(client.preparerDone);
-        row.push(client.checker);
-        row.push(client.readyToPack);
-        row.push(client.outstandingInfo);
-        row.push(client.emailed);
-        row.push(client.signed);
-        row.push(client.interviewDate);
-        row.push(client.tel.number);
-        row.push(client.cell.number);
-        row.push(client.email.value);
-        return row;
     }
 
-    function getRow(fileName) {
+    function getRow(id) {
         var row;
         $('table').each(function() {
             var table = $(this).DataTable();
             table.rows().every(function() {
-                if (this.data()[0] == fileName) row = this;
+                var href = $(this.node()).data('href');
+                if (href && href.includes(id)) {
+                    row = this;
+                }
             });
         });
         return row;
     }
 
     function findTableForRow(row) {
-        var readyToPack = row.data()[19] != '';
-        var status = row.data()[17] == '' ? 'new' : row.data()[17].toLowerCase();
-        var emailed = row.data()[21] != '';
+        var data = row;
+        if (row.data) data = row.data();
+        var readyToPack, status, emailed;
+        TABLE.columns.map((column, i) => {
+            var value = data[i] != '';
+            var header = column.header;
+            switch (header) {
+                case 'Ready To PRT/Pack':
+                    return readyToPack = value;
+                case 'PRE OK':
+                    return status = data[i].toLowerCase();
+                case 'Emailed to Si':
+                    return emailed = value;
+            }
+        });
 
+        if (!status) status = 'new';
         if (readyToPack) return '#doneTable';
         if (emailed) return '#emailedTable';
         return '#' + status + 'Table';
@@ -163,21 +151,80 @@ $(document).ready(function() {
         var rowNode = table.row.add(row.data()).draw().node();
         var href = $(row.node()).attr('data-href');
         addClassesToRow(rowNode, href);
+        var name = getName(row);
+        var text = `${name} has been moved to your <u>${tableId.substring(1, tableId.length - 5)} table</u>`;
+        $(document).trigger('toast', [text]);
         row.remove().draw();
     }
 
-    // jQuery down by 1 index
     function addClassesToRow(row, href) {
-        var $row = $(row);
-        if (href) $row.attr('data-href', href);
-        $row.find('td').each(function() {
+        row = $(row);
+        if (href) row.attr('data-href', href);
+        row.find('td').each(function (i) {
+            var classes = TABLE.columns[i].classes;
+            if (classes) {
+                $(this).addClass(classes.join(' '));
+            }
             $(this).addClass('text-nowrap');
         });
-        $(row).find('td').eq(13).addClass('edit');
-        $(row).find('td').eq(16).addClass('select status');
-        $(row).find('td').eq(17).addClass('select initials');
-        $(row).find('td').eq(18).addClass('date-edit');
-        $(row).find('td').eq(20).addClass('date-edit');
-        $(row).find('td').eq(21).addClass('date-edit');
+    }
+
+    function createClient(client) {
+        var row = [];
+        var husband = client.husband;
+        var wife = client.wife;
+        var husbandGst = husband ? husband.rental ? husband.rental.gstReturn : '' : '';
+        var wifeGst = wife ? wife.rental ? wife.rental.gstReturn : '' : '';
+        row.push(client.slips ? 'Y' : '');
+        row.push(client.selfEmployed ? 'Y' : '');
+        row.push(husbandGst || wifeGst ? 'Y' : '');
+        row.push(husband ? husband.t1135 : '');
+        row.push(wife ? wife.t1135 : '');
+        row.push(client.rental ? 'Y' : '');
+        row.push(client.t777 ? 'Y' : '');
+        row.push(client.stocks ? 'Y' : '');
+        row.push(client.new ? 'Y' : '');
+        row.push(client.confirmPickupDate ? 'Y' : '');
+        row.push(client.pickupDate);
+        row.push(husband ? husband.lastName : '');
+        row.push(husband ? husband.firstName : '');
+        row.push(wife ? wife.lastName : '');
+        row.push(wife ? wife.firstName : '');
+        row.push(client.group);
+        row.push(client.preparerRemarks);
+        row.push(client.interviewer);
+        row.push(client.preparer);
+        row.push(client.preparerDone);
+        row.push(client.checker);
+        row.push(client.outstandingInfo);
+        row.push(client.readyToPack);
+        row.push(client.signed);
+        row.push(client.emailed);
+        row.push(client.interviewDate);
+        row.push(client.tel ? client.tel.number : '');
+        row.push(client.cell ? client.cell.number : '');
+        row.push(client.email ? client.email.value : '');
+        return row;
+    }
+    
+    // On 'tables/t1/monitoring.js' change
+    function getName(row) {
+        var data = row.data();
+        var name = [];
+        var names = ['Husband Last Name', 'Husband First Name', 'Wife Last Name', 'Wife First Name'];
+        var indices = TABLE.columns.map((column, i) => {
+            return names.includes(column.header) ? i : false;
+        }).filter(index => index);
+        
+        indices.map((index) => {
+            var value = data[index];
+            value ? name.push(value) : '';
+        });
+
+        if (name.length === 4) {
+            name[1] = `${name[1]} and ${name[2]}`;
+        }
+
+        return name.join(', ');
     }
 });

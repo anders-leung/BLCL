@@ -2,14 +2,6 @@
  * Created by ander on 2017-05-10.
  */
 $(document).ready(function(e) {
-    console.log('options: ', options)
-    if (newClient) {
-        $('#newTel').prop('checked', true);
-        $('#newCell').prop('checked', true);
-        $('#newEmail').prop('checked', true);
-        $('#newAddress').prop('checked', true);
-    }
-
     // Setup the year
     var year = (new Date()).getFullYear();
     $('#year').val(year);
@@ -256,6 +248,11 @@ $(document).ready(function(e) {
 
         $('#consult').val(client.consultFee);
         $('#price').val(client.price);
+    } else {
+        $('#newTel').prop('checked', true);
+        $('#newCell').prop('checked', true);
+        $('#newEmail').prop('checked', true);
+        $('#newAddress').prop('checked', true);
     }
 
     $('form').on('submit', function() {

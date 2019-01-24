@@ -46,12 +46,6 @@ const tableSetup = {
         { header: 'Year End', value: fn('client.yearEnd') },
         { header: 'Due Date', value: fn(), field: 'due', classes: ['date-edit'] },
         { header: 'Tx Pyb last year', value: fn(), field: 'taxOwing' },
-        { header: 'Preparer', value: (client) => {
-            const preparer = client.preparer;
-            console.log('preparer: ', preparer)
-            if (preparer.length === 0) return '';
-            return preparer[preparer.length - 1].initials;
-        }, field: 'preparer', classes: ['select', 'initials'] },
         { header: 'Preparer Start', value: fn(), field: 'job.start', classes: ['date-edit'] },
         { header: 'Preparer Done', value: fn(), field: 'job.finish', classes: ['date-edit'] },
         { header: 'File Closed', value: fn(), field: 'fileClosed', classes: ['select', 'toggle'] },

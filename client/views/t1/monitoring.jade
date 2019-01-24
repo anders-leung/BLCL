@@ -43,17 +43,19 @@ block content
                 table(id=client[0] + 'Table').cell-border
                     thead
                         tr
-                            each column in TABLE
+                            each column in TABLE.columns
                                 th=column.header
                     tfoot
                         tr
-                            each column in TABLE
+                            each column in TABLE.columns
                                 th
                     tbody
                         each t1 in client[1]
                             tr(data-href="/t1/client/" + t1._id)
-                                each column in TABLE
-                                    td(class=column.classes ? column.classes.join(' ') : '')=column.value(t1)
+                                each column in TABLE.columns
+                                    - var value = column.value(t1);
+                                    - var classes = column.classes ? column.classes.join(' ') : '';                                    
+                                    td.text-nowrap(class=classes)=value
 
         //- - for (var i = 0; i < clients.length; i++)
             div(id=clients[i][0]).tab-pane

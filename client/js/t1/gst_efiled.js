@@ -28,8 +28,7 @@ $(document).ready(function() {
         var options = { year: 'numeric', month: 'short', day: 'numeric' };
         var table = $(tableId).DataTable({
             'columnDefs': [
-                { type: 'date', targets: [5, 7] },
-                { visible: false, searchable: true, targets: 0 }
+                { type: 'date', targets: [5, 6] },
             ],
             'select': true,
             'dom': '<"toolbar">lBfrtip',

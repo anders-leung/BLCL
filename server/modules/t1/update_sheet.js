@@ -438,6 +438,44 @@ function updateWifeDeparture(sheet) {
     sheet.cell('X14').value('');
 }
 
+function splitT1135(sheet) {
+    unmergeAll('I7:T7', sheet);
+
+    range = sheet.range('I7:N7');
+    range.merged(true);
+    range.style({
+        fontSize: 18,
+        bold: true,
+        horizontalAlignment: 'left',
+        rightBorder: true,
+    });
+    sheet.cell('I7').value('');
+
+    sheet.range('O7:T7').style({
+        fill: 'ffc000',
+        fontSize: 14,
+        bold: true,
+    });
+
+    sheet.range('P7:T7').style({ horizontalAlignment: 'center' });
+
+    sheet.cell('O7').value('T1135');
+
+    range = sheet.range('P7:Q7');
+    range.merged(true);
+    range.style({
+        fontSize: 14,
+        bold: true,
+        horizontalAlignment: 'center',
+        rightBorder: true,
+    });
+
+    sheet.cell('P7').value('H');
+    sheet.cell('R7').value('');
+    sheet.cell('S7').style({ rightBorder: true }).value('W');
+    sheet.cell('T7').value('');
+}
+
 var UpdateService = {
     updateSheet: function(sheet) {
         updateHusbandT4(sheet);
@@ -455,6 +493,7 @@ var UpdateService = {
         setDD(sheet);
         updateConsultFeeAndPriceQuoted(sheet);
         setOSI(sheet);
+        splitT1135(sheet);
     }
 };
 

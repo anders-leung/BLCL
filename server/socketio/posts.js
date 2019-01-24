@@ -7,22 +7,14 @@ let NRService = require('../modules/nr/client');
 const updateInvoice = require('./invoices/update');
 const weekChange = require('./invoices/week-change');
 const description = require('./invoices/description');
-
 const templates = require('./templates/templates');
-
 const directoryDelete = require('./directories/delete');
+const t2 = require('./t2/update');
 
 let ClientsSocket = {
     ClientUpdate : async function(socket) {
         socket.on('update t1', function (data) {
             console.log(data);
-            if (data.field == 'preparer') {
-                T1Service.findClient({ _id : data.id }, function(err, client) {
-                    data.client = client[0];
-                    socket.broadcast.emit('job assignment', data);
-                })
-            }
-            socket.broadcast.emit('update t1', data);
 
             if (data.field == 'packed') data.value = data.value == 'Y';
             let search = { _id: data.id };
@@ -30,6 +22,8 @@ let ClientsSocket = {
             
             T1Service.updateClient(search, update, false, function(err, client) {
                 if (err) console.log(err);
+                if (data.field === 'preparer') data.client = client;
+                socket.broadcast.emit('update t1', data);
             });
         });
 
@@ -65,6 +59,10 @@ let ClientsSocket = {
         
         // Client deletion
         socket.on('directory delete', directoryDelete);
+
+        socket.on('update t2', async (data) => {
+            await t2.update(socket, data);
+        });
     }
 };
 

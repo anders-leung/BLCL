@@ -29,7 +29,7 @@ function adjustTables() {
 }
 
 function getField(cell) {
-    return TABLE[$(cell).index()].field;
+    return TABLE.columns[$(cell).index()].field;
     var header;
     $('table').first().find('thead tr th').each(function(index) {
         if ($(cell).index() == index) header = $(this).html();
@@ -41,7 +41,7 @@ function getField(cell) {
 
 function getColumn(field) {
     var column = -1;
-    TABLE.map((col, index) => {
+    TABLE.columns.map((col, index) => {
         if (col.field === field) {
             column = index;
         }
@@ -107,7 +107,8 @@ $(document).ready(function() {
     function saveEdits(that, type) {
         var cell = $(that).closest('td');
         var row = $(that).closest('tr');
-        var id = row.attr('data-href').split('/')[3];
+        console.log(row.data('href'))
+        var id = row.data('href').split('/')[3];
         var value = $(that).find('input').val();
         if (type == 'select') value = $(that).find('select').val();
         var field = getField(cell);

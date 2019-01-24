@@ -7,20 +7,16 @@ block content
     script(type='text/javascript').
         var statuses = "#{statuses}";
         var initials = "#{initials}";
-        var TABLE = !{JSON.stringify(TABLE)};
+        var TABLE = !{JSON.stringify(TABLE)}
     script(src='/js/t1/clients.js')
 
     ul.nav.nav-tabs
-        li.nav-item
-            a.nav-link.active(data-toggle='tab' href='#new') New
-        li.nav-item
-            a.nav-link(data-toggle='tab' href='#wip') WIP
-        li.nav-item
-            a.nav-link(data-toggle='tab' href='#ok') OK
-        li.nav-item
-            a.nav-link(data-toggle='tab' href='#emailed') Emailed
-        li.nav-item
-            a.nav-link(data-toggle='tab' href='#done') Done
+        each table, index in TABLE.tables
+            li.nav-item
+                - var active = '';
+                if (index === 0)
+                    - active = 'active'
+                a.nav-link(data-toggle='tab' href=table.id class=active)=table.name
 
     #table.col-12.tab-content(style='border-top: 0')
         - for (var i = 0; i < clients.length; i++)
@@ -28,16 +24,16 @@ block content
                 table(id=clients[i][0] + 'Table').cell-border
                     thead
                         tr
-                            each column in TABLE
+                            each column in TABLE.columns
                                 th=column.header
                     tfoot
                         tr
-                            each column in TABLE
+                            each column in TABLE.columns
                                 th
                     tbody
                         each client in clients[i][1]
                             tr(data-href="/t1/client/" + client._id)
-                                each column in TABLE
+                                each column in TABLE.columns
                                     - var value = column.value(client);
                                     - var classes = column.classes ? column.classes.join(' ') : '';
                                     td.text-nowrap(class=classes)=value

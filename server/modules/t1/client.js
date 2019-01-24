@@ -26,6 +26,10 @@ function cleanValues(values) {
 }
 
 var ClientService = {
+    get: async (query) => {
+        return await to(Client.find(query));
+    },
+
     saveClient : function(values, callback) {
         values = cleanValues(values);
         var client = new Client(values);

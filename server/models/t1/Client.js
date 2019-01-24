@@ -82,9 +82,12 @@ var ClientSchema = new Schema({
     },
     husband: {
         t1135: {
-            type: String,
-            enum: ['', '0', '1', '2'],
-            default: '',
+            signed: Date,
+            efiled: Date,
+            value: {
+                type: Number,
+                enum: [0, 1, 2],
+            },
         },
         citizenship: { type: Boolean, default: false },
         election: { type: Boolean, default: false },
@@ -178,9 +181,12 @@ var ClientSchema = new Schema({
     },
     wife: {
         t1135: {
-            type: String,
-            enum: ['', '0', '1', '2'],
-            default: '',
+            signed: Date,
+            efiled: Date,
+            value: {
+                type: Number,
+                enum: [0, 1, 2],
+            },
         },
         citizenship: { type: Boolean, default: false },
         election: { type: Boolean, default: false },
@@ -347,8 +353,8 @@ var ClientSchema = new Schema({
         enum: [ '', 'N/A', 'CLIENT', 'BLCL' ], 
         default: '' 
     },
-    t1Efiled: { type: String, default: '' },
-    gstEfiled: { type: String, default: '' },
+    t1Efiled: Date,
+    gstEfiled: Date,
     outstandingInfo: { type: String, default: "" },
     remarks: { type: String, default: "" },
     callDate: { type: String, default: "" }, // Email/Call Pu
@@ -361,6 +367,25 @@ var ClientSchema = new Schema({
     gstRemarks: String,
     preparerRemarks: String,
     oldPreparer: String,
+    gstSigned: Date,
 });
+
+ClientSchema.virtual('name').get(function () {
+    let name = '';
+    const husband = this.husband;
+    const wife = this.wife;
+    if (husband.lastName) {
+        name += `${husband.lastName}, ${husband.firstName}`;
+    }
+    if (wife.lastName) {
+        const wifeName = `${wife.lastName}, ${wife.firstName}`;
+        if (name) name += ` and ${wifeName}`;
+        else name += wifeName;
+    }
+    return name;
+});
+
+ClientSchema.set('toObject', { virtuals: true });
+ClientSchema.set('toJSON', { virtuals: true });
 
 module.exports = mongoose.model('T1', ClientSchema);

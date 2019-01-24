@@ -57,9 +57,9 @@ router.post('/', function(req, res) {
     });
 });
 
-router.post('/:client_name', function(req, res) {
-    var client_name = req.params.client_name;
-    ClientService.updateClient({ pathName : client_name }, req.body, true, function(err, client) {
+router.post('/:id', function(req, res) {
+    var _id = req.params.id;
+    ClientService.updateClient({ _id }, req.body, true, function(err, client) {
         if (err) {
             return res.render('error');
         }

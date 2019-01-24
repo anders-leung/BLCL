@@ -53,10 +53,6 @@ var fields = {
             cell.value(client.tel.number);
         },
 
-        'S7' : function(cell, client) {
-            cell.value(client.t1135);
-        },
-
         'V7' : function(cell, client) {
             cell.value(client.stocks ? 'Y' : '');
         },
@@ -354,6 +350,10 @@ var fields = {
             cell.value(client.husband.election ? 'Y' : '');
         },
 
+        'R7' : function(cell, client) {
+            cell.value(client.husband.t1135);
+        },
+        
         'W10' : function(cell, client) {
             cell.value(client.husband.noa ? 'Y' : '');
         },
@@ -584,6 +584,10 @@ var fields = {
             cell.value(client.wife.election ? 'Y' : '');
         },
 
+        'T7' : function(cell, client) {
+            cell.value(client.wife.t1135);
+        },
+        
         'W11' : function(cell, client) {
             cell.value(client.wife.noa ? 'Y' : '');
         },
@@ -822,7 +826,7 @@ function clientToExcel(oldClient, client) {
         if (!fs.existsSync(path)) {
             var previousYear = parseInt(client.year) - 1;
             path = t1Directory + '//' + previousYear.toString() + '//' + oldClient.fileName + '.xlsx';
-            if (!fs.existsSync(path)) path = t1Directory + '//Templates//1- T1 INTERVIEW-New.xlsx';
+            if (!fs.existsSync(path)) path = t1Directory + '//Templates//1- T1 INTERVIEW-2019.xlsx';
         }
         console.log('Client To Excel');
         console.log('previous path: ', path);

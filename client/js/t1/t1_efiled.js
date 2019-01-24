@@ -28,8 +28,7 @@ $(document).ready(function() {
         var options = { year: 'numeric', month: 'short', day: 'numeric' };
         var table = $(tableId).DataTable({
             'columnDefs': [
-                { type: 'date', targets: [5, 7] },
-                { visible: false, searchable: true, targets: 0 }
+                { type: 'date', targets: [7, 8, 9, 10] },
             ],
             'select': true,
             'dom': '<"toolbar">lBfrtip',
@@ -69,18 +68,21 @@ $(document).ready(function() {
     socket.on('update t1', checkRows);
 
     function checkRows(data) {
-        var row = getRow(data.fileName);
+        var row = getRow(data.id);
         console.log(data);
         var tableId = findTableForRow(row);
+        var originalTable = $(row.node()).closest('table').attr('id');
+        if (tableId.includes(originalTable)) return;
         if (tableId) moveRow(row, tableId);
     }
 
-    function getRow(fileName) {
+    function getRow(id) {
         var row;
         $('table').each(function() {
             var table = $(this).DataTable();
             table.rows().every(function() {
-                if (this.data()[0] == fileName) {
+                var href = $(this.node()).attr('data-href');
+                if (href && href.includes(id)) {
                     row = this;
                 }
             });
@@ -89,7 +91,10 @@ $(document).ready(function() {
     }
 
     function findTableForRow(row) {
-        var t1Efiled = row.data()[6] == '0' || (row.data()[6] != '0' && row.data()[7] != '');
+        var data = row.data();
+        var husband = !data[4] || data[9];
+        var wife = !data[5] || data[10];
+        var t1Efiled = husband && wife;
 
         if (t1Efiled) {
             return '#doneTable'
@@ -106,16 +111,44 @@ $(document).ready(function() {
         var rowNode = table.row.add(row.data()).draw().node();
         var href = $(row.node()).attr('data-href');
         addClassesToRow(rowNode, href);
+        
+        var name = getName(row);
+        var text = `${name} has been moved to <u>${tableId.substring(1, tableId.length - 5)} table</u>`;
+        $(document).trigger('toast', text);
+
         row.remove().draw();
     }
 
-    // This is behind by 1
     function addClassesToRow(row, href) {
-        var $row = $(row);
-        $row.attr('data-href', href);
-        $row.find('td').each(function() {
+        row = $(row);
+        row.attr('data-href', href);
+        row.find('td').each(function(i) {
+            var classes = TABLE.columns[i].classes;
+            if (classes) {
+                $(this).addClass(classes.join(' '));
+            }
             $(this).addClass('text-nowrap');
         });
-        $(row).find('td').eq(6).addClass('date-edit');
+    }
+    
+    // On 'tables/t1/monitoring.js' change
+    function getName(row) {
+        var data = row.data();
+        var name = [];
+        var names = ['Husband Last Name', 'Husband First Name', 'Wife Last Name', 'Wife First Name'];
+        var indices = TABLE.columns.map((column, i) => {
+            return names.includes(column.header) ? i : false;
+        }).filter(index => index);
+        
+        indices.map((index) => {
+            var value = data[index];
+            value ? name.push(value) : '';
+        });
+
+        if (name.length === 4) {
+            name[1] = `${name[1]} and ${name[2]}`;
+        }
+
+        return name.join(', ');
     }
 });

@@ -4,7 +4,7 @@
 
 function colorCells(row) {
     $(row).find('td').each(function (i) {
-        var color = TABLE[i].color;
+        var color = TABLE.columns[i].color;
         if (color) {
             $(this).css('color', color);
         }
@@ -12,7 +12,7 @@ function colorCells(row) {
 }
 
 function colorHeader(header) {
-    var color = TABLE[header.index()].color;
+    var color = TABLE.columns[header.index()].color;
     if (color) {
         header.css('color', color);
     }
@@ -149,7 +149,7 @@ $(document).ready(function() {
     function findTableForRow(row) {
         var data = row.data();
         var preparer, packed, emailed, received, tax, type, amount, signed;
-        TABLE.map((column, i) => {
+        TABLE.columns.map((column, i) => {
             var value = data[i] != '';
             var header = column.header;
             switch (header) {
@@ -226,8 +226,10 @@ $(document).ready(function() {
 
         $(row.node())
         var name = getName(row);
-        toast(`${name} has been moved to <u>${tableId.substring(1, tableId.length - 5)} table</u>`);
+        var text = `${name} has been moved to <u>${tableId.substring(1, tableId.length - 5)} table</u>`;
+        $(document).trigger('toast', text);
 
+        console.log('about to remove the row');
         row.remove().draw();
     }
 
@@ -238,33 +240,11 @@ $(document).ready(function() {
             var that = $(this);
             that.addClass('text-nowrap');
 
-            var classes = TABLE[i].classes;
+            var classes = TABLE.columns[i].classes;
             if (classes) {
                 that.addClass(classes.join(' '));
             }
         });
-    }
-
-    function toast(text) {
-        var toasts = $('#toasts');
-        var toast = (`
-            <div style="margin:0; display: none" class="toast">
-                <div class="alert alert-warning alert-dismissible pull-right" role="alert" style="display:inline-flex; opacity: 0.8">
-                    <div style="display: inline-table">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="padding:2px 5px">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <p style="margin:0 5px">${text}</p>
-                    </div>
-                </div>
-            </div>
-        `)
-
-        toast = $(toast).appendTo(toasts);
-        toast.fadeIn()
-        setTimeout(() => {
-            toast.fadeOut();
-        }, 5000);
     }
 
     // On 'tables/t1/monitoring.js' change
@@ -272,7 +252,7 @@ $(document).ready(function() {
         var data = row.data();
         var name = [];
         var names = ['Husband Last Name', 'Husband First Name', 'Wife Last Name', 'Wife First Name'];
-        var indices = TABLE.map((column, i) => {
+        var indices = TABLE.columns.map((column, i) => {
             return names.includes(column.header) ? i : false;
         }).filter(index => index);
         

@@ -9,16 +9,16 @@ block content
             table(id='t2Table').cell-border
                 thead
                     tr
-                        each column in TABLE
+                        each column in TABLE.columns
                             th=column.header
                 tfoot
                     tr
-                        each column in TABLE
+                        each column in TABLE.columns
                             th
                 tbody
                     each t2 in t2s
                         tr(data-href="/t2/client/" + t2._id)
-                            each column, index in TABLE
+                            each column, index in TABLE.columns
                                 - var value = column.value(t2);
                                 - var classes = column.classes ? column.classes.join(' ') : '';
                                 td.text-nowrap(class=classes)=value
