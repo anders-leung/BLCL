@@ -33,7 +33,7 @@ $(document).ready(function() {
             extend: 'excelHtml5',
             footer: true,
             title: function () {
-                return `Sales From ${$('#weeks option:selected').val()}`;
+                return `${$('#company').val().toUpperCase()} Sales From ${$('#weeks option:selected').val()}`;
             },
             exportOptions: {
                 columns: ':visible'

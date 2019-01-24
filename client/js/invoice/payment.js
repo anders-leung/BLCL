@@ -34,7 +34,7 @@ $(document).ready(function() {
             extend: 'excelHtml5',
             footer: true,
             title: function () {
-                return `Payments Received From ${$('#weeks option:selected').val()}`;
+                return `${$('#company').val().toUpperCase()} Payments Received From ${$('#weeks option:selected').val()}`;
             },
             exportOptions: {
                 columns: ':visible'
