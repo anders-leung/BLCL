@@ -25,7 +25,6 @@ $(document).ready(function() {
 
         var table = $('table').DataTable({
             'columnDefs': [
-                { visible: false, targets: 0 },
                 { type: 'date', targets: [4] },
             ],
             'select': true,
