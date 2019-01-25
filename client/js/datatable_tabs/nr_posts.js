@@ -48,7 +48,7 @@ $(document).ready(function() {
 
         $(this).on('focus', '.datepicker', function() {
             $(this).datepicker({
-                dateFormat: 'yy-M-dd',
+                dateFormat: 'M d, yy',
                 onSelect: function() {
                     var td = $(this).parent();
                     if ($(td).find('input').length === 0) return;

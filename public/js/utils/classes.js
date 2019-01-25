@@ -15,11 +15,11 @@ $(document).ready(function(e) {
     });
     
     $('.datepicker').datepicker({
-        dateFormat: 'yy-M-dd'
+        dateFormat: 'M d, yy'
     });
 
     $('.datepickerChangeYear').datepicker({
-        dateFormat: 'yy-M-dd',
+        dateFormat: 'M d, yy',
         changeMonth: true,
         changeYear: true,
         yearRange: '-80:+0'
