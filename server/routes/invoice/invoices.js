@@ -5,6 +5,8 @@ var CookieService = require('../utils/cookies');
 var InvoiceService = require('../../modules/invoice/invoice');
 var ClientService = require('../../modules/t1/client');
 
+const TABLE = require('../../tables/invoice/invoices');
+
 /* GET home page. */
 router.get('/', CookieService.isLoggedIn, async (req, res) => {
     const [doneErr, done] = await InvoiceService.get({ $and: [{ pytReceived: { $ne: '' } }, { pytReceived: { $exists: true } }] });
@@ -23,6 +25,7 @@ router.get('/', CookieService.isLoggedIn, async (req, res) => {
     // }
 
     res.render('invoice/invoices', {
+        TABLE,
         title: 'Invoice',
         role: req.session.role,
         invoices: os,
