@@ -148,7 +148,7 @@ $(document).ready(function() {
 
     function findTableForRow(row) {
         var data = row.data();
-        var preparer, packed, emailed, received, tax, type, amount, signed;
+        var preparer, packed, emailed, received, tax, type, amount, signedH, signedW;
         TABLE.columns.map((column, i) => {
             var value = data[i] != '';
             var header = column.header;
@@ -167,12 +167,15 @@ $(document).ready(function() {
                     return type = value;
                 case 'PYT Amount':
                     return amount = value;
-                case 'Signed':
-                    return signed = value;
+                case 'Signed H':
+                    return signedH = value;
+                case 'Signed W':
+                    return signedW = value;
                 default:
                     return;
             }
         });
+        var signed = signedH && signedW;
         var pyt = received && tax && type && amount;
         console.log(preparer, packed, emailed, signed, pyt)
 

@@ -81,8 +81,8 @@ var ClientSchema = new Schema({
         sin: { type: String, default: "" }
     },
     husband: {
+        signed: Date,
         t1135: {
-            signed: Date,
             efiled: Date,
             value: {
                 type: Number,
@@ -180,8 +180,8 @@ var ClientSchema = new Schema({
         studentLoan: { type: Boolean, default: false }
     },
     wife: {
+        signed: Date,
         t1135: {
-            signed: Date,
             efiled: Date,
             value: {
                 type: Number,
