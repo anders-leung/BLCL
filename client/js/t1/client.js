@@ -4,7 +4,7 @@
 $(document).ready(function(e) {
     // Setup the year
     var year = (new Date()).getFullYear();
-    $('#year').val(year);
+    $('#year').val(year - 1);
 
     function populateSelect(name, options) {
         if (name == 'initials') {
