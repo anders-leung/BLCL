@@ -665,13 +665,13 @@ block content
                                 .col-6
                                     .row
                                         .form-group.col-6
-                                            label(for='donation') Donation
+                                            label.red(for='donation') Donation
                                             select#donation.form-control(name='donation' required)
                                                 option
                                                 option N
                                                 option Y
                                         .form-group.col-6
-                                            label(for='medExp') Med Exp
+                                            label.red(for='medExp') Med Exp
                                             select#medExp.form-control(name='medExp' required)
                                                 option
                                                 option N
@@ -778,7 +778,7 @@ block content
                                         label.red(for='husbandT1135') T1135 H
                                         input#husbandT1135.form-control(type='number' min=0 max=2 name='husband[t1135][value]' required)
                                     .form-group.col-2
-                                        label.red(for='wifeT1135') T1135 H
+                                        label.red(for='wifeT1135') T1135 W
                                         input#wifeT1135.form-control(type='number' min=0 max=2 name='wife[t1135][value]' required)
                                     .form-group.col-2
                                         label.red(for='prSold') PR Sold
