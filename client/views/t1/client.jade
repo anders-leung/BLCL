@@ -278,6 +278,40 @@ block content
                                             input#husbandT4AOAS.form-check-input(type='checkbox' name='husband[t4AOAS')
                                             label.form-check-label(for='husbandT4AOAS') T4A (OAS)
                                     br
+                                    .row
+                                        .group
+                                            .form-check
+                                                input#husbandT5013.form-check-input(type='checkbox' name='husband[t5013][value]')
+                                                label.form-check-label(for='husbandT5013') T5013
+                                            .form-check
+                                                input#husbandT5013Joint.form-check-input(type='checkbox' name='husband[t5013][joint]')
+                                                label.form-check-label(for='husbandT5013Joint') Joint
+                                        .group
+                                            .form-check
+                                                input#husbandT5008.form-check-input(type='checkbox' name='husband[t5008][value]')
+                                                label.form-check-label(for='husbandT5008') T5008 / S3
+                                            .form-check
+                                                input#husbandT5008Joint.form-check-input(type='checkbox' name='husband[t5008][joint]')
+                                                label.form-check-label(for='husbandT5008Joint') Joint
+                                        .group
+                                            .form-check
+                                                input#husbandT4AP.form-check-input(type='checkbox' name='husband[t4AP][value]')
+                                                label.form-check-label(for='husbandT4AP') T4A (P)
+                                            .form-check
+                                                input#husbandSplit.form-check-input(type='checkbox' name='husband[t4AP][split]')
+                                                label.form-check-label(for='husbandSplit') Split
+                                    br
+                                    .row
+                                        .form-check
+                                            input#husbandT4RSP.form-check-input(type='checkbox' name='husband[t4RSP]')
+                                            label.form-check-label(for='husbandT4RSP') T4RSP / T4RIF
+                                        .form-check
+                                            input#husbandT4E.form-check-input(type='checkbox' name='husband[t4E]')
+                                            label.form-check-label(for='husbandT4E') T4E
+                                        .form-check
+                                            input#husbandUCCB.form-check-input(type='checkbox' name='husband[uccb]')
+                                            label.form-check-label(for='husbandUCCB') UCCB
+                                    br
                                     label Other Income
                                     .row
                                         .form-group.col-3
@@ -302,28 +336,6 @@ block content
                                         .form-group.col-4
                                             label(for='husbandCountry') Country
                                             input#husbandCountry.form-control(type='text' name='husband[foreignIncome][country]')
-                                    .row
-                                        .group
-                                            .form-check
-                                                input#husbandT5013.form-check-input(type='checkbox' name='husband[t5013][value]')
-                                                label.form-check-label(for='husbandT5013') T5013
-                                            .form-check
-                                                input#husbandT5013Joint.form-check-input(type='checkbox' name='husband[t5013][joint]')
-                                                label.form-check-label(for='husbandT5013Joint') Joint
-                                        .group
-                                            .form-check
-                                                input#husbandT5008.form-check-input(type='checkbox' name='husband[t5008][value]')
-                                                label.form-check-label(for='husbandT5008') T5008 / S3
-                                            .form-check
-                                                input#husbandT5008Joint.form-check-input(type='checkbox' name='husband[t5008][joint]')
-                                                label.form-check-label(for='husbandT5008Joint') Joint
-                                        .group
-                                            .form-check
-                                                input#husbandT4AP.form-check-input(type='checkbox' name='husband[t4AP][value]')
-                                                label.form-check-label(for='husbandT4AP') T4A (P)
-                                            .form-check
-                                                input#husbandSplit.form-check-input(type='checkbox' name='husband[t4AP][split]')
-                                                label.form-check-label(for='husbandSplit') Split
                                     br
                                     .group-joint
                                         .row
@@ -353,18 +365,6 @@ block content
                                         .form-group.col-4
                                             label(for='husbandSupportReceived') Support PYT Rec'd
                                             input#husbandSupportReceived.form-control(type='number' name='husband[supportReceived]')
-                                        .form-check
-                                            br
-                                            input#husbandT4RSP.form-check-input(type='checkbox' name='husband[t4RSP]')
-                                            label.form-check-label(for='husbandT4RSP') T4RSP / T4RIF
-                                        .form-check
-                                            br
-                                            input#husbandT4E.form-check-input(type='checkbox' name='husband[t4E]')
-                                            label.form-check-label(for='husbandT4E') T4E
-                                        .form-check
-                                            br
-                                            input#husbandUCCB.form-check-input(type='checkbox' name='husband[uccb]')
-                                            label.form-check-label(for='husbandUCCB') UCCB
                                 .col-6
                                     label.col-12 Wife
                                         hr
@@ -416,6 +416,42 @@ block content
                                                 input#wifeT4AOAS.form-check-input(type='checkbox' name='wife[t4AOAS]')
                                                 label.form-check-label(for='wifeT4AOAS') T4A (OAS)
                                         br
+                                        .row
+                                            .group
+                                                .form-check
+                                                    input#wifeT5013.form-check-input(type='checkbox' name='wife[t5013][value]')
+                                                    label.form-check-label(for='wifeT5013') T5013
+                                                .form-check
+                                                    input#wifeT5013Joint.form-check-input(type='checkbox' name='wife[t5013][joint]')
+                                                    label.form-check-label(for='wifeT5013Joint') Joint
+                                            .group
+                                                .form-check
+                                                    input#wifeT5008.form-check-input(type='checkbox' name='wife[t5008][value]')
+                                                    label.form-check-label(for='wifeT5008') T5008 / S3
+                                                .form-check
+                                                    input#wifeT5008Joint.form-check-input(type='checkbox' name='wife[t5008][joint]')
+                                                    label.form-check-label(for='wifeT5008Joint') Joint
+                                            .group
+                                                .form-check
+                                                    input#wifeT4AP.form-check-input(type='checkbox' name='wife[t4AP][value]')
+                                                    label.form-check-label(for='wifeT4AP') T4A (P)
+                                                .form-check
+                                                    input#wifeSplit.form-check-input(type='checkbox' name='wife[t4AP][split]')
+                                                    label.form-check-label(for='wifeSplit') Split
+                                        .row
+                                            .form-check
+                                                br
+                                                input#wifeT4RSP.form-check-input(type='checkbox' name='wife[t4RSP]')
+                                                label.form-check-label(for='wifeT4RSP') T4RSP / T4RIF
+                                            .form-check
+                                                br
+                                                input#wifeT4E.form-check-input(type='checkbox' name='wife[t4E]')
+                                                label.form-check-label(for='wifeT4E') T4E
+                                            .form-check
+                                                br
+                                                input#wifeUCCB.form-check-input(type='checkbox' name='wife[uccb]')
+                                                label.form-check-label(for='wifeUCCB') UCCB
+                                        br
                                         label Other Income
                                         .row
                                             .form-group.col-3
@@ -440,29 +476,6 @@ block content
                                             .form-group.col-4
                                                 label(for='wifeCountry') Country
                                                 input#wifeCountry.form-control(type='text' name='wife[foreignIncome][country]')
-                                        .row
-                                            .group
-                                                .form-check
-                                                    input#wifeT5013.form-check-input(type='checkbox' name='wife[t5013][value]')
-                                                    label.form-check-label(for='wifeT5013') T5013
-                                                .form-check
-                                                    input#wifeT5013Joint.form-check-input(type='checkbox' name='wife[t5013][joint]')
-                                                    label.form-check-label(for='wifeT5013Joint') Joint
-                                            .group
-                                                .form-check
-                                                    input#wifeT5008.form-check-input(type='checkbox' name='wife[t5008][value]')
-                                                    label.form-check-label(for='wifeT5008') T5008 / S3
-                                                .form-check
-                                                    input#wifeT5008Joint.form-check-input(type='checkbox' name='wife[t5008][joint]')
-                                                    label.form-check-label(for='wifeT5008Joint') Joint
-                                            .group
-                                                .form-check
-                                                    input#wifeT4AP.form-check-input(type='checkbox' name='wife[t4AP][value]')
-                                                    label.form-check-label(for='wifeT4AP') T4A (P)
-                                                .form-check
-                                                    input#wifeSplit.form-check-input(type='checkbox' name='wife[t4AP][split]')
-                                                    label.form-check-label(for='wifeSplit') Split
-                                        br
                                         .group-joint
                                             .row
                                                 .form-group.col-3
@@ -491,18 +504,6 @@ block content
                                             .form-group.col-4
                                                 label(for='wifeSupportReceived') Support PYT Rec'd
                                                 input#wifeSupportReceived.form-control(type='number' name='wife[supportReceived]')
-                                            .form-check
-                                                br
-                                                input#wifeT4RSP.form-check-input(type='checkbox' name='wife[t4RSP]')
-                                                label.form-check-label(for='wifeT4RSP') T4RSP / T4RIF
-                                            .form-check
-                                                br
-                                                input#wifeT4E.form-check-input(type='checkbox' name='wife[t4E]')
-                                                label.form-check-label(for='wifeT4E') T4E
-                                            .form-check
-                                                br
-                                                input#wifeUCCB.form-check-input(type='checkbox' name='wife[uccb]')
-                                                label.form-check-label(for='wifeUCCB') UCCB
 
             #calculation-of-taxable-income.content-part(data-title='Calculation of Taxable Income')
                 .content-inner
