@@ -10,9 +10,9 @@ const table = {
             let wife = fn('wife.rental.gstReturn')(client);
             return husband || wife ? 'Y' : '';
         } },
+        { header: 'Rental', value: fn('rental') },
         { header: 'T1135 H', value: fn('husband.t1135.value') },
         { header: 'T1135 W', value: fn('wife.t1135.value') },
-        { header: 'Rental', value: fn('rental') },
         { header: '777', value: fn('t777') },
         { header: 'Stock', value: fn('stocks') },
         { header: 'New', value: fn('new'), color: 'red' },
