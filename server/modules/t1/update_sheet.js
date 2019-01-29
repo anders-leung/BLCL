@@ -1,7 +1,8 @@
 /**
  * Created by ander on 2017-12-17.
  */
-var XLSX = require('xlsx-populate');
+const husband = 'ffd966';
+const wife = 'ffff00';
 
 function unmergeAll(range, sheet) {
     range = sheet.range(range).merged(false);
@@ -476,6 +477,42 @@ function splitT1135(sheet) {
     sheet.cell('T7').value('');
 }
 
+function updateT4APSplit(sheet) {
+    unmergeAll('B27:F28', sheet);
+    let range = sheet.range('B27:C28');
+    range.merged(true);
+    range.style({ rightBorder: true });
+
+    range = sheet.range('D27:E28');
+    range.merged(true);
+    range.style({
+        fontSize: 11,
+        rightBorder: true,
+        fill: husband,
+    });
+
+    sheet.cell('B27').value('');
+    sheet.cell('D27').value('Split');
+    sheet.cell('F27').value('');
+
+    unmergeAll('P27:T28', sheet);
+    range = sheet.range('P27:Q28');
+    range.merged(true);
+    range.style({ rightBorder: true });
+
+    range = sheet.range('R27:S28');
+    range.merged(true);
+    range.style({
+        fontSize: 11,
+        rightBorder: true,
+        fill: husband,
+    });
+
+    sheet.cell('P27').value('');
+    sheet.cell('R27').value('Split');
+    sheet.cell('T27').value('');
+}
+
 var UpdateService = {
     updateSheet: function(sheet) {
         updateHusbandT4(sheet);
@@ -494,6 +531,7 @@ var UpdateService = {
         updateConsultFeeAndPriceQuoted(sheet);
         setOSI(sheet);
         splitT1135(sheet);
+        updateT4APSplit(sheet);
     }
 };
 
