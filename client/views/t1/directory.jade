@@ -12,7 +12,8 @@ block content
             thead
                 tr
                     th Client Name
-                    th Preparer
+                    th Old PRE
+                    th PRE
                     th T1135
                     if (role === 'Administrator')
                         th
@@ -21,7 +22,8 @@ block content
                 each client in clients
                     tr(data-href="/t1/client/" + client._id)
                         td.text-nowrap #{client.fileName}
-                        td #{client.preparer || client.oldPreparer}
+                        td=client.oldPreparer
+                        td=client.preparer
                         td
                             if client.t1135 == 'N' || client.t1135 == ''
                                 | 0
