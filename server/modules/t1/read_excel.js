@@ -358,7 +358,7 @@ var fields = {
         client.husband.t4AP.value = (cell ? cell.v != '' : false);
     },
 
-    'B28' : function(cell, client) {
+    'F27' : function(cell, client) {
         client.husband.t4AP.split = (cell ? cell.v == 'Y' : false);
     },
 
@@ -550,7 +550,7 @@ var fields = {
         client.wife.t4AP.value = (cell ? cell.v != '' : false);
     },
 
-    'P28' : function(cell, client) {
+    'T27' : function(cell, client) {
         client.wife.t4AP.split = (cell ? cell.v == 'Y' : false);
     },
 
