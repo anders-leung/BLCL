@@ -34,7 +34,6 @@ var fields = {
 
         'P2' : function(cell, client) {
             cell.value(client.preparer);
-            console.log(cell.value())
         },
 
         'V2' : function(cell, client) {
@@ -66,7 +65,7 @@ var fields = {
         },
 
         'I8' : function(cell, client) {
-            cell.value(client.cell.number);
+            cell.value(client.cell.number.join(', '));
         },
 
         'T8' : function(cell, client) {
@@ -486,7 +485,7 @@ var fields = {
             cell.value(client.husband.t4AP.value ? 'Y' : '');
         },
 
-        'B28' : function(cell, client) {
+        'F27' : function(cell, client) {
             cell.value(client.husband.t4AP.split ? 'Y' : '');
         },
 
@@ -720,7 +719,7 @@ var fields = {
             cell.value(client.wife.t4AP.value ? 'Y' : '');
         },
 
-        'P28' : function(cell, client) {
+        'T27' : function(cell, client) {
             cell.value(client.wife.t4AP.split ? 'Y' : '');
         },
 
@@ -826,13 +825,14 @@ function clientToExcel(oldClient, client) {
         if (!fs.existsSync(path)) {
             var previousYear = parseInt(client.year) - 1;
             path = t1Directory + '//' + previousYear.toString() + '//' + oldClient.fileName + '.xlsx';
-            if (!fs.existsSync(path)) path = t1Directory + '//Templates//1- T1 INTERVIEW-2019.xlsx';
+            if (!fs.existsSync(path)) path = `${t1Directory}/Templates/1- T1 INTERVIEW-2019 Rev Jan 24, 19 chg T4AP.xlsx`;
         }
         console.log('Client To Excel');
         console.log('previous path: ', path);
         XLSX.fromFileAsync(path).then(function(workbook) {
             var sheet = workbook.sheet('Interview Sheet');
-            UpdateSheetService.updateSheet(sheet);
+            if (path.includes('Templates')) UpdateSheetService.updateSheet(sheet);
+            
             for (var section in fields) {
                 if (section == 'husband') if (!client.husband) continue;
                 if (section == 'wife') if (!client.wife) continue;
