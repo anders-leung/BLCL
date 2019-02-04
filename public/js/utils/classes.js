@@ -30,24 +30,19 @@ $(document).ready(function(e) {
     });
     
     // Phone formatting
-    $('.phone').on('keyup', function(e) {
-        var key = e.keyCode || e.charCode;
-        if (key == 8 || key == 46) {
-            return false;
-        }
+    $('.phone').on('input', function(e) {
+        var input = e.originalEvent.data;
+        if (!input) return;
+
         var number = $(this);
         var value = number.val();
 
-        if (e.keyCode >= 48 && e.keyCode <= 57) {
-            console.log(e);
-        }
-
         if (value.length == 3) {
-            number.val(value + '-');
-        } else if(value.length == 7) {
+            number.val('(' + value + ') ');
+        } else if(value.length == 9) {
             number.val(value + '-');
         }
-        if (value.length > 12) {
+        if (value.length > 14 || !input.match(/[0-9]/g)) {
             number.val(value.substring(0, value.length - 1));
         }
     });
