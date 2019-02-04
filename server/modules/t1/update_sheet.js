@@ -4,6 +4,10 @@
 const husband = 'ffd966';
 const wife = 'ffff00';
 
+const husbandFills = ['C4', 'H4', 'G8', 'V10', 'E20', 'J20', 'L20', 'S20', 'W20', 'Y20', 'K21',
+    'X21', 'K22', 'X22', 'K23', 'X23', 'E25', 'K25', 'S25', 'X25', 'D27', 'J27', 'R27', 'W27',
+    'J28', 'W28', 'J29', 'W29', 'J30', 'W30', 'B33', 'E36', 'S36', 'H38', 'P38', 'V38', 'H41', 'V41'];
+
 function unmergeAll(range, sheet) {
     range = sheet.range(range).merged(false);
     var addresses = [];
@@ -453,7 +457,6 @@ function splitT1135(sheet) {
     sheet.cell('I7').value('');
 
     sheet.range('O7:T7').style({
-        fill: 'ffc000',
         fontSize: 14,
         bold: true,
     });
@@ -467,13 +470,14 @@ function splitT1135(sheet) {
     range.style({
         fontSize: 14,
         bold: true,
+        fill: husband,
         horizontalAlignment: 'center',
         rightBorder: true,
     });
 
     sheet.cell('P7').value('H');
     sheet.cell('R7').value('');
-    sheet.cell('S7').style({ rightBorder: true }).value('W');
+    sheet.cell('S7').style({ rightBorder: true, fill: wife }).value('W');
     sheet.cell('T7').value('');
 }
 
@@ -513,6 +517,15 @@ function updateT4APSplit(sheet) {
     sheet.cell('T27').value('');
 }
 
+function fills(sheet) {
+    husbandFills.forEach((cell) => {
+        sheet.cell(cell).style({
+            fill: husband,
+            border: true,
+        });
+    });
+}
+
 var UpdateService = {
     updateSheet: function(sheet) {
         updateHusbandT4(sheet);
@@ -532,6 +545,7 @@ var UpdateService = {
         setOSI(sheet);
         splitT1135(sheet);
         updateT4APSplit(sheet);
+        fills(sheet);
     }
 };
 
