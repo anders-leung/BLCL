@@ -46,13 +46,17 @@ block content
                                             input#newTel(type='checkbox' name='tel[check]')
                                             | New Telephone
                                 .form-group.col-2
-                                    label(for='cell') Cell
-                                    input#cell.form-control.phone(type='text' name='cell[number]')
+                                    label(for='cell') Cell 1
+                                    input#cell1.form-control.phone(type='text' name='cell[number][0]')
                                     .checkbox
                                         label(for='newCell')
                                             input#newCell(type='checkbox' name='cell[check]')
                                             | New Cell
-                                .form-group.col-6
+                                .form-group.col-2
+                                    label(for='cell') Cell 2
+                                    input#cell2.form-control.phone(type='text' name='cell[number][1]')
+                            .row
+                                .form-group.col-8
                                     label(for='email') Email
                                     input#email.form-control(type='email' name='email[value]')
                                     .checkbox

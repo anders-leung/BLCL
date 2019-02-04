@@ -17,7 +17,7 @@ var ClientSchema = new Schema({
         check: { type: Boolean, default: false }
     },
     cell: {
-        number: { type: String, default: "" },
+        number: [{ type: String, default: "" }],
         check: { type: Boolean, default: false }
     },
     email: {

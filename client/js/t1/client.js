@@ -52,7 +52,12 @@ $(document).ready(function(e) {
         $('#selfEmployed').prop('checked', client.selfEmployed);
         $('#rental').prop('checked', client.rental);
         $('#tel').val(client.tel.number);
-        $('#cell').val(client.cell.number);
+        if (client.cell.number) {
+            var cell = $('#cell1');
+            cell.val(client.cell.number[0].length > 1 ? client.cell.number[0] : '');
+            $('#cell2').val(client.cell.number[1].length > 1 ? client.cell.number[1] : '');
+            if (cell.val().length === 0) cell.val(client.cell.number);
+        }
         $('#email').val(client.email.value);
         $('#apartment').val(client.address.apartment);
         $('#street').val(client.address.street);
