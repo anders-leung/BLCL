@@ -772,10 +772,10 @@ block content
                                 .row
                                     .form-group.col-3
                                         label.red(for='husbandT1135') T1135 H
-                                        input#husbandT1135.form-control(type='number' min=0 max=2 name='husband[t1135][value]' required)
+                                        input#husbandT1135.form-control(type='number' min=0 max=2 name='husband[t1135][value]')
                                     .form-group.col-3
                                         label.red(for='wifeT1135') T1135 W
-                                        input#wifeT1135.form-control(type='number' min=0 max=2 name='wife[t1135][value]' required)
+                                        input#wifeT1135.form-control(type='number' min=0 max=2 name='wife[t1135][value]')
                                     .form-group.col-3
                                         label.red(for='prSold') PR Sold
                                         select#prSold.form-control(name='prSold' required)
@@ -799,7 +799,7 @@ block content
                                 .row
                                     .form-check
                                         input#slips.form-check-input(type='checkbox' name='slips')
-                                        label.form-check-label(for='slips') Slips
+                                        label.form-check-label(for='slips') Simple
                                     .form-check
                                         input#stocks.form-check-input(type='checkbox' name='stocks')
                                         label.form-check-label(for='stocks') Stocks
