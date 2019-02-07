@@ -4,7 +4,7 @@ const fn = require('../helper');
 
 const table = {
     columns: [
-        { header: 'Slips', value: fn('slips') },
+        { header: 'Simple', value: fn('slips') },
         { header: 'Self Empl', value: fn('selfEmployed') },
         { header: 'GST', value: (client) => {
             let husband = fn('husband.rental.gstReturn')(client);
