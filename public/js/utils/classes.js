@@ -48,13 +48,13 @@ $(document).ready(function(e) {
     });
 
     // Sin formatting
-    $('.sin').on('keyup', function(e) {
-        var key = e.keyCode || e.charCode;
-        if (key == 8 || key == 46) {
-            return false;
-        }
+    $('.sin').on('input', function(e) {
+        var input = e.originalEvent.data;
+        if (!input) return;
+
         var sin = $(this);
         var value = sin.val();
+        
         if (value.length > 11) {
             sin.val(value.substring(0, value.length - 1));
         }
