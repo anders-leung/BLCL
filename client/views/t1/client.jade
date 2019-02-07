@@ -319,18 +319,23 @@ block content
                                             label(for='husband130') 130
                                             input#husband130.form-control(type='number' name='husband[otherIncome[value130]')
                                     label Foreign Income
+                                    label Div & Int
                                     .row
-                                        .form-group.col-6
-                                            label(for='husbandDiv') Div & Int
-                                            .input-group.form-inline
-                                                input#husbandDivCurrency.col-6.form-control(type='text' name='husband[foreignIncome][div][currency]')
-                                                input#husbandDiv.form-control(type='number' name='husband[foreignIncome][div][value]')
+                                        .form-group.col-3
+                                            label Currency
+                                            input#husbandDivCurrency.form-control(type='text' name='husband[foreignIncome][div][currency]')
+                                        .form-group.col-3
+                                            label $
+                                            input#husbandDiv.form-control(type='number' name='husband[foreignIncome][div][value]')
+                                        
+                                    label(for='husbandEmpl') Empl
                                     .row
-                                        .form-group.col-6
-                                            label(for='husbandEmpl') Empl
-                                            .input-group.form-inline
-                                                input#husbandEmplCurrency.col-6.form-control(type='text' name='husband[foreignIncome][empl][currency]')
-                                                input#husbandEmpl.form-control(type='number' name='husband[foreignIncome][empl][value]')
+                                        .form-group.col-3
+                                            label Currency
+                                            input#husbandEmplCurrency.form-control(type='text' name='husband[foreignIncome][empl][currency]')
+                                        .form-group.col-3
+                                            label $
+                                            input#husbandEmpl.form-control(type='number' name='husband[foreignIncome][empl][value]')
                                         .form-group.col-4
                                             label(for='husbandCountry') Country
                                             input#husbandCountry.form-control(type='text' name='husband[foreignIncome][country]')
@@ -459,18 +464,22 @@ block content
                                                 label(for='wife130') 130
                                                 input#wife130.form-control(type='number' name='wife[otherIncome][value130]')
                                         label Foreign Income
+                                        label Div & Int
                                         .row
-                                            .form-group.col-6
-                                                label(for='wifeDiv') Div & Int
-                                                .input-group.form-inline
-                                                    input#wifeDivCurrency.col-6.form-control(type='text' name='wife[foreignIncome][div][currency]')
-                                                    input#wifeDiv.form-control(type='number' name='wife[foreignIncome][div][value]')
+                                            .form-group.col-3
+                                                label Currency
+                                                input#wifeDivCurrency.form-control(type='text' name='wife[foreignIncome][div][currency]')
+                                            .form-group.col-3
+                                                label $
+                                                input#wifeDiv.form-control(type='number' name='wife[foreignIncome][div][value]')
+                                        label Empl
                                         .row
-                                            .form-group.col-6
-                                                label(for='wifeEmpl') Empl
-                                                .input-group.form-inline
-                                                    input#wifeEmplCurrency.col-6.form-control(type='text' name='wife[foreignIncome][empl][currency]')
-                                                    input#wifeEmpl.form-control(type='number' name='wife[foreignIncome][empl][value]')
+                                            .form-group.col-3
+                                                label Currency
+                                                input#wifeEmplCurrency.form-control(type='text' name='wife[foreignIncome][empl][currency]')
+                                            .form-group.col-3
+                                                label $
+                                                input#wifeEmpl.form-control(type='number' name='wife[foreignIncome][empl][value]')
                                             .form-group.col-4
                                                 label(for='wifeCountry') Country
                                                 input#wifeCountry.form-control(type='text' name='wife[foreignIncome][country]')
