@@ -1,5 +1,5 @@
 const fs = require('fs');
-const PDFDocument = require('pdfkit');
+const PDFDocument = require('../../pdfkit-tables');
 const ConfigService = require('../config');
 
 const margin = 72;
@@ -58,7 +58,7 @@ module.exports = async (invoice) => {
     setHeader(doc, companyFields);
     doc.moveDown(1);
     setAttention(doc, invoice);
-    doc.moveDown(3);
+    doc.moveDown(2);
     setContent(doc, invoice);
     setFooter(doc, invoice);
 
@@ -187,34 +187,20 @@ const setContent = (doc, invoice) => {
 
     let gstSum = 0;
     let pstSum = 0;
+    const table = { headers: ['', ''], rows: [] };
     for (const service of invoice.services) {
-        const lines = splitLine(doc, service.details, contentLimit);
-        for (var i = 0; i < lines.length; i++) {
-            const line = lines[i];
-            if (i === 0) {
-                writeLine(doc, [
-                    { value: line, start: margin },
-                    { value: (service.amount ? `$${numberWithCommas(service.amount)}` : ''), }
-                ], 1);
-            } else {
-                writeLine(doc, [{ value: line, start: margin }], 0.1);
-            }
-        }
+        table.rows.push([service.details, numberWithCommas(service.amount)]);
         gstSum += parseFloat(service.gst);
-        if (service.pst) pstSum += parseFloat(service.pst);
+        pstSum += parseFloat(service.pst);
     }
+    
+    doc.table(table);
 
-    writeLine(doc, [
-        { value: '5% GST', start: margin },
-        { value: `$${numberWithCommas(convert(gstSum))}`}
-    ], 3);
-
-    if (pstSum > 0) {
-        writeLine(doc, [
-            { value: '7% PST', start: margin },
-            { value: `$${numberWithCommas(convert(pstSum))}`}
-        ], 1);
-    }
+    const tax = { headers: ['', ''], rows: [] };
+    if (gstSum) tax.rows.push(['5% GST', numberWithCommas(convert(gstSum))]);
+    if (pstSum) tax.rows.push(['7% PST', numberWithCommas(convert(pstSum))]);
+    doc.moveDown(2);
+    doc.table(tax);
 }
 
 const setFooter = (doc, invoice) => {
