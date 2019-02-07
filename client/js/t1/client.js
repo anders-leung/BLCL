@@ -34,6 +34,22 @@ $(document).ready(function(e) {
         }
     }
 
+    $('#husbandFirstName').on('input', function () {
+        if ($('#husbandFirstName').val().trim()) {
+            $('#husbandT1135').prop('required', true);
+        } else {
+            $('#husbandT1135').removeAttr('required');
+        }
+    });
+
+    $('#wifeFirstName').on('input', function () {
+        if ($('#wifeFirstName').val().trim()) {
+            $('#wifeT1135').prop('required', true);
+        } else {
+            $('#wifeT1135').removeAttr('required');
+        }
+    });
+
     if (client) {
         $('#year').val(client.year);
         $('#interviewer').val(client.interviewer);
@@ -82,6 +98,7 @@ $(document).ready(function(e) {
         $('#sin3').val(client.dependent3.sin);
 
         if (client.husband) {
+            if (client.husband.firstName) $('#husbandT1135').prop('required', true);
             $('#husbandFirstName').val(client.husband.firstName);
             $('#husbandLastName').val(client.husband.lastName);
             $('#husbandDob').val(client.husband.dateOfBirth);
@@ -145,6 +162,7 @@ $(document).ready(function(e) {
         }
 
         if (client.wife) {
+            if (client.wife.firstName) $('#wifeT1135').prop('required', true);
             $('#wifeFirstName').val(client.wife.firstName);
             $('#wifeLastName').val(client.wife.lastName);
             $('#wifeDob').val(client.wife.dateOfBirth);
