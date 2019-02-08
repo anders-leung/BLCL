@@ -18,7 +18,7 @@ function colorHeader(header) {
     }
 }
 
-var exportTables = ['normal', 'noPreparer', 'packed', 'osSigned', 'osPyt', 'emailedNotPacked'];
+var exportTables = ['normal', 'noPreparer', 'packed', 'emailed', 'osSigned', 'osPyt', 'emailedNotPacked', 'missing', 'done', 'all'];
 
 function exportDatatable(name) {
     var exportDatatable = {
@@ -52,9 +52,9 @@ function exportDatatable(name) {
         filename: function() {
             return $('#' + name + 'Title').val() || (new Date()).toLocaleDateString('en-CA', options) + ' - ' + name;
         },
-        exportOptions: {
-            columns: columns
-        }
+        // exportOptions: {
+        //     columns: columns
+        // }
     }]
 
     return exportDatatable;
