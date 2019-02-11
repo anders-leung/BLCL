@@ -10,11 +10,11 @@ const fills = {
     },
     wife: {
         fill: 'ffff00',
-        cells: []
+        cells: ['V1', 'W1', 'E4', 'K4', 'S7', 'L8', 'V11', 'E33', 'E34', 'K38', 'S38', 'X38', 'K41', 'X41']
     },
     light: {
         fill: 'fff2cc',
-        cells: ['S1', 'T1', 'O7', 'U7', 'V7', 'X7', 'P8', 'Q8', 'R8', 'S8', 'U8', 'W8', 'X8',
+        cells: ['S1', 'T1', 'O7', 'U7', 'W7', 'X7', 'P8', 'Q8', 'R8', 'S8', 'U8', 'W8', 'X8',
             'P9', 'Q9', 'R9', 'U9']
     },
     blue: {
@@ -485,14 +485,14 @@ function splitT1135(sheet) {
     range.style({
         fontSize: 14,
         bold: true,
-        fill: husband,
+        fill: fills.husband.fill,
         horizontalAlignment: 'center',
         rightBorder: true,
     });
 
     sheet.cell('P7').value('H');
     sheet.cell('R7').value('');
-    sheet.cell('S7').style({ rightBorder: true, fill: wife }).value('W');
+    sheet.cell('S7').style({ rightBorder: true, fill: fills.wife.fill }).value('W');
     sheet.cell('T7').value('');
 }
 
@@ -507,7 +507,7 @@ function updateT4APSplit(sheet) {
     range.style({
         fontSize: 11,
         rightBorder: true,
-        fill: husband,
+        fill: fills.husband.fill,
     });
 
     sheet.cell('B27').value('');
@@ -524,7 +524,7 @@ function updateT4APSplit(sheet) {
     range.style({
         fontSize: 11,
         rightBorder: true,
-        fill: husband,
+        fill: fills.husband.fill,
     });
 
     sheet.cell('P27').value('');
@@ -532,16 +532,49 @@ function updateT4APSplit(sheet) {
     sheet.cell('T27').value('');
 }
 
-function fills(sheet) {
+function splitCell(sheet) {
+    unmergeAll('I8:O8', sheet);
+    sheet.cell('G8').value('Cell 1');
+    let range = sheet.range('I8:K8');
+    range.merged(true).style({
+        fontSize: 12,
+        horizontalAlignment: true,
+        bold: true
+    });
+    
+    sheet.cell('L8').value('Cell 2').style({ fontSize: 12 });
+    range = sheet.range('M8:O8');
+    range.merged(true).style({
+        fontSize: 12,
+        horizontalAlignment: true,
+        bold: true
+    });
+}
+
+function populateFills(sheet) {
     Object.keys(fills).forEach((type) => {
         const { fill, cells } = fills[type];
         cells.forEach((cell) => {
             sheet.cell(cell).style({
                 fill,
                 border: true,
+                bold: true
             });
         });
     });
+    sheet.range('C4:F4').style({ border: 'medium' });
+    sheet.range('L4:H4').style({ border: 'medium' });
+    sheet.range('O7:T7').style({ border: 'medium' });
+    sheet.range('O1:Z4').style({ border: 'medium' });
+    sheet.range('A7:Z9').style({ topBorder: 'medium', bottomBorder: 'medium' });
+    sheet.range('A23:F24').style({ topBorder: 'thick', bottomBorder: 'thick' });
+    sheet.cell('F23').style({ rightBorder: 'thick' });
+    sheet.range('G24:J24').style({ topBorder: 'thick', bottomBorder: 'thick' });
+    sheet.cell('J24').style({ rightBorder: 'thick' });
+    sheet.range('O23:T24').style({ topBorder: 'thick', bottomBorder: 'thick' });
+    sheet.cell('T23').style({ rightBorder: 'thick' });
+    sheet.range('U24:W24').style({ topBorder: 'thick', bottomBorder: 'thick' });
+    sheet.cell('W24').style({ rightBorder: 'thick' });
 }
 
 var UpdateService = {
@@ -563,7 +596,8 @@ var UpdateService = {
         setOSI(sheet);
         splitT1135(sheet);
         updateT4APSplit(sheet);
-        fills(sheet);
+        splitCell(sheet);
+        populateFills(sheet);
     }
 };
 

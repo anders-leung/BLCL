@@ -65,7 +65,11 @@ var fields = {
         },
 
         'I8' : function(cell, client) {
-            cell.value(client.cell.number.join(', '));
+            cell.value(client.cell.number[0]);
+        },
+        
+        'M8' : function(cell, client) {
+            cell.value(client.cell.number[1]);
         },
 
         'T8' : function(cell, client) {
@@ -350,7 +354,7 @@ var fields = {
         },
 
         'R7' : function(cell, client) {
-            cell.value(client.husband.t1135);
+            cell.value(client.husband.t1135.value);
         },
         
         'W10' : function(cell, client) {
@@ -584,7 +588,7 @@ var fields = {
         },
 
         'T7' : function(cell, client) {
-            cell.value(client.wife.t1135);
+            cell.value(client.wife.t1135.value);
         },
         
         'W11' : function(cell, client) {
@@ -825,13 +829,13 @@ function clientToExcel(oldClient, client) {
         if (!fs.existsSync(path)) {
             var previousYear = parseInt(client.year) - 1;
             path = t1Directory + '//' + previousYear.toString() + '//' + oldClient.fileName + '.xlsx';
-            if (!fs.existsSync(path)) path = `${t1Directory}/Templates/1- T1 INTERVIEW-2019 Rev Jan 24, 19 chg T4AP.xlsx`;
+            if (!fs.existsSync(path)) path = `${t1Directory}/Templates/1 - T1 INTERVIEW-2019 Rev Feb 7, 19.xlsx`;
         }
         console.log('Client To Excel');
         console.log('previous path: ', path);
         XLSX.fromFileAsync(path).then(function(workbook) {
             var sheet = workbook.sheet('Interview Sheet');
-            if (path.includes('Templates')) UpdateSheetService.updateSheet(sheet);
+            if (!path.includes('Templates')) UpdateSheetService.updateSheet(sheet);
             
             for (var section in fields) {
                 if (section == 'husband') if (!client.husband) continue;

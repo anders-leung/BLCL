@@ -37,16 +37,20 @@ $(document).ready(function(e) {
     $('#husbandFirstName').on('input', function () {
         if ($('#husbandFirstName').val().trim()) {
             $('#husbandT1135').prop('required', true);
+            $('#husbandT1135').removeAttr('disabled');
         } else {
             $('#husbandT1135').removeAttr('required');
+            $('#husbandT1135').prop('disabled', true);
         }
     });
 
     $('#wifeFirstName').on('input', function () {
         if ($('#wifeFirstName').val().trim()) {
             $('#wifeT1135').prop('required', true);
+            $('#wifeT1135').removeAttr('disabled');
         } else {
             $('#wifeT1135').removeAttr('required');
+            $('#wifeT1135').prop('disabled', true);
         }
     });
 
@@ -98,7 +102,12 @@ $(document).ready(function(e) {
         $('#sin3').val(client.dependent3.sin);
 
         if (client.husband) {
-            if (client.husband.firstName) $('#husbandT1135').prop('required', true);
+            if (client.husband.firstName) {
+                $('#husbandT1135').prop('required', true);
+            } else {
+                $('#husbandT1135').prop('disabled', true);
+            }
+
             $('#husbandFirstName').val(client.husband.firstName);
             $('#husbandLastName').val(client.husband.lastName);
             $('#husbandDob').val(client.husband.dateOfBirth);
@@ -162,7 +171,12 @@ $(document).ready(function(e) {
         }
 
         if (client.wife) {
-            if (client.wife.firstName) $('#wifeT1135').prop('required', true);
+            if (client.wife.firstName) {
+                $('#wifeT1135').prop('required', true);
+            } else {
+                $('#wifeT1135').prop('disabled', true);
+            }
+            
             $('#wifeFirstName').val(client.wife.firstName);
             $('#wifeLastName').val(client.wife.lastName);
             $('#wifeDob').val(client.wife.dateOfBirth);
@@ -276,6 +290,8 @@ $(document).ready(function(e) {
         $('#newCell').prop('checked', true);
         $('#newEmail').prop('checked', true);
         $('#newAddress').prop('checked', true);
+        $('#husbandT1135').prop('disabled', true);
+        $('#wifeT1135').prop('disabled', true);
     }
 
     $('form').on('submit', function() {
