@@ -236,6 +236,23 @@ const setFooter = (doc, invoice) => {
         writeLine(doc, line5);
         doc.x = margin;
         doc.y -= 20;
+    } else {
+        const line1 = [
+            { value: '(2)', font: 'TImes-Bold', start: 72 },
+            { value: 'E-Transfers to our email cantrust.business@gmail.com and indicate your Invoice No. with your payment', start: margin * 1.5 }
+        ];
+        const line2 = [
+            { value: '(1)', font: 'Times-Bold', start: 72 },
+            { value: 'Issue a cheque payable to Cantrust Business Service Ltd. please mark your Invoice No. on the cheque;', font: 'Times-Roman', start: margin * 1.5 }
+        ];
+        const line3 = [{ value: 'Settlement of Invoice', font: 'Times-Bold', start: margin }];
+        writeLine(doc, line1);
+        doc.y -= 20;
+        writeLine(doc, line2);
+        doc.y -= 20;
+        writeLine(doc, line3);
+        doc.x = margin;
+        doc.y -= 20;
     }
 
     if (invoice.company === 'blcl') doc.font('Times-Italic');
