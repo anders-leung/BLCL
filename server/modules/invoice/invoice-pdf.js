@@ -238,8 +238,8 @@ const setFooter = (doc, invoice) => {
         doc.y -= 20;
     } else {
         const line1 = [
-            { value: '(2)', font: 'TImes-Bold', start: 72 },
-            { value: 'E-Transfers to our email cantrust.business@gmail.com and indicate your Invoice No. with your payment', start: margin * 1.5 }
+            { value: '(2)', font: 'Times-Bold', start: 72 },
+            { value: 'E-Transfers to our email cantrust.business@gmail.com and indicate your Invoice No. with your payment', font: 'Times-Roman', start: margin * 1.5 }
         ];
         const line2 = [
             { value: '(1)', font: 'Times-Bold', start: 72 },
