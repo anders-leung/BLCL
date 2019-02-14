@@ -577,6 +577,10 @@ function populateFills(sheet) {
     sheet.cell('W24').style({ rightBorder: 'thick' });
 }
 
+function selfEmployedToSimple(sheet) {
+    sheet.cell('P8').style({ fontSize: 11 }).value('Simple');
+}
+
 var UpdateService = {
     updateSheet: function(sheet) {
         updateHusbandT4(sheet);
@@ -597,6 +601,7 @@ var UpdateService = {
         splitT1135(sheet);
         updateT4APSplit(sheet);
         splitCell(sheet);
+        selfEmployedToSimple(sheet);
         populateFills(sheet);
     }
 };
