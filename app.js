@@ -75,6 +75,12 @@ init('./server/routes', async (err) => {
     global.invoiceDirectory = config.invoice_directory;
     global.templateDirectory = config.template_directory;
     global.fileDirectory = config.file_directory;
+    global.twilio = config.twilio;
+    
+    // const twilio = require('./server/modules/sms/sms');
+    // twilio(null, null, () => {
+    //     console.log('finished sending');
+    // });
 
     let descriptions;
     [err, descriptions] = await DescriptionService.get({});
@@ -83,7 +89,7 @@ init('./server/routes', async (err) => {
         await DescriptionService.setup();
     }
 
-    await T2Service.setup();
+    // await T2Service.setup();
     
     var setup = require('./server/routes/utils/setup');
     setup();

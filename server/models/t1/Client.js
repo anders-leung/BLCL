@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;
 
 var ClientSchema = new Schema({
     year: { type: String, default: '' },
-    interviewer: { type: String, default: "" },
+    interviewer: Date,
     prSold: { type: Boolean, default: false },
     pickupDate: { type: String, default: "" },
     preparer: { type: String, default: "" },

@@ -9,10 +9,10 @@ const fields = {
         'preparerDone', 'readyToPack', 'signed', 'pytReceived', 'pytAmount', 
         'pytDate', 'recBy', 'taxToCRA', 't1Efiled', 'gstEfiled', 'outstandingInfo',
         'remarks', 't1Remarks', 'gstRemarks', 'preparerRemarks', 'callDate',
-        'emailed', 'interviewDate', 'pickupDate'
+        'emailed', 'interviewDate', 'pickupDate', 'checker',
     ],
     bools: ['new', 'packed', 'confirmPickupDate'],
-    dates: ['packed'],
+    dates: ['packed', 'interviewDate'],
 }
 
 const update = {};
