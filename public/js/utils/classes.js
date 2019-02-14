@@ -63,16 +63,19 @@ $(document).ready(function(e) {
         }
     });
 
-    $('.postalCode').on('keyup', function(e) {
-        var key = e.keyCode || e.charCode;
-        if (key == 8 || key == 46) return false;
+    $('.postalCode').on('input', function(e) {
+        var input = e.originalEvent.data;
+        if (!input) return;
 
         var postalCode = $(this);
         var value = postalCode.val();
+
         if (value.length > 7) {
             postalCode.val(value.substring(0, value.length - 1));
         }
         
         if (value.length == 3) postalCode.val(value + ' ');
-    })
+
+        postalCode.val(value.toUpperCase());
+    });
 });
