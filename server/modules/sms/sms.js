@@ -1,12 +1,18 @@
 const twilio = require('twilio');
-const accountSid = 'AC05e155b7efa12cfcd26f5adbfbf15a94';
-const token = 'be690cf0c56f3f21320c403803406577'
-const tclient = new twilio(accountSid, token);
+let tclient;
 
 module.exports = function textClient(client, template, cb) {
+    if (!tclient) {
+        tclient = new twilio(global.twilio.accountSid, global.twilio.token);
+    }
+    
     tclient.messages.create({
+        // body: template.body,
+        // from: '+17786546339',
+        // to: `+1${client.number.replace(/[()\-\s]/g, '')}`,
         body: 'Test message',
-        from: '+17786546339'
+        from: '+15005550006',
+        to: '+17788670616'
     })
     .then((message) => {
         console.log('twilio message: ', message.sid);
