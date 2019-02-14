@@ -53,7 +53,7 @@ var ClientService = {
     findClientsOSPyt : function(callback) {
         var emailed = {};
         emailed['interviewDate'] = { $ne : '' };
-        emailed['packed'] = false;
+        emailed['packed'] = { $eq: null };
         emailed['signed'] = { $ne : '' };
         emailed['emailed'] = { $ne : '' };
         emailed['$or'] = [
@@ -64,7 +64,7 @@ var ClientService = {
         ]
         var normal = {};
         normal['interviewDate'] = { $ne : '' };
-        normal['packed'] = true ;
+        normal['packed'] = { $exists: true, $ne: null };
         normal['signed'] = { $ne : '' };
         normal['$or'] = [
             { 'pytReceived' : '' },
@@ -80,7 +80,7 @@ var ClientService = {
     findClientsOSSigned: function(callback) {
         var normal = {};
         normal['interviewDate'] = { $ne: '' };
-        normal['packed'] = true;
+        normal['packed'] = { $exists: true, $ne: null };
         normal['signed'] = '';
         normal['pytReceived'] = { $ne: '' };
         normal['pytAmount'] = { $ne: '' };
@@ -89,7 +89,7 @@ var ClientService = {
 
         var emailed = {};
         emailed['interviewDate'] = { $ne : '' };
-        emailed['packed'] = false;
+        emailed['packed'] = { $eq: null };
         emailed['signed'] = '';
         emailed['emailed'] = { $ne : '' };
         emailed['pytReceived'] = { $ne: '' };
@@ -114,7 +114,7 @@ var ClientService = {
     findClientsEmailedNotPacked : function(callback) {
         var search = {};
         search['interviewDate'] = { $ne : '' };
-        search['packed'] = false;
+        search['packed'] = { $eq: null };
         search['signed'] = { $ne : '' };
         search['emailed'] = { $ne : '' };
         search['pytReceived'] = { $ne : '' };
@@ -150,7 +150,7 @@ var ClientService = {
             method = 'count';
         }
         search['interviewDate'] = { $ne : '' };
-        search['packed'] = true;
+        search['packed'] = { $exists: true, $ne: null };
         search['emailed'] = '';
         search['signed'] = '';
         search['$or'] = [
@@ -232,7 +232,7 @@ var ClientService = {
         var search = {};
         search['preparer'] = { $ne : '' };
         search['interviewDate'] = { $ne : '' };
-        search['packed'] = false;
+        search['packed'] = { $eq: null };
         search['emailed'] = '';
         search['signed'] = '';
         Client.find(search).lean().exec(function(err, clients) {
@@ -314,7 +314,7 @@ var ClientService = {
             search['pytReceived'] = { $ne : '' };
             search['pytAmount'] = { $ne : '' };
             search['signed'] = { $ne : '' };
-            search['packed'] = true;
+            search['packed'] = { $exists: true, $ne: null };
         }
         Client.find(search).lean().exec(function(err, clients) {
             callback(err, clients);
@@ -402,7 +402,7 @@ var ClientService = {
         search['recBy'] = { $ne : '' };
         search['taxToCRA'] = { $ne : '' };
         search['signed'] = { $ne : '' };
-        search['packed'] = true;
+        search['packed'] = { $exists: true, $ne: null };
         let err, clients;
         [err, clients] = await to(Client[method](search).lean().exec());
         if (err) return err;

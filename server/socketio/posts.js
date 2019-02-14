@@ -16,7 +16,6 @@ let ClientsSocket = {
         socket.on('update t1', function (data) {
             console.log(data);
 
-            if (data.field == 'packed') data.value = data.value == 'Y';
             let search = { _id: data.id };
             let update = { [data.field]: data.value };
             

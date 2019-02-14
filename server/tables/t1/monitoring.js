@@ -31,7 +31,7 @@ const table = {
         { header: 'Outstanding Info', value: fn(), field: 'outstandingInfo', classes: ['edit'], color: 'green' },
         { header: 'Remarks', value: fn(), field: 'remarks', classes: ['edit'] },
         { header: 'Ready To PRT/Pack', value: fn(), field: 'readyToPack', classes: ['date-edit'] },
-        { header: 'Packed', value: fn(), field: 'packed', classes: ['select', 'toggle'] },
+        { header: 'Packed', value: fn(), field: 'packed', classes: ['date-edit'] },
         { header: 'Method', value: fn('method') },
         { header: 'Rec\'d By', value: fn(), field: 'recBy', classes: ['select', 'initials'], color: 'red' },
         { header: 'Tax To CRA', value: fn(), field: 'taxToCRA', classes: ['select', 'tax'], color: 'red' },

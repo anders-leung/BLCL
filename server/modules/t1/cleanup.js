@@ -12,6 +12,7 @@ const fields = {
         'emailed', 'interviewDate', 'pickupDate'
     ],
     bools: ['new', 'packed', 'confirmPickupDate'],
+    dates: ['packed'],
 }
 
 const update = {};
@@ -19,6 +20,7 @@ const update = {};
 Object.keys(fields).map((type) => {
     let value = '';
     if (type === 'bools') value = false;
+    if (type === 'dates') value = null;
     fields[type].map((field) => {
         update[field] = value;
     });
