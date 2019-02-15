@@ -534,7 +534,7 @@ function updateT4APSplit(sheet) {
 
 function splitCell(sheet) {
     unmergeAll('I8:O8', sheet);
-    sheet.cell('G8').value('Cell 1');
+    sheet.cell('G8').value('Cell (1)');
     let range = sheet.range('I8:K8');
     range.merged(true).style({
         fontSize: 12,
@@ -542,10 +542,10 @@ function splitCell(sheet) {
         bold: true
     });
     
-    sheet.cell('L8').value('Cell 2').style({ fontSize: 12 });
+    sheet.cell('L8').value('Cell (2)').style({ fontSize: 12 });
     range = sheet.range('M8:O8');
     range.merged(true).style({
-        fontSize: 12,
+        fontSize: 11,
         horizontalAlignment: true,
         bold: true
     });
