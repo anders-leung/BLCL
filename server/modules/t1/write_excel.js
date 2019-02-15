@@ -829,7 +829,7 @@ function clientToExcel(oldClient, client) {
         if (!fs.existsSync(path)) {
             var previousYear = parseInt(client.year) - 1;
             path = t1Directory + '//' + previousYear.toString() + '//' + oldClient.fileName + '.xlsx';
-            if (!fs.existsSync(path)) path = `${t1Directory}/Templates/1 - T1 INTERVIEW-2019 Rev Feb 7, 19.xlsx`;
+            if (!fs.existsSync(path)) path = `${t1Directory}/Templates/1 - T1 INTERVIEW-2019 Rev Feb 11, 19.xlsx`;
         }
         console.log('Client To Excel');
         console.log('previous path: ', path);
