@@ -1,3 +1,4 @@
+const jade = require('jade');
 const twilio = require('twilio');
 let tclient;
 
@@ -6,11 +7,9 @@ module.exports = function textClient(number, template, values, cb) {
         tclient = new twilio(global.twilio.accountSid, global.twilio.token);
     }
     
-    const textFile = `${__dirname}/templates/${template}.txt`;
+    const js = require(`./templates/${template}`);
 
-    const textFn = jade.compileFile(textFile);
-
-    const text = textFn(values);
+    const text = jade.compile(js.text)(values);
     
     tclient.messages.create({
         body: text,
