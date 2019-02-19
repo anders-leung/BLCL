@@ -76,11 +76,6 @@ init('./server/routes', async (err) => {
     global.templateDirectory = config.template_directory;
     global.fileDirectory = config.file_directory;
     global.twilio = config.twilio;
-    
-    // const twilio = require('./server/modules/sms/sms');
-    // twilio(null, null, () => {
-    //     console.log('finished sending');
-    // });
 
     let descriptions;
     [err, descriptions] = await DescriptionService.get({});
@@ -125,6 +120,17 @@ fs.readdir(cron, (err, list) => {
     list.map((file) => {
         require(`${cron}/${file}`);
     });
+});
+
+// Grab the AR user
+const UserService = require('./server/modules/user');
+UserService.findOneUser({ email: 'ar@ben-cpa.com' }, (err, user) => {
+    if (err) {
+        const message = 'Error getting AR user';
+        console.log(message, ': ', err);
+        throw new Error(message);
+    }
+    global.ar = user;
 });
 
 module.exports = app;
