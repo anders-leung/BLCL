@@ -148,11 +148,15 @@ $(document).ready(function() {
 
     function findTableForRow(row) {
         var data = row.data();
-        var preparer, packed, emailed, received, tax, type, amount, signedH, signedW;
+        var preparer, packed, emailed, received, tax, type, amount, signedH, signedW, husband, wife;
         TABLE.columns.map((column, i) => {
             var value = data[i] != '';
             var header = column.header;
             switch (header) {
+                case 'Husband Last Name':
+                    return husband = value;
+                case 'Wife Last Name':
+                    return wife = value;
                 case 'PRE':
                     return preparer = value;
                 case 'Packed':
@@ -175,9 +179,12 @@ $(document).ready(function() {
                     return;
             }
         });
+        signedH = (husband && signedH) || !husband;
+        signedW = (wife && signedW) || !wife;
         var signed = signedH && signedW;
         var pyt = received && tax && type && amount;
-        console.log(preparer, packed, emailed, signed, pyt)
+        var partPyt = received || tax || type || amount;
+        console.log(preparer, packed, emailed, signed, pyt, partPyt)
 
         var table = ''
         if (!preparer) return '#noPreparerTable';
@@ -206,6 +213,8 @@ $(document).ready(function() {
                 } else {
                     if (pyt) {
                         table = '#osSignedTable';
+                    } else if (partPyt) {
+                        table = '#osPytTable';
                     } else {
                         table = '#packedTable';
                     }
