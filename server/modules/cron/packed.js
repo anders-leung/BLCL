@@ -3,22 +3,26 @@ const schedule = require('node-schedule');
 const frequency = '*/30 * * * * *';
 const day = 1000 * 60 * 60 * 24;
 
-const neverNotified = {
-    notified: { $exists: false },
-    packed: { $lte: new Date(new Date() - day) },
-};
-
-const notifiedBefore = {
-    notified: { $lte: new Date(new Date() - day * 5) },
-    packed: { $exists: true, $ne: null },
+const packed = { $exists: true, $ne: null };
+const notPickedUp = {
+    'husband.signed': { $eq: null },
+    'wife.signed': { $eq: null },
+    emailed: '',
+    pytReceived : '',
+    pytAmount : '',
+    recBy : '',
+    taxToCRA : ''
 }
 
-const firstNotification = schedule.scheduleJob(frequency, () => {
-    const packed = require('../t1/notify/packed');
-    packed(neverNotified);
-});
+const query = Object.assign({
+    $or: [
+        { notified: { $lte: new Date(new Date() - day * 4) } },
+        { notified: { $exists: false } },
+    ],
+    packed,
+}, notPickedUp);
 
-const otherEmail = schedule.scheduleJob(frequency, () => {
-    const packed = require('../t1/notify/packed');
-    packed(notifiedBefore);
+const notification = schedule.scheduleJob(frequency, () => {
+    const notify = require('../t1/notify');
+    notify(query, 'packed');
 });
