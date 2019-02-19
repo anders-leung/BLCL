@@ -8,6 +8,94 @@ var clientNames = require('../utils/client');
 var async = require('async');
 var moment = require('moment');
 
+const notSignedNotPaid = [
+    { 'husband.signed': { $eq: null } },
+    { 'wife.signed': { $eq: null } },
+    { 'pytReceived' : '' },
+    { 'pytAmount' : '' },
+    { 'recBy' : '' },
+    { 'taxToCRA' : '' }
+];
+
+const signedNotPaid = [{
+    $or: [
+        {
+            'husband.firstName': { $ne: '' },
+            'husband.signed': { $ne: null },
+            'wife.firstName': { $eq: '' }
+        },
+        {
+            'wife.firstName': { $ne: '' },
+            'wife.signed': { $ne: null },
+            'husband.firstName': { $eq: '' }
+        },
+        {
+            'husband.firstName': { $ne: '' },
+            'husband.signed': { $ne: null },
+            'wife.firstName': { $ne: '' },
+            'wife.signed': { $ne: null }
+        }
+    ],
+    $or: [
+        { 'pytReceived' : '' },
+        { 'pytAmount' : '' },
+        { 'recBy' : '' },
+        { 'taxToCRA' : '' }
+    ]
+}];
+
+const notSignedButPaid = [{
+    $or: [
+        {
+            'husband.firstName': { $ne: '' },
+            'husband.signed': { $eq: null },
+            'wife.firstName': { $eq: '' }
+        },
+        {
+            'wife.firstName': { $ne: '' },
+            'wife.signed': { $eq: null },
+            'husband.firstName': { $eq: '' }
+        },
+        {
+            'husband.firstName': { $ne: '' },
+            'wife.firstName': { $ne: '' },
+            $or: [
+                { 'husband.signed': { $eq: null } },
+                { 'wife.signed': { $eq: null } }
+            ]
+        }
+    ],
+    pytReceived: { $ne: '' },
+    pytAmount: { $ne: '' },
+    recBy: { $ne: '' },
+    taxToCRA: { $ne: '' },
+}];
+
+const signedAndPaid = [{
+    $or: [
+        {
+            'husband.firstName': { $ne: '' },
+            'husband.signed': { $ne: null },
+            'wife.firstName': { $eq: '' }
+        },
+        {
+            'wife.firstName': { $ne: '' },
+            'wife.signed': { $ne: null },
+            'husband.firstName': { $eq: '' }
+        },
+        {
+            'husband.firstName': { $ne: '' },
+            'husband.signed': { $ne: null },
+            'wife.firstName': { $ne: '' },
+            'wife.signed': { $ne: null }
+        }
+    ],
+    pytReceived: { $ne: '' },
+    pytAmount: { $ne: '' },
+    recBy: { $ne: '' },
+    taxToCRA: { $ne: '' },
+}];
+
 function cleanValues(values) {
     for (var field in values) {
         if (field == 'prSold' || field == 'donation' || field == 'medExp') {
@@ -54,24 +142,14 @@ var ClientService = {
         var emailed = {};
         emailed['interviewDate'] = { $ne : '' };
         emailed['packed'] = { $eq: null };
-        emailed['signed'] = { $ne : '' };
         emailed['emailed'] = { $ne : '' };
-        emailed['$or'] = [
-            { 'pytReceived' : '' },
-            { 'pytAmount' : '' },
-            { 'recBy' : '' },
-            { 'taxToCRA' : '' }
-        ]
+        emailed['$and'] = signedNotPaid;
+
         var normal = {};
         normal['interviewDate'] = { $ne : '' };
-        normal['packed'] = { $exists: true, $ne: null };
-        normal['signed'] = { $ne : '' };
-        normal['$or'] = [
-            { 'pytReceived' : '' },
-            { 'pytAmount' : '' },
-            { 'recBy' : '' },
-            { 'taxToCRA' : '' }
-        ]
+        normal['packed'] = { $ne: null };
+        normal['$and'] = signedNotPaid;
+
         Client.find({ $or: [emailed, normal] }).lean().exec(function(err, clients) {
             callback(err, clients);
         });
@@ -81,21 +159,21 @@ var ClientService = {
         var normal = {};
         normal['interviewDate'] = { $ne: '' };
         normal['packed'] = { $exists: true, $ne: null };
-        normal['signed'] = '';
         normal['pytReceived'] = { $ne: '' };
         normal['pytAmount'] = { $ne: '' };
         normal['recBy'] = { $ne: '' };
         normal['taxToCRA'] = { $ne: '' };
+        normal['$and'] = notSignedButPaid;
 
         var emailed = {};
         emailed['interviewDate'] = { $ne : '' };
         emailed['packed'] = { $eq: null };
-        emailed['signed'] = '';
         emailed['emailed'] = { $ne : '' };
         emailed['pytReceived'] = { $ne: '' };
         emailed['pytAmount'] = { $ne: '' };
         emailed['recBy'] = { $ne: '' };
         emailed['taxToCRA'] = { $ne: '' };
+        emailed['$and'] = notSignedButPaid;
         
         Client.find({ $or: [normal, emailed] }).lean().exec(function(err, clients) {
             callback(err, clients);
@@ -115,12 +193,9 @@ var ClientService = {
         var search = {};
         search['interviewDate'] = { $ne : '' };
         search['packed'] = { $eq: null };
-        search['signed'] = { $ne : '' };
         search['emailed'] = { $ne : '' };
-        search['pytReceived'] = { $ne : '' };
-        search['pytAmount'] = { $ne : '' };
-        search['recBy'] = { $ne : '' };
-        search['taxToCRA'] = { $ne : '' };
+        search['$and'] = signedAndPaid;
+
         Client.find(search).lean().exec(function(err, clients) {
             callback(err, clients);
         });
@@ -130,13 +205,8 @@ var ClientService = {
         var search = {};
         search['interviewDate'] = { $ne : '' };
         search['emailed'] = { $ne : '' };
-        search['signed'] = '';
-        search['$or'] = [
-            { 'pytReceived': '' },
-            { 'pytAmount': '' },
-            { 'recBy': '' },
-            { 'taxToCRA': '' }
-        ]
+        search['$and'] = notSignedNotPaid;
+
         Client.find(search).lean().exec(function(err, clients) {
             callback(err, clients);
         });
@@ -149,16 +219,11 @@ var ClientService = {
             search = { preparer: preparer };
             method = 'count';
         }
+
         search['interviewDate'] = { $ne : '' };
-        search['packed'] = { $exists: true, $ne: null };
+        search['packed'] = { $ne: null };
         search['emailed'] = '';
-        search['signed'] = '';
-        search['$or'] = [
-            { 'pytReceived' : '' },
-            { 'pytAmount' : '' },
-            { 'recBy' : '' },
-            { 'taxToCRA' : '' }
-        ]
+        search['$and'] = notSignedNotPaid;
 
         let err, clients;
         [err, clients] = await to(Client[method](search).lean().exec());
@@ -169,10 +234,13 @@ var ClientService = {
     findClientsPytRec : function(callback) {
         var search = {};
         search['interviewDate'] = { $ne : '' };
-        search['pytReceived'] = { $ne : '' };
-        search['pytAmount'] = { $ne : '' };
-        search['recBy'] = { $ne : '' };
-        search['taxToCRA'] = { $ne : '' };
+        search['$or'] = [
+            { pytReceived: { $ne : '' } },
+            { pytAmount: { $ne : '' } },
+            { recBy: { $ne : '' } },
+            { taxToCRA: { $ne : '' } },
+        ];
+
         Client.find(search).lean().exec(function(err, clients) {
             callback(err, clients);
         });
@@ -234,7 +302,7 @@ var ClientService = {
         search['interviewDate'] = { $ne : '' };
         search['packed'] = { $eq: null };
         search['emailed'] = '';
-        search['signed'] = '';
+        search['$and'] = notSignedNotPaid;
         Client.find(search).lean().exec(function(err, clients) {
             callback(err, clients);
         });
@@ -273,8 +341,8 @@ var ClientService = {
                     var updates = {}
                     updates['fileName'] = clientNames.getFileName(client);
                     updates['pathName'] = clientNames.getPathName(client);
-                    if (client.pytReceived && client.pytAmount && client.recBy && client.taxToCRA) {
-                        updates['pytDate'] = moment().format('YYYY-MMM-DD').toUpperCase();
+                    if (client.pytReceived) {
+                        updates['pytDate'] = new Date();
                     }
                     Client.update(search, { $set: updates }, function(file_name_err) {
                         if (file_name_err) console.log(file_name_err);
@@ -397,12 +465,9 @@ var ClientService = {
         search['interviewDate'] = { $ne : '' };
         search['preparer'] = preparer ? preparer : { $ne : '' };
         search['preparerDone'] = 'OK';
-        search['pytReceived'] = { $ne : '' };
-        search['pytAmount'] = { $ne : '' };
-        search['recBy'] = { $ne : '' };
-        search['taxToCRA'] = { $ne : '' };
-        search['signed'] = { $ne : '' };
-        search['packed'] = { $exists: true, $ne: null };
+        search['packed'] = { $ne: null };
+        search['$and'] = signedAndPaid;
+
         let err, clients;
         [err, clients] = await to(Client[method](search).lean().exec());
         if (err) return err;
