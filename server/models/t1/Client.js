@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;
 
 var ClientSchema = new Schema({
     year: { type: String, default: '' },
-    interviewer: Date,
+    interviewer: String,
     prSold: { type: Boolean, default: false },
     pickupDate: { type: String, default: "" },
     preparer: { type: String, default: "" },
@@ -346,7 +346,7 @@ var ClientSchema = new Schema({
         default: ''
     },
     pytAmount: { type: String, default: '' },
-    pytDate: { type: String, default: '' },
+    pytDate: Date,
     recBy: { type: String, default: '' },
     taxToCRA: { 
         type: String, 
@@ -368,6 +368,7 @@ var ClientSchema = new Schema({
     preparerRemarks: String,
     oldPreparer: String,
     gstSigned: Date,
+    notified: Date,
 });
 
 ClientSchema.virtual('name').get(function () {
@@ -379,6 +380,21 @@ ClientSchema.virtual('name').get(function () {
     }
     if (wife.lastName) {
         const wifeName = `${wife.lastName}, ${wife.firstName}`;
+        if (name) name += ` and ${wifeName}`;
+        else name += wifeName;
+    }
+    return name;
+});
+
+ClientSchema.virtual('attention').get(function () {
+    let name = '';
+    const husband = this.husband;
+    const wife = this.wife;
+    if (husband.lastName) {
+        name += `Mr. ${husband.lastName}`;
+    }
+    if (wife.lastName) {
+        const wifeName = `Mrs. ${wife.lastName}`;
         if (name) name += ` and ${wifeName}`;
         else name += wifeName;
     }
