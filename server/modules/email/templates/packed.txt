@@ -1,9 +1,0 @@
-Dear #{attention}
-
-
-Your #{year} T1 General Tax Return is ready to be picked up.
-Please bring your cheques for payment to CRA and to Benjamin Leung & Co., Ltd. when you come up to sign your return.
-
-Thanks and regards,
-Benjamin Leung & Co., Ltd
-Chartered Professional Accountant
