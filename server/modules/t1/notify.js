@@ -10,7 +10,7 @@ async function notify(query, type) {
 
     if (err) return console.log('os-pyt-t1 err: ', err);
 
-    // if (process.env.NODE_ENV === 'test') return;
+    if (process.env.NODE_ENV === 'test') return;
 
     UserService.getAllUsers((err, users) => {
         if (err) return console.log('T1 OS get all users err: ', err);
@@ -31,15 +31,7 @@ async function notify(query, type) {
                 });
             }
 
-            if (cell.number[0]) {
-                sms(cell.number[0], type, values, (err) => {
-                    if (!err) {
-                        T1Service.updateClient({ _id: t1._id }, { notified: new Date() }, false, (err) => {
-                            if (err) console.log(`${type} notification error updating client: `, err);
-                        });
-                    }
-                });
-            } else if (email.value) {
+            if (email.value) {
                 let emailFrom = employee || global.ar;
                 const client = { email: email.value }
                 const options = {
@@ -51,6 +43,14 @@ async function notify(query, type) {
 
                 emailClient(emailFrom, client, type, values, options, (err, success) => {
                     if (success) {
+                        T1Service.updateClient({ _id: t1._id }, { notified: new Date() }, false, (err) => {
+                            if (err) console.log(`${type} notification error updating client: `, err);
+                        });
+                    }
+                });
+            } else if (cell.number[0]) {
+                sms(cell.number[0], type, values, (err) => {
+                    if (!err) {
                         T1Service.updateClient({ _id: t1._id }, { notified: new Date() }, false, (err) => {
                             if (err) console.log(`${type} notification error updating client: `, err);
                         });
