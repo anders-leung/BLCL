@@ -1,4 +1,3 @@
-const UserService = require('../user');
 const InvoiceService = require('../invoice/invoice');
 const emailClient = require('../notifications/email');
 

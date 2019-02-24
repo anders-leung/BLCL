@@ -1,6 +1,6 @@
 const schedule = require('node-schedule');
 
-const frequency = '*/30 * * * * *';
+const frequency = '0 */5 * * * *';
 const day = 1000 * 60 * 60 * 24;
 
 const packed = { $exists: true, $ne: null };
