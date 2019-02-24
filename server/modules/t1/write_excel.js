@@ -566,7 +566,7 @@ var fields = {
         },
 
         'B41' : function(cell, client) {
-            cell.value(client.husband.installation);
+            cell.value(client.husband.installment);
         },
 
         'I41' : function(cell, client) {
@@ -800,7 +800,7 @@ var fields = {
         },
 
         'P41' : function(cell, client) {
-            cell.value(client.wife.installation);
+            cell.value(client.wife.installment);
         },
 
         'L41' : function(cell, client) {
