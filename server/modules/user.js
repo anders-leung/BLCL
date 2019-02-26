@@ -42,7 +42,7 @@ var UserService = {
     },
 
     getInitials : async function() {
-        const ignore = ['AND', 'ADMIN'];
+        const ignore = ['AND', 'ADMIN', 'LM', 'RL'];
         [err, initials] = await to(User.find({}).distinct('initials'));
         initials.sort();
         initials.unshift('');
