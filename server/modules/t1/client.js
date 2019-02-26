@@ -234,12 +234,14 @@ var ClientService = {
     findClientsPytRec : function(callback) {
         var search = {};
         search['interviewDate'] = { $ne : '' };
-        search['$or'] = [
-            { pytReceived: { $ne : '' } },
-            { pytAmount: { $ne : '' } },
-            { recBy: { $ne : '' } },
-            { taxToCRA: { $ne : '' } },
-        ];
+        // search['$or'] = [
+        //     { pytReceived: { $ne : '' } },
+        //     { pytAmount: { $ne : '' } },
+        //     { recBy: { $ne : '' } },
+        //     { taxToCRA: { $ne : '' } },
+        // ];
+        search['pytReceived'] = { $ne: '' };
+        search['pytDate'] = { $exists: true, $ne: null };
 
         Client.find(search).lean().exec(function(err, clients) {
             callback(err, clients);
