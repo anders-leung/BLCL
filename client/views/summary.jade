@@ -1,37 +1,43 @@
 extends layout
 
 block content
+    script(type='text/javascript', src='/js/datatables/jquery.dataTables.min.js')
+    script(type='text/javascript', src='/js/datatables/dataTables.buttons.min.js')
+    script(type='text/javascript', src='/js/datatables/jszip.min.js')
+    script(type='text/javascript', src='/js/datatables/buttons.html5.min.js')
+    script(type='text/javascript', src='/js/datatables/datatables-sum.js')
     script(type='text/javascript', src='/js/summary/summary.js')
 
-    table.cell-border
-        thead
-            tr
-                th
-                th Normal
-                th New
-                th WIP
-                th OK
-                th Total Assigned
-                th Done
-                th Packed
-        tfoot
-            tr
-                th
-                th Normal
-                th New
-                th WIP
-                th OK
-                th Total Assigned
-                th Done
-                th Packed
-        tbody
-            - for (var user in data)
+    #table.col-12.tab-content
+        table.cell-border(style='width:100%')
+            thead
                 tr
-                    td #{user}
-                    td #{data[user].new + data[user].wip + data[user].ok}
-                    td #{data[user].new}
-                    td #{data[user].wip}
-                    td #{data[user].ok}
-                    td #{data[user].total}
-                    td #{data[user].done}
-                    td #{data[user].packed}
+                    th
+                    th Normal
+                    th New
+                    th WIP
+                    th OK
+                    th Total Assigned
+                    th Done
+                    th Packed
+            tfoot
+                tr
+                    th
+                    th Normal
+                    th New
+                    th WIP
+                    th OK
+                    th Total Assigned
+                    th Done
+                    th Packed
+            tbody
+                - for (var user in data)
+                    tr
+                        td #{user}
+                        td #{data[user].new + data[user].wip + data[user].ok}
+                        td #{data[user].new}
+                        td #{data[user].wip}
+                        td #{data[user].ok}
+                        td #{data[user].total}
+                        td #{data[user].done}
+                        td #{data[user].packed}

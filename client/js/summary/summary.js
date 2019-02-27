@@ -1,13 +1,18 @@
 $(document).ready(function() {
     var table = $('table').DataTable({
-        'iDisplayLength': 10,
         'select': true,
         'scrollX': false,
         'paging': false,
         'searching': false,
-        'columnDefs': [
-            { type: 'date', targets: [0, 7] },
-        ],
+        'dom': 'RlBfrtip',
+        'buttons': [{
+            extend: 'excelHtml5',
+            footer: true,
+            title: new Date().toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' }) + ' Summary',
+            exportOptions: {
+                columns: ':visible'
+            }
+        }],
         
         drawCallback: function() {
             var api = this.api();
@@ -19,6 +24,7 @@ $(document).ready(function() {
                 }
                 $(this.footer()).html(sum);
             });
-        }
+        },
+        
     });
 });
