@@ -293,13 +293,14 @@ $(document).ready(function(e) {
     }
 
     $('form').on('submit', function() {
+        $('#save').prop('disabled', true);
         // to each unchecked checkbox
         $('input[type=checkbox]').each(function () {
-            $(this).val(1);
+            $(this).val(true);
         });
         $('input[type=checkbox]:not(:checked)').each(function () {
             // set value 0 and check it
-            $(this).prop('checked', true).val(0);
+            $(this).prop('checked', true).val(false);
         });
     });
 });
