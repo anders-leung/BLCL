@@ -102,6 +102,7 @@ $(document).ready(function(e) {
         if (client.husband) {
             if (client.husband.firstName) {
                 $('#husbandT1135').prop('required', true);
+                $('#husbandT1135').val(client.husband.t1135 ? client.husband.t1135.value : '');
             } else {
                 $('#husbandT1135').prop('disabled', true);
             }
@@ -171,6 +172,7 @@ $(document).ready(function(e) {
         if (client.wife) {
             if (client.wife.firstName) {
                 $('#wifeT1135').prop('required', true);
+                $('#wifeT1135').val(client.wife.t1135 ? client.wife.t1135.value : '');
             } else {
                 $('#wifeT1135').prop('disabled', true);
             }
@@ -283,6 +285,21 @@ $(document).ready(function(e) {
 
         $('#consult').val(client.consultFee);
         $('#price').val(client.price);
+        switch (client.prSold) {
+            case (true):
+                client.prSold = 'Y';
+                break;
+            case (false):
+                client.prSold = 'N';
+                break;
+            case (null):
+                client.prSold = '';
+        }
+        $('#prSold option').each(function () {
+            if ($(this).val() === client.prSold) {
+                $(this).prop('selected', true);
+            }
+        });
     } else {
         $('#newTel').prop('checked', true);
         $('#newCell').prop('checked', true);
