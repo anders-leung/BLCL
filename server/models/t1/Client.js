@@ -391,10 +391,10 @@ ClientSchema.virtual('attention').get(function () {
     const husband = this.husband;
     const wife = this.wife;
     if (husband.lastName) {
-        name += `Mr. ${husband.lastName}`;
+        name += `Mr. ${husband.firstName} ${husband.lastName}`;
     }
     if (wife.lastName) {
-        const wifeName = `Ms. ${wife.lastName}`;
+        const wifeName = `Ms. ${wife.firstName} ${wife.lastName}`;
         if (name) name += ` and ${wifeName}`;
         else name += wifeName;
     }
