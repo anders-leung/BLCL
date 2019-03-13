@@ -338,14 +338,14 @@ var ClientService = {
             oldYear = oldClient.year;
             oldFileName = oldClient.fileName;
             values = cleanValues(values);
+            if (values.pytReceived) {
+                values['pytDate'] = new Date();
+            }
             Client.update(search, { $set: values }, function(save_err) {
                 Client.findOne(search, function(find_err, client) {
                     var updates = {}
                     updates['fileName'] = clientNames.getFileName(client);
                     updates['pathName'] = clientNames.getPathName(client);
-                    if (client.pytReceived) {
-                        updates['pytDate'] = new Date();
-                    }
                     Client.update(search, { $set: updates }, function(file_name_err) {
                         if (file_name_err) console.log(file_name_err);
                         var id_search = { _id: oldClient._id };
