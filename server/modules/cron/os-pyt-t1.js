@@ -30,7 +30,7 @@ const query = {
         },
         {
             $or: [
-                { notified: { $lte: new Date(new Date() - day * 4) } },
+                { notified: { $lte: new Date(new Date() - day * 7) } },
                 { notified: { $exists: false } },
             ],
         }
