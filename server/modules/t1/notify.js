@@ -41,7 +41,7 @@ async function notify(query, type) {
 
                 values.user = emailFrom.name;
 
-                emailClient(emailFrom, client, type, values, options, (err, success) => {
+                emailClient(global.nr, client, type, values, options, (err, success) => {
                     if (success) {
                         T1Service.updateClient({ _id: t1._id }, { notified: new Date() }, false, (err) => {
                             if (err) console.log(`${type} notification error updating client: `, err);
