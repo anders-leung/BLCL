@@ -23,7 +23,8 @@ async function notify(query, type) {
                 year: t1.year,
             }
 
-            if (type !== 'packed') {
+            if (type === 'os-info') {
+                values.osInfo = t1.outstandingInfo;
                 users.forEach((user) => {
                     if (user.initials === preparer) {
                         employee = user;
