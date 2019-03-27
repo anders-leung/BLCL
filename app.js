@@ -133,13 +133,13 @@ UserService.findOneUser({ email: 'ar@ben-cpa.com' }, (err, user) => {
     global.ar = user;
 });
 
-UserService.findOneUser({ email: 'no-reply@ben-cpa.com' }, (err, user) => {
+UserService.findOneUser({ email: 't1@ben-cpa.com' }, (err, user) => {
     if (err) {
         const message = 'Error getting NR user';
         console.log(message, ': ', err);
         throw new Error(message);
     }
-    global.nr = user;
+    global.t1 = user;
 });
 
 module.exports = app;

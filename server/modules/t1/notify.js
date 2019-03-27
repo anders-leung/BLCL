@@ -33,7 +33,7 @@ async function notify(query, type) {
             }
 
             if (email.value) {
-                let emailFrom = employee || global.ar;
+                let emailFrom = employee || global.t1;
                 const client = { email: email.value }
                 const options = {
                     subject: `Benjamin Leung & Co., Ltd. CPA`,
