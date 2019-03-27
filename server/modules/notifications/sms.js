@@ -24,7 +24,7 @@ module.exports = function textClient(number, template, values, cb) {
         cb();
     })
     .catch((err) => {
-        console.log('Twilio message failed: ', err);
+        console.log(`Twilio message to ${number} failed: `, err);
         cb(err);
     });
 }

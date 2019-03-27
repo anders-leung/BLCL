@@ -31,7 +31,7 @@ module.exports = function emailClient(user, client, template, values, options, c
         let success = true;
         if (error) {
             success = false;
-            console.log(error);
+            console.log(`Email error to ${client.email}: `, error);
         } else {
             console.log('Message sent: ', info.messageId);
         }
