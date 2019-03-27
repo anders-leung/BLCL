@@ -73,8 +73,8 @@ $(document).ready(function(e) {
         $('#rental').prop('checked', client.rental);
         $('#tel').val(client.tel.number);
         if (client.cell.number) {
-            $('#cell1').val(client.cell.number[0] ? client.cell.number[0] : '');
-            $('#cell2').val(client.cell.number[1] ? client.cell.number[1] : '');
+            $('#cell1').val(client.cell.number[0].length > 1 ? client.cell.number[0] : client.cell.number);
+            $('#cell2').val(client.cell.number[1].length > 1 ? client.cell.number[1] : '');
         }
         $('#email').val(client.email.value);
         $('#apartment').val(client.address.apartment);
