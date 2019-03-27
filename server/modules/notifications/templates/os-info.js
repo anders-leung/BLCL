@@ -12,7 +12,9 @@ br\n
 p Thanks and regards,\n
 |   #{user}<br/>\n
 |   Benjamin Leung & Co., Ltd<br/>\n
-|   <strong>Chartered Professional Accountant</strong>`;
+|   <strong>Chartered Professional Accountant</strong>\n
+br\n
+p *** This is an automatic outgoing message from our system ***`;
 
 const text = `| Dear #{attention},\n\n
 | Thank you for entrusting our company to prepare your 2018 T1 General Tax Return.\n
@@ -25,6 +27,8 @@ const text = `| Dear #{attention},\n\n
 | Thanks and regards,\n
 | #{user}\n
 | Benjamin Leung & Co., Ltd.\n
-| Chartered Professional Accountant\n`;
+| Chartered Professional Accountant\n
+| \n
+| *** This is an automatic outgoing message from our system ***`;
 
 module.exports = { html, text };

@@ -5,10 +5,8 @@ p Please be advised that we will not efile your tax return to the CRA until paym
 br\n
 br\n
 p Thanks and regards,\n
-|   #{user}<br/>\n
 |   Benjamin Leung & Co., Ltd<br/>\n
-|   <strong>Chartered Professional Accountant</strong>
-br\n
+|   <strong>Chartered Professional Accountant</strong>\n
 br\n
 p *** This is an automatic outgoing message from our system ***`;
 

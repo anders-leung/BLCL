@@ -4,9 +4,10 @@ p Please return us the form T183 of your 2018 T1 General Tax Return duly signed,
 br\n
 br\n
 p Thanks and regards,\n
-|   #{user}<br/>\n
 |   Benjamin Leung & Co., Ltd<br/>\n
-|   <strong>Chartered Professional Accountant</strong>`;
+|   <strong>Chartered Professional Accountant</strong>\n
+br\n
+p *** This is an automatic outgoing message from our system ***`;
 
 const text = `| Dear #{attention}\n
 | \n

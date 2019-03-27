@@ -7,7 +7,9 @@ br\n
 br\n
 p Thanks and regards,\n
 |   Benjamin Leung & Co., Ltd<br/>\n
-|   <strong>Chartered Professional Accountant</strong>`;
+|   <strong>Chartered Professional Accountant</strong>\n
+br\n
+p *** This is an automatic outgoing message from our system ***`;
 
 const text = `| Dear #{attention},\n
 | \n
