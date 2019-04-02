@@ -7,8 +7,8 @@ const table = {
         { header: 'Simple', value: fn('slips') },
         { header: 'Self Empl', value: fn('selfEmployed') },
         { header: 'GST', value: (client) => {
-            let husband = fn('husband.rental.gstReturn')(client);
-            let wife = fn('wife.rental.gstReturn')(client);
+            let husband = fn('husband.rental.gstReturn')(client) || fn('husband.selfEmployed.gstReturn')(client);
+            let wife = fn('wife.rental.gstReturn')(client) || fn('wife.selfEmployed.gstReturn')(client);
             return husband || wife ? 'Y' : '';
         } },
         { header: 'Rental', value: fn('rental') },
