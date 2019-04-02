@@ -194,7 +194,7 @@ var ClientSchema = new Schema({
         lastName: { type: String, default: "" },
         dateOfBirth: { type: String, default: "" },
         departure: {
-            which: { type: String, enum: ['', 'DEPARTURE', 'LAND', 'DECEASED'], default: '' },
+            which: { type: String, enum: ['', 'DEPARTURE', 'LAND', 'DECEASED', 'RETURNED'], default: '' },
             value: { type: String, default: '' }
         },
         sin: { type: String, default: "" },
