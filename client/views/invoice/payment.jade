@@ -28,6 +28,7 @@ block content
             thead
                 tr
                     th
+                    th Pyt Date
                     th #
                     th Client Name
                     th Remarks
@@ -51,10 +52,12 @@ block content
                     th
                     th
                     th
+                    th
             tbody
                 each invoice in invoices
                     tr
                         td=invoice._id
+                        td=convertDate(invoice.pytDate)
                         - var client = invoice.client;
                         if client
                             - client = client.name
