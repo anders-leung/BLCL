@@ -7,21 +7,15 @@ var router = express.Router();
 var CookieService = require('./utils/cookies');
 var UserService = require('../modules/user');
 
-var previousUrl = '/';
-var login_error = false;
-
-router.get('/', function(req, res) {
+router.get('/*', function(req, res) {
+    const { login_error } = req.query;
     req.session = null;
-    previousUrl = '/';
-    var urlTokens = req.originalUrl.split('+');
-    if (urlTokens.length > 1) previousUrl = urlTokens[1];
     res.render('login', { 
         title : 'BLCL', 
-        login_error: login_error,
         options: {},
-        role: null
+        role: null,
+        login_error,
     });
-    login_error = false;
 });
 
 router.post('/', function(req, res) {
@@ -31,11 +25,9 @@ router.post('/', function(req, res) {
         if (err) res.render('error');
         if (user) {
             CookieService.createCookie(req, user.initials, user.role);
-            console.log(previousUrl);
-            res.redirect(previousUrl);
+            res.redirect('/');
         } else {
-            login_error = true;
-            res.redirect('/login');
+            res.redirect('/login?login_error=true');
         }
     });
 });
