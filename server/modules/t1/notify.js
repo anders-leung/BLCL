@@ -32,8 +32,8 @@ async function notify(query, type) {
                 });
             }
 
-            console.log(`Attempting to notify t1 client ${t1.attention}`);
             if (email.value) {
+                console.log(`Attempting to notify t1 client ${t1.attention} at ${email.value}`);
                 let emailFrom = employee || global.t1;
                 const client = { email: email.value }
                 const options = {
@@ -51,6 +51,7 @@ async function notify(query, type) {
                     }
                 });
             } else if (cell.number[0]) {
+                console.log(`Attempting to notify t1 client ${t1.attention} at ${cell.number[0]}`);
                 sms(cell.number[0], type, values, (err) => {
                     if (!err) {
                         T1Service.updateClient({ _id: t1._id }, { notified: new Date() }, false, (err) => {
