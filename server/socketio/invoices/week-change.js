@@ -43,6 +43,7 @@ function getPaymentData(invoices) {
         if (!client) client = invoice.oneTimeClient;
         var r = [
             invoice._id,
+            invoice.pytDate.toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' }),
             invoice.number,
             client.name,
             (invoice.remarks || ''),
@@ -65,6 +66,7 @@ async function getSalesData(invoices) {
         if (!client) client = invoice.oneTimeClient;
         const data = [
             invoice._id,
+            invoice.issueDate.toLocaleDateString("en-US", { year: 'numeric', month: 'short', day: 'numeric' }),
             invoice.number,
             client.name,
         ]

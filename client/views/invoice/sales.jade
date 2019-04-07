@@ -31,6 +31,7 @@ block content
             thead
                 tr
                     th
+                    th Issue Date
                     th #
                     th Client Name
                     th Total A/R
@@ -43,6 +44,7 @@ block content
                     th
                     th
                     th
+                    th
                     each service in services
                         th
                     th
@@ -52,6 +54,7 @@ block content
                 each invoice in invoices
                     tr
                         td=invoice._id
+                        td=convertDate(invoice.issueDate)
                         - var client = invoice.client;
                         if client
                             - client = client.name
