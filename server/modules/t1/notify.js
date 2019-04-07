@@ -32,6 +32,7 @@ async function notify(query, type) {
                 });
             }
 
+            console.log(`Attempting to notify t1 client ${t1.attention}`);
             if (email.value) {
                 let emailFrom = employee || global.t1;
                 const client = { email: email.value }
