@@ -90,7 +90,7 @@ async function getSalesData(invoices) {
         }
         data.push(gst.toFixed(2));
         data.push(pst.toFixed(2));
-        data.splice(3, 0, invoice.total);
+        data.splice(4, 0, invoice.total);
         return data;
     });
 }
