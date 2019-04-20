@@ -17,8 +17,9 @@ const table = {
         { header: 'T1e Remarks', value: fn(), field: 't1Remarks', classes: ['edit'] },
         { header: 'Signed H', value: fn(), field: 'husband.signed' },
         { header: 'Signed W', value: fn(), field: 'wife.signed' },
-        { header: 'T1135 EFILED H', value: fn(), field: 'husband.t1135.efiled',  classes: ['date-edit'] },
-        { header: 'T1135 EFILED W', value: fn(), field: 'wife.t1135.efiled', classes: ['date-edit'] },
+        { header: 'T1135 EFILED H', value: fn(), field: 'husband.t1135.efiled',  classes: ['date-edit'], color: 'red' },
+        { header: 'T1135 EFILED W', value: fn(), field: 'wife.t1135.efiled', classes: ['date-edit'], color: 'red' },
+        { header: 'Rec\'d By', value: fn(), field: 'recBy', color: 'red' },
     ]
 }
 
