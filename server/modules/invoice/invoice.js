@@ -42,7 +42,7 @@ const InvoiceService = {
         const weekRange = week.split(' - ');
         const weekStart = new Date(weekRange[0]);
         const weekEnd = new Date(weekRange[1]);
-        weekEnd.setDate(weekEnd + 1);
+        weekEnd.setDate(weekEnd.getDate() + 1);
         
         Object.assign(query, {
             [field]: {
