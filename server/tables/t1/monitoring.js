@@ -18,6 +18,7 @@ const table = {
         { header: 'Stock', value: fn('stocks') },
         { header: 'New', value: fn('new'), color: 'red' },
         { header: 'CFM PU', value: fn('confirmPickupDate'), color: 'red' },
+        { header: 'Interview Date', value: fn('interviewDate') },
         { header: 'Pickup Date', value: fn(), field: 'pickupDate', classes: ['date-edit'] },
         { header: 'Husband Last Name', value: fn('husband.lastName') },
         { header: 'Husband First Name', value: fn('husband.firstName') },
@@ -32,6 +33,12 @@ const table = {
         { header: 'Remarks', value: fn(), field: 'remarks', classes: ['edit'] },
         { header: 'Ready To PRT/Pack', value: fn(), field: 'readyToPack', classes: ['date-edit'] },
         { header: 'Packed', value: fn(), field: 'packed', classes: ['date-edit'] },
+        { header: 'Call PU', value: (client) => {
+            const cell = client.cell.number;
+            const numbers = !!cell.length;
+            const email = client.email.value;
+            return (numbers || email) ? '' : 'Y';
+        } },
         { header: 'Method', value: fn('method') },
         { header: 'Rec\'d By', value: fn(), field: 'recBy', classes: ['select', 'initials'], color: 'red' },
         { header: 'Tax To CRA', value: fn(), field: 'taxToCRA', classes: ['select', 'tax'], color: 'red' },
@@ -41,7 +48,6 @@ const table = {
         { header: 'Signed W', value: fn(), field: 'wife.signed', classes: ['date-edit'], color: 'red' },
         { header: 'Emailed to Si', value: fn(), field: 'emailed', classes: ['date-edit'], color: 'purple' },
         { header: 'Email/Call Pu', value: fn(), field: 'callDate', classes: ['date-edit'] },
-        { header: 'Interview Date', value: fn('interviewDate') },
         { header: 'Phone Number', value: fn('tel.number') },
         { header: 'Cell', value: fn('cell.number') },
         { header: 'Email', value: fn('email.value') },
