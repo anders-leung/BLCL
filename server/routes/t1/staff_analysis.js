@@ -2,9 +2,9 @@ var express = require('express');
 var async = require('async');
 var router = express.Router();
 
-var CookieService = require('./utils/cookies');
-var ClientService = require('../modules/t1/client');
-var UserService = require('../modules/user');
+var CookieService = require('../utils/cookies');
+var ClientService = require('../../modules/t1/client');
+var UserService = require('../../modules/user');
 
 /* GET users listing. */
 router.get('/', CookieService.isLoggedIn, function(req, res) {
@@ -26,7 +26,9 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
             var list = [];
             Object.keys(dict).sort().forEach(function(key) {
                 var entry = [key];
-                entry.push(dict[key]);
+                const clients = dict[key];
+                if (clients.length === 0) return;
+                entry.push(clients);
                 list.push(entry);
             });
 

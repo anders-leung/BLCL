@@ -1,10 +1,10 @@
 var express = require('express');
 var router = express.Router();
-var to = require('../helpers/to');
+var to = require('../../helpers/to');
 
-var CookieService = require('./utils/cookies');
-var ClientService = require('../modules/t1/client');
-var UserService = require('../modules/user');
+var CookieService = require('../utils/cookies');
+var ClientService = require('../../modules/t1/client');
+var UserService = require('../../modules/user');
 
 var functions = {
     new: async function(user) {
