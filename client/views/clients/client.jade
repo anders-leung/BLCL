@@ -75,8 +75,9 @@ block content
                                 ul.list-group
                                     each invoice in invoices
                                         if invoice.company === company.toLowerCase()
+                                            - services = invoice.services.map(service => service.service);
                                             li.list-group-item
-                                                a(href=`/invoices/${company.toLowerCase()}\/${invoice.number}.pdf`)=`${invoice.number} issued on ${convertDate(invoice.issueDate)}`
+                                                a(href=`/invoices/${company.toLowerCase()}\/${invoice.number}.pdf`)=`${invoice.number} issued on ${convertDate(invoice.issueDate)} - ${services.join()}`
                 br
 
                 legend Files
