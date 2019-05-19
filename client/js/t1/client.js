@@ -34,24 +34,41 @@ $(document).ready(function(e) {
         }
     }
 
-    $('#husbandFirstName').on('input', function () {
-        if ($('#husbandFirstName').val().trim()) {
-            $('#husbandT1135').prop('required', true);
-            $('#husbandT1135').removeAttr('disabled');
-        } else {
-            $('#husbandT1135').removeAttr('required');
-            $('#husbandT1135').prop('disabled', true);
-        }
-    });
+    function toggleRequiredDisabled(determinants, value) {
+        const fields = determinants.split('.');
+        let required = '';
+        fields.forEach((determinant) => {
+            const element = $(determinant);
+            if (determinant.includes('GST')) {
+                required = required || element.prop('checked');
+            } else {
+                required += element.val().trim();
+            }
+        });
 
-    $('#wifeFirstName').on('input', function () {
-        if ($('#wifeFirstName').val().trim()) {
-            $('#wifeT1135').prop('required', true);
-            $('#wifeT1135').removeAttr('disabled');
+        if (required) {
+            $(value).prop('required', true);
+            $(value).removeAttr('disabled');
         } else {
-            $('#wifeT1135').removeAttr('required');
-            $('#wifeT1135').prop('disabled', true);
+            $(value).removeAttr('required');
+            $(value).prop('disabled', true);
         }
+    }
+
+    const requiredDisabledMap = {
+        '#husbandFirstName.#husbandLastName': '#husbandT1135',
+        '#wifeFirstName.#wifeLastName': '#wifeT1135',
+        '#husbandRentalGST.#husbandSelfEmployedGST': '#husbandGSTDue',
+        '#wifeRentalGST.#wifeSelfEmployedGST': '#wifeGSTDue',
+    }
+
+    Object.entries(requiredDisabledMap).forEach(function ([determinants, value]) {
+        const fields = determinants.split('.');
+        fields.forEach((determinant) => {
+            $(determinant).on('input', function() {
+                toggleRequiredDisabled(determinants, value);
+            });
+        });
     });
 
     if (client) {
@@ -146,11 +163,17 @@ $(document).ready(function(e) {
             $('#husbandSplit').prop('checked', client.husband.t4AP.split);
             $('#husbandRental').val(client.husband.rental.value);
             $('#husbandRentalJoint').val(client.husband.rental.joint);
-            $('#husbandRentalGST').prop('checked', client.husband.rental.gstReturn);
+            if (client.husband.rental.gstReturn) {
+                $('#husbandRentalGST').prop('checked', true);
+                $('#husbandGSTDue').prop('required', true);
+            }
             $('#husbandT4E').prop('checked', client.husband.t4E);
             $('#husbandSelfEmployed').val(client.husband.selfEmployed.value);
             $('#husbandSelfEmployedJoint').val(client.husband.selfEmployed.joint);
-            $('#husbandSelfEmployedGST').prop('checked', client.husband.selfEmployed.gstReturn);
+            if (client.husband.selfEmployed.gstReturn) {
+                $('#husbandSelfEmployedGST').prop('checked', true);
+                $('#husbandGSTDue').prop('required', true);
+            }
             $('#husbandT4RSP').prop('checked', client.husband.t4RSP);
             $('#husbandSupportReceived').val(client.husband.supportReceived);
             $('#husbandUCCB').prop('checked', client.husband.uccb);
@@ -216,11 +239,17 @@ $(document).ready(function(e) {
             $('#wifeSplit').prop('checked', client.wife.t4AP.split);
             $('#wifeRental').val(client.wife.rental.value);
             $('#wifeRentalJoint').val(client.wife.rental.joint);
-            $('#wifeRentalGST').prop('checked', client.wife.rental.gstReturn);
+            if (client.wife.rental.gstReturn) {
+                $('#wifeRentalGST').prop('checked', true);
+                $('#wifeGSTDue').prop('required', true);
+            }
             $('#wifeT4E').prop('checked', client.wife.t4E);
             $('#wifeSelfEmployed').val(client.wife.selfEmployed.value);
             $('#wifeSelfEmployedJoint').val(client.wife.selfEmployed.joint);
-            $('#wifeSelfEmployedGST').prop('checked', client.wife.selfEmployed.gstReturn);
+            if (client.wife.selfEmployed.gstReturn) {
+                $('#wifeSelfEmployedGST').prop('checked', true);
+                $('#wifeGSTDue').prop('required', true);
+            }
             $('#wifeT4RSP').prop('checked', client.wife.t4RSP);
             $('#wifeSupportReceived').val(client.wife.supportReceived);
             $('#wifeUCCB').prop('checked', client.wife.uccb);

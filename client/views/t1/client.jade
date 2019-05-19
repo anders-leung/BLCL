@@ -366,6 +366,9 @@ block content
                                                 br
                                                 input#husbandSelfEmployedGST.form-check-input(type='checkbox' name='husband[selfEmployed][gstReturn]')
                                                 label.form-check-label(for='husbandSelfEmployedGST') GST Rtn
+                                            .form-group.col-3
+                                                label(for='husbandGSTDue') GST Due
+                                                input#husbandGSTDue.form-control.datepicker(type='text' name='husband[gstDue]')
                                     .row
                                         .form-group.col-4
                                             label(for='husbandSupportReceived') Support PYT Rec'd
@@ -509,6 +512,9 @@ block content
                                                     br
                                                     input#wifeSelfEmployedGST.form-check-input(type='checkbox' name='wife[selfEmployed][gstReturn]')
                                                     label.form-check-label(for='wifeSelfEmployedGST') GST Rtn
+                                                .form-group.col-3
+                                                    label(for='wifeGSTDue') GST Due
+                                                    input#wifeGSTDue.form-control.datepicker(type='text' name='wife[gstDue]')
                                         .row
                                             .form-group.col-4
                                                 label(for='wifeSupportReceived') Support PYT Rec'd
