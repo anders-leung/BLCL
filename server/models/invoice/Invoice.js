@@ -28,6 +28,7 @@ const InvoiceSchema = new Schema({
         gst: String,
         pst: String,
     }],
+    partialPyt: Number,
     pytReceived: {
         type: String,
         enum: [ '', 'ADV', 'CA', 'CHQ', 'DD', 'ET', 'INV' ],
@@ -40,6 +41,20 @@ const InvoiceSchema = new Schema({
         when: Date,
         attempt: Number,
     },
+});
+
+InvoiceSchema.virtual('owing').get(function() {
+    let owing = this.total;
+    if (this.partialPyt) {
+        owing -= this.partialPyt;
+        owing = owing.toFixed(2);
+    }
+    return owing;
+});
+
+InvoiceSchema.virtual('partialPayment').get(function() {
+    const { partialPyt } = this;
+    return partialPyt ? partialPyt.toFixed(2) : '';
 });
 
 module.exports = mongoose.model('Invoice', InvoiceSchema);

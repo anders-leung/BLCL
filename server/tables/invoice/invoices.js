@@ -19,9 +19,10 @@ const tableSetup = {
         { header: 'Issue Date', value: fn('issueDate') },
         { header: 'Sign Date', value: fn(), field: 'signDate', classes: ['date-edit'] },
         { header: 'PYT Type', value: fn(), field: 'pytReceived', classes: ['select', 'pytType'] },
+        { header: 'Partial Pyt', value: fn('partialPayment'), field: 'partialPyt', classes: ['edit', 'empty'] },
         { header: 'Remarks', value: fn(), field: 'remarks', classes: ['edit'] },
         { header: 'Preparer', value: fn('issuedBy') },
-        { header: 'Amount Owing', value: fn('total') },
+        { header: 'Amount Owing', value: fn('owing') },
     ]
 };
 
