@@ -13,7 +13,8 @@ const table = {
         { header: 'Wife Last Name', value: fn('wife.lastName') },
         { header: 'Wife First Name', value: fn('wife.firstName') },
         { header: 'GSTe Remarks', value: fn(), field: 'gstRemarks', classes: ['edit'] },
-        { header: 'Signed', value: fn(), field: 'gstSigned', classes: ['date-edit'] },
+        { header: 'Signed H', value: fn(), field: 'husband.signed' },
+        { header: 'Signed W', value: fn(), field: 'wife.signed' },
         { header: 'GST EFILED', value: fn(), field: 'gstEfiled', classes: ['date-edit'] },
     ]
 }
