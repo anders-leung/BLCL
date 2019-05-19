@@ -48,6 +48,14 @@ async function loadUserStats(initials) {
         if (error) break;
     }
 
+    Object.entries(dict).forEach(([user, stats]) => {
+        const values = Object.values(stats);
+        const count = values.reduce((sum, value) => sum + value);
+        if (count === 0) {
+            delete dict[user];
+        }
+    });
+
     return [error, dict];
 }
 
