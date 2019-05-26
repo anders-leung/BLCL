@@ -1,0 +1,35 @@
+//
+   Created by ander on 2017-11-01.
+
+extends ../layout
+
+block content
+    script(type='text/javascript', src='/js/datatables/jquery.dataTables.min.js')
+    script(type='text/javascript', src='/js/datatables/dataTables.buttons.min.js')
+    script(type='text/javascript', src='/js/datatables/jszip.min.js')
+    script(type='text/javascript', src='/js/datatables/buttons.html5.min.js')
+    script(type='text/javascript', src='/js/datatables/datatables-sum.js')
+    script(type='text/javascript', src='/js/t1/report.js')
+
+    #table.col-12.tab-content
+        table(style='width:100%;').cell-border
+            thead
+                tr
+                    th Employee
+                    th CFM PU
+                    th New
+                    th Pickup Date
+                    th PYT Amt
+                    th Rental
+                    th Self Empl
+                    th Slips
+                    th Stocks
+                    th T1135 0
+                    th T1135 1
+                    th T1135 2
+                    th 777
+            tbody
+                each entry in entries
+                    tr
+                        each value in entry
+                            td=value

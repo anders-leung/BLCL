@@ -18,6 +18,9 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
                 if (err) {
                     callback(err);
                 } else {
+                    if (clients.length === 0) {
+                        return callback();
+                    }
                     dict[user.initials] = clients;
                     callback();
                 }
@@ -26,9 +29,7 @@ router.get('/', CookieService.isLoggedIn, function(req, res) {
             var list = [];
             Object.keys(dict).sort().forEach(function(key) {
                 var entry = [key];
-                const clients = dict[key];
-                if (clients.length === 0) return;
-                entry.push(clients);
+                entry.push(dict[key]);
                 list.push(entry);
             });
 
