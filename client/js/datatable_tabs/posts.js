@@ -133,18 +133,18 @@ $(document).ready(function() {
             table.rows().every(function (row) {
                 var href = $(this.node()).data('href');
                 if (href && href.includes(id)) {
-                    if (field === 'partialPyt') {
-                        const owingCell = table.cell(row, column - 1);
-                        const owing = owingCell.data();
-                        const newOwing = owing - value;
-                        owingCell.data(newOwing.toFixed(2));
-                        const pytCell = table.cell(row, column);
-                        const pyt = pytCell.data();
-                        const newPyt = Number(pyt || 0) + Number(value);
-                        pytCell.data(newPyt.toFixed(2));
-                    } else {
+                    // if (field === 'partialPyt') {
+                    //     const owingCell = table.cell(row, column + );
+                    //     const owing = owingCell.data();
+                    //     const newOwing = owing - value;
+                    //     owingCell.data(newOwing.toFixed(2));
+                    //     const pytCell = table.cell(row, column);
+                    //     const pyt = pytCell.data();
+                    //     const newPyt = Number(pyt || 0) + Number(value);
+                    //     pytCell.data(newPyt.toFixed(2));
+                    // } else {
                         table.cell(row, column).data(value);
-                    }
+                    // }
                 }
             });
         });

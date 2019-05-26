@@ -64,7 +64,7 @@ $(document).ready(function() {
         cell_being_edited = cell;
         var value = $(this).html();
         previousValue = value;
-        if (cell.className.includes('empty')) value = '';
+        // if (cell.className.includes('empty')) value = '';
 
         var input = $("<input type='text' value='" + value + "'>");
         $(this).html(input);
