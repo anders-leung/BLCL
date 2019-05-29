@@ -27,6 +27,7 @@ const InvoiceService = {
     },
 
     update: async (query, data) => {
+        return await to(Invoice.findOneAndUpdate(query, data));
         const { partialPyt } = data;
         const increment = {};
         if (partialPyt) {
