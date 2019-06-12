@@ -192,7 +192,7 @@ function setTotal() {
 
     if (isNaN(sum)) sum = 0;
 
-    $('#total').val(convert(sum));
+    $('#total').val(parseFloat(sum).toFixed(2));
 }
 
 function populateFields(invoice) {
