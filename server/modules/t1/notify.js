@@ -10,7 +10,7 @@ async function notify(query, type) {
 
     if (err) return console.log('os-pyt-t1 err: ', err);
 
-    if (process.env.NODE_ENV === 'prod') return;
+    if (process.env.NODE_ENV !== 'prod') return;
 
     UserService.getAllUsers((err, users) => {
         if (err) return console.log('T1 OS get all users err: ', err);
