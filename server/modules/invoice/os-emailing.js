@@ -8,7 +8,7 @@ async function osEmail(query) {
 
     if (err) return console.log('osEmailing err: ', err);
 
-    if (process.env.NODE_ENV === 'test') return;
+    if (process.env.NODE_ENV === 'prod') return;
 
     invoices.map(async (invoice) => {
         let client = invoice.client;
